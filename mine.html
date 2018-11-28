@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/glset.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        select {
+            height: 36px;
+        }
+
+        .save {
+            position: fixed;
+            top: 0px;
+            width: calc(100% - 40px);
+            height: 38px;
+            z-index: 999;
+            background: #fff;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+
+        }
+
+        .savebg {
+            height: 38px;
+            /* background: #ccc; */
+        }
+    </style>
+</head>
+
+<body>
+    <div style="padding: 20px;">
+        <div class="save">
+            <div class="savebg">
+                <button class="layui-btn layui-btn-normal">保存</button>
+            </div>
+        </div>
+        <div style="height: 60px;"></div>
+        <table id="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width: 37.5%;" colspan="3">科目</th>
+                    <th style="width: 12.5%;">序号</th>
+                    <th style="width: 12.5%;">重新命名</th>
+                    <th style="width: 12.5%;">字体</th>
+                    <th style="width: 12.5%;">字号</th>
+                    <th style="width: 12.5%;">字色</th>
+                </tr>
+            </thead>
+            <!-- 我的王国开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="2">我的王国</td>
+                    <td colspan="2">密码修改</td>
+                    <td>
+                        <input type="number" class="layui-input" />
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="密码修改" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">我的主页</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="我的首页" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 我的王国结束 -->
+            <!-- 客户管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="2">客户管理</td>
+                    <td colspan="2">客户信息</td>
+                    <td>
+                        <input type="number" class="layui-input" />
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="客户信息" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">添加客户</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="添加客户" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 客户管理结束 -->
+            <!-- 经营管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="20">经营管理</td>
+                    <td colspan="2">工作汇总</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="添加客户" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="4">采购管理</td>
+                    <td>需求计划</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="需求计划" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>需求汇总</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="需求汇总" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>采购列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="采购列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>采购订单</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="采购订单" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">销售/维修</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="销售/维修" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">检测/维护</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="检测/维护" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">物料库存</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="物料库存" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">物料报废</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="物料报废" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">管理报告</td>
+                    <td>代办列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="代办列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>报告列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="报告列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">BI数据</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="BI数据" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">数据纠错</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="数据纠错" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">质量理赔</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="质量理赔" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">合同协议</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="合同协议" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">轮胎参数</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="轮胎参数" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">车务管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车务管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">加油记录</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="加油记录" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">车辆保险</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆保险" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">服务网络</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="服务网络" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 经营管理结束 -->
+            <!-- 市场管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="8">市场管理</td>
+
+                    <td colspan="2">工作业绩</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="工作业绩" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">工作计划</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="工作计划" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">拜访报告</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="拜访报告" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">市场分析</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="市场分析" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">销售预测</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="销售预测" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">月度报告</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="月度报告" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">经营统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="经营统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">应收应付</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="应收应付" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 市场管理结束 -->
+            <!-- 统计管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="10">统计管理</td>
+
+                    <td colspan="2">车辆物料</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆物料" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">胎位磨损</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="胎位磨损" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">轮胎状态</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="轮胎状态" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">胎纹深度</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="胎纹深度" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">按车统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="按车统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">车辆管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">运营统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="运营统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">物料更新</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="物料更新" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">车辆统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">轮胎统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="轮胎统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 统计管理结束 -->
+            <!-- 财务管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="13">财务管理</td>
+                    <td rowspan="2">发票管理</td>
+                    <td>发票列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="发票列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>添加发票</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="添加发票" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">应收管理</td>
+                    <td>应收列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="应收列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>收款单</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="收款单" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="2">应付管理</td>
+                    <td>应付列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="应付列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>付款单</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="付款单" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">结算汇总</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="结算汇总" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="3">资金管理</td>
+                    <td>资金管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="资金管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>收支汇总</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="收支汇总" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>资金调拨</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="资金调拨" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">工资管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="工资管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">销售利润</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="销售利润" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">固定资产</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="固定资产" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 财务管理结束 -->
+            <!-- 行政管理开始 -->
+            <tbody>
+                <tr>
+                    <td>行政管理</td>
+                    <td colspan="2">人力管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="人力管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 行政管理结束 -->
+            <!-- 系统管理开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="21">
+                        系统管理
+                    </td>
+                    <td colspan="2">交费统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="交费统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">费用编辑</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="费用编辑" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">编辑列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="编辑列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">注册列表</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="注册列表" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">轮胎参数</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="轮胎参数" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">品名规格</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="品名规格" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">品牌型号</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="品牌型号" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">维修参数</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="维修参数" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">广告核准</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="广告核准" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">系统参数</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="系统参数" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">昵称修改</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="昵称修改" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">警语广告</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="警语广告" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">系统年费</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="系统年费" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">职务管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="职务管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">用户管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="用户管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">权限管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="权限管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="5">期初数据</td>
+                    <td>期初物料</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="期初物料" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>应收账款</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="应收账款" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>应付账款</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="应付账款" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>账户资金</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="账户资金" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>车辆轮胎</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆轮胎" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 系统管理结束 -->
+            <!-- 胎压监控开始 -->
+            <tbody>
+                <tr>
+                    <td rowspan="6">胎压监控</td>
+                    <td colspan="2">监控页面</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="监控页面" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">车辆信息</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="车辆信息" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">统计分析</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="统计分析" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">报警管理</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="报警管理" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">故障统计</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="故障统计" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">系统设置</td>
+                    <td>
+                        <input type="number" class="layui-input">
+                    </td>
+                    <td>
+                        <input data-name="rename" type="text" class="layui-input" name="" id="" value="系统设置" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">宋体</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" data-name="fontsize" class="layui-input" name="" id="" value="16" />
+                    </td>
+                    <td>
+                        <select>
+                            <option value="" selected="">红色</option>
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+            <!-- 胎压监控结束 -->
+        </table>
+    </div>
+</body>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+
+    });
+</script>
+
+</html>

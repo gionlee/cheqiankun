@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody,
+        .winbodys {
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-layer-btn1 {
+            background-color: #FFB800 !important;
+            border-color: #FFB800 !important;
+            color: #fff !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div>
+            <div class="layui-btn layui-btn-sm" onclick="add()">增加</div>
+            <div class="layui-btn layui-btn-sm layui-btn-danger layui-btn-warm" onclick="alldel()">批量删除</div>
+        </div> -->
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        规格
+                    </th>
+                    <th>
+                        型号
+                    </th>
+                    <th>
+                        品牌
+                    </th>
+                    <th>
+                        产地
+                    </th>
+                    <th>
+                        速度级别
+                    </th>
+                    <th>
+                        轮辋
+                    </th>
+                    <th>
+                        气压
+                    </th>
+                    <th>
+                        负荷
+                    </th>
+                    <th>
+                        单负荷
+                    </th>
+                    <th>
+                        双负荷
+                    </th>
+
+                    <th>
+                        重量
+                    </th>
+
+                    <th>
+                        外直径
+                    </th>
+
+                    <th>
+                        断面宽
+                    </th>
+
+                    <th>
+                        纹深
+                    </th>
+
+                    <th>
+                        纹深数
+                    </th>
+                    <!-- <th>操作</th> -->
+
+                </tr>
+            </thead>
+            <tbody class="lists">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+            <tbody class="addlt">
+                <tr>
+                    <td>规格</td>
+                    <td><input type="text" class="layui-input" data-name="norms" value=""></td>
+                    <td>品牌</td>
+                    <td><input type="text" class="layui-input" data-name="model"></td>
+                    <td>型号</td>
+                    <td><input type="text" class="layui-input" data-name="arand"></td>
+                </tr>
+                <tr>
+                    <td>产地</td>
+                    <td><input type="text" class="layui-input" data-name="address"></td>
+                    <td>轮辋规格</td>
+                    <td><input type="text" class="layui-input" data-name="rim"></td>
+                    <td>重量</td>
+                    <td><input type="text" class="layui-input" data-name="weight"></td>
+                </tr>
+                <tr>
+                    <td>轮纹深度</td>
+                    <td><input type="text" class="layui-input" data-name="linesS"></td>
+                    <td>胎纹沟数</td>
+                    <td><input type="text" class="layui-input" data-name="linesNu"></td>
+                    <td>断面宽</td>
+                    <td><input type="text" class="layui-input" data-name="section"></td>
+                </tr>
+                <tr>
+                    <td>负荷指数</td>
+                    <td><input type="text" class="layui-input" data-name="loadS"></td>
+                    <td>单胎轴荷</td>
+                    <td><input type="text" class="layui-input" data-name="singleLoad"></td>
+                    <td>双胎轴荷</td>
+                    <td><input type="text" class="layui-input" data-name="doubleLoad"></td>
+                </tr>
+                <tr>
+                    <td>外直径</td>
+                    <td><input type="text" class="layui-input" data-name="diameter"></td>
+                    <td>标准气压</td>
+                    <td><input type="text" class="layui-input" data-name="pressure"></td>
+                    <td>速度级别</td>
+                    <td><input type="text" class="layui-input" data-name="speed"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="winbodys">
+        <table class="layui-table">
+            <tbody class="uplist">
+
+            </tbody>
+        </table>
+    </div>
+    <div id="pages"></div>
+</body>
+<script>
+    let ltData = {}
+    ltData.page = 1
+    ltData.limit = 20
+    ltData.norms = ''
+    ltData.model = ''
+    ltData.atand = ''
+    let arr = []
+    $.ajax({
+        url: `${API}/erpParameters/getParameterPage`,
+        type: 'get',
+        data: ltData,
+        success: function (res) {
+            let str = ''
+            arr = res.data.records
+            layui.use(['laypage', 'layer'], function () {
+                var laypage = layui.laypage
+                laypage.render({
+                    elem: 'pages',
+                    limit: 20,
+                    count: res.data.total,
+                    jump: function (obj) {
+                        ltData.page = obj.curr
+                        pages()
+                    }
+                });
+            })
+        }
+    })
+    // 分页
+    function pages() {
+        $.ajax({
+            url: `${API}/erpParameters/getParameterPage`,
+            type: 'get',
+            data: ltData,
+            success: function (res) {
+                let str = ''
+                arr = res.data.records.reverse()
+                console.log(arr,'222')
+                $('.lists').html('')
+                $.each(arr, function (i) {
+                    let json = arr[i]
+                    str += `<tr>
+                            <td>
+                           ${arr.length - i}
+                        </td>
+                        <td>
+                            ${json.norms}
+                        </td>
+                        <td>
+                                ${json.model}
+                        </td>
+                        <td>
+                                ${json.arand}
+                        </td>
+                        <td>
+                                ${json.address}
+                        </td>
+                        <td>
+                                ${json.speed}
+                        </td>
+                        <td>
+                                ${json.rim}
+                        </td>
+                        <td>
+                                ${json.pressure}
+                        </td>
+                        <td>
+                                ${json.loadS}
+                        </td>
+                        <td>
+                                ${json.singleLoad}
+                        </td>
+                        <td>
+                                ${json.doubleLoad}
+                        </td>
+
+                        <td>
+                                ${json.weight}
+                        </td>
+
+                        <td>
+                                ${json.diameter}
+                        </td>
+
+                        <td>
+                                ${json.section}
+                        </td>
+
+                        <td>
+                                ${json.linesS}
+                        </td>
+
+                        <td>
+                                ${json.linesNu}
+                        </td>
+                        </tr>`
+                })
+
+                $('.lists').append(str)
+                $('.changes').on('click', function () {
+                    if (!$(this).is(':checked')) {
+                        $('.allchange').prop("checked", false)
+                    }
+                    let bol = true
+                    $('.changes').each(function () {
+                        if (!$(this).is(':checked')) {
+                            bol = false
+                        }
+                    })
+                    if (bol) {
+                        $('.allchange').prop("checked", true)
+                    }
+                })
+                $('.allchange').on('click', function () {
+                    if ($(this).is(':checked')) {
+                        $('.changes').each(function () {
+
+                            $(this).prop("checked", true)
+                        })
+                    } else {
+                        $('.changes').each(function () {
+
+                            $(this).prop("checked", false)
+                        })
+                    }
+
+                })
+            }
+        })
+    }
+    // 删除
+    function del(id) {
+        if (confirm('是否删除?')) {
+            $.ajax({
+                url: `${API}/erpParameters/removeParameters?parameterIds=${id}`,
+                type: 'get',
+                success: function (res) {
+                    window.location.reload()
+                }
+            })
+        }
+
+    }
+    // 新增
+    function add() {
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '新增',
+                content: $('.winbody'),
+                area: ['720px'],
+                btn: ['保存', '取消'],
+                yes: function (index) {
+                    let data = {}
+                    $('.addlt input').each(function (i, n) {
+                        data[$(this).data('name')] = $(this).val()
+                    })
+                    $.ajax({
+                        url: `${API}/erpParameters/inertOrUpdateParameters?id=`,
+                        data: data,
+                        type: 'get',
+                        success: function (res) {
+                            window.location.reload()
+                        }
+                    })
+                }
+            })
+        })
+    }
+    // 修改
+    function update(index) {
+        let json = arr[index]
+        console.log(arr,json)
+        $('.uplist').html(`<tr>
+                    <td>规格</td>
+                    <td><input type="hidden" data-name="id" value="${json.id}">
+                    <input type="text" class="layui-input" data-name="norms" value="${json.norms}"></td>
+                    <td>品牌</td>
+                    <td><input type="text" class="layui-input" data-name="model" value="${json.model}"></td>
+                    <td>型号</td>
+                    <td><input type="text" class="layui-input" data-name="arand" value="${json.arand}"></td>
+                </tr>
+                <tr>
+                    <td>产地</td>
+                    <td><input type="text" class="layui-input" data-name="address" value="${json.address}"></td>
+                    <td>轮辋规格</td>
+                    <td><input type="text" class="layui-input" data-name="rim" value="${json.rim}"></td>
+                    <td>重量</td>
+                    <td><input type="text" class="layui-input" data-name="weight" value="${json.weight}"></td>
+                </tr>
+                <tr>
+                    <td>轮纹深度</td>
+                    <td><input type="text" class="layui-input" data-name="linesS" value="${json.linesS}"></td>
+                    <td>胎纹沟数</td>
+                    <td><input type="text" class="layui-input" data-name="linesNu" value="${json.linesNu}"></td>
+                    <td>断面宽</td>
+                    <td><input type="text" class="layui-input" data-name="section" value="${json.section}"></td>
+                </tr>
+                <tr>
+                    <td>负荷指数</td>
+                    <td><input type="text" class="layui-input" data-name="loadS" value="${json.loadS}"></td>
+                    <td>单胎轴荷</td>
+                    <td><input type="text" class="layui-input" data-name="singleLoad" value="${json.singleLoad}"></td>
+                    <td>双胎轴荷</td>
+                    <td><input type="text" class="layui-input" data-name="doubleLoad" value="${json.doubleLoad}"></td>
+                </tr>
+                <tr>
+                    <td>外直径</td>
+                    <td><input type="text" class="layui-input" data-name="diameter" value="${json.diameter}"></td>
+                    <td>标准气压</td>
+                    <td><input type="text" class="layui-input" data-name="pressure" value="${json.pressure}"></td>
+                    <td>速度级别</td>
+                    <td><input type="text" class="layui-input" data-name="speed" value="${json.speed}"></td>
+                </tr>`)
+        layui.use('layer', function () {
+            var layer = layui.layer;
+            layer.open({
+                type: 1,
+                title: '修改',
+                content: $('.winbodys'),
+                area: ['720px'],
+                btn: ['保存', '新增', '取消'],
+                yes: function (index) {
+                    let data = {}
+                    $('.uplist input').each(function (i, n) {
+                        data[$(this).data('name')] = $(this).val()
+                    })
+
+                    $.ajax({
+                        url: `${API}/erpParameters/inertOrUpdateParameters`,
+                        data: data,
+                        type: 'get',
+                        success: function (res) {
+                            window.location.reload()
+                        }
+                    })
+                },
+                btn2: function () {
+                    let data = {}
+                    $('.uplist input').each(function (i, n) {
+                        data[$(this).data('name')] = $(this).val()
+                    })
+                    data.id = ''
+                    $.ajax({
+                        url: `${API}/erpParameters/inertOrUpdateParameters`,
+                        data: data,
+                        type: 'get',
+                        success: function (res) {
+                            window.location.reload()
+                        }
+                    })
+                }
+            })
+        })
+    }
+    // 删除
+    function alldel() {
+        let arr = []
+
+        $('.changes').each(function () {
+            if ($(this).is(':checked')) {
+                arr.push($(this).val())
+            }
+        })
+        if (confirm('是否删除?')) {
+            $.each(arr, function (i, id) {
+
+                $.ajax({
+                    url: `${API}/erpParameters/removeParameters?parameterIds=${id}`,
+                    type: 'get',
+                    success: function (res) {
+                        $(`.c_${id}`).parent().parent().remove()
+                    }
+                })
+            })
+        }
+    }
+</script>

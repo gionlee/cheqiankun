@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        .title {
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .qianming {
+            width: 652px;
+            margin: 0 auto;
+        }
+
+        ul.qianming li {
+            display: inline-block;
+            width: 160px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        ul.qianming input {
+            width: 100px;
+            display: inline-block;
+            border-bottom: 1px solid #ccc;
+        }
+        .hover-body {
+            position: relative;
+        }
+        .hover-show {
+            position:absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 9999999999999999999999999;
+            display: none;
+        }
+        .hover-show li {
+            width: 150px;
+            height: 30px;
+            background: #fff;
+            border-bottom:1px solid #ccc;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+        }
+        .hover-show li:hover {
+            background: #ccc;
+            /* color: #fff; */
+        }
+        .hover-show li ul {
+
+        }
+        .hover-show div {
+            top: 0;
+            position: absolute;
+            width: 150px;
+        }
+        .hover-show div ul {
+            position: absolute;
+            top: 0;
+            left: 150px;
+        }
+        .saleWindow {
+            padding: 10px;
+            display: none;
+        }
+        .dphWindow {
+            width: 600px;
+            padding: 10px;
+            cursor: pointer;
+            display: none;
+        }
+        .wlWindow {
+            padding: 10px;
+            width:1200px;
+            display: none;
+        }
+        .carWindow {
+            width: 1200px;
+            padding: 10px;
+            display: none;
+        }
+        .wxxmwin,.wpztwin {
+            width: 600px;
+            display: none;
+            padding: 10px;
+        }
+        .wxxmwin ul li, .wpztwin ul li{
+            width: 150px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            border: 0.5px solid #ccc;
+            float: left;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+        .active {
+            background:rgb(5, 197, 253);
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>工作日期</th>
+                <th>里程表数</th>
+                <th>工作单号</th>
+                <th style="width:20%;">客户名称</th>
+                <th>车辆牌号</th>
+                <th>挂车牌号</th>
+
+            </tr>
+        </thead>
+        <tbody class="saveOne">
+            <tr>
+                <td><input type="text" data-name="saleRepairDate" class="layui-input  date" value=""></td>
+                <td><input type="text" data-name="saleRepairMileage" class="layui-input" value=""></td>
+                <td><input type="text" data-name="saleRepairSheetId" readonly class="layui-input" value=""></td>
+                <td><input data-name="customerName" type="text" class="layui-input" value=""></td>
+                <td><input type="text" data-name="carPlate" class="layui-input carPlate" value=""></td>
+                <td><input type="text" data-name="trailerPlate" class="layui-input trailerPlate" value=""></td>
+            </tr>
+        </tbody>
+
+    </table>
+    <div class="hover-body">
+        <ul class="hover-show">
+
+        </ul>
+    </div>
+    <div class="title">
+        商品销售 <div class="layui-btn-xs layui-btn" onclick="saleEdit()">编辑</div>
+    </div>
+    <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th style="width:10%;">来源</th>
+                <th>品名</th>
+                <th>品牌</th>
+                <th colspan="2">规格</th>
+                <th>型号</th>
+                <th>产地</th>
+                <th>单位</th>
+                <th>生产编号</th>
+                <th>物料新旧</th>
+                <th>去向</th>
+                <th style="width:5%;">数量</th>
+                <th style="width:5%;">单价</th>
+                <th style="width:5%;">金额</th>
+            </tr>
+        </thead>
+
+        <tbody class="spxs">
+        </tbody>
+    </table>
+    <div class="title">
+        物料维修 <div class="layui-btn-xs layui-btn" onclick="wlEdit()">编辑</div>
+    </div>
+    <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th style="width:10%;">来源</th>
+                <th>品名</th>
+                <th>品牌</th>
+                <th>规格</th>
+                <th>型号</th>
+                <th>产地</th>
+                <th>单位</th>
+                <th>生产编号</th>
+                <th>物料新旧</th>
+                <th>去向</th>
+                <th style="width:5%;">数量</th>
+                <th style="width:5%;">单价</th>
+                <th style="width:5%;">金额</th>
+            </tr>
+        </thead>
+
+        <tbody class="wlwx">
+            <tr>
+            </tr>
+        </tbody>
+    </table>
+    <div class="title">
+        车辆维修 <div class="layui-btn-xs layui-btn" onclick="carEdit()">编辑</div>
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>汽修项目</th>
+                <th>维修科目</th>
+                <th>维修方式</th>
+                <th>工时</th>
+                <th>费用</th>
+                <th>费用承担</th>
+                <th>保险单号</th>
+                <th>保险公司</th>
+                <th>备注</th>
+            </tr>
+        </thead>
+        <tbody class="clwx">
+
+        </tbody>
+    </table>
+    <table class="layui-table">
+        <tbody>
+            <tr class="fyjf">
+                <td style="width:10%;">费用合计</td>
+                <td style="width:10%;"><input type="text" data-name="saleRepairCost" class="layui-input" value=""></td>
+                <td style="width:10%;">消费积分</td>
+                <td style="width:10%;"><input type="text" data-name="saleRepairIntegralConsumption" class="layui-input"
+                        value=""></td>
+                <td style="width:10%;">实收金额</td>
+                <td style="width:10%;"><input type="text" data-name="saleRepairPaidAmount" class="layui-input" value=""></td>
+                <td style="width:10%;">付款方式</td>
+                <td style="width:10%;" class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name="interest" class="fkfs" lay-filter="aihao">
+                                <option value='银行支票'>银行支票</option>
+                                <option value='网银电汇'>网银电汇</option>
+                                <option value='银行承兑'>银行承兑</option>
+                                <option value='现金收款'>现金收款</option>
+                                <option value='应收账款'>应收账款</option>
+                                <option value='免费'>免费</option>
+                                <option value='预收账款'>预收账款</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td style="width:10%;">本次积分</td>
+                <td style="width:10%;"><input type="text" data-name="saleRepairIntegral" class="layui-input" value=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="qianming">
+        <li>
+            <label for="fwjb">服务经办</label>
+            <input type="text" data-name="serviceAttn" class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">库管经办</label>
+            <input type="text" data-name="serviceAttn" class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">客户经办</label>
+            <input type="text" data-name="customerAttn" class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">财务经办</label>
+            <input type="text" data-name="financeAttn" class="layui-input">
+        </li>
+    </ul>
+    <div class="title">
+        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(false)">确认/重复</button>
+        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne()">确认/结束</button>
+    </div>
+    <!-- 商品销售编辑页 -->
+    <div class="saleWindow">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>去向</th>
+                    <th>生产编号</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>金额</th>
+                    <th>安装胎压</th>
+                    <th colspan="2">动平衡</th>
+                </tr>
+            </thead>
+            <tbody class="spxsList">
+                <tr>
+                    <td class="layui-form">
+                        <select name="" class="sel" id=""></select>
+                    </td>
+                    <td><input type="text" class="layui-input materielName" data-name="materielName" onclick="showLv1(false,true,'saleWindow')"></td>
+                    <td><input type="text" class="layui-input materielBrand" data-name="materielBrand"></td>
+                    <td><input type="text" class="layui-input materielSpecifications" data-name="materielSpecifications"></td>
+                    <td><input type="text" class="layui-input materielModel" data-name="materielModel"></td>
+                    <td><input type="text" class="layui-input materielPlace" data-name="materielPlace"></td>
+                    <td><input type="text" class="layui-input materielState" data-name="materielState"></td>
+                    <td><input type="text" class="layui-input materielUnit" data-name="materielUnit"></td>
+                    <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo"></td>
+                    <td><input type="text" class="layui-input materielProduction_id" data-name="materielProduction_id"></td>
+                    <td><input type="text" class="layui-input materielNumber" data-name="materielNumber"></td>
+                    <td><input type="text" class="layui-input materielPrice" data-name="materielPrice"></td>
+                    <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
+                    <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+                    <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
+                    <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingRight" class="layui-input"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align:center">
+            <div class="layui-btn layui-btn-xs" onclick="saveRe()">确认/重复</div>
+            <div class="layui-btn layui-btn-xs">确认/新添</div>
+            <div class="layui-btn layui-btn-xs">确认/结束</div>
+            <div class="layui-btn layui-btn-xs">取消/结束</div>
+        </div>
+        <div style="text-align:center;margin:10px;">商品列表</div>
+        <table class="layui-table saleList">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>单位</th>
+                    <th>生产编号</th>
+                    <th>物料新旧</th>
+                    <th>去向</th>
+                    <th>数量</th>
+                    <th>单价</th>
+                    <th>金额</th>
+                    <th>安装胎压</th>
+                    <th colspan="2">动平衡</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="splblist">
+                <tr>
+                    <td>1</td>
+                    <td>金方舟</td>
+                    <td>轮胎</td>
+                    <td>固特异</td>
+                    <td>205/45R17</td>
+                    <td>EAGLE F1 GSD3 91V</td>
+                    <td>国产</td>
+                    <td>新物品</td>
+                    <td>条</td>
+                    <td>1</td>
+                    <td>1</td>
+                    <td>苏D23186-右1轮</td>
+                    <td>单价</td>
+                    <td>金额</td>
+                    <td>安装胎压</td>
+                    <td onclick="setDph()">动平衡1</td>
+                    <td>动平衡2</td>
+                    <td>
+                        <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 动平衡 -->
+    <div class="dphWindow">
+        <table class="layui-table">
+            <tbody>
+                <tr>
+                    <td style="background:#fff;" colspan="5" class="dphnum"></td>
+                </tr>
+                <tr>
+                    <td class="dphtype" style="background:#fff;">20寸</td>
+                    <td class="dphtype" style="background:#fff;">22.5寸</td>
+                    <td class="dphtype" style="background:#fff;">轿车</td>
+                    <td style="background:#fff;">
+                        <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="delDph()">消除</div>
+                    </td>
+                    <td style="background:#fff;">
+                        <div class="layui-btn  layui-btn-xs" onclick="saveDph()">确定</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="background:#fff;" class="dph">5</td>
+                    <td style="background:#fff;" class="dph">10</td>
+                    <td style="background:#fff;" class="dph">20</td>
+                    <td style="background:#fff;" class="dph">50</td>
+                    <td style="background:#fff;" class="dph">100</td>
+                </tr>
+                <tr>
+                    <td style="background:#fff;" class="dph">150</td>
+                    <td style="background:#fff;" class="dph">200</td>
+                    <td style="background:#fff;" class="dph">250</td>
+                    <td style="background:#fff;" class="dph">300</td>
+                    <td style="background:#fff;" class="dph">350</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- 物料维修编辑页 -->
+    <div class="wlWindow">
+        <table class="layui-table">
+            <tr class="wxbj">
+                <td>
+                    维修项目
+                </td>
+                <td onclick="showWxxm()">
+                    <input type="text" data-name="repairRepair" class="layui-input repairRepair">
+                </td>
+                <td>
+                    物品状态
+                </td>
+                <td onclick="showWpzt()">
+                    <input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
+                </td>
+                <td>
+                    胎纹深度
+                </td>
+                <td>
+                    <input type="text" data-name="tireTread1" class="layui-input">
+                </td>
+                <td>
+                    <input type="text" data-name="tireTread2" class="layui-input">
+                </td>
+                <td>
+                    <input type="text" data-name="tireTread3" class="layui-input">
+                </td>
+                <td>
+                    <input type="text" data-name="tireTread4" class="layui-input">
+                </td>
+            </tr>
+        </table>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>去向</th>
+                    <th>生产编号</th>
+                    <th>胎压ID</th>
+                    <th>胎压</th>
+                    <th>数量</th>
+                    <th>维修金额</th>
+                </tr>
+            </thead>
+            <tbody class="wlwxList">
+                <tr>
+                    <td><input type="text" class="layui-input" data-name="materielSource"></td>
+                    <td><input type="text" class="layui-input" data-name="materielName"></td>
+                    <td><input type="text" class="layui-input" data-name="materielBrand"></td>
+                    <td><input type="text" class="layui-input" data-name="materielSpecifications"></td>
+                    <td><input type="text" class="layui-input" data-name="materielModel"></td>
+                    <td><input type="text" class="layui-input" data-name="materielPlace"></td>
+                    <td><input type="text" class="layui-input" data-name="materielState"></td>
+                    <td><input type="text" class="layui-input" data-name="materielUnit"></td>
+                    <td><input type="text" class="layui-input" data-name="materielOutTo"></td>
+                    <td><input type="text" class="layui-input" data-name="materielProductionId"></td>
+                    <td><input type="text" class="layui-input" data-name="materiel_sensor_id"></td>
+                    <td><input type="text" class="layui-input" data-name="materielPressure"></td>
+                    <td><input type="text" class="layui-input" data-name="materielNumber"></td>
+                    <td><input type="text" class="layui-input" data-name="materielTotal"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align:center">维修耗材</div>
+        <div>
+            <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="addWxhc()">新增</div>
+        </div>
+        <div>
+            <div style="width:70%; float:left;">
+                <table class="layui-table">
+                    <thead>
+                        <tr>
+                            <th>耗材仓库</th>
+                            <th>品名</th>
+                            <th>品牌</th>
+                            <th>规格</th>
+                            <th>型号</th>
+                            <th>数量</th>
+                            <th style="width: 100px;">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody class="wxhclist">
+
+                    </tbody>
+                </table>
+            </div>
+            <div style="width: 25%;float:right;">
+                <table class="layui-table">
+                    <tr>
+                        <td rowspan="2">动平衡</td>
+                        <td>
+                            <input type="text" class="layui-input">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input type="text" class="layui-input">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="text-align:center">
+            <div class="layui-btn layui-btn-xs" onclick="saveWx()">确认/重复</div>
+            <div class="layui-btn layui-btn-xs">确认/新添</div>
+            <div class="layui-btn layui-btn-xs">确认/结束</div>
+            <div class="layui-btn layui-btn-xs">取消/结束</div>
+        </div>
+        <div class="title">
+            待处理
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>维修项目</th>
+                    <th>来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>数量</th>
+                    <th>生产编号</th>
+                    <th>胎压ID</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="dcllist">
+
+            </tbody>
+        </table>
+        <div class="title">
+            已完成
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>维修项目</th>
+                    <th>来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>数量</th>
+                    <th>去向</th>
+                    <th>生产编号</th>
+                    <th>胎压ID</th>
+                    <th>物品状态</th>
+                    <th>金额</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="ywclist">
+
+            </tbody>
+        </table>
+    </div>
+    <!-- 车辆维修编辑页 -->
+    <div class="carWindow">
+        <div class="title">
+            车辆维修 </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>汽修项目</th>
+                    <th>维修科目</th>
+                    <th>维修方式</th>
+                    <th>工时</th>
+                    <th>费用</th>
+                    <th>费用承担</th>
+                    <th>保险单号</th>
+                    <th>保险公司</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody class="clwx">
+                <tr>
+                    <td><input type="text" class="layui-input" data-name="garageProject" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairProject" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairMode" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="title">
+            耗材明细
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width:10%;">来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>状态</th>
+                    <th style="width:5%;">单位</th>
+                    <th style="width:5%;">数量</th>
+                    <th>备注</th>
+                    <th style="width:15%;">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <select name="interest" lay-filter="aihao">
+                                    <option value=""></option>
+                                    <option value="0">金方舟</option>
+                                </select>
+                            </div>
+                        </div>
+                    </td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td>
+
+                        <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
+                        <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="text-align: center">
+            <div class="layui-btn layui-btn-xs" onclick="saveCar(true)">确认/结束</div>
+            <div class="layui-btn layui-btn-xs" onclick="saveCar()">取消/结束</div>
+        </div>
+    </div>
+    <div class="wxxmwin">
+        <ul>
+            <li></li>
+        </ul>
+    </div>
+    <div class="wpztwin">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+    let layform = ''
+    layui.use('form', function () {
+        layform = layui.form
+    })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '.date'
+        })
+    })
+    let layer = ''
+    layui.use('layer', function () {
+        layer = layui.layer
+    })
+    if (sessionStorage.pcar) {
+        $('.carPlate').val(sessionStorage.pcar)
+    }
+    if (sessionStorage.gcar) {
+        $('.trailerPlate').val(sessionStorage.gcar)
+    }
+    let saleList = []
+    //  获取商品列表
+    function selSaleList() {
+        $.ajax({
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuShangPinLieBiao?carPai=津AW8838`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+                let arr = res.data
+                saleList = res.data
+                let str = ''
+                let strs = ''
+                $.each(arr, function (i, n) {
+                    str +=
+                        `<tr>
+                            <td >${n.warehouseName || '' }</td>
+                            <td>${n.materielName}</td>
+                            <td colspan="2">${n.materielBrand}</td>
+                            <td>${n.materielSpecifications}</td>
+                            <td>${n.materielModel}</td>
+                            <td>${n.materielPlace}</td>
+                            <td>${n.materielUnit}</td>
+                            <td>${n.materielProductionId}</td>
+                            <td>${n.materielState}</td>
+                            <td>${n.materielOutTo}</td>
+                            <td>${n.materielNumber}</td>
+                            <td>${n.materielPrice}</td>
+                            <td>${n.materielTotal}</td>
+                        </tr>`
+                    strs +=
+                        `<tr>     
+                            <td>${saleList.length - i}</td>
+                            <td >${n.warehouseName == null ? '' : n.warehouseName}</td>
+                            <td>${n.materielName == null ? '' : n.materielName}</td>
+                            <td>${n.materielBrand == null ? '' : n.materielBrand}</td>
+                            <td>${n.materielSpecifications == null ? '' : n.materielSpecifications}</td>
+                            <td>${n.materielModel == null ? '' : n.materielModel}</td>
+                            <td>${n.materielPlace == null ? '' : n.materielPlace}</td>
+                            <td>${n.materielUnit == null ? '' : n.materielUnit}</td>
+                            <td>${n.materielProductionId == null ? '' : n.materielProductionId}</td>
+                            <td>${n.materielState == null ? '' : n.materielState}</td>
+                            <td>${n.materielOutTo == null ? '' : n.materielOutTo}</td>
+                            <td>${n.materielNumber == null ? '' : n.materielNumber}</td>
+                            <td>${n.materielPrice == null ? '' : n.materielPrice}</td>
+                            <td>${n.materielTotal == null ? '' : n.materielTotal}</td>
+                            <td>${n.materielPressure == null ? '' : n.materielPressure}</td>
+                            <td>${n.dynamicBalancingLeft == null ? '' : n.dynamicBalancingLeft}</td>
+                            <td>${n.dynamicBalancingRight == null ? '' : n.dynamicBalancingRight}</td>
+                            <td> <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
+                        </tr>`
+                })
+                $('.splblist').html(strs)
+                $('.spxs').html(str)
+            }
+        })
+    }
+    selSaleList()
+    // 获取所有的仓库
+    let ckList = []
+    $.ajax({
+        url: `${API}/erpCustomerWarehouse/getWarehouses`,
+        type: 'get',
+        success: function (res) {
+            let arrs = res.data
+            let str = ''
+            ckList = res.data
+            $.each(arrs, function (i, n) {
+                str += `<option>${n.warName}</option>`
+            })
+            $('.sel').html(str)
+
+            layui.use('form', function () {
+                var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                form.render();
+            })
+        }
+
+    })
+    // 维修项目
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=维护项目`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = ''
+            $.each(arr, function (i, k) {
+                str += `<li>${k.name}</li>`
+            })
+            $('.wxxmwin ul').html(str)
+            $('.wxxmwin ul li').click(function () {
+                if($(this).hasClass('active')) {
+                    $(this).removeClass('active')
+                } else {
+                    $(this).addClass('active')
+                }
+                
+            })
+        }
+    })
+    //  设置维修项目
+    function showWxxm () {
+        layer.open({
+            type: 1,
+            content: $('.wxxmwin'),
+            area:['620px'],
+            btn:['确定'],
+            yes:function (index) {
+                let arr = []
+                $('.wxxmwin .active').each(function () {
+                    arr.push($(this).text())
+                })
+                $('.repairRepair').val(arr.toString())
+                layer.close(index)
+            }
+        })
+    }
+    // 物品状态
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=物料状态`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = ''
+            $.each(arr, function (i, k) {
+                str += `<li>${k.name}</li>`
+            })
+            $('.wpztwin ul').html(str)
+            $('.wpztwin ul li').click(function () {
+                if($(this).hasClass('active')) {
+                    $(this).removeClass('active')
+                } else {
+                    $(this).addClass('active')
+                }
+                
+            })
+        }
+    })
+
+    // 设置物品状态
+    function showWpzt () {
+        layer.open({
+            type: 1,
+            content: $('.wpztwin'),
+            area:['620px'],
+            btn:['确定'],
+            yes:function (index) {
+                let arr = []
+                $('.wpztwin .active').each(function () {
+                    arr.push($(this).text())
+                })
+                $('.materielRepairState').val(arr.toString())
+                layer.close(index)
+            }
+        })
+    }
+    // 保存物料维修
+    function saveWx() {
+        let data = {}
+        $('.wxbj input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $('.wlwxList input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $('.wxhclist input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        console.log(data)
+    }
+    // 商品销售
+    function saleEdit() {
+        layer.open({
+            type: 1,
+            content: $('.saleWindow'),
+            area: ['1400px']
+        })
+    }
+    let wwcList = []
+    let ywcList = []
+    // 物料维修查询
+    function wlList() {
+        $.ajax({
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXiu?carPai=苏D23186`,
+            type: 'get',
+            success: function (res) {
+                wwcList = res.data.weiwancheng
+                ywcList = res.data.yiwancheng
+                let arr = wwcList.concat(ywcList)
+                let str = ''
+                $.each(arr, function (i, n) {
+                    str +=
+                        `<tr>
+                        <td>${n.materielSource}</td>
+                        <td>${n.materielName}</td>
+                        <td>${n.materielBrand}</td>
+                        <td>${n.materielSpecifications}</td>
+                        <td>${n.materielModel}</td>
+                        <td>${n.materielPlace}</td>
+                        <td>${n.materielUnit}</td>
+                        <td>${n.materielProductionId}</td>
+                        <td>${n.materielRepairState}</td>
+                        <td>${n.materielOutTo}</td>
+                        <td>${n.materielNumber}</td>
+                        <td>${n.materielPrice}</td>
+                        <td>${n.materielTotal}</td>
+                        `
+                })
+                $('.wlwx').html(str)
+
+            }
+        })
+    }
+    wlList()
+    // 物料维修
+    function wlEdit() {
+        layer.open({
+            type: 1,
+            content: $('.wlWindow'),
+            area: ['1220px'],
+            yes: function (index) {
+                layer.close(index)
+
+            }
+        })
+    }
+    // 车辆维修查询
+    function selCar() {
+        $.ajax({
+            url: `${API}/erpXiaoShouWeiXiu//xiaoshouweixiuCheLiangWeiXiu?carPai=津AW8838`,
+            type: 'get',
+            success: function (res) {
+                let arr = res.data
+                let str = ''
+                $.each(arr, function (i, n) {
+                    str +=
+                        `<tr>
+                        <td>${n.garageProject == null ? '' : n.garageProject}</td>
+                        <td>${n.repairProject == null ? '' : n.repairProject}</td>
+                        <td>${n.repairMode == null ? '' : n.repairMode}</td>
+                        <td>${n.workTime == null ? '' : n.workTime}</td>
+                        <td>${n.money == null ? '' : n.money}</td>
+                        <td>${n.moneyC == null ? '' : n.moneyC}</td>
+                        <td>${n.insurancepolicyno == null ? '' : n.insurancepolicyno}</td>
+                        <td>${n.insuranceCompany == null ? '' : n.insuranceCompany}</td>
+                        <td>${n.repairRemarks == null ? '' : n.repairRemarks}</td>
+                        </tr>`
+                })
+                $('.clwx').html(str)
+            }
+        })
+    }
+    selCar()
+    // 车辆维修
+    function carEdit() {
+        layer.open({
+            type: 1,
+            content: $('.carWindow'),
+            area: ['1220px'],
+            yes: function (index) {
+                layer.close(index)
+
+            }
+        })
+    }
+    //　保存车辆维修信息
+    function saveCar(bol) {
+        if (bol) {
+
+        } else {
+
+        }
+        layer.close(layer.index);
+    }
+    //  维修耗材新增
+    function addWxhc() {
+        
+        $('.wlWindow').css({
+            'width': '1180px'
+        })
+        $('.wxhclist').append(
+            `<tr>
+                <td class="layui-form"><select class="wxsel"></select></td>
+                <td><input class="layui-input "></td>
+                <td><input class="layui-input "></td>
+                <td><input class="layui-input "></td>
+                <td><input class="layui-input "></td>
+                <td><input class="layui-input "></td>
+                <td><div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
+            </tr>`
+        )
+        let str = '<option></option>'
+        $.each(ckList, function (i, n) {
+            str += `<option>${n.warName}</option>`
+        })
+        $('.wxsel').html(str)
+
+        layui.use('form', function () {
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+            form.render();
+        })
+
+    }
+    let dphTags = ''
+    // 设置动平衡
+    function setDph(_this) {
+        dphTags = _this
+        layer.open({
+            type: 1,
+            content: $('.dphWindow'),
+            area: ['640px']
+        })
+        $('.dphtype').css({
+            'background': '#fff'
+        })
+    }
+    let dph = []
+    $('.dph').on('click', function () {
+        dph.push($(this).text())
+        let str = dph.toString()
+        str = str.replace(/,/g, '+')
+        $('.dphnum').html(str)
+    })
+    $('.dphtype').on('click', function () {
+        $('.dphtype').css({
+            'background': '#fff'
+        })
+        $(this).css({
+            'background': '#ccc'
+        })
+    })
+    // 动平衡退格
+    function delDph() {
+        dph = dph.slice(0, dph.length - 1)
+        let str = dph.toString()
+        str = str.replace(/,/g, '+')
+        $('.dphnum').html(str)
+    }
+    // 保存动平衡数值
+    function saveDph() {
+        layer.close(layer.index)
+        let nums = 0
+        $.each(dph, function (i, n) {
+            nums += Number(n)
+        })
+        $(dphTags).val(nums)
+        $('.dphnum').html('')
+        dph = []
+    }
+
+    function saveOne(bol) {
+        let data = {}
+        $('.saveOne input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $('.qianming input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $('.fyjf input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        data.saleRepairPaymentMethod = $('.fkfs').val()
+        data.custId = loadUserInfo.customer.id
+        data.userId = loadUserInfo.user.id
+        data.customerId = loadUserInfo.customer.id
+        $.ajax({
+            url: `${API}/erpSaleRepairOrder/inertOrUpdateSaleRepair`,
+            type: 'get',
+            data: data,
+            success: function (res) {
+                let spxsdata = {
+                    saleRepairId: res.data.repairOrder.id,
+                    custId: 1,
+                    flowSheet: res.data.materielFlow.materielFlowSheetId,
+                    flowId: res.data.materielFlow.id
+                }
+                let ltwxdata = {
+                    saleRepairId: res.data.repairOrder.id,
+                    custId: 1,
+                    flowSheet: res.data.materielFlow.materielFlowSheetId,
+                    flowId: res.data.materielFlow.id
+                }
+                let clwxdata = {
+                    saleRepairId: res.data.repairOrder.id,
+                    custId: 1,
+                    flowSheet: res.data.materielFlow.materielFlowSheetId,
+                    flowId: res.data.materielFlow.id
+                }
+                $('.spxs input').each(function (i, n) {
+                    spxsdata[$(this).data('name')] = $(this).val()
+                })
+                $.ajax({
+                    url: `${API}/erpSaleRepairOrder/inertSaleRepairSale`,
+                    type: 'get',
+                    data: spxsdata,
+                    async: false,
+                    success: function (res) {}
+                })
+                $('.ltwx input').each(function (i, n) {
+                    ltwxdata[$(this).data('name')] = $(this).val()
+                })
+                $.ajax({
+                    url: `${API}/erpSaleRepairOrder/inertSaleRepairRepair`,
+                    type: 'get',
+                    data: ltwxdata,
+                    async: false,
+                    success: function (res) {}
+                })
+
+                $('.spxs input').each(function (i, n) {
+                    clwxdata[$(this).data('name')] = $(this).val()
+                })
+                $.ajax({
+                    url: `${API}/erpSaleRepairOrder/inertErpSaleRepairGarage`,
+                    type: 'get',
+                    data: clwxdata,
+                    async: false,
+                    success: function (res) {
+                        if (bol) {
+                            $('.numid').val('')
+                            $('.to').val('')
+                        }
+                        layer.msg('保存成功！')
+                    }
+                })
+
+
+            }
+        })
+    }
+
+    function saveRe() {
+        let data = {}
+        $('.spxsList input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        data.orderId = '1'
+        data.warehouseId = '1'
+        $.ajax({
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
+            type: 'post',
+            data:data,
+            success: function (res) {
+                if (res.code == 0) {
+                    layer.msg('保存成功!')
+                    selSaleList()
+                }
+
+            }
+        })
+    }
+
+    //  查找大类
+    function showLv1(show, bol) {
+
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTop`,
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arrs = res.data
+                $.each(arrs, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+                })
+                $('.hover-show').html(str)
+                if (show) {
+                    $('.hover-show').show()
+                }
+
+                isAI = bol
+            }
+        })
+    }
+    // 查找品名
+    function showLv2(zid, _this) {
+        $(`.hover-show .list-2`).html('')
+        aiZid = zid
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找规格
+    function showLv3(zid, _this) {
+        $(`.hover-show .list-3`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找品牌
+    function showLv4(zid, _this) {
+        $(`.hover-show .list-4`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找型号
+    function showLv5(zid, _this) {
+        $(`.hover-show .list-5`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv6(zid, _this) {
+        $(`.hover-show .list-6`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                console.log(res)
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找
+    function showLv7(zid, _this) {
+        $(`.hover-show .list-7`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv8(zid, _this) {
+        $(`.hover-show .list-8`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    $(document).on('click', function () {
+        $('.hover-show').hide()
+    })
+    let par = ''
+
+    function setWlVal(_this) {
+        par = 'saleWindow'
+        $(`.${par} .materielUnit`).val($(_this).text())
+        $(`.${par} .materielPlace`).val($(_this).parents('.list-8').prev().text())
+        $(`.${par} .materielState`).val($(_this).parents('.list-7').prev().text())
+        $(`.${par} .materielModel`).val($(_this).parents('.list-6').prev().text())
+        $(`.${par} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+        $(`.${par} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+        $(`.${par} .materielName`).val($(_this).parents('.list-3').prev().text())
+    }
+    let fkfs = []
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+                fkfs.push({
+                    name: k.name
+                })
+            })
+            $('.fkfs').html(str)
+            layform.render()
+        }
+    })
+</script>
+
+</html>

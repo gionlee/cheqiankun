@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            overflow: auto;
+            box-sizing: border-box;
+            margin: 0 auto;
+        }
+
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+            border: 1px solid #ccc;
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+        }
+        .layui-layer {
+            background: #fff;
+        }
+        .layui-layer-btn {
+            background: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+            <div> <button class="layui-btn layui-btn-sm " onclick="addUser(0)">添加</button><button class="layui-btn layui-btn-sm layui-btn-danger"
+                onclick="alldel()">批量删除</button></div>
+        <table class="layui-table">
+            <thead>
+                <tr><th> <input type="checkbox" class="allchange"></th>
+                    <th>序号</th>
+                    <th>所属单位</th>
+                    <th>姓名</th>
+                    <th>职务/权限</th>
+                    <th style="width:60%;word-break: keep-all;white-space:nowrap;">负责单位</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="lists"></tbody>
+        </table>
+        <!-- <div>
+            <a href="" class="layui-btn layui-btn-sm">保存</a>
+            <a href="" class="layui-btn layui-btn-sm layui-btn-danger">取消</a>
+        </div> -->
+    </div>
+    <div class="winbody">
+        <table class="layui-table list">
+            <tr>
+                <td>姓名:</td>
+                <td><input type="text" class="layui-input username" data-name="name"></td>
+                <td>职务:</td>
+                <td class="">
+
+                    <select name="" id="">
+                        <option value="总经理">总经理</option>
+                        <option value="维修经理">维修经理</option>
+                        <option value="业务经理">业务经理</option>
+                        <option value="技术经理">技术经理</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="checkbox" name="" id=""> 全部分支
+                </td>
+                <td colspan="2">
+                    <input class="kallchange" type="checkbox" name="" id=""> 全部客户
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+<script>
+    let arr = []
+    $.ajax({
+        url: `${API}/erpUser/getcustUserByCustId?custId=1`,
+        type: 'get',
+        success: function (res) {
+            let str = ''
+            arr = res.data
+            $.each(res.data, function (i) {
+                let json = res.data[i]
+                let name = json.groupName
+               if (name != null) {
+                if (json.groupName.length > 50) {
+                    name = json.groupName.substring(0, 48) + '...'
+                }
+            }
+                str += `<tr> <td><input type="checkbox" class="changes c_${json.id}" data-name="id" value="${json.id}"></td>
+                    <td>${i + 1}</td>
+                    <td>${json.branchName == null ? '' : json.branchName}</td>
+                    <td>${json.realName == null ? '' : json.realName}</td>
+                    <td>${json.customerName == null ? '' : json.customerName}</td>
+                    <td  nowrap="nowrap" title="分支：${json.branchName == null ? '' : json.branchName} 客户：${json.groupName == null ? '' : json.groupName}"><span style="color:red;">分支：</span>${json.branchName == null ? '' : json.branchName} &nbsp;&nbsp;&nbsp;<span style="color:red;">客户：</span>${name == null ? '' : name}</td>
+                    <td><div class="layui-btn layui-btn-xs" onclick="changeStute(${i})">${json.status == 1 ? '停用' : '开启'}</div></td>
+                    <td><div class="layui-btn layui-btn-xs" onclick="usup(${i})">修改</div><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="del(${json.id})">删除</div></td>
+                </tr>`
+            })
+            $('.lists').append(str)
+            $('.changes').on('click', function () {
+                if (!$(this).is(':checked')) {
+                    $('.allchange').prop("checked", false)
+                }
+                let bol = true
+                $('.changes').each(function () {
+                    if (!$(this).is(':checked')) {
+                        bol = false
+                    }
+                })
+                if (bol) {
+                    $('.allchange').prop("checked", true)
+                }
+            })
+            $('.allchange').on('click', function () {
+                if ($(this).is(':checked')) {
+                    $('.changes').each(function () {
+
+                        $(this).prop("checked", true)
+                    })
+                } else {
+                    $('.changes').each(function () {
+
+                        $(this).prop("checked", false)
+                    })
+                }
+
+            })
+        }
+    })
+    // 删除
+    // 批量删除
+    function alldel() {
+        let arr = []
+
+        $('.changes').each(function () {
+            if ($(this).is(':checked')) {
+                arr.push($(this).val())
+            }
+        })
+        if (confirm('是否删除?')) {
+            $.each(arr, function (i, id) {
+
+                $.ajax({
+                    url: `${API}/erpCustomer/removeCustomer?custId=${id}`,
+                    type: 'get',
+                    success: function (res) {
+                        $(`.c_${id}`).parent().parent().remove()
+                    }
+                })
+            })
+        }
+    }
+    // 删除
+    function del(id) {
+        if (confirm('是否删除?')) {
+            $.ajax({
+                url: `${API}/erpCustomer/removeCustomer?custId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    window.location.reload()
+                }
+            })
+        }
+    }
+    // 修改
+    function usup(index) {
+        let json = arr[index]
+        let slist = json.groupName.split(',')
+        let str = ''
+        $.each(slist,function (i,n) { 
+            str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n}' >${n}</td></tr>`
+
+        })
+        $('.list').append(str)
+        $('.kchanges').on('click', function () {
+                if (!$(this).is(':checked')) {
+                    $('.kallchange').prop("checked", false)
+                }
+                let bol = true
+                $('.kchanges').each(function () {
+                    if (!$(this).is(':checked')) {
+                        bol = false
+                    }
+                })
+                if (bol) {
+                    $('.kallchange').prop("checked", true)
+                }
+            })
+            $('.kallchange').on('click', function () {
+                if ($(this).is(':checked')) {
+                    $('.kchanges').each(function () {
+
+                        $(this).prop("checked", true)
+                    })
+                } else {
+                    $('.kchanges').each(function () {
+
+                        $(this).prop("checked", false)
+                    })
+                }
+
+            })
+        $('.username').val(json.realName)
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                area: ['740px','530px'],
+                title: '用户管理',
+                content: $('.winbody'),
+                btn: ['保存'],
+                yes: function (index) {
+                    json.groupName = ''
+                    json.userId = json.id
+                    $('.kchanges').each(function () {
+                        if($(this).is(':checked')) {
+                            json.groupName += $(this).val()
+                        }
+                       
+                    })
+                    json.realName =$('.username').val()
+                    $.ajax({
+                        url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+                        type:'post',
+                        data:json,
+                        success:function (res) {
+                            window.location.reload()
+                        }
+                    })
+                    // layer.close(index)
+                }
+            });
+        })
+    }
+    function addUser(index) {
+        let json = arr[index]
+        let slist = json.groupName.split(',')
+        let str = ''
+        $.each(slist,function (i,n) { 
+            str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n}' >${n}</td></tr>`
+
+        })
+        $('.list').append(str)
+        $('.kchanges').on('click', function () {
+                if (!$(this).is(':checked')) {
+                    $('.kallchange').prop("checked", false)
+                }
+                let bol = true
+                $('.kchanges').each(function () {
+                    if (!$(this).is(':checked')) {
+                        bol = false
+                    }
+                })
+                if (bol) {
+                    $('.kallchange').prop("checked", true)
+                }
+            })
+            $('.kallchange').on('click', function () {
+                if ($(this).is(':checked')) {
+                    $('.kchanges').each(function () {
+
+                        $(this).prop("checked", true)
+                    })
+                } else {
+                    $('.kchanges').each(function () {
+
+                        $(this).prop("checked", false)
+                    })
+                }
+
+            })
+        $('.username').val(json.realName)
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                area: ['740px','530px'],
+                title: '用户管理',
+                content: $('.winbody'),
+                btn: ['保存'],
+                yes: function (index) {
+                    json.groupName = ''
+                    json.userId = ''
+                    $('.kchanges').each(function () {
+                        if($(this).is(':checked')) {
+                            json.groupName += $(this).val()
+                        }
+                       
+                    })
+                    json.realName =$('.username').val()
+                    $.ajax({
+                        url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+                        type:'post',
+                        data:json,
+                        success:function (res) {
+                            window.location.reload()
+                        }
+                    })
+                    // layer.close(index)
+                }
+            });
+        })
+    }
+    // 更改状态
+    function changeStute(index) {
+        let json = arr[index]
+        if (json.status == 1) {
+            json.status = 0
+        } else {
+            json.status = 1
+        }
+        $.ajax({
+            url: `${API}/erpUser/inertOrUpdateCustUser`,
+            type: 'post',
+            data: json,
+            success: function (res) {
+                window.location.reload()
+            }
+        })
+    }
+
+</script>
+
+</html>

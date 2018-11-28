@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<div class="layui-row">
+				<div class="layui-col-xs6 layui-col-xs-offset3">
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>客户列表</th>
+							</tr>
+						</thead>
+						<tbody class="customerList">
+							<!--<tr>
+								<td>
+									<a href="to-do-report-list.html">客户1</a>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<a href="to-do-report-list.html">客户2</a>
+								</td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		var layer = ''
+		layui.use('layer', function() {
+			layer = layui.layer
+		});
+		$.ajax({
+			type: "post",
+			url: `${API}/erpCustomer/getErpCustor`,
+			async: true,
+			data:{
+				code: loadUserInfo.customer.cusCode,
+				userId: loadUserInfo.customer.id
+			},
+			success: function(res) {
+				let htmlStr = "";
+				let data = res.data.customerList;
+				$.each(data, function(i,item) {
+					htmlStr += `<tr>
+									<td cusid=${item.id} cusName=${item.cusName}>${item.cusName}</td>
+								</tr>`
+				});
+				$('.customerList').html(htmlStr);
+			}
+		});
+		$('.customerList').on('mouseover','td',function(){
+			$(this).css('cursor','pointer');
+		});
+		$('.customerList').on('click','td',function(){
+			location.href = "to-do-report-list.html";
+			var obj = {
+				custId: $(this).attr('cusid'),
+				name: $(this).attr('cusName')
+			}
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		});
+	</script>
+
+</html>

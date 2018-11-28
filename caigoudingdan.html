@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+            margin: 10px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="select">
+            <div class="search">
+                <input class="layui-input" style="border:1px solid #ccc;" type="text" placeholder="客户名称       编码">
+            </div>
+
+            <button class="layui-btn layui-btn-normal" onclick="select()">查询</button>
+
+        </div>
+        <ul class="lists">
+
+        </ul>
+    </div>
+</body>
+<script>
+    $.ajax({
+        url: `${API}/erpManagement/gojianceweihu?custId=${loadUserInfo.customer.id}`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data
+            let str = ''
+            $.each(arr, function (i, n) {
+                console.log(n.id)
+                str += `<li>
+                <a href="./cgddxq.html?id=${n.id}">
+                   ${n.cusName}
+                </a>
+            </li>`
+            })
+            $('.lists').html(str)
+        }
+    })
+    function select() {
+        alert('系统错误,请稍后重试!')
+    }
+</script>

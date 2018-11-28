@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-input {
+            border: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th colspan="2">维修主管</th>
+                    <th colspan="2">维修人员</th>
+                    <th colspan="2">维修人员</th>
+                </tr>
+                <tr>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                    <th>姓名</th>
+                    <th>电话</th>
+                </tr>
+            </thead>
+            <tbody class="cars">
+
+            </tbody>
+        </table>
+        <div style="text-align:center;">
+            <div class="layui-btn" style="margin:0 auto;" onclick="save()">保存</div>
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>车辆牌号</th>
+                    <th>挂车牌号</th>
+                    <th colspan="2">司机1</th>
+                    <th colspan="2">司机2</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="lists">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    $.ajax({
+        url: `${API}/erpDriverRepair/getdriverRepair`,
+        type: 'get',
+        success: function (res) {
+            console.log(res)
+            let str = ''
+            $.each(res.data, function (i) {
+                let json = res.data[i]
+                str += `<tr>
+                    <td><input type="text" data-name="supervisorName" class="layui-input" value="${json.supervisorName}"></td>
+                    <td><input type="text" data-name="supervisorPhone" class="layui-input" value="${json.supervisorPhone}"></td>
+                    <td><input type="text" data-name="personnelName" class="layui-input" value="${json.personnelName}"></td>
+                    <td><input type="text" data-name="personnelPhone" class="layui-input" value="${json.personnelPhone}"></td>
+                    <td><input type="text" data-name="supervisorNameo" class="layui-input" value="${json.personnelNameo}"></td>
+                    <td><input type="text" data-name="supervisorNameo" class="layui-input" value="${json.personnelPhoneo}"></td>
+                </tr>`
+            })
+            $('.cars').append(str)
+        }
+    })
+
+    $.ajax({
+        url: `${API}/erpDriver/getdriverBycustId?custId=1`,
+        type: 'get',
+        success: function (res) {
+            let str = ''
+            $.each(res.data, function (i) {
+                let json = res.data[i]
+                str += `<tr>
+                    <td>${i + 1}</td>
+                    <td><input class="layui-input" data-name="carNumber" value="${json.carNumber == null ? '' : json.carNumber}"></td>
+                    <td><input class="layui-input" data-name="trailerNumber" value="${json.trailerNumber == null ? '' : json.trailerNumber}"></td>
+                    <td><input class="layui-input" data-name="driverA" value="${json.driverA == null ? '' : json.driverA}"></td>
+                    <td><input class="layui-input" data-name="driverAPhone" value="${json.driverAPhone == null ? '' : json.driverAPhone}"></td>
+                    <td><input class="layui-input" data-name="driverB" value="${json.driverB == null ? '' : json.driverB}"></td>
+                    <td><input class="layui-input" data-name="driverBPhone" value="${json.driverBPhone == null ? '' : json.driverBPhone}"></td>
+                    <td>
+                        <div class="layui-btn layui-btn-xs" onclick="saveList(${i},${json.id})">保存</div>
+                        <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="dele(${json.id})">删除</div>
+                    </td>
+                </tr>`
+            })
+            $('.lists').append(str)
+        }
+    })
+    function save() {
+        let str = ''
+        $('.cars input').each(function () {
+            str += '&' + $(this).data('name') + '=' + $(this).val()
+        })
+        $.ajax({
+            url: `${API}/erpDriverRepair/inertOrUpdateRepair?${str}`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+
+
+            }
+        })
+    }
+    function saveList(index, id) {
+        let str = $('.lists tr')[index]
+        let tags = $(str).find('input')
+        let json = `id=${id}`
+        $.each(tags, function (i) {
+            json += '&' + $(this).data('name') + '=' + $(this).val()
+        })
+        $.ajax({
+            url: `${API}/erpDriver/inertOrUpdateDriver?${json}`,
+            type: 'get',
+            success: function (res) {
+            }
+        })
+    }
+    function dele(id) {
+        if (confirm('确定要删除么？')) {
+            $.ajax({
+                url: `${API}/erpDriver/removedriverById?Id=${id}`,
+                type: 'get',
+                success: function (res) {
+                    console.log(res)
+                    window.reload()
+                }
+            })
+        }
+
+    }
+</script>

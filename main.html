@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>车乾坤</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+	<script src="./lib/layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./js/Global.js"></script>
+	<script src="./js/xadmin.js"></script>
+	<style>
+		sup {
+			width: 12px;
+			height: 12px;
+			background: red;
+			color: #fff;
+			text-align: center;
+			line-height: 12px;
+			font-size: 12px;
+			border-radius: 50%;
+			display: inline-block;
+		}
+		.infoWin,.adWin {
+			padding: 10px;
+			width: 700px;
+			display: none;
+		}
+		.change {
+			width: 200px;
+			height:90px;
+			line-height: 90px;
+			float: left;
+			text-align: center;
+		}
+		.jjWin {
+			width: 1200px;
+			padding: 10px;
+			display: none;
+		}
+		.jjMWin,.jjInfoWin,.jjfbrWin,.jjfbnrWin,.jjfbWin{
+			width: 840px;
+			padding: 10px;
+			display: none;
+		}
+		.sendNews {
+			display: none;
+		}
+		#images img {
+            width: 30px;
+            height:30px;
+            float:left;
+        }
+	</style>
+</head>
+
+<body>
+	<!-- 顶部开始 -->
+	<div class="container" style="height: 90px;background: #ccc;">
+		<div class="logo">
+			<a href="./index.html" style="line-height: 90px; padding: 0;">
+				<img src="images/logo.png" width="180" height="90" />
+			</a>
+		</div>
+		<div class="left_open" style="height: 90px;">
+			<i title="展开/隐藏左侧栏" class="iconfont" style="margin-top: 29px;background: #000;">&#xe699;</i>
+		</div>
+		<div class="change">
+			<div class="layui-btn layui-btn-xs " onclick="showJj()">竞技</div>
+			<div class="layui-btn layui-btn-xs ">广告</div>
+		</div>
+		<div class="banner-text" style="text-align:center;">
+
+		</div>
+
+
+		<!--<ul class="layui-nav left fast-add" lay-filter="">
+          <li class="layui-nav-item">
+            <a href="javascript:;">+新增</a>
+            <dl class="layui-nav-child">
+              <dd><a onclick="x_admin_show('资讯','http://www.baidu.com')"><i class="iconfont">&#xe6a2;</i>资讯</a></dd>
+              <dd><a onclick="x_admin_show('图片','http://www.baidu.com')"><i class="iconfont">&#xe6a8;</i>图片</a></dd>
+               <dd><a onclick="x_admin_show('用户','http://www.baidu.com')"><i class="iconfont">&#xe6b8;</i>用户</a></dd>
+            </dl>
+          </li>
+        </ul> -->
+		<ul class="layui-nav right" style="margin-top:20px;" lay-filter="">
+			<!-- <li class="layui-nav-item">
+            <a href="javascript:;">admin</a>
+            <dl class="layui-nav-child">
+              <dd><a onclick="x_admin_show('个人信息','http://www.baidu.com')">个人信息</a></dd>
+              <dd><a href="./index.html">退出</a></dd>
+            </dl>
+          </li> -->
+			<li class="layui-nav-item to-index"><a onclick="seeInfoD()">消息<sup>1</sup></a></li>
+		</ul>
+
+	</div>
+	<!-- 顶部结束 -->
+	<!-- 中部开始 -->
+	<!-- 左侧菜单开始 -->
+	<div class="left-nav" style="top: 90px;">
+		<div id="side-nav">
+			<ul id="nav">
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6d7;</i>
+						<cite>我的王国</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>密码修改</cite>
+
+							</a>
+						</li>
+						<li>
+							<a _href="./mine.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>我的主页</cite>
+
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li class="show">
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6c7;</i>
+						<cite>客户管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="customer.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>客户信息</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="addcustomer.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>添加客户</cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6f6;</i>
+						<cite>经营管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="./managemen.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>工作汇总</cite>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe6b3;</i>
+								<cite>采购管理</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="./demand.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>需求计划</cite>
+
+									</a>
+								</li>
+								<li>
+									<a _href="./xuqiuhuizong.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>需求汇总</cite>
+
+									</a>
+								</li>
+								<li>
+									<a _href="./caigouliebiao.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>采购列表</cite>
+
+									</a>
+								</li>
+								<li>
+									<a _href="./caigoudingdan.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>采购订单</cite>
+									</a>
+								</li>
+
+							</ul>
+						</li>
+						<li>
+							<a _href="./xiaoshouweixiu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>销售/维修</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./jianceweihu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>检测/维护</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./wuliaokucun.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>物料库存</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./wuliaobaofei.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>物料报废</cite>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe6ab;</i>
+								<cite>管理报告</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="to-do-list.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>待办列表</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="to-do-list.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>报告列表</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a _href="./BIshuju.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>BI数据</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./shujujiucuo.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>数据纠错</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./zhilianglipei.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>质量理赔</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./wuliaosuopei.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>物料索赔</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./hetongxieyi.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>合同协议</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./luntaicanshu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>轮胎参数</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./chewuguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车务管理</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./jiayoujilu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>加油记录</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./insurance.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车辆保险</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./server.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>服务网络</cite>
+							</a>
+						</li>
+
+
+					</ul>
+				</li>
+
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe726;</i>
+						<cite>市场管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>工作业绩</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>工作计划</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>拜访报告</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>市场分析</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>销售预测</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>月度报告</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>经营统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>应收统计</cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6ce;</i>
+						<cite>统计管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="./cheliangwuliao.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车辆物料</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./taiweimohao.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>胎位磨耗</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./luntaizhuangtai.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>轮胎状态</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./taiwenshendu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>胎纹深度</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./anchetongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>按车统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./cheliangguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车辆里程</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./yunyingtongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>运营统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./wuliaogengxin.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>物料更新</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./cheliangtongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车辆统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./luntaitongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>轮胎统计</cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6e5;</i>
+						<cite>财务管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe6c9;</i>
+								<cite>发票管理</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>发票列表</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>添加发票</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe6fc;</i>
+								<cite>应收管理</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>应收列表</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>收款单</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe723;</i>
+								<cite>应付管理</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>应付列表</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>付款单</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>结算汇总</cite>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe758;</i>
+								<cite>资金管理</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>资金管理</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>收支汇总</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="javascript:;">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>资金调拨</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>工资管理</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>销售利润</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>固定资产</cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6b4;</i>
+						<cite>行政管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="javascript:;">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>人力管理</cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6ae;</i>
+						<cite>系统管理</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="./jiaofeitongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>交费统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./feiyongbianji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>费用编辑</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./bianjiliebiao.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>编辑列表</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./zhuceliebiao.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>注册列表</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./xtluntaicanshu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>轮胎参数</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./format.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>品名规格</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./model.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>品牌型号</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./parameter.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>维修参数</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./guanggaohezhun.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>广告核准</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./xitongcanshu.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>系统参数</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./nichengxiugai.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>昵称修改</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./jingyuguanggao.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>警语广告</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./xitongnianfei.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>系统年费</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./zhiwuguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>职务管理</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./yonghuguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>用户管理</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./quanxianguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>权限管理</cite>
+							</a>
+						</li>
+						<li>
+							<a href="javascript:;">
+								<i class="iconfont">&#xe812;</i>
+								<cite>期初数据</cite>
+								<i class="iconfont nav_right">&#xe697;</i>
+							</a>
+							<ul class="sub-menu">
+								<li>
+									<a _href="./materiel.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>期初物料</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="./yingshouzhangkuan.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>应收账款</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="./yingfuzhangkuan.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>应付账款</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="./zhanghuzijin.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>账户资金</cite>
+									</a>
+								</li>
+								<li>
+									<a _href="./cheliangluntai.html">
+										<i class="iconfont">&#xe6a7;</i>
+										<cite>车辆物料</cite>
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="show">
+					<a href="javascript:;">
+						<i class="iconfont">&#xe6b6;</i>
+						<cite>胎压监控</cite>
+						<i class="iconfont nav_right">&#xe697;</i>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a _href="info-list.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>监控页面</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./vehicleinformation.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>车辆信息</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./statisticalanalysis.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>统计分析 </cite>
+							</a>
+						</li>
+						<li>
+							<a _href="danger-manage.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>报警管理</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./guzhangtongji.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>故障统计</cite>
+							</a>
+						</li>
+						<li>
+							<a _href="./systemsetup.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>系统设置 </cite>
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<!-- <div class="x-slide_left"></div> -->
+	<!-- 左侧菜单结束 -->
+	<!-- 右侧主体开始 -->
+	<div class="page-content" style="top: 90px;left: 180px">
+		<!--<div style="height: 80px;"></div>-->
+		<div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+			<ul class="layui-tab-title">
+				<li class="home"><i class="layui-icon">&#xe68e;</i>我的桌面</li>
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item layui-show">
+					<iframe src='./welcome.html' frameborder="0" scrolling="yes" class="x-iframe" style="width: 100%;"></iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="page-content-bg"></div>
+	<!-- 右侧主体结束 -->
+	<!-- 中部结束 -->
+	<!-- 底部开始 -->
+	<!--<div class="footer">
+        <div class="copyright">Copyright ©2017 x-admin v2.3 All Rights Reserved</div>  
+    </div>-->
+	<!-- 底部结束 -->
+	<!-- 消息 -->
+	<div class="infoWin">
+		<div style="margin:10px auto">
+			<div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delNews()">删除</div>
+			<div class="layui-btn layui-btn-xs ">标记已完成</div>
+			<div class="layui-btn layui-btn-xs " onclick="seeDone(this)">已完成</div>
+			<div class="layui-btn layui-btn-xs " onclick="sendNews(this)">发送通知</div>
+		</div>
+		<div class="infoList">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th><input type="checkbox" name="" class="allchange" id=""></th>
+						<th>序号</th>
+						<th>日期</th>
+						<th>科目</th>
+						<th>来源</th>
+						<th>内容</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+					<tr>
+						<td><input type="checkbox" name="" class="changes" id=""></td>
+						<td>1</td>
+						<td>2018-09-27</td>
+						<td>代销出库</td>
+						<td>天津港保税区金方舟国际贸易有限公司</td>
+						<td>45664</td>
+						<td>待办</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="sendNews">
+			<table class="layui-table">
+				<tr>
+					<td>发送人：</td>
+					<td style="width:80%;"><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td>接收人：</td>
+					<td><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td>内容：</td>
+					<td><textarea name="" id="" cols="30" rows="10" style="width: 100%;"></textarea></td>
+				</tr>
+			</table>
+			<div style="margin:10px;text-align: center;">
+				<div class="layui-btn layui-btn-xs">发送</div>
+			</div>
+		</div>
+	</div>
+	<!-- 广告页 -->
+	<div class="adWin">
+		<div style="margin:10px auto;text-align: center;">
+			<input type="text" class="layui-input adSel" style="width:200px;display: inline-block;margin-right: 10px;"><button
+			 class="layui-btn layui-btn-sm" onclick="selAd()">查询</bu>
+		</div>
+		<table class="layui-table">
+
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>时间</th>
+					<th>编号</th>
+					<th>分类</th>
+					<th>内容</th>
+					<th>发布人</th>
+					<th>联系电话</th>
+					<th>备注</th>
+				</tr>
+			</thead>
+			<tbody class="adlist">
+
+			</tbody>
+		</table>
+	</div>
+	<!-- 竞技首页 -->
+	<div class="jjWin">
+		<div style="margin:10px auto;text-align: center;">
+			<div class="layui-btn layui-btn-sm" style="float:left" onclick="fbJjCon()">发布信息</div>
+			<input type="text" id="seljj" class="layui-input" style="width:200px;display: inline-block;margin-right: 10px;"><button
+			 class="layui-btn layui-btn-sm" onclick="selJj()">查询</bu>
+		</div>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>时间</th>
+					<th>编号</th>
+					<th>分类</th>
+					<th>内容</th>
+					<th>状态</th>
+					<th>发布人</th>
+					<th>联系电话</th>
+					<th>竞技数量</th>
+					<th>响应</th>
+				</tr>
+			</thead>
+			<tbody class="jjlist">
+
+			</tbody>
+		</table>
+	</div>
+	<!-- 竞技发布内容页 -->
+	<div class="jjfbWin">
+		<table class="layui-table">
+			<tbody>
+				<tr>
+					<td>分类</td>
+					<td><input type="text" data-name="fenLei" id="fl" class="layui-input jj"></td>
+					<td>车辆信息</td>
+					<td><input type="text" data-name="carMessage" id="clxx" class="layui-input jj"></td>
+					<td>状态</td>
+					<td class="layui-form"><select class="jjstate" id="zt" name="" id="">
+							<option></option>
+							<option value="待办">待办</option>
+							<option value="完成">完成</option>
+						</select></td>
+				</tr>
+				<tr>
+					<td>发布人</td>
+					<td><input type="text" data-name="people" id="fbr" class="layui-input jj"></td>
+					<td>联系电话</td>
+					<td><input type="text" data-name="phone" id="lxdh" class="layui-input jj"></td>
+					<td>发布照片</td>
+					<td id="images"></td>
+				</tr>
+				<tr>
+					<td colspan="6">
+						<textarea class="jjcons" name="" id="nr" cols="30" rows="10" style="width:100%;"></textarea>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+		<button type="button" class="layui-btn" id="uploadImg">
+			<i class="layui-icon">&#xe67c;</i>上传图片
+		</button>
+	</div>
+	<!-- 竞技功能页 -->
+	<div class="jjMWin">
+		<table class="layui-table">
+			<tbody class="jjrxz">
+				<tr>
+					<td>竞技人</td>
+					<td colspan="3"><input type="text" data-name="name" class="layui-input"></td>
+					<td>地址</td>
+					<td colspan="3"><input type="text" data-name="address" class="layui-input"></td>
+					<td>联系电话</td>
+					<td><input type="text" data-name="phone" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td colspan="5">
+
+					</td>
+				</tr>
+				<tr>
+					<td data-name="duan1" onclick="updaJjInfo(this)">字段1</td>
+					<td data-name="duan2" onclick="updaJjInfo(this)">字段2</td>
+					<td data-name="duan3" onclick="updaJjInfo(this)">字段3</td>
+					<td data-name="duan4" onclick="updaJjInfo(this)">字段4</td>
+					<td data-name="duan5" onclick="updaJjInfo(this)">字段5</td>
+					<td data-name="duan6" onclick="updaJjInfo(this)">字段6</td>
+					<td data-name="duan7" onclick="updaJjInfo(this)">字段7</td>
+					<td data-name="duan8" onclick="updaJjInfo(this)">字段8</td>
+					<td data-name="duan9" onclick="updaJjInfo(this)">字段9</td>
+					<td data-name="duan10" onclick="updaJjInfo(this)">字段10</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- 字段编辑页 -->
+	<div class="jjInfoWin">
+		<textarea name="" id="zdbj" cols="30" rows="10" style="width: 100%;"></textarea>
+	</div>
+	<!-- 竞技发布人 -->
+	<div class="jjfbrWin">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>时间</th>
+					<th>编号</th>
+					<th>响应内容</th>
+					<th>成功数量</th>
+					<th>好评率</th>
+					<th>竞技人</th>
+					<th>联系电话</th>
+				</tr>
+			</thead>
+			<tbody class="fbrlist">
+				<tr>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- 竞技详情 -->
+	<div class="jjfbnrWin">
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>时间</th>
+					<th>编号</th>
+					<th>发布内容</th>
+					<th>状态</th>
+					<th>编辑</th>
+					<th>发布人</th>
+					<th>联系电话</th>
+				</tr>
+			</thead>
+			<tbody class="jjxq">
+			</tbody>
+		</table>
+	</div>
+</body>
+<script>
+	if (loadUserInfo.customer.cusCode == '80000003') {
+		$('#nav>li').hide()
+		$('.show').show()
+	}
+	//权限设定
+	// let arr = loadUserInfo.user.groupId.split(',')
+	// $('.sub-menu > li').each(function (i) {
+	// 	let _this = $(this)
+	// 	$(this).hide()
+	// 	$.each(arr,function (j,n) {
+	// 		if (i == n - 1) {
+	// 			_this.show()
+	// 		}
+	// 	})
+	// })
+	//　广告
+	let adList = []
+	let form = ''
+	layui.use('form', function () {
+		form = layui.form
+	})
+	$.ajax({
+		url: `${API}/erpAdvertisementCheck/getcheckPage`,
+		type: 'get',
+		success: function (res) {
+			adList = res.data.records
+			let nums = 0
+			$('.banner-text').html(adList[nums].content)
+			$('.banner-text').css({
+				'font-family': adList[nums].contentFamily,
+				'font-size': adList[nums].contentSize,
+				'color': adList[nums].contentColor,
+			})
+			setInterval(function () {
+				console.log(nums, adList.length)
+				if (nums = adList.length) {
+					nums = 0
+				}
+				$('.banner-text').html(adList[nums].content)
+				$('.banner-text').css({
+					'font-family': adList[nums].contentFamily,
+					'font-size': adList[nums].contentSize,
+					'color': adList[nums].contentColor,
+				})
+				nums++
+			}, 12000)
+		}
+	})
+	//  消息
+
+	function seeInfoD() {
+		$('.changes').on('click', function () {
+			if (!$(this).is(':checked')) {
+				$('.allchange').prop("checked", false)
+			}
+			let bol = true
+			$('.changes').each(function () {
+				if (!$(this).is(':checked')) {
+					bol = false
+				}
+			})
+			if (bol) {
+				$('.allchange').prop("checked", true)
+			}
+		})
+		$('.allchange').on('click', function () {
+			if ($(this).is(':checked')) {
+				$('.changes').each(function () {
+
+					$(this).prop("checked", true)
+				})
+			} else {
+				$('.changes').each(function () {
+
+					$(this).prop("checked", false)
+				})
+			}
+
+		})
+		layui.use('layer', function () {
+			layui.layer.open({
+				type: 1,
+				content: $('.infoWin'),
+				area: ['720px']
+			})
+		})
+	}
+	//  已完成的消息
+	function seeDone(_this) {
+		if ($(_this).text() == '已完成') {
+			$(_this).text('返回')
+			$('.changes').parents('td').hide()
+			$('.allchange').parents('th').hide()
+		} else {
+			$(_this).text('已完成')
+			$('.changes').parents('td').show()
+			$('.allchange').parents('th').show()
+		}
+
+	}
+	// 消息通知
+	function sendNews(_this) {
+		if ($(_this).text() == '发送通知') {
+			$(_this).text('返回')
+			$('.sendNews').show()
+			$('.infoList').hide()
+		} else {
+			$(_this).text('发送通知')
+			$('.sendNews').hide()
+			$('.infoList').show()
+		}
+	}
+	// 显示广告
+	$('.banner-text').on('click', function () {
+		$.ajax({
+			url: `${API}/erpAdvertisementCheck/getcheckPage`,
+			type: 'get',
+			success: function (res) {
+				let arr = res.data.records
+				let str = ''
+				$.each(arr, function (i, k) {
+					str +=
+						`<tr>
+							<td>${arr.length  - i}</td>
+							<td>${k.checkTime}</td>
+							<td>${k.checkNumber}</td>
+							<td>${''}</td>
+							<td>${k.content.length > 10 ? k.content.substring(0,7) + '...' : k.content}</td>
+							<td>${k.contract}</td>
+							<td>${k.telphone}</td>
+							<td>${''}</td>
+						</tr>`
+				})
+				$('.adlist').html(str)
+			}
+		})
+
+		layui.use('layer', function () {
+			layui.layer.open({
+				type: 1,
+				content: $('.adWin'),
+				area: ['720px', '400px']
+			})
+		})
+	})
+
+	// 删除选中
+	function delNews() {
+		$('.changes').each(function () {
+			if ($(this).is(':checked')) {
+				$(this).parents('tr').remove()
+			}
+		})
+	}
+	let layer = ''
+	//　显示竞技
+	let jjLists = [] // 竞技人id
+	function selJj() {
+		$.ajax({
+			url: `${API}/erpAdvertisementCheck/selectFbxx?cs=${$('#seljj').val()}`,
+			success: function (res) {
+				let arr = res.data.reverse()
+				jjLists = res.data.reverse()
+				let str = ''
+				$.each(arr, function (i, n) {
+					str +=
+						`<tr style="cursor:pointer;" onclick="jjCon(${i})">
+							<td>${arr.length - i}</td>
+							<td>${n.fabuTime}</td>
+							<td>${n.orderNumber}</td>
+							<td>${n.fenLei}</td>
+							<td title="${n.message}">${n.message.length > 20 ? n.message.substring(0,15) + '...' : n.message}</td>
+							<td>${n.state}</td>
+							<td class="seeFbr" data-id="${n.id}">${n.people}</td>
+							<td>${n.phone}</td>
+							<td>${n.number}</td>
+							<td>
+								<div data-name="${n.id}" class="layui-btn layui-btn-xs jjMenu">竞技</div>
+							</td>
+						</tr>`
+				})
+				$('.jjlist').html(str)
+				layer.msg('查询成功!')
+			}
+		})
+	}
+
+	function showJj() {
+
+		$.ajax({
+			url: `${API}/erpAdvertisementCheck/selectFbxx?cs=${$('#seljj').val()}`,
+			success: function (res) {
+				let arr = res.data.reverse()
+				jjLists = res.data.reverse()
+				let str = ''
+				$.each(arr, function (i, n) {
+					str +=
+						`<tr style="cursor:pointer;" onclick="jjCon(${i})">
+							<td>${arr.length - i}</td>
+							<td>${n.fabuTime}</td>
+							<td>${n.orderNumber}</td>
+							<td>${n.fenLei}</td>
+							<td title="${n.message}">${n.message.length > 20 ? n.message.substring(0,15) + '...' : n.message}</td>
+							<td>${n.state}</td>
+							<td class="seeFbr" data-id="${n.id}">${n.people}</td>
+							<td>${n.phone}</td>
+							<td>${n.number}</td>
+							<td>
+								<div data-name="${n.id}" class="layui-btn layui-btn-xs jjMenu">竞技</div>
+							</td>
+						</tr>`
+				})
+				$('.jjlist').html(str)
+				layer.open({
+					type: 1,
+					content: $('.jjWin'),
+					area: ['1220px']
+				})
+				// 竞技功能页
+				$('.jjMenu').on('click', function (e) {
+					let _this = $(this)
+					layer.open({
+						type: 1,
+						content: $('.jjMWin'),
+						area: ['860px'],
+						btn: ['提交'],
+						yes: function (index) {
+							$('.jjrxz input').each(function () {
+								jjrdata[$(this).data('name')] = $(this).val()
+							})
+							jjrdata.custId = loadUserInfo.customer.id
+							jjrdata.id = _this.data('name')
+							$.ajax({
+								url: `${API}/erpAdvertisementCheck/inertJjr`,
+								type: 'post',
+								data: jjrdata,
+								success: function (res) {
+									if (res.code == 0) {
+										layer.msg('添加成功！')
+									}
+									layer.close(index)
+								},
+							})
+						}
+					})
+					e.preventDefault()
+					e.stopPropagation()
+				})
+				// 发布人信息页
+				$('.seeFbr').on('click', function (e) {
+					$.ajax({
+						url: `${API}/erpAdvertisementCheck/selectFbxxById?name=${$(this).text()}`,
+						success: function (res) {
+							let arrs = res.data.reverse()
+							let strs = ''
+							$.each(arrs, function (k, m) {
+								strs +=
+									`<tr>
+									<td>${arrs.length - k}</td>
+									<td>${m.fabuTime}</td>
+									<td>${m.orderNumber}</td>
+									<td>${m.message}</td>
+									<td>${m.number}</td>
+									<td>${m.stateGood || ''}</td>
+									<td>${m.people}</td>
+									<td>${m.phone}</td>
+									</tr>`
+							})
+							console.log(strs)
+							$('.fbrlist').html(strs)
+						}
+					})
+					layer.open({
+						type: 1,
+						content: $('.jjfbrWin'),
+						area: ['860px']
+					})
+					e.preventDefault()
+					e.stopPropagation()
+				})
+			}
+		})
+
+	}
+	// 发布竞技内容
+	function fbJjCon() {
+
+		layer.open({
+			type: 1,
+			content: $('.jjfbWin'),
+			area: ['860px'],
+			btn: ['保存', '取消'],
+			yes: function (index) {
+				let data = {}
+				$('.jj').each(function () {
+					data[$(this).data('name')] = $(this).val()
+				})
+				data.message = $('.jjcons').val()
+				data.state = $('.jjstate').val()
+				data.picture = imgList.toString()
+				$.ajax({
+					url: `${API}/erpAdvertisementCheck/inertFbxx?custId=${loadUserInfo.customer.id}`,
+					type: 'post',
+					data: data,
+					success: function (res) {
+						if (res.code == 0) {
+							layer.msg('保存成功！', {
+								time: 1500
+							}, function () {
+								layer.close(index)
+							})
+						}
+					}
+				})
+			}
+
+		})
+	}
+
+	// 竞技详情页
+	function jjInfo() {
+		layer.open({
+			type: 1,
+			content: $('.jjMWin'),
+			area: ['860px']
+		})
+	}
+	// 修改字段内容页
+	let jjrdata = {}
+
+	function updaJjInfo(_this) {
+		layer.open({
+			type: 1,
+			content: $('.jjInfoWin'),
+			btn: ['提交/修改'],
+			area: ['860px'],
+			yes: function (index) {
+				jjrdata[$(_this).data('name')] = $('#zdbj').val()
+				$('#zdbj').val('')
+				layer.close(index)
+			}
+		})
+	}
+	// 保存字段内容
+	function saveZdbj() {
+
+	}
+	// 竞技详情
+	function jjCon(i) {
+		let json = jjLists[i]
+		$('.jjxq').html(
+			`<tr>
+					<td>1</td>
+					<td>${json.fabuTime}</td>
+					<td>${json.orderNumber}</td>
+					<td>${json.message}</td>
+					<td>${json.state}</td>
+					<td><div class="layui-btn layui-btn-xs" onclick="editJj(${i})">编辑</div></td>
+					<td>${json.people}</td>
+					<td>${json.phone}</td>
+				</tr>`
+		)
+		layer.open({
+			type: 1,
+			title: '详情',
+			content: $('.jjfbnrWin'),
+			area: ['860px']
+		})
+
+	}
+	// 修改竞技信息
+	function editJj(i) {
+		let json = jjLists[i]
+		$('#fl').val(`${json.fenLei}`)
+		$('#clxx').val(`${json.carMessage}`)
+		$('#zt').val(`${json.state}`)
+		$('#fbr').val(`${json.people}`)
+		$('#lxdh').val(`${json.phone}`)
+		$('#nr').val(`${json.message}`)
+		imgList = json.picture.split(',')
+		$('#images').html('')
+		$.each(imgList, function (i, n) {
+			$('#images').append('<img src="' + n + '" class="layui-upload-img">')
+		})
+		form.render()
+		layer.open({
+			type: 1,
+			content: $('.jjfbWin'),
+			btn: ['保存', '取消'],
+			area: ['860'],
+			yes: function (index) {
+				$('.jj').each(function () {
+					json[$(this).data('name')] = $(this).val()
+				})
+				json.message = $('.jjcons').val()
+				json.state = $('.jjstate').val()
+				json.picture = imgList.toString()
+				$.ajax({
+					url: `${API}/erpAdvertisementCheck/updateJjr`,
+					type: 'post',
+					data: json,
+					success: function (res) {
+						if (res.code == '0') {
+							layer.closeAll('page')
+							layer.msg('修改成功!')
+							setTimeout(function () {
+								showJj()
+							}, 1500)
+						}
+					},
+					error: function () {
+						alert('系统错误')
+					}
+				})
+			}
+		})
+	}
+	//  广告查询
+	function selAd() {
+
+		$.ajax({
+			url: `${API}/erpAdvertisementCheck/getcheckPage?content=${$('.adSel').val()}`,
+			type: 'get',
+			success: function (res) {
+				let arr = res.data.records
+				let str = ''
+				$.each(arr, function (i, k) {
+					str +=
+						`<tr>
+							<td>${arr.length  - i}</td>
+							<td>${k.checkTime}</td>
+							<td>${k.checkNumber}</td>
+							<td>${''}</td>
+							<td>${k.content.length > 10 ? k.content.substring(0,7) + '...' : k.content}</td>
+							<td>${k.contract}</td>
+							<td>${k.telphone}</td>
+							<td>${''}</td>
+						</tr>`
+				})
+				$('.adlist').html(str)
+			}
+		})
+	}
+	// 图片上传
+	let imgList = [] //  上传图片路径
+	layui.use('upload', function () {
+		var upload = layui.upload;
+
+		//执行实例
+		var uploadInst = upload.render({
+			elem: '#uploadImg' //绑定元素
+				,
+			url: `${API}/erpClaims/upload` //上传接口
+				,
+			accept: 'images',
+			multiple: true,
+			number: 6,
+			before: function (res) {
+				console.log(res)
+				//上传完毕回调
+				res.preview(function (index, file, result) {
+					$('#images').append('<img src="' + result + '" alt="' + file.name + '" class="layui-upload-img">')
+				});
+
+			},
+			done: function (res) {
+				console.log(res)
+				//上传完毕回调
+				imgList.push(res.data.src)
+			},
+			error: function () {
+				//请求异常回调
+			}
+		});
+	});
+</script>
+
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 1200px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!--<div class="margin:10px;">
+            <div class="layui-btn layui-btn-sm" onclick="add()">增加</div>
+        </div>-->
+        <table class="layui-table lp-detail">
+        	
+        </table>
+    </div>
+</body>
+<script>
+    let layer = ''
+    $('.tbr').val(loadUserInfo.user.realName)
+    layui.use('layer', function () {
+        layer = layui.layer
+    })
+    $.ajax({
+    	type:"post",
+    	url:`${API}/erpClaims/selectByClaimsId?claimsId=${getUrlParam("claimsId")}`,
+    	async:true,
+    	success: function(res) {
+    		let data = res.data;
+    		
+    		htmlStr = `<tr>
+			        		<td>受理日期</td>
+			        		<td>${typeof (data.claimsDt) == 'undefined' ? '' : msToDate(data.claimsDt,2)}</td>
+			        		<td>理赔单号</td>
+			        		<td>${typeof (data.claimsId) == 'undefined' ? '' : data.claimsId}</td>
+			        		<td>受理单位</td>
+			        		<td>${typeof (data.claimsUnit) == 'undefined' ? '' : data.claimsUnit}</td>
+			        		<td>品牌</td>
+			        		<td>${typeof (data.brand) == 'undefined' ? '' : data.brand}</td>
+			        		<td colspan="2" rowspan="2">
+			        			<img src=${typeof (data.masterId) == 'undefined' ? '' : data.masterId} />
+			        		</td>
+			        		<!--<td></td>-->
+			        	</tr>
+			        	<tr>
+			        		<td>生产编号</td>
+			        		<td>${typeof (data.produceId) == 'undefined' ? '' : data.produceId}</td>
+			        		<td>品名</td>
+			        		<td>${typeof (data.mname) == 'undefined' ? '' : data.mname}</td>
+			        		<td>规格</td>
+			        		<td>${typeof (data.specification) == 'undefined' ? '' : data.specification}</td>
+			        		<td>型号</td>
+			        		<td>${typeof (data.size) == 'undefined' ? '' : data.size}</td>
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        	</tr>
+			        	<tr>
+			        		<td>销售单号</td>
+			        		<td>${typeof (data.saleId) == 'undefined' ? '' : data.saleId}</td>
+			        		<td>销售日期</td>
+			        		<td>${typeof (data.saleDt) == 'undefined' ? '' : msToDate(data.saleDt,2)}</td>
+			        		<td>销售价格</td>
+			        		<td></td>
+			        		<td>使用里程</td>
+			        		<td>${typeof (data.useMileage) == 'undefined' ? '' : data.useMileage}</td>
+			        		<td>DOT号</td>
+			        		<td>${typeof (data.dotId) == 'undefined' ? '' : data.dotId}</td>
+			        	</tr>
+			        	<tr>
+			        		<td>客户名称</td>
+			        		<td colspan="3">${typeof (data.customerName) == 'undefined' ? '' : data.customerName}</td>
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<td>车辆牌号</td>
+			        		<td>${typeof (data.carPalte) == 'undefined' ? '' : data.carPalte}</td>
+			        		<td>车辆型号</td>
+			        		<td>${typeof (data.carSize) == 'undefined' ? '' : data.carSize}</td>
+			        		<td>胎位</td>
+			        		<td>${typeof (data.tirePlace) == 'undefined' ? '' : data.tirePlace}</td>
+			        	</tr>
+			        	<tr>
+			        		<td>物料初检</td>
+			        		<td colspan="5">${typeof (data.oneContent) == 'undefined' ? '' : data.oneContent}</td>
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<td>初检日期</td>
+			        		<td>${typeof (data.oneDt) == 'undefined' ? '' : msToDate(data.oneDt,2)}</td>
+			        		<td>初检经办</td>
+			        		<td>${typeof (data.oneAttn) == 'undefined' ? '' : data.oneAttn}</td>
+			        	</tr>
+			        	<tr>
+			        		<td rowspan="2">厂家鉴定</td>
+			        		<td rowspan="2" colspan="5">${typeof (data.appraisalContent) == 'undefined' ? '' : data.appraisalContent}</td>
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<td>鉴定日期</td>
+			        		<td>${typeof (data.appraisalDt) == 'undefined' ? '' : data.appraisalDt}</td>
+			        		<td>鉴定结论</td>
+			        		<td>${typeof (data.appraisalResult) == 'undefined' ? '' : data.appraisalResult}</td>
+			        	</tr>
+			        	<tr>
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<!--<td></td>-->
+			        		<td>理赔金额</td>
+			        		<td>${typeof (data.claimsPrice) == 'undefined' ? '' : data.claimsPrice}</td>
+			        		<td>业务经理</td>
+			        		<td>${typeof (data.businessManagger) == 'undefined' ? '' : data.businessManagger}</td>
+			        	</tr>
+			        	<tr>
+			        		<td>理赔状态</td>
+			        		<td>${typeof (data.claimsStatus) == 'undefined' ? '' : data.claimsStatus}</td>
+			        		<td>客户确认</td>
+			        		<td>${typeof (data.clientsQ) == 'undefined' ? '' : data.clientsQ}</td>
+			        		<td>交接日期</td>
+			        		<td>${typeof (data.handoverDt) == 'undefined' ? '' : msToDate(data.handoverDt,2)}</td>
+			        		<td>财务经办</td>
+			        		<td>${typeof (data.financialAttn) == 'undefined' ? '' : data.financialAttn}</td>
+			        		<td>物料去向</td>
+			        		<td>${typeof (data.matarialsTo) == 'undefined' ? '' : data.matarialsTo}</td>
+			        	</tr>`;
+			 $('.lp-detail').html(htmlStr);
+    	}
+
+    });
+    /*layui.use('laydate', function () {
+        laydate = layui.laydate
+        laydate.render({
+            elem: '.slrq'
+        })
+        laydate.render({
+            elem: '.xsrq'
+        })
+        laydate.render({
+            elem: '.cjrq'
+        })
+        laydate.render({
+            elem: '.jdrq'
+        })
+        laydate.render({
+            elem: '.jjrq'
+        })
+    })*/
+   
+</script>

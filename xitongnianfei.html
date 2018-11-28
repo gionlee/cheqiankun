@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-input-inline {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>客户编码</th>
+                    <th>客户名称</th>
+                    <th>管理用户</th>
+                    <th>操作用户</th>
+                    <th>业务用户</th>
+                    <th>大车数量</th>
+                    <th>费用</th>
+                    <th>缴费单号</th>
+                    <th colspan="2">服务期限</th>
+                    <th>剩余天数</th>
+                </tr>
+            </thead>
+            <tbody class="fybj">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+
+        </table>
+    </div>
+
+</body>
+<script>
+
+
+
+    let json = {}
+    $.ajax({
+        url: `${API}/erpProject/getProjectById?projectId=1`,
+        type: 'get',
+        success: function (res) {
+        }
+    })
+    function update(id) {
+        $.ajax({
+            url: `${API}/erpProject/getProjectById?projectId=${id}`,
+            type: 'get',
+            success: function (res) {
+                let json = res.data
+                let str = `<tr><td>
+                        <input type="text" class="layui-input" value="${json.projectName}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" value="${json.projectNum}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" value="${json.projectMoney}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" value="${json.projectUnit}">
+                    </td></tr>`
+                $('.xg').append(str)
+                let sle = ``
+                $.each(json.projectLists, function (i) {
+                    sle += `<tr>
+                    <td colspan="2">${json.projectLists[i].projectName}</td>
+                    <td colspan="2" data-id="${json.projectLists[i].id}"><input class="layui-input" value="${json.projectLists[i].projectCount}"></td></tr>`
+                })
+                $('.change').append(sle)
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        area: ['740px'],
+                        title: '修改',
+                        content: $('.winbody')
+                    });
+                })
+            }
+        })
+    }
+</script>

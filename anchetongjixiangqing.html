@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+   <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+            min-height: 600px;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 720px;
+            padding: 10px;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+    	<div class="search">
+            <input class="layui-input ksdate" type="text" id="startDate" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel" name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" id="endDate" type="text" placeholder="结束日期">
+        </div>
+        <div class="search">
+             &nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" id="cx">查询</button>
+        </div>
+        <table class="layui-table">
+            <thead>
+
+                <th>
+                    序号
+                </th>
+                <th>
+                    车辆牌号
+                </th>
+                <th>
+                    工作单数
+                </th>
+                <th>
+                    购置
+                </th>
+                <th>
+                    维修
+                </th>
+                <th>维护</th>
+                <th>总金额</th>
+                </tr>
+            </thead>
+            <tbody id="list">
+               
+            </tbody>
+        </table>
+    </div>
+    <!--<div class="winbody">
+        <table class="layui-table">
+            <tbody>
+                <tr>
+                    <td style="width:60px;">客户名称</td>
+                    <td colspan="3"><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">发票日期</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">凭证号</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">发票方向</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">发票类型</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                </tr>
+                <tr>
+                    <td style="width:60px;">发票号</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">工作单号</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">发票金额</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">财务经办</td>
+                    <td><input type="text" class="layui-input" value=""></td>
+                    <td style="width:60px;">备注</td>
+                    <td colspan="3"><input type="text" class="layui-input" value=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>-->
+</body>
+<script>
+	function seeInfo() {
+		layui.use('layer', function() {
+			let layer = layui.layer;
+			layer.open({
+				type: 1,
+				area: ['1200px'],
+				title: '车辆牌号',
+				content: $('.winbody')
+			});
+		})
+	}
+	
+	function getYear(type, dates) {
+		var dd = new Date();
+		var n = dates || 0;
+		var year = dd.getFullYear() + Number(n);
+		if(type == "s") {
+			var day = year + "-01-01";
+		};
+		if(type == "e") {
+			var day = year + "-12-31";
+		};
+		if(!type) {
+			var day = year + "-01-01/" + year + "-12-31";
+		};
+		return day;
+	};
+	
+	function GetRequest() {
+		var url = location.search; //获取url中"?"符后的字串  
+		var theRequest = new Object();
+		if(url.indexOf("?") != -1) {
+			var str = url.substr(1);
+			strs = str.split("&");
+			for(var i = 0; i < strs.length; i++) {
+				theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+			}
+		}
+		return theRequest;
+	}
+	
+	$(function() {
+		var startDate =getYear("s",0);
+		var endDate =getYear("e",0);
+		
+		var userid = GetRequest().userid;
+		var id = GetRequest().id;
+		//'http://120.79.205.40:3340/erpManagement/anchetongji?startDate=2018-01-01&endDate=2018-12-12&custId=1', 
+		$.ajax({
+			url:API+'/erpManagement/anchetongji?startDate='+startDate+'&endDate='+endDate+'&carPlate='+id+'&custId='+userid,
+			type: 'get',
+			dataType: 'json',
+			success: function(ret) {
+				var objkacha = ret.data[5];
+				var html = '';
+	
+				for(var key in objkacha) {
+	
+					html +=' <tr>'+
+ '                    <td>' + key + '</td>'+
+ '                    <td>' + objkacha[key].catPlate + '</td>'+
+ '                    <td>' + objkacha[key].workNum + '</td>'+
+ '                    <td>' + objkacha[key].purchase + '</td>'+
+ '                    <td>' + objkacha[key].erp_repair + '</td>'+
+ '                    <td>' + objkacha[key].maintian + '</td>'+
+ '                    <td>' + objkacha[key].allAmount + '</td>'+
+ '                </tr>';
+					
+	
+				}
+				
+				$("#list").html(html);
+	
+			},
+			error: function(err) {
+				alert("系统错误");
+	
+			}
+		});
+	
+	})
+	
+	 $("#cx").click(function(){
+    	var userid =GetRequest().userid;
+		var id =GetRequest().id;
+		var startDate = $("#startDate").val();
+		var endDate = $("#endDate").val();
+		//'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
+			$.ajax({
+				url: API+'/erpManagement/anchetongji?catPlate='+id+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
+				type: 'get',
+				dataType: 'json',
+				success:function(ret) {
+					var objkacha = ret.data[5];
+				var html = '';
+	
+				for(var key in objkacha) {
+	
+					html +=' <tr>'+
+ '                    <td>' + key + '</td>'+
+ '                    <td>' + objkacha[key].catPlate + '</td>'+
+ '                    <td>' + objkacha[key].workNum + '</td>'+
+ '                    <td>' + objkacha[key].purchase + '</td>'+
+ '                    <td>' + objkacha[key].erp_repair + '</td>'+
+ '                    <td>' + objkacha[key].maintian + '</td>'+
+ '                    <td>' + objkacha[key].allAmount + '</td>'+
+ '                </tr>';
+					
+	
+				}
+				
+				$("#list").html(html);
+								           		         		
+				},
+				error:function(err) {
+					alert("系统错误");
+
+				}
+			});
+    })
+     
+      layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+</script>

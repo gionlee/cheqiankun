@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            width: 200px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        p {
+            text-align: center;
+        }
+        .group ,.vip,.gold{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <p>
+            <span class="title">天津港保税区金方舟国际贸易有限公司</span>--客户列表
+        </p>
+        <table id="table" lay-filter="test" class="layui-table">
+            <thead id="head">
+                <tr>
+                    <th rowspan="2" style="width: 20%;">合计</th>
+                    <th>客户总数</th>
+                    <th>车辆总数</th>
+                    <th>小型车</th>
+                    <th>客车</th>
+                    <th>单机</th>
+                    <th>拖头</th>
+                    <th>挂车</th>
+                </tr>
+                <tr class="tlist">
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="group" onclick="goGroup()">
+
+                </tr>
+                <tr class='vip' onclick="goVip()">
+
+                </tr>
+                <tr class="gold" onclick="goGold()">
+
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script src="./js/jquery-2.1.0.js"></script>
+<script>
+
+</script>
+<script>
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return decodeURI(r[2]); return null; //返回参数值
+    }
+    $('.title').html(getUrlParam('name'))
+
+    $.ajax({
+        url: `${API}/erpCustomer/getErpCustorByCustomerId?customerId=${getUrlParam('id')}`,
+        type: 'get',
+        success: function (res) {
+            console.log(res)
+            let json = res.data
+            $('.tlist').html(`<th>${json.customerNum}</th>
+                    <th>${json.carNum}</th>
+                    <th>${json.numMap.xcarnum}</th>
+                    <th>${json.numMap.psacarnum}</th>
+                    <th>${json.numMap.dcarnum}</th>
+                    <th>${json.numMap.tcarnum}</th>
+                    <th>${json.numMap.gcarnum}</th>`)
+            if (json.groupMap.groupMap  == '0' || json.groupMap.groupMap  == null) {
+                $('.group').html(`<td>
+                        集团客户
+                    </td>
+                    <td>${json.groupMap.groupNum}</td>
+                    <td>${json.groupMap.groupCarNum}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>`)
+            } else {
+                $('.group').html(`<td>
+                        集团客户
+                    </td>
+                    <td>${json.groupMap.groupNum}</td>
+                    <td>${json.groupMap.groupCarNum}</td>
+                    <td>${json.groupMap.groupMap.xcarnum}</td>
+                    <td>${json.groupMap.groupMap.psacarnum}</td>
+                    <td>${json.groupMap.groupMap.dcarnum}</td>
+                    <td>${json.groupMap.groupMap.tcarnum}</td>
+                    <td>${json.groupMap.groupMap.gcarnum}</td>`)
+            }
+
+            if (json.vipMap.vipMap  == '0' || json.vipMap.vipMap  == null) {
+                $('.vip').html(`<td>
+                        VIP客户
+                    </td>
+                    <td>${json.vipMap.vIPNum}</td>
+                    <td>${json.vipMap.vIPCarNum}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>`)
+            } else {
+                $('.vip').html(`<td>
+                        VIP客户
+                    </td>
+                    <td>${json.vipMap.vIPNum}</td>
+                    <td>${json.vipMap.vIPCarNum}</td>
+                    <td>${json.vipMap.vipMap.xcarnum}</td>
+                    <td>${json.vipMap.vipMap.psacarnum}</td>
+                    <td>${json.vipMap.vipMap.dcarnum}</td>
+                    <td>${json.vipMap.vipMap.tcarnum}</td>
+                    <td>${json.vipMap.vipMap.gcarnum}</td>`)
+            }
+            if (json.goldMap.goidMap == '0' || json.goldMap.goidMap == null) {
+                $('.gold').html(`<td>
+                        金牌客户
+                    </td>
+                    <td>${json.goldMap.goldNum}</td>
+                    <td>${json.goldMap.goldCarNum}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>`)
+            } else {
+                $('.gold').html(`<td>
+                        金牌客户
+                    </td>
+                    <td>${json.goldMap.goldNum}</td>
+                    <td>${json.goldMap.goldCarNum}</td>
+                    <td>${json.goldMap.goidMap.xcarnum}</td>
+                    <td>${json.goldMap.goidMap.psacarnum}</td>
+                    <td>${json.goldMap.goidMap.dcarnum}</td>
+                    <td>${json.goldMap.goidMap.tcarnum}</td>
+                    <td>${json.goldMap.goidMap.gcarnum}</td>`)
+            }
+
+        }
+    })
+    function goVip() {
+        window.location.href = './vipcustomerlist.html'
+    }
+    function goGroup() {
+        window.location.href = './groupcustomerlist.html'
+    }
+    function goGold() {
+        window.location.href = './goldcustomerlist.html'
+    }
+
+</script>
+
+</html>

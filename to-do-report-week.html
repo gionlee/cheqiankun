@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+
+			<div class="layui-row">
+				<div class="layui-col-xs8 layui-col-xs-offset2">
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="2">单位</th>
+								<th>里程预警</th>
+								<th>胎纹预警</th>
+								<th>里程达限预警</th>
+								<th>胎纹达限预警</th>
+								<th>本周更新</th>
+								<th>本月更新计划</th>
+								<th>意外损耗数量</th>
+								<th>本月更新数量</th>
+								<th>本月更新完成</th>
+								<th>近期更新计划</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="week-report-list">
+							<!--<tr>
+								<td>天津港保税区金方舟国际贸易有限公司</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+								<td>0</td>
+							</tr>-->
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		var layer = ''
+		layui.use('layer', function() {
+			layer = layui.layer
+		})
+		layui.use('element', function() {
+			element = layui.element;
+		});
+
+		layui.use('laydate', function() {
+			laydate = layui.laydate
+			laydate.render({
+				elem: '.start-time'
+			});
+			laydate.render({
+				elem: '.end-time'
+			});
+		});
+		var data_obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+		data_obj.workDtS = data_obj.workDtS.replace(/\//ig,'-');
+		data_obj.workDtE = data_obj.workDtE.replace(/\//ig,'-');
+		$.ajax({
+			type: "post",
+			url: `${API}/erpSaleRepairOrder/findWeekly`,
+			async: true,
+			data: data_obj,
+			success: function (res){
+				let data = res.data;
+				let htmlStr = "";
+				$.each(data, function(i,item) {
+					htmlStr += `<tr>
+									<td>${item.cusName}</td>
+									<td>${item.mileageWarning}</td>
+									<td>${item.treadWarning}</td>
+									<td>${item.mileageLimitWarning}</td>
+									<td>${item.treadLimiWarning}</td>
+									<td>${item.thisWeel}</td>
+									<td>${item.thisMonthPlan}</td>
+									<td>${item.accident}</td>
+									<td>${item.thisMonth}</td>
+									<td>${item.updateCompleted}</td>
+									<td>${item.recentUpdatePlan}</td>
+								</tr>`;
+				});
+				$('.week-report-list').html(htmlStr);
+			}
+		});
+	</script>
+
+</html>

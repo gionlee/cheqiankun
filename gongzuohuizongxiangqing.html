@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        .title {
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .qianming {
+            width: 652px;
+            margin: 0 auto;
+        }
+
+        ul.qianming li {
+            display: inline-block;
+            width: 160px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        ul.qianming input {
+            width: 100px;
+            display: inline-block;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .layui-form-checkbox[lay-skin=primary] {
+            margin: 0 auto;
+            padding: 0px;
+        }
+
+        .layui-form-checkbox {
+            margin: 0 !important;
+        }
+        .gc,#gclist {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th style="width:10%;">检测日期</th>
+                <th style="width:15%;">检测地点</th>
+                <th style="width:30%;" colspan="2">驾驶区间</th>
+                <th style="width:5%;">车辆里程</th>
+                <th style="width:15%;">检测单号</th>
+                <th style="width:15%;">运营路况</th>
+                <th style="width:5%;">客户经办</th>
+                <th style="width:5%;">服务经办</th>
+            </tr>
+        </thead>
+        <tbody class="jcinfo">
+            <tr>
+                <td><input type="text" data-name="inspectionDt" class="layui-input dates" readonly></td>
+                <td><input type="text" data-name="place" class="layui-input" value=""></td>
+                <td class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline" style="width:45%;">
+                            <!-- <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="1" selected>北京</option>
+                            </select> -->
+                            <input class="layui-input" data-name="drivingRange1" type="text">
+                        </div>
+                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+                        <div class="layui-input-inline" style="width:45%;">
+                            <!-- <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="1" selected>东城</option>
+                            </select> -->
+                            <input class="layui-input" data-name="drivingRange2" type="text">
+                        </div>
+                    </div>
+                </td>
+                <td class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline" style="width:45%;">
+                            <!-- <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="1" selected>北京</option>
+                            </select> -->
+                            <input class="layui-input" data-name="drivingRange3" type="text">
+                        </div>
+                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+                        <div class="layui-input-inline" style="width:45%;">
+                            <!-- <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="1" selected>东城</option>
+                            </select> -->
+                            <input class="layui-input" data-name="drivingRange4" type="text">
+                        </div>
+                    </div>
+                </td>
+                <td><input type="text" data-name="mileage" class="layui-input" value=""></td>
+                <td><input type="text" data-name="formId" class="layui-input" readonly></td>
+                <td class="layui-form yylk">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name="interest" class="jcwhlist" data-name="roadStatus" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="0">国道省道</option>
+                                <option value="1" selected="">高速/国道</option>
+                                <option value="2" selected="">丘陵/盘山</option>
+                                <option value="3" selected="">水泥路面</option>
+                                <option value="4" selected="">泥土道路</option>
+                                <option value="5" selected="">混合道路</option>
+                                <option value="6" selected="">非道路</option>
+                                <option value="7" selected="">城镇道路</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="text" data-name="customerName" class="layui-input" value=""></td>
+                <td><input type="text" data-name="attn" class="layui-input" value=""></td>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <div class="title">
+        <span class="carnum"></span> 车辆动态
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th colspan="7">轮胎信息</th>
+                <th colspan="9" class="layui-form">本期轮胎检测信息
+                </th>
+                <th colspan="6">上期轮胎监测信息</th>
+            </tr>
+            <tr>
+                <th style="min-width:30px;">序号</th>
+                <th>品牌</th>
+                <th>型号</th>
+                <th>规格</th>
+                <th>胎号</th>
+                <th>胎位</th>
+                <th>报错</th>
+                <th>胎压</th>
+                <th>芯/帽</th>
+                <th>小修</th>
+                <th colspan="4">内外平均纹深度</th>
+                <th>轮胎状态</th>
+                <th>使用建议</th>
+                <th>胎压</th>
+                <th colspan="4">内外评论纹深度</th>
+                <th>轮胎状态</th>
+            </tr>
+        </thead>
+
+        <tbody id="list">
+        </tbody>
+    </table>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串  
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    let layform = layui.use('form', function () {
+        layform = layui.form
+    })
+    let jcwhlist = []
+    let fkfs = []
+    let syjy = []
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+                fkfs.push({
+                    name: k.name
+                })
+            })
+            $('.fkfslist').html(str)
+            layform.render()
+        }
+    })
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=使用建议`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+                syjy.push({
+                    name: k.name
+                })
+            })
+            $('.syjy').html(str)
+            layform.render()
+        }
+    })
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=运营路况`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+                jcwhlist.push({
+                    name: k.name
+                })
+            })
+            $('.jcwhlist').html(str)
+            layform.render()
+        }
+    })
+
+    $(function () {
+        $('.carnum').html(decodeURI(decodeURI(GetRequest().name)))
+        $.ajax({
+            url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + decodeURI(decodeURI(GetRequest().name)),
+            type: 'get',
+            dataType: 'json',
+            success: function (res) {
+                console.log(res)
+                var arr = res.data.contents;
+                var str = '';
+                $.each(arr, function (i, n) {
+                    str += `<tr  class="carList">
+                <td>${i + 1}</td>
+                <td>${n.brand == null ? '' : n.brand}</td>
+                <td>${n.size == null ? '' : n.size}</td>
+                <td>${n.specification == null ? '' : n.specification}</td>
+                
+                <td>${n.produceId == null ? '' : n.produceId}</td>
+                <td>${n.tirePlace == null ? '' : n.tirePlace}</td>
+                <td>${n.errorOrTure == null ? '' : n.errorOrTure}</td>
+                <td>${n.pressureModi == null ? '' : n.pressureModi}</td>
+                <td>${n.coreCap == null ? '' : n.coreCap}</td>
+                <td>${n.minorRepairs == null ? '' : n.minorRepairs}</td>
+                <td>${n.deepLines1 == null ? '' : n.deepLines1}</td>
+                <td>${n.deepLines2 == null ? '' : n.deepLines2}</td>
+                <td>${n.deepLines3 == null ? '' : n.deepLines3}</td>
+                <td>${n.deepLines4 == null ? '' : n.deepLines4}</td>
+                <td>${n.tireStatus == null ? '' : n.tireStatus}</td>
+                <td>${n.useDevice == null ? '' : n.useDevice}</td>
+                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
+                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
+                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
+                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
+                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
+                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+                
+            </tr>`
+                })
+
+                $("#list").html(str);
+
+            },
+            error: function (err) {
+                alert("系统错误");
+
+            }
+        });
+
+    })
+    // 保存
+    function saveAll() {
+        let data = {}
+
+        // $('.jfxf input').each(function (i, n) {
+        //     data[$(this).data('name')] = $(this).val()
+        // })
+        data.custId = 1
+        data.userId = 1
+        $('.jcinfo input').each(function (i, n) {
+            data[$(this).data('name')] = $(this).val()
+        })
+        console.log($('.yylk').val(), '22')
+        data.roadStatus = $('.layui-unselect').eq(0).val()
+        data.paidMethod = $('.layui-unselect').eq(1).val()
+        data.carPlate = decodeURI(decodeURI(GetRequest().id))
+        $.ajax({
+            url: `${API}/erpManagement/gojianceweihuCarDataSure`,
+            type: 'get',
+            data: data,
+            success: function (res) {
+                $('.carList').each(function () {
+                    let datas = {}
+                    datas.carPlate = decodeURI(decodeURI(GetRequest().id))
+                    datas.orderId = res.data.inspectionOrder.id
+                    datas.formId = res.data.management.workId
+                    $(this).find('input').each(function () {
+
+
+                        datas[$(this).data('name')] = $(this).val()
+                    })
+                    $.ajax({
+                        url: `${API}/erpManagement/jianceweihuCarInspectionContent`,
+                        type: 'post',
+                        data: datas,
+                        success: function (res) {
+                            console.log(res)
+                        }
+                    })
+                })
+
+            }
+        })
+
+    }
+
+</script>
+
+</html>

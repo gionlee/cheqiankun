@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            overflow: auto;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .layui-table {
+            width: 600px;
+            margin:20px auto;
+        }
+        .btn {
+            width: 600px;
+            text-align: left;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="btn"><div class="layui-btn layui-btn-sm">新增</div></div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>客户名称</th>
+                    <td>期初金额</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="layui-input"></td>
+                    <td><input type="text" class="layui-input"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <a href="" class="layui-btn layui-btn-sm" onclick="save()">保存</a>
+            <a href="" class="layui-btn layui-btn-sm layui-btn-danger">取消</a>
+        </div>
+    </div>
+</body>
+<script>
+    $.ajax({
+        url: `${API}/erpUser/getcustUserById?custId=1`,
+        type: 'get',
+        success: function (res) {
+        }
+    })
+    function save () {
+        let data = {}
+        data.realName = $('.nicheng').val()
+        data.userId = 1
+        data.custId = 1
+        $.ajax({
+        url: `${API}/erpUser/UpdateUserRealName`,
+        data: data,
+        type: 'post',
+        success: function (res) {
+            $('.nicheng').val(res.data.realName)
+        }
+    })
+    }
+
+</script>
+
+</html>

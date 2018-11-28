@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            width: 200px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="select">
+            <div class="search">
+                <input class="layui-input" type="text" placeholder="单位名称      编码">
+            </div>
+            <div class="btn">
+                <button class="layui-btn layui-btn-normal">查询</button>
+            </div>
+        </div>
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead id="head">
+                <tr>
+                    <th>序号</th>
+                    <th colspan="4">服务类型</th>
+                    <th colspan="4">单位名称</th>
+                    <th colspan="4">地址</th>
+                    <th colspan="2">电话</th>
+                    <th colspan="4">客户评价</th>
+                </tr>
+            </thead>
+            <tbody class="weblist">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+    })
+
+
+    $.ajax({
+        url: `${API}/erpServiceWeb/getServiceWebPage`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.records
+            let str = ``
+            $.each(arr, function (i) {
+                let json = arr[i]
+                str += `<tr>
+            <td>${json.id}</td>
+            <td colspan="4">${json.serviceType == null ? '' : json.serviceType}</td>
+            <td colspan="4">${json.companyName == null ? '' : json.companyName}</td>
+            <td colspan="4">${json.companyAddress == null ? '' : json.companyAddress}</td>
+            <td colspan="2">${json.companyPhone == null ? '' : json.companyPhone}</td>
+            <td colspan="4">${json.evaluation == null ? '' : json.evaluation}</td>
+                </tr>`
+            })
+
+            $('.weblist').append(str)
+        }
+    })
+</script>
+
+</html>

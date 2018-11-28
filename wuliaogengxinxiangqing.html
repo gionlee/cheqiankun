@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        .title {
+            font-size: 16px;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .qianming {
+            width: 652px;
+            margin: 0 auto;
+        }
+
+        ul.qianming li {
+            display: inline-block;
+            width: 160px;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        ul.qianming input {
+            width: 100px;
+            display: inline-block;
+            border-bottom: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>工作日期</th>
+                <th>里程表数</th>
+                <th>工作单号</th>
+                <th colspan="2">客户名称</th>
+                <th>车辆牌号</th>
+                <th>挂车牌号</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" class="layui-input" value="2018-10-03"></td>
+                <td><input type="text" class="layui-input" value="0"></td>
+                <td><input type="text" class="layui-input" value="XSWX181003004"></td>
+                <td colspan="2"><input type="text" class="layui-input" value="天津港保税区金方舟国际贸易有限公司"></td>
+                <td><input type="text" class="layui-input" value="沪DT9126"></td>
+                <td><input type="text" class="layui-input" value="津AK2082"></td>
+            </tr>
+        </tbody>
+
+    </table>
+    <div class="title">
+        商品销售
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>品名</th>
+                <th>品牌</th>
+                <th colspan="2">规格</th>
+                <th>型号</th>
+                <th>产地</th>
+                <th>单位</th>
+                <th>生产编号</th>
+                <th>物料新旧</th>
+                <th>来源</th>
+                <th>去向</th>
+                <th style="width:5%;">数量</th>
+                <th style="width:5%;">单价</th>
+                <th style="width:5%;">金额</th>
+                <th style="width:10%;">操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><input type="text" class="layui-input" value="电器-胎压主机"></td>
+                <td><input type="text" class="layui-input" value="胎客"></td>
+                <td colspan="2"><input type="text" class="layui-input" value="CAN GPRS 蓝牙"></td>
+                <td><input type="text" class="layui-input" value="TM-CZD-A"></td>
+                <td><input type="text" class="layui-input" value="国产"></td>
+                <td><input type="text" class="layui-input" value="只"></td>
+                <td><input type="text" class="layui-input" value="1000150"></td>
+                <td><input type="text" class="layui-input" value="新物品"></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value="100.0"></td>
+                <td><input type="text" class="layui-input" value="100.0"></td>
+                <td>
+                    <div class="layui-btn  layui-btn-xs ">新增</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="title">
+        轮胎维修
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>品名</th>
+                <th>品牌</th>
+                <th colspan="2">规格</th>
+                <th>型号</th>
+                <th>产地</th>
+                <th>单位</th>
+                <th>生产编号</th>
+                <th>物料新旧</th>
+                <th>来源</th>
+                <th>去向</th>
+                <th style="width:5%;">数量</th>
+                <th style="width:5%;">单价</th>
+                <th style="width:5%;">金额</th>
+                <th style="width:10%;">操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td><input type="text" class="layui-input" value="电器-胎压主机"></td>
+                <td><input type="text" class="layui-input" value="胎客"></td>
+                <td colspan="2"><input type="text" class="layui-input" value="CAN GPRS 蓝牙"></td>
+                <td><input type="text" class="layui-input" value="TM-CZD-A"></td>
+                <td><input type="text" class="layui-input" value="国产"></td>
+                <td><input type="text" class="layui-input" value="只"></td>
+                <td><input type="text" class="layui-input" value="1000150"></td>
+                <td><input type="text" class="layui-input" value="新物品"></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value="100.0"></td>
+                <td><input type="text" class="layui-input" value="100.0"></td>
+                <td>
+                    <div class="layui-btn  layui-btn-xs ">新增</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="title">
+        车辆维修
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>汽修项目</th>
+                <th>维修科目</th>
+                <th>维修方式</th>
+                <th>工时费用</th>
+                <th>备注</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" class="layui-input" value="发动机"></td>
+                <td><input type="text" class="layui-input" value="发动机大修"></td>
+                <td><input type="text" class="layui-input" value="调试"></td>
+                <td><input type="text" class="layui-input" value="500"></td>
+                <td><input type="text" class="layui-input" value="无"></td>
+                <td>
+                    <div class="layui-btn  layui-btn-xs ">新增</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- <div class="title">
+        耗材明细
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th style="width:10%;">来源</th>
+                <th>品名</th>
+                <th>品牌</th>
+                <th>规格</th>
+                <th>型号</th>
+                <th>产地</th>
+                <th>状态</th>
+                <th style="width:5%;">单位</th>
+                <th style="width:5%;">数量</th>
+                <th>备注</th>
+                <th style="width:15%;">操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="0">金方舟</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td><input type="text" class="layui-input" value=""></td>
+                <td>
+                    <div class="layui-btn  layui-btn-xs ">新增</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
+                    <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                </td>
+            </tr>
+        </tbody>
+    </table> -->
+    <table class="layui-table">
+        <tbody>
+            <tr>
+                <td style="width:10%;">费用合计</td>
+                <td style="width:10%;"><input type="text" class="layui-input" value="500"></td>
+                <td style="width:10%;">消费积分</td>
+                <td style="width:10%;"><input type="text" class="layui-input" value="500"></td>
+                <td style="width:10%;">实收金额</td>
+                <td style="width:10%;"><input type="text" class="layui-input" value="500"></td>
+                <td style="width:10%;">付款方式</td>
+                <td style="width:10%;" class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select name="interest" lay-filter="aihao">
+                                <option value=""></option>
+                                <option value="0">银行支票</option>
+                                <option value="1" selected="">网银电汇</option>
+                            </select>
+                        </div>
+                    </div>
+                </td>
+                <td style="width:10%;">本次积分</td>
+                <td style="width:10%;"><input type="text" class="layui-input" value="500"></td>
+            </tr>
+        </tbody>
+    </table>
+    <ul class="qianming">
+        <li>
+            <label for="fwjb">服务经办</label>
+            <input type="text" id='fwjb' class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">库管经办</label>
+            <input type="text" id='fwjb' class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">客户经办</label>
+            <input type="text" id='fwjb' class="layui-input">
+        </li>
+        <li>
+            <label for="fwjb">财务经办</label>
+            <input type="text" id='fwjb' class="layui-input">
+        </li>
+    </ul>
+    <div class="title">
+        <button class="layui-btn  layui-btn-sm layui-btn-normal">保存</button>
+    </div>
+</body>
+<script>
+    function back() {
+        window.location.href = './managemeninfo.html'
+    }
+</script>
+
+</html>

@@ -1,0 +1,342 @@
+<!-- 系统设置页面 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/Global.js"></script>
+  <style>
+    .wrap {
+      padding: 20px;
+    }
+
+    .select {
+      height: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .search {
+      width: 200px;
+      height: 38px;
+      margin: 0 auto;
+      display: inline-block;
+      padding-top: 1px;
+
+    }
+
+    .layui-input {
+      width: 200px;
+    }
+
+    .btn {
+      display: inline-block;
+
+    }
+
+    .systemsetup {
+      cursor: pointer;
+    }
+
+    .winbody {
+      padding: 10px;
+      display: none;
+    }
+
+    .editBody {
+      padding: 10px;
+      display: none;
+    }
+
+    .layui-input {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="select">
+      <div class="search">
+        <button class="layui-btn layui-btn-normal" onclick="add()">设置</button>
+      </div>
+      <div class="search">
+        <input class="layui-input" id="pid1" type="text">
+      </div>
+      <div class="btn">
+        <span class="systemsetup" onclick="she()">设置等同</span>
+      </div>
+    </div>
+    <table id="table" lay-filter="table" class="layui-table">
+      <thead id="head">
+        <tr>
+          <th colspan="2">序号</th>
+          <th colspan="2">品牌</th>
+          <th colspan="4">规格</th>
+          <th colspan="3">型号</th>
+          <th colspan="2">产地</th>
+          <th colspan="2">速度上限</th>
+          <th colspan="2">温度上限</th>
+          <th colspan="4">胎压下限</th>
+          <th colspan="4">胎压上限</th>
+          <th colspan="4">电压下限</th>
+          <th colspan="4">编辑</th>
+        </tr>
+      </thead>
+      <tbody class="weblist">
+
+      </tbody>
+    </table>
+
+  </div>
+  <!-- 设置的·页面· -->
+  <div class="winbody">
+    <table class="layui-table">
+      <tr>
+        <td>速度 km/h</td>
+        <td><input type="text" data-name="refDt" id="speed1" class="layui-input sj" value=""></td>
+      </tr>
+      <tr>
+        <td>温度℃</td>
+        <td><input type="text" data-name="refDt" id="temperature1" class="layui-input sj" value=""></td>
+      </tr>
+      <tr>
+        <td>胎压Kg/cm2</td>
+        <td><input type="text" data-name="refDt" id="pressure1" placeholder="上限百分比" class="layui-input sj"  value=""><input type="text" id="pressureSmall1" placeholder="下限百分比"  data-name="refDt" class="layui-input sj" value=""></td>
+      </tr>
+      <tr>
+        <td>电压</td>
+        <td><input type="text" data-name="refDt" id="voltageSmall1" class="layui-input sj" value=""></td>
+      </tr>
+    </table>
+  </div>
+  <!-- 修改的页面 -->
+  <div class="editBody">
+    <table class="layui-table">
+      <thead>
+        <tr>
+          <th>品牌</th>
+          <th>规格</th>
+          <th>型号</th>
+          <th>产地</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="add">
+          <td><input type="text" id="brand" class="layui-input sj" value=""><input type="hidden" id="id" value=""><input type="hidden" id="pid" value=""></td>
+          <td><input type="text" id="specifications" class="layui-input" value=""></td>
+          <td><input type="text" id="model" class="layui-input" value=""></td>
+          <td><input type="text" id="place" class="layui-input" value=""></td>
+        </tr>
+        <tr>
+          <td colspan="2">速度 km/h</td>
+          <td colspan="2"><input type="text" id="speed" class="layui-input"></td>
+        </tr>
+        <tr>
+          <td colspan="2">温度℃</td>
+          <td colspan="2"><input type="text" id="temperature" class="layui-input"></td>
+        </tr>
+        <tr>
+          <td colspan="2">胎压KPA</td>
+          <td colspan="1"><input type="text" id="pressure" class="layui-input" ></td>
+          <td colspan="1"><input type="text" id="pressureSmall" class="layui-input" ></td>
+        </tr>
+        <tr>
+          <td colspan="2">电压</td>
+          <td colspan="2"><input type="text" id="voltageSmall" class="layui-input"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+	
+	var pids=1;
+  layui.use('table', function () {
+    var table = layui.table;
+  })
+
+	$(function(){
+		shu();
+	});
+
+   function shu(){
+   	$.ajax({
+    url: `${API}/information/selectList`,
+    type: 'get',
+    data:{
+    	custId:loadUserInfo.customer.id              //客户id 后期修改
+    },
+    success: function (res) {
+    	let str = ''
+      let json = res.data
+      $('.weblist').html("");
+      $.each(json, function(i,n) {
+      	str += `<tr>
+            <td colspan="2">${n.id}</td>
+            <td colspan="2">${n.brand}</td>
+            <td colspan="4">${n.specifications}</td>
+            <td colspan="3">${n.model}</td>
+            <td colspan="2">${n.place}</td>
+            <td colspan="2">${n.speed}</td>
+            <td colspan="2">${n.temperature}</td>
+            <td colspan="4">${n.pressureSmall}</td>
+            <td colspan="4">${n.pressure}</td>
+            <td colspan="4">${n.voltageSmall}</td>
+            <td colspan="4" onclick="editBody(${n.id})"><div class="layui-btn layui-btn-xs ">修改</div></td>
+                </tr>`
+      });
+      
+      $('.weblist').html(str)
+    }
+  })
+   }
+  
+  // 设置·的弹框·
+  function add() {
+    layui.use('layer', function () {
+      let layer = layui.layer;
+      layer.open({
+        type: 1,
+        content: $('.winbody'),
+        title: '设置',
+        area: ['450px'],
+        btn: ['保存', '取消'],
+        maxmin: true,
+        yes: function (index) {
+          $.ajax({
+            url: `${API}/information/updateAll`,
+            type: 'get',
+            data:{
+            	pid:pids,
+            	speed:$("#speed1").val(),
+            	pressure:$("#pressure1").val(),
+            	pressureSmall:$("#pressureSmall1").val(),
+            	voltageSmall:$("#voltageSmall1").val(),
+            	temperature:$("#temperature1").val()
+            },
+            success: function (res) {
+            	if(res.code==0){
+            		 shu();
+                 layer.msg('设置成功！')
+                 layer.close(index)
+            		 $("#speed").val("");
+		             $("#pressure").val("");
+		             $("#pressureSmall").val("");
+		             $("#voltageSmall").val("");
+		             $("#temperature").val("");
+            	}else{
+            		alert("设置失败");
+            	}
+            }
+          })
+
+        }
+      })
+    });
+  }
+  // 修改的页面
+  function editBody(id) {
+  	$.ajax({
+            url: `${API}/information/selectById?id=`+id,
+            type: 'get',
+            success: function (res) {
+              $("#id").val(res.data.id);
+              $("#brand").val(res.data.brand);
+              $("#pid").val(res.data.pid);
+              $("#specifications").val(res.data.specifications);
+              $("#model").val(res.data.model);
+              $("#place").val(res.data.place);
+              $("#speed").val(res.data.speed);
+              $("#pressure").val(res.data.pressure);
+              $("#pressureSmall").val(res.data.pressureSmall);
+              $("#voltageSmall").val(res.data.voltageSmall);
+              $("#temperature").val(res.data.temperature);
+            }
+          })
+    layui.use('layer', function () {
+      let layer = layui.layer;
+      layer.open({
+        type: 1,
+        content: $('.editBody'),
+        title: '修改',
+        area: ['920px'],
+        btn: ['保存', '取消'],
+        maxmin: true,
+        yes: function (da) {
+          $.ajax({
+            url: `${API}/information/updateInformation`,
+            type: 'get',
+            data:{
+            	id:$("#id").val(),
+            	pid:$("#pid").val(),
+            	brand:$("#brand").val(),
+            	specifications:$("#specifications").val(),
+            	model:$("#model").val(),
+            	place:$("#place").val(),
+            	speed:$("#speed").val(),
+            	pressure:$("#pressure").val(),
+            	pressureSmall:$("#pressureSmall").val(),
+            	voltageSmall:$("#voltageSmall").val(),
+            	temperature:$("#temperature").val()
+            },
+            success: function (res) {
+            	if(res.code==0){
+            		shu();
+            		layer.msg('设置成功！')
+                 layer.close(da)
+            		$("#id").val("");
+	              $("#brand").val("");
+	              $("#pid").val("");
+	              $("#specifications").val("");
+	              $("#model").val("");
+	              $("#place").val("");
+	              $("#speed").val("");
+	              $("#pressure").val("");
+	              $("#pressureSmall").val("");
+	              $("#voltageSmall").val("");
+	              $("#temperature").val("");
+            	}else{
+            		alert("修改失败");
+            	}
+              
+            }
+          })
+
+        }
+      })
+    });
+  }
+  
+  function she(){
+  	var pid=$("#pid1").val();
+  	$.ajax({
+    url: `${API}/information/equivalent`,
+    type: 'get',
+    data:{
+    	pid:pid,
+    	cid:1
+    },
+    success: function (res) {
+     if(res.code==0){
+      	shu();
+      	alert("修改成功");
+     }else{
+     	alert("修改失败");
+     }
+    }
+  })
+  }
+</script>
+
+</html>

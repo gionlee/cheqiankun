@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <script src="./js/xlsx.full.min.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 30px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+            height: 30px;
+            line-height: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height:30px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            /* padding: 0 5px; */
+            min-height: 30px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+        .hover-body {
+            position: relative;
+        }
+        .hover-show {
+            position:absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 10;
+            display: none;
+        }
+        .hover-show li {
+            width: 150px;
+            height: 30px;
+            background: #fff;
+            border-bottom:1px solid #ccc;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+        }
+        .hover-show li:hover {
+            background: #ccc;
+            /* color: #fff; */
+        }
+        .hover-show li ul {
+
+        }
+        .hover-show div {
+            top: 0;
+            position: absolute;
+            width: 150px;
+        }
+        .hover-show div ul {
+            position: absolute;
+            top: 0;
+            left: 150px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
+    <div class="wrap">
+
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="min-width:60px;">入库时间</th>
+                    <th>仓库</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>数量</th>
+                    <th style="width:15%;">生产编号</th>
+                    <th style="width:10%;">二维码</th>
+                    <th style="width:10%;">RFID</th>
+                    <th>单价</th>
+                    <th>总金额</th>
+                    <th>发票类型</th>
+                </tr>
+            </thead>
+            <tbody class="saves">
+                <tr>
+                    <td class="ai">
+                        <input type="text" class="layui-input rkdate">
+                    </td>
+                    <td class="layui-form ai">
+                        <div class="layui-input-block">
+                            <select class="cangku" name="interest" lay-filter="aihao">
+                                <option value="金方舟">金方舟</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="ai">
+                        <input type="text" onclick="showLv1(true)" data-name="materielName" class="layui-input save-data ai-data materielName"
+                            value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielBrand" class="layui-input save-data materielBrand" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielSpecifications" class="layui-input save-data materielSpecifications"
+                            value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielModel" class="layui-input save-data materielModel" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielPlace" class="layui-input save-data materielPlace" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielState" class="layui-input save-data materielState" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielUnit" class="layui-input save-data materielUnit" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielNumber" class="layui-input save-data" value="">
+                    </td>
+                    <td>
+                        <span class="scbh"></span>
+                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
+                    </td>
+                    <td class="ercode">
+
+                    </td>
+                    <td class="rfid">
+
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielStoragePrice" class="layui-input" value="">
+                    </td>
+                    <td class="prices ai" style="width:100px;">
+
+                    </td>
+                    <td class="layui-form ai">
+                        <div class="layui-input-block">
+                            <select class="fplx" name="" id="">
+
+                            </select>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="hover-body">
+            <ul class="hover-show">
+
+            </ul>
+        </div>
+        <div style="margin:20px auto;text-align: center;"><a class="layui-btn layui-btn-sm" onclick="save()">保存</a></div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>入库时间</th>
+                    <th>仓库</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>数量</th>
+                    <th>生产编号</th>
+                    <th>二维码</th>
+                    <th>RFID</th>
+                    <th>单价</th>
+                    <th>总金额</th>
+                    <th>发票类型</th>
+                </tr>
+            </thead>
+            <tbody class="matlist"></tbody>
+        </table>
+
+    </div>
+</body>
+<script>
+    let layform = ''
+    let layer = ''
+    layui.use('form', function () {
+        layform = layui.form
+    })
+    layui.use('layer', function () {
+        layer = layui.layer
+    })
+    layui.use('laydate',function () {
+        layui.laydate.render({
+            elem: '.rkdate' //指定元素
+        });
+    })
+    let bhlist = []
+    let materielProductionId = [] // 生产编号
+    let materielRfid = [] // RFID
+    let materielEqcode = [] // 二维码
+    let materielProductionIdai = [] // ai生产编号
+    let materielRfidai = [] // aiRFID
+    let materielEqcodeai = [] // ai二维码
+    let isAiClick = false
+    $('#seeInfo').on('click', function () {
+        $('#excel-file').click()
+    })
+    
+    $('#excel-file').change(function (e) {
+        var files = e.target.files;
+
+        var fileReader = new FileReader();
+        fileReader.onload = function (ev) {
+            try {
+                var data = ev.target.result,
+                    workbook = XLSX.read(data, {
+                        type: 'binary'
+                    }), // 以二进制流方式读取得到整份excel表格对象
+                    persons = []; // 存储获取到的数据
+            } catch (e) {
+                alert('文件读取失败！');
+                return;
+            }
+
+            // 表格的表格范围，可用于判断表头是否数量是否正确
+            var fromTo = '';
+            // 遍历每张表读取
+
+            for (var sheet in workbook.Sheets) {
+                if (workbook.Sheets.hasOwnProperty(sheet)) {
+                    fromTo = workbook.Sheets[sheet]['!ref'];
+                    persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+                    // break; // 如果只取第一张表，就取消注释这行
+                }
+            }
+
+            bhlist = persons
+            let ercode = ''
+            let scbh = ''
+            let rfid = ''
+
+
+            if (isAiClick) {
+                $.each(bhlist, function (i, n) {
+                    ercode += bhlist[i]['二维码'] + ','
+                    scbh += bhlist[i]['生产编号'] + ','
+                    rfid += bhlist[i]['RFID'] + ','
+                    materielProductionIdai.push(bhlist[i]['生产编号'])
+                    materielRfidai.push(bhlist[i]['RFID'])
+                    materielEqcodeai.push(bhlist[i]['二维码'])
+                })
+                $('#seeAiInfo').html('更改')
+                if (scbh.length > 26) {
+                    $('.scbhai').html(scbh.slice(0, 20) + '...')
+                    $('.scbhai').attr('title', scbh.slice(0, scbh.length - 1))
+                } else {
+                    $('.scbhai').html(scbh.slice(0, scbh.length - 1))
+                }
+                if (ercode.length > 26) {
+                    $('.ercodeai').html(ercode.slice(0, 20) + '...')
+                    $('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
+                } else {
+                    $('.ercodeai').html(ercode.slice(0, ercode.length - 1))
+                }
+                if (rfid.length > 26) {
+                    $('.rfidai').html(rfid.slice(0, 20) + '...')
+                    $('.rfidai').attr('title', rfid.slice(0, rfid.length - 1))
+                } else {
+                    $('.rfidai').html(rfid.slice(0, rfid.length - 1))
+                }
+            } else {
+                $.each(bhlist, function (i, n) {
+                    ercode += bhlist[i]['二维码'] + ','
+                    scbh += bhlist[i]['生产编号'] + ','
+                    rfid += bhlist[i]['RFID'] + ','
+                    materielProductionId.push(bhlist[i]['生产编号'])
+                    materielRfid.push(bhlist[i]['RFID'])
+                    materielEqcode.push(bhlist[i]['二维码'])
+                })
+                $('#seeInfo').html('更改')
+                if (scbh.length > 26) {
+                    $('.scbh').html(scbh.slice(0, 20) + '...')
+                    $('.scbh').attr('title', scbh.slice(0, scbh.length - 1))
+                } else {
+                    $('.scbh').html(scbh.slice(0, scbh.length - 1))
+                }
+                if (ercode.length > 26) {
+                    $('.ercode').html(ercode.slice(0, 20) + '...')
+                    $('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
+                } else {
+                    $('.ercode').html(ercode.slice(0, ercode.length - 1))
+                }
+                if (rfid.length > 26) {
+                    $('.rfid').html(rfid.slice(0, 20) + '...')
+                    $('.rfid').attr('title', rfid.slice(0, rfid.length - 1))
+                } else {
+                    $('.rfid').html(rfid.slice(0, rfid.length - 1))
+                }
+            }
+
+
+
+        };
+
+        // 以二进制方式打开文件
+        fileReader.readAsBinaryString(files[0]);
+    });
+    let fplx = []
+
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=发票类型`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+                fplx.push({
+                    name: k.name
+                })
+            })
+            $('.fplx').html(str)
+            layform.render()
+            selWl()
+        }
+    })
+    // 查询物料
+    function selWl() {
+        $.ajax({
+            url: `${API}/erpWarehouse/getMateriels?custId=${loadUserInfo.user.id}`,
+            type: 'get',
+            success: function (res) {
+                let arr = res.data
+                let str = ''
+                $.each(arr, function (i, n) {
+                    let fp = fplx[n.materiel_invoice_type].name
+                    str +=
+                        `<tr>
+                    <td>${n.materiel_storage_date == null ? '' : n.materiel_storage_date}</td>
+                    <td>${n.war_name == null ? '' : n.war_name}</td>
+                    <td>${n.materiel_name == null ? '' : n.materiel_name}</td>
+                    <td>${n.materiel_brand == null ? '' : n.materiel_brand}</td>
+                    <td>${n.materiel_Specifications == null ? '' : n.materiel_Specifications}</td>
+                    <td>${n.materiel_model == null ? '' : n.materiel_model}</td>
+                    <td>${n.materiel_place == null ? '' : n.materiel_place}</td>
+                    <td>${n.materiel_state == null ? '' : n.materiel_state}</td>
+                    <td>${n.materiel_unit == null ? '' : n.materiel_unit}</td>
+                    <td>${n.num == null ? '' : n.num}</td>
+                    <td>${n.materiel_production_id == null ? '' : n.materiel_production_id}</td>
+                    <td>${n.materiel_eqcode == null ? '' : n.materiel_eqcode}</td>
+                    <td>${n.materiel_rfid == null ? '' : n.materiel_rfid}</td>
+                    <td>${n.materiel_storage_price == null ? '' : n.materiel_storage_price}</td>
+                    <td>${n.totalPrice == null ? '' : n.totalPrice}</td>
+                    <td>${fp == null ? '' : fp}</td>
+                    <tr>`
+                })
+
+                $('.matlist').html(str)
+            }
+        })
+    }
+
+    function save() {
+        let dataai = {}
+        let data = {}
+        $('.saves input').each(function (i, n) {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $.each(ckList, function (i, n) {
+            if (n.warName == $('.cangku').val()) {
+                data.warehouseId = n.id
+            }
+        })
+        data.qrcodes = materielEqcode.toString()
+        data.rfIds = materielRfid.toString()
+        data.shengIds = materielProductionId.toString()
+        data.jingban = loadUserInfo.user.realName
+        data.custName = loadUserInfo.user.realName
+        data.faPiao = $('.fplx').val()
+        data.custId = loadUserInfo.customer.id
+        $('.saves input').each(function (i, n) {
+            dataai[$(this).data('name')] = $(this).val()
+        })
+        $.each(ckList, function (i, n) {
+            if (n.warName == $('.cangku').val()) {
+                dataai.warehouseId = n.id
+            }
+        })
+        if (isAI) {
+            data.tai = true
+            data.qrcodes = materielEqcodeai.toString()
+            data.rfIds = materielRfidai.toString()
+            data.shengIds = materielProductionIdai.toString()
+            data.jingban = loadUserInfo.user.realName
+            data.custName = loadUserInfo.user.realName
+            data.faPiao = $('.fplx').val()
+            data.custId = loadUserInfo.customer.id
+            data.zhiNeng = true
+            if (data.wuLiaoName == '') {
+                alert('请选择仓库！')
+            } else if (data.faPiao == '') {
+                alert('请选择发票类型')
+            }
+        } else {
+            data.zhiNeng = false
+            data.tai = false
+        }
+                    $.ajax({
+                        url: `${API}/erpWarehouse/saveMateriels`,
+                        type: 'post',
+                        data: data,
+                        success: function (res) {
+                            if (res.code == 0) {
+                                layer.msg('保存成功！')
+
+                            } else {
+                                layer.msg(res.msg)
+
+                            }
+                        }
+                    })
+
+    }
+    // 查询仓库
+    let ckList = []
+    $.ajax({
+        url: `${API}/erpCustomerWarehouse/getcustWarehouseByCustId?custId=${loadUserInfo.user.id}`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data
+            ckList = res.data
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.warName}" >${k.warName}</option>`
+            })
+            $('.cangku').html(str)
+            layform.render()
+        }
+    })
+    //  查找大类
+    function showLv1(show, bol) {
+
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTop`,
+    type: 'get',
+    success: function (res) {
+        let str = ''
+        let arrs = res.data
+        $.each(arrs, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+        })
+        $('.hover-show').html(str)
+        if (show) {
+            $('.hover-show').show()
+        }
+
+        isAI = bol
+    }
+})
+}
+// 查找品名
+function showLv2(zid, _this) {
+$(`.hover-show .list-2`).html('')
+aiZid = zid
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找规格
+function showLv3(zid, _this) {
+$(`.hover-show .list-3`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+        })
+        str += '</ul>'
+        console.log(str)
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找品牌
+function showLv4(zid, _this) {
+$(`.hover-show .list-4`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找型号
+function showLv5(zid, _this) {
+$(`.hover-show .list-5`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+
+function showLv6(zid, _this) {
+$(`.hover-show .list-6`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        console.log(res)
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+        })
+        str += '</ul>'
+        console.log(str)
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找
+function showLv7(zid, _this) {
+$(`.hover-show .list-7`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+
+function showLv8(zid, _this) {
+$(`.hover-show .list-8`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+    let isAI = false
+    let isFcAi = true // 是否第一次选中智能轮胎
+    function setWlVal(_this) {
+
+        if (!isAI) {
+            $('.materielUnit').val($(_this).text())
+            $('.materielState').val($(_this).parents('.list-8').prev().text())
+            $('.materielPlace').val($(_this).parents('.list-7').prev().text())
+            $('.materielModel').val($(_this).parents('.list-6').prev().text())
+            $('.materielSpecifications').val($(_this).parents('.list-4').prev().text())
+            $('.materielBrand').val($(_this).parents('.list-5').prev().text())
+            $('.materielName').val($(_this).parents('.list-3').prev().text())
+        } else {
+            $('.materielUnitAI').val($(_this).text())
+            $('.materielStateAI').val($(_this).parents('.list-8').prev().text())
+            $('.materielPlaceAI').val($(_this).parents('.list-7').prev().text())
+            $('.materielModelAI').val($(_this).parents('.list-6').prev().text())
+            $('.materielSpecificationsAI').val($(_this).parents('.list-5').prev().text())
+            $('.materielBrandAI').val($(_this).parents('.list-4').prev().text())
+        }
+        if ($('.materielName').val() == '智能轮胎' && isFcAi) {
+            isFcAi = false
+            $('.ai').prop('rowspan', '2')
+            $('.saves').append(
+                `<tr class="AIlist"><td>
+                        <input type="text" onclick="showLv1(true,true)" data-name="materielBrand" class="layui-input ai-data materielBrandAI" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielSpecifications" class="layui-input ai-data materielSpecificationsAI"
+                            value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielModel" class="layui-input ai-data materielModelAI" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielPlace" class="layui-input ai-data materielPlaceAI" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielState" class="layui-input ai-data materielStateAI" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielUnit" class="layui-input ai-data materielUnitAI" value="">
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielNumber" class="layui-input ai-data" value="">
+                    </td>
+                    <td>
+                        <span class="scbhai"></span>
+                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeAiInfo">上传</button>
+                    </td>
+                    <td class="ercodeai">
+
+                    </td>
+                    <td class="rfidai">
+
+                    </td>
+                    <td>
+                        <input type="text" data-name="materielStoragePrice" class="layui-input" value="">
+                    </td></tr>`
+            )
+            $('#seeAiInfo').on('click', function () {
+        $('#excel-file').click()
+        isAiClick = true
+    })
+        } else {
+            if (!isAI) {
+                $('.ai').prop('rowspan', '1')
+                $('.AIlist').remove()
+                isFcAi = true
+            }
+        }
+    }
+    $(document).on('click', function () {
+        $('.hover-show').hide()
+    })
+    showLv1()
+</script>
+
+</html>

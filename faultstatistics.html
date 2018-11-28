@@ -1,0 +1,106 @@
+<!--  故障统计页面 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/Global.js"></script>
+  <style>
+    .wrap {
+      padding: 20px;
+    }
+
+    .select {
+      height: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .search {
+      width: 200px;
+      height: 38px;
+      margin: 0 auto;
+      display: inline-block;
+      padding-top: 1px;
+
+    }
+
+    .layui-input {
+      width: 200px;
+    }
+
+    .btn {
+      display: inline-block;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="select">
+      <div class="search">
+        <div class="layui-form">
+          <div class="layui-form-item">
+            <div class="layui-input-inline"></div>
+            <select name="interest" lay-filter="aihao">
+              <option value="0">上月</option>
+              <option value="1" selected="">上半年</option>
+              <option value="1" selected="">下半年</option>
+              <option value="1" selected="">默认当月</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="btn">
+      <button class="systemsetup layui-btn layui-btn-sm">故障统计</button>
+    </div>
+  </div>
+  <table id="table" lay-filter="table" class="layui-table">
+    <thead id="head">
+      <tr>
+        <th rowspan="2">统计</th>
+        <th rowspan="2">胎压超高</th>
+        <th rowspan="2">胎压超低</th>
+        <th rowspan="2">急剧泄压</th>
+        <th rowspan="2">胎温超高</th>
+        <th colspan="4">车内显示器</th>
+        <th colspan="2">中继器</th>
+        <th colspan="4">胎内传感器</th>
+      </tr>
+      <th>显示故障</th>
+      <th>接口故障</th>
+      <th>USB故障</th>
+      <th>发送故障</th>
+      <th>接收故障</th>
+      <th>传输故障</th>
+      <th>胎压故障</th>
+      <th>胎温故障</th>
+      <th>电池欠压</th>
+      <th>失联</th>
+    </thead>
+    <tbody class="weblist">
+
+    </tbody>
+  </table>
+  </div>
+</body>
+<script>
+
+
+
+</script>
+
+</html>

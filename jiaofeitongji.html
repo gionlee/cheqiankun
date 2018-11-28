@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+        }
+
+        .layui-input {
+            /* border: 0; */
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 40px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 720px;
+            padding: 10px;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="search">
+            <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        </div>
+        <div class="btn">
+            <button class="layui-btn layui-btn-normal">查询</button>
+        </div>
+
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th colspan="12" style="text-align:right;padding-right: 30px;">总金额：<span class="nums"></span>元</th>
+                </tr>
+                <tr>
+                    <th>序号</th>
+                    <th>日期</th>
+                    <th>交费单号</th>
+                    <th>交费方式</th>
+                    <th>客户名称</th>
+                    <th>服务项目</th>
+                    <th>服务期限</th>
+                    <th>费用</th>
+                    <th>优惠</th>
+                    <th>实收</th>
+                    <th>核准人</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody class="list"></tbody>
+        </table>
+    </div>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+    function seeInfo() {
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                area: ['740px'],
+                title: '车辆牌号',
+                content: $('.winbody')
+            });
+        })
+    }
+    $.ajax({
+        url:`${API}/erpServiceOrderProject/selectOrder?custId=1`,
+        type:'get',
+        success: function (res) {
+            let arr= res.data
+            let str = ''
+            let nums = 0
+            $.each(arr,function (i,n) {
+                str+=`<tr>
+                    <td>${i+1}</td>
+                    <td>${n.date == null ? '' : n.date}</td>
+                    <td>${n.orderId == null ? '' : n.orderId}</td>
+                    <td>${n.payWay == null ? '' : n.payWay}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>${n.moneySum == null ? '' : n.moneySum}</td>
+                    <td>${n.checkPeople == null ? '' : n.checkPeople}</td>
+                    <td>${n.bz == null ? '' : n.bz}</td>
+                    </tr>`
+                    nums += n.moneySum
+            })
+            $('.list').html(str)
+            $('.nums').html(nums)
+
+        }
+    })
+</script>

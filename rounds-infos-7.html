@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>后台登录-X-admin2.0</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+	/>
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<style>
+		.headb,
+		bodyb {
+			width: 300px;
+			margin: 0 auto;
+			height: 120px;
+			border: 3px solid #666;
+			border-top-left-radius: 30px;
+			border-top-right-radius: 30px;
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 40px;
+			z-index: -1
+		}
+
+		.bodyb {
+			border-radius: 0;
+			top: 170px;
+			height: 405px;
+		}
+
+		.my_round_img img {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+	<!--<link rel="stylesheet" type="text/css" href="css/common.css"/>-->
+</head>
+
+<body>
+
+	<div class="my_content">
+		<!-- <div class="headb">
+		</div> -->
+		<div class="headb bodyb"></div>
+		<p class="my_title" id="mycarNum">车牌号码车牌号码</p>
+		<div class="my_round_box">
+			<div>
+
+			</div>
+			<div>
+				<!-- 左侧外轮 -->
+				<div class="my_round my_round_left my_round_info_right">
+					<div class="my_round_img police_type01">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id01"></p>
+
+						<p class="positioner_id01"> </p>
+						<p class="voltage01"></p>
+					</div>
+				</div>
+				<!-- 左侧内轮 -->
+				<!--<div class="my_round my_round_left">
+						<div class="my_round_img">
+							<img src="./images/hong.png" alt="">
+						</div>
+						<div class="my_round_info">
+							<p></p>
+							<p></p>
+						</div>
+					</div>-->
+				<!-- 右侧外轮 -->
+				<div class="my_round my_round_right">
+					<div class="my_round_img police_type02">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id02"></p>
+
+						<p class="positioner_id02"> </p>
+						<p class="voltage02"></p>
+					</div>
+				</div>
+				<!-- 右侧内轮 -->
+				<!--<div class="my_round my_round_right my_round_info_right">
+						<div class="my_round_img">
+							<img src="./images/hong.png" alt="">
+						</div>
+						<div class="my_round_info">
+							<p></p>
+							<p></p>
+						</div>
+					</div>-->
+			</div>
+
+
+
+			<div>
+				<!-- 左侧外轮 -->
+				<div class="my_round my_round_left my_round_info_right">
+					<div class="my_round_img police_type11">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id11"></p>
+
+						<p class="positioner_id11"> </p>
+						<p class="voltage11"></p>
+					</div>
+				</div>
+				<!-- 左侧内轮 -->
+				<!-- <div class="my_round my_round_left">
+					<div class="my_round_img">
+							<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p></p>
+						<p></p>
+					</div>
+				</div> -->
+				<!-- 右侧外轮 -->
+				<div class="my_round my_round_right">
+					<div class="my_round_img police_type12">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id12"></p>
+
+						<p class="positioner_id12"> </p>
+						<p class="voltage12"></p>
+					</div>
+				</div>
+				<!-- 右侧内轮 -->
+				<!-- <div class="my_round my_round_right my_round_info_right">
+					<div class="my_round_img">
+							<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p></p>
+						<p></p>
+					</div>
+				</div> -->
+			</div>
+
+			<div>
+				<!-- 左侧外轮 -->
+				<div class="my_round my_round_left my_round_info_right">
+					<div class="my_round_img police_type21">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id21"></p>
+
+						<p class="positioner_id21"> </p>
+						<p class="voltage21"></p>
+					</div>
+				</div>
+				<!-- 左侧内轮 -->
+				<!-- <div class="my_round my_round_left">
+					<div class="my_round_img police_type12">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id12"></p>
+						<p class="positioner_id12"> </p>
+					</div>
+				</div> -->
+				<!-- 右侧外轮 -->
+				<div class="my_round my_round_right">
+					<div class="my_round_img police_type22">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info">
+						<p class="sensors_id22"></p>
+
+						<p class="positioner_id22"> </p>
+						<p class="voltage22"></p>
+					</div>
+				</div>
+				<!-- 右侧内轮 -->
+				<!-- <div class="my_round my_round_right my_round_info_right">
+					<div class="my_round_img police_type14">
+						<img src="./images/lv.png" alt="">
+					</div>
+					<div class="my_round_info ">
+						<p class="sensors_id14"></p>
+						<p class="positioner_id14"> </p>
+					</div>
+				</div> -->
+			</div>
+
+			<div style="height: 80px; width: 380px;position: relative;margin-left:10px;">
+				<!-- 备胎 -->
+				<div class="my_round_info" style="position: absolute;left: 140px;top: 10px;">
+					<p class="sensors_id30"></p>
+				</div>
+				<div class="my_round my_round_bot my_round_info_right">
+					<div class="my_round_img police_type30">
+						<img src="./images/lv.png" alt="">
+					</div>
+
+				</div>
+				<div class="my_round_info" style="position: absolute;right: 70px;top:10px;">
+					<p class="positioner_id30"> </p>
+				</div>
+
+
+				<p class="voltage30" style="padding-left: 222px;font-size: 14px;color: #333;font-weight: 600;"></p>
+			</div>
+		</div>
+
+		<div class="my_round_info_table" style="width: 200px; display: none;">
+			<table class="layui-table" lay-size="sm" border="1" style="border-collapse: collapse;">
+				<tr>
+					<td>轮胎规格</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>轮胎品牌</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>轮胎型号</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>轮胎编号</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>传感器ID</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>RFID</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>二维码</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>轮胎纹深</td>
+					<td>12</td>
+				</tr>
+				<tr>
+					<td>轮胎里程</td>
+					<td>12</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+	var _hmt = _hmt || [];
+	(function () {
+		var hm = document.createElement("script");
+		hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+		var s = document.getElementsByTagName("script")[0];
+		s.parentNode.insertBefore(hm, s);
+	})();
+</script>
+<style type="text/css">
+	.my_content {
+		width: 480px;
+		margin: 10px auto;
+		position: relative;
+	}
+
+	.my_title {
+		text-align: center;
+		font-size: 20px;
+		line-height: 40px;
+	}
+
+	.my_round_box {
+		margin: 20px auto;
+		width: 460px;
+		min-height: 480px;
+		height: 480px;
+		height: auto;
+		/*background: #eee;*/
+	}
+
+	.my_round_box>div {
+		height: 120px;
+	}
+
+	.my_round {
+		margin: 10px;
+	}
+
+	.my_round_img {
+		width: 40px;
+		height: 80px;
+		background: #393939;
+		border-radius: 5px;
+		float: left;
+	}
+
+	.my_round_left {
+		float: left;
+	}
+
+	.my_round_right {
+		float: right;
+	}
+
+	.my_round_bot {
+		width: 110px;
+		height: 80px;
+		margin: 0 auto;
+	}
+
+	.my_round_info {
+		float: left;
+		line-height: 23px;
+		margin: 5px;
+		font-size: 14px;
+		/*color: #51ec7d;*/
+		color: #333;
+		font-weight: 600;
+		width: 40px;
+		text-align: center;
+	}
+
+	.my_round_info_right .my_round_img {
+		float: right;
+	}
+
+	.my_round_bot .my_round_img {
+		transform: rotate(90deg);
+	}
+
+	.my_round_info_table {
+		position: absolute;
+	}
+</style>
+<script src="js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	/***************************鼠标滑过显示表格*******************************/
+	 
+	function getUrlParam(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+		var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+		if (r != null) return unescape(r[2]); return null; //返回参数值
+	}
+	$('#mycarNum').html(decodeURI(getUrlParam('carname')))
+	const id = getUrlParam('id')
+	let sensors = {} // 温度
+	let positioner = {} // 胎压
+	let police_type = {} // 报警状态
+	$.ajax({
+		url: `${API}/real/selectCarTyre?carId=${id}`,
+		type: 'get',
+		success: function (res) {
+			console.log(res)
+			for (let key in res) {
+
+				if (key.search('sensors') != -1) {
+					if (res[key] < 0) {
+						$(`.${key}`).eq(0).html(-Number(res[key]).toFixed(1))
+					} else {
+						$(`.${key}`).eq(0).html(Number(res[key]).toFixed(1))
+					}
+
+				}
+				if (key.search('voltage') != -1) {
+					$(`.${key}`).eq(0).html(res[key])
+				}
+				if (key.search('positioner') != -1) {
+					$(`.${key}`).eq(0).html(Number(res[key]).toFixed(1))
+
+				}
+				if (key.search('police_type') != -1) {
+					if (res[key] == 0) {
+						$(`.${key}`).eq(0).find('img')[0].src = './images/lv.png'
+					}
+					if (res[key] == 1) {
+						$(`.${key}`).eq(0).find('img')[0].src = './images/hong.png'
+					}
+					if (res[key] == 2) {
+						$(`.${key}`).eq(0).find('img')[0].src = './images/zi.png'
+					}
+					if (res[key] == 3) {
+						$(`.${key}`).eq(0).find('img')[0].src = './images/hui.png'
+					}
+					$(`.${key}`).on('click', function () {
+						let po = key.split('police_type')[1]
+						window.open(`./echarts1.html?po=${po}&carId=${id}&name=${encodeURI(getUrlParam('carname'))}&carnum=${getUrlParam('carnum')}`)
+					})
+				}
+			}
+			// console.log(sensors)
+		}
+	})
+	// 左侧 
+	var SRC = ''
+	$('.my_round_left').hover(function (event) {
+		SRC = $(this).children('.my_round_img').children(' img').get(0).src
+		var e = event || window.event;
+		var clientX = e.clientX;
+		var clientY = e.clientY;
+		var cur_box_W = parseInt($(this).css('width'));
+		var cur_box_H = parseInt($(this).css('height'));
+
+		$('.my_round_info_table').css({
+			'display': 'block',
+			'top':   '160px',
+			'left':  '240px'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = './images/active.png'
+	}, function () {
+		$('.my_round_info_table').css({
+			'display': 'none'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = SRC
+	});
+
+	// 右侧 
+	$('.my_round_right').hover(function (event) {
+		SRC = $(this).children('.my_round_img').children(' img').get(0).src
+		var e = event || window.event;
+		$('.my_round_info_table').css({
+			'display': 'block',
+			'top':   '160px',
+			'left': '110px'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = './images/active.png'
+	}, function () {
+		$('.my_round_info_table').css({
+			'display': 'none'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = SRC
+	});
+
+	// 备胎 
+	$('.my_round_bot').hover(function () {
+		SRC = $(this).children('.my_round_img').children(' img').get(0).src
+		$('.my_round_info_table').css({
+			'display': 'block',
+			'left':'180px',
+			'top': '160px'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = './images/active.png'
+	}, function () {
+		$('.my_round_info_table').css({
+			'display': 'none'
+		});
+		$(this).children('.my_round_img').children(' img').get(0).src = SRC
+	});
+
+	$('.my_round_info_table').hover(function () {
+		$(this).css('display', 'block');
+	}, function () {
+		$(this).css('display', 'none');
+	});
+</script>
+
+</html>

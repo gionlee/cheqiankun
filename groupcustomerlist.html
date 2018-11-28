@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            width: 200px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <p>
+            天津港保税区金方舟国际贸易有限公司--集团客户列表
+        </p>
+        <table id="table" lay-filter="test" class="layui-table">
+            <thead id="head">
+                <tr>
+                    <th>序号</th>
+                    <th>客户编号</th>
+                    <th>客户名称</th>
+                    <th>车辆总数</th>
+                    <th>小型车</th>
+                    <th>客车</th>
+                    <th>单机</th>
+                    <th>拖头</th>
+                    <th>挂车</th>
+                    <th>业务额</th>
+                    <th>分管经理</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script>
+
+    $.ajax({
+        url: `${API}/erpCustomer/getErpCustor?userId=${loadUserInfo.user.id}&code=${loadUserInfo.customer.cusCode}`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.customerList
+            let str = ''
+            let num = 0
+            $.each(arr,function (i,n) {
+                if(n.cusCusType == '集团客户') {
+                    num++
+                    str+=`<tr style="cursor:pointer;" onclick="update(${n.id})">
+                        <td>${num}</td>
+                        <td>${n.cusCode == null ? '' : n.cusCode}</td>
+                        <td>${n.cusName == null ? '' : n.cusName}</td>
+                        <td>${n.cusVehicletotal == null ? '' : n.cusVehicletotal}</td>
+
+                        <td>${n.cusXCar == null ? '' : n.cusXCar}</td>
+                        <td>${n.cusPsacar == null ? '' : n.cusPsacar}</td>
+                        <td>${n.cusDCar == null ? '' : n.cusDCar}</td>
+                        <td>${n.cusTCar == null ? '' : n.cusTCar}</td>
+                        <td>${n.cusGCar == null ? '' : n.cusGCar}</td>
+                        <td></td>
+                        <td>${n.cusChargeManager == null ? '' : n.cusChargeManager}</td>
+                        
+                        </tr>`
+                }
+            })
+            $('list').html(str)
+
+        }
+    })
+    function update(id) {
+        window.location.href = `./updatecustomer.html?custId=${id}`
+    }
+</script>
+
+</html>

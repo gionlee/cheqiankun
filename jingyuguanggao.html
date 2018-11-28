@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-input-inline {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div> <a class="layui-btn layui-btn-sm" onclick="addAd()">添加</a></div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>内容</th>
+                    <th>内容字体</th>
+                    <th>内容字号</th>
+                    <th>内容颜色</th>
+                    <th>播放频率</th>
+                    <th>发布单位</th>
+                    <th>联系人</th>
+                    <th>电话</th>
+                    <th>提交日期</th>
+                    <th>截止日期</th>
+                    <th>核准状态</th>
+                    <th>核准日期</th>
+                    <th>核准编号</th>
+                    <th>核准人</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="fybj">
+				
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+
+            <tbody class="xg">
+                <tr>
+                    <td>发布单位</td>
+                    <td colspan="3"><input type="text" class="layui-input" id="company"></td>
+                </tr>
+                <tr>
+                    <td>内容</td>
+                    <td colspan="3"><input type="text" class="layui-input" id="content"></td>
+                </tr>
+                <tr>
+                    <td>内容字体</td>
+                    <td><input type="text" class="layui-input" id="contentFamily"></td>
+                    <td>内容字号</td>
+                    <td><input type="text" class="layui-input" id="contentSize"></td>
+                </tr>
+                <tr>
+                    <td>内容颜色</td>
+                    <td><input type="text" class="layui-input" id="contentColor"></td>
+                    <td>播放频率</td>
+                    <td><input type="text" class="layui-input" id="playRate"></td>
+                </tr>
+                <tr>
+                    <td>联系人</td>
+                    <td><input type="text" class="layui-input" id="contract"></td>
+                    <td>电话</td>
+                    <td><input type="text" class="layui-input" id="telphone"></td>
+                </tr>
+                <tr>
+                    <td>提交日期</td>
+                    <td><input type="text" class="layui-input" id="submitTime"></td>
+                    <td>截止日期</td>
+                    <td><input type="text" class="layui-input" id="endTime"></td>
+                </tr>
+                <tr>
+                        <td>编号</td>
+                        <td><input type="text" class="layui-input" id="checkNumber"><input type="hidden" id="id" value="0"></td>
+                    <td>申请项目</td>
+                    <td class="layui-form "><select  lay-verify="" id="programs">
+                            <option value="播放">播放</option>
+                            <option value="删除">删除</option>
+                            <option value="修改">修改</option>
+                        </select></td>
+                    
+                </tr>
+            </tbody>
+            <tbody class="change">
+					
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script src="./js/Global.js"></script>
+<script>
+	$(function(){
+		jing();
+    });
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
+    layui.use('laydate',function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#submitTime' //指定元素
+        });
+        laydate.render({
+            elem: '#endTime' //指定元素
+        });
+        
+    })
+    //　添加警语广告
+    function addAd() {
+        $("#id").val('');
+		        	$("#company").val('');
+		        	$("#content").val('')
+		        	$("#contentFamily").val('')
+		        	$("#contentSize").val('')
+		        	$("#contentColor").val('')
+		            $("#playRate").val('')
+		        	$("#contract").val('')
+		        	$("#telphone").val('')
+		        	$("#submitTime").val('')
+		        	$("#endTime").val('')
+		        	$("#checkNumber").val('')
+                    $("#programs").val('')
+                    layer.open({
+                        type:1,
+                        title:'新增',
+                        content: $('.winbody'),
+                        btn:['确认'],
+                        area:['740px'],
+                        yes: function (index) {
+                            ti(index)
+                        }
+                    })
+    }
+    // 广告查询
+function jing(){
+	
+$('.fybj').html("");
+$.ajax({
+        url: `${API}/erpAdvertisementCheck/getcheckPage`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.records.reverse()
+        	$.each(arr, function (i,n) {
+                var str ="";
+        	   str+=`<tr><td>
+                        ${arr.length - i}
+                    </td>
+                    <td>
+                        ${n.content}
+                    </td>
+                    <td>
+                        ${n.contentFamily}
+                    </td>
+                    <td>
+                        ${n.contentSize}
+                    </td>
+                    <td>
+                        ${n.contentColor}
+                    </td>
+                    <td>
+                        ${n.playRate}
+                    </td>
+                    <td>
+                        ${n.company}
+                    </td>
+                    <td>
+                        ${n.contract}
+                    </td>
+                    <td>
+                        ${n.telphone}
+                    </td>
+                    <td>
+                       ${n.submitTime}
+                    </td>
+                    <td>
+                        ${n.endTime==null?' ':n.endTime}
+                    </td>`;
+                    var zhuang="";
+                    if(n.checkState==0){
+                    	zhuang="待审";
+                    }else if(n.checkState==1){
+                    	zhuang="审核";
+                    }else if(n.checkState==2){
+                    	zhuang="驳回";
+                    }else if(n.checkState==3){
+                    	zhuang="欠费";
+                    }
+                    str+=`<td>
+                        ${zhuang}
+                    </td>
+                    <td>
+                        ${n.checkTime}
+                    </td>
+                    <td>
+                        ${n.checkNumber}
+                    </td>
+                    <td>
+                        ${n.checkPeople}
+                    </td>
+                    <td>
+                        <button  class="layui-btn layui-btn-sm" type="button" onclick="update(${n.id})">修改</button>
+                    </td></tr>`
+                    $('.fybj').append(str);
+                    })
+                
+        }
+    })
+}
+    let json = {}
+    function ti(index){
+    	var id=$("#id").val();
+    	if(id==0){
+    		$.ajax({
+		        url: `${API}/erpAdvertisementCheck/inertOrUpdatecheck`,
+		        type: 'get',
+		        data:{
+		        	company:$("#company").val(),
+		        	content:$("#content").val(),
+		        	contentFamily:$("#contentFamily").val(),
+		        	contentSize:$("#contentSize").val(),
+		        	contentColor:$("#contentColor").val(),
+		        	playRate:$("#playRate").val(),
+		        	contract:$("#contract").val(),
+		        	telphone:$("#telphone").val(),
+		        	submitTime:$("#submitTime").val(),
+		        	endTime:$("#endTime").val(),
+		        	checkNumber:$("#checkNumber").val(),
+		        	programs:$("#programs").val()
+		        },
+		        success: function (res) {
+                    layer.msg('保存成功！')
+                    setTimeout(function () {
+                        layer.close(index)
+                        jing();
+                        $("#id").val("0");
+                    },1500)
+                    
+		        }
+		    })
+    	}else{
+    		$.ajax({
+		        url: `${API}/erpAdvertisementCheck/inertOrUpdatecheck`,
+		        type: 'get',
+		        data:{
+		        	id:$("#id").val(),
+		        	company:$("#company").val(),
+		        	content:$("#content").val(),
+		        	contentFamily:$("#contentFamily").val(),
+		        	contentSize:$("#contentSize").val(),
+		        	contentColor:$("#contentColor").val(),
+		        	playRate:$("#playRate").val(),
+		        	contract:$("#contract").val(),
+		        	telphone:$("#telphone").val(),
+		        	submitTime:$("#submitTime").val(),
+		        	endTime:$("#endTime").val(),
+		        	checkNumber:$("#checkNumber").val(),
+		        	programs:$("#programs").val()
+		        },
+		        success: function (res) {
+                    
+                    layer.msg('保存成功！')
+                    setTimeout(function () {
+                        layer.close(index)
+                        jing();
+                    },1500)
+		        }
+		    })
+    	}
+    
+    }
+    function update(id) {
+
+        $.ajax({
+            url: `${API}/erpAdvertisementCheck/getcheckById?webId=${id}`,
+            type: 'get',
+            success: function (res) {
+                	$("#id").val(res.data.id);
+		        	$("#company").val(res.data.company);
+		        	$("#content").val(res.data.content);
+		        	$("#contentFamily").val(res.data.contentFamily);
+		        	$("#contentSize").val(res.data.contentSize);
+		        	$("#contentColor").val(res.data.contentColor);
+		            $("#playRate").val(res.data.playRate);
+		        	$("#contract").val(res.data.contract);
+		        	$("#telphone").val(res.data.telphone);
+		        	$("#submitTime").val(res.data.submitTime);
+		        	$("#endTime").val(res.data.endTime);
+		        	$("#checkNumber").val(res.data.checkNumber);
+                    $("#programs").val(res.data.programs);
+                    layer.open({
+                        type:1,
+                        content: $('.winbody'),
+                        btn:['确认'],
+                        area:['740px'],
+                        yes: function (index) {
+                            ti(index)
+                        }
+                    })
+            }
+        })
+    }
+</script>

@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 1200px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        #images img {
+            width: 30px;
+            height:30px;
+            float:left;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="margin:10px;">
+            <div class="layui-btn layui-btn-sm" onclick="add()">增加</div>
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>索赔单号</th>
+                    <th>受理日期</th>
+                    <th>索理单位</th>
+                    <th>客户名称</th>
+                    <th>车牌号码</th>
+                    <th>品名</th>
+                    <th>规格</th>
+                    <th>品牌</th>
+                    <th>型号</th>
+                    <th>生产编号</th>
+                    <th>初检日期</th>
+                    <th>鉴定日期</th>
+                    <th>理赔金额</th>
+                    <th>物料去向</th>
+                    <th>理赔状态</th>
+                    <th>填表人</th>
+                </tr>
+            </thead>
+            <tbody class="zllp"></tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+            <tbody>
+                <tr>
+                    <td style="width:5%;">处理日期</td>
+                    <td><input type="text" class="layui-input slrq claimsDt" value=""></td>
+                    <td style="width:5%;">索赔单号</td>
+                    <td><input type="text" class="layui-input claimsId" value=""></td>
+                    <td style="width:5%;">索理单位</td>
+                    <td colspan="3"><input type="text" class="layui-input claimsUnit" value=""></td>
+                    <td style="width:5%;">填表人</td>
+                    <td colspan=""><input type="text" class="layui-input tbr createBy" readonly value=""></td>
+                </tr>
+                <tr>
+                    <td style="width:5%;">生产编号</td>
+                    <td>
+                    	<input type="text" style="width: 78%; display: inline-block;" class="layui-input produceId" value="">
+                    	<button type="button" class="layui-btn layui-btn-sm" onclick="search()">查询</button>
+                    </td>
+                    <td style="width:5%;">品名</td>
+                    <td><input type="text" class="layui-input MName" value=""></td>
+                    <td style="width:5%;">规格</td>
+                    <td><input type="text" class="layui-input specification" value=""></td>
+                    <td style="width:5%;">品牌</td>
+                    <td><input type="text" class="layui-input brand" value=""></td>
+                    <td style="width:5%;">型号</td>
+                    <td><input type="text" class="layui-input size" value=""></td>
+                </tr>
+                <tr>
+                    <td>销售单号</td>
+                    <td><input type="text" class="layui-input saleId" value=""></td>
+                    <td>销售日期</td>
+                    <td><input type="text" class="layui-input xsrq saleDt" value=""></td>
+                    <td>销售价格</td>
+                    <td><input type="text" class="layui-input sellingPrice " value=""></td>
+                    <td>使用里程</td>
+                    <td><input type="text" class="layui-input useMileage" value=""></td>
+                    <td>DOT号</td>
+                    <td><input type="text" class="layui-input dotId" value=""></td>
+                </tr>
+                <tr>
+                    <td>客户名称</td>
+                    <td colspan="3"><input type="text" class="layui-input customerName" value=""></td>
+                    <td>车牌号</td>
+                    <td><input type="text" class="layui-input carPalte" value=""></td>
+                    <td>车辆型号</td>
+                    <td><input type="text" class="layui-input carSize" value=""></td>
+                    <td>胎位</td>
+                    <td><input type="text" class="layui-input tirePlace" value=""></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">物料初检</td>
+                    <td colspan="5" rowspan="2"><textarea name="" class="oneContent" id="" style="width: 100%; height: 100%;"></textarea></td>
+                    <td>初检日期</td>
+                    <td><input type="text" class="layui-input cjrq oneDt"></td>
+                    <td rowspan="2">照片</td>
+                    <td rowspan="2" id="images"></td>
+                </tr>
+                <tr>
+                    <td>初检经办</td>
+                    <td><input type="text" class="layui-input oneAttn"></td>
+                </tr>
+                <tr>
+                    <td rowspan="2">厂家鉴定</td>
+                    <td rowspan="2" colspan="5"><textarea name="" class="appraisalContent" id="" style="width: 100%; height: 100%;"></textarea></td>
+                    <td>鉴定日期</td>
+                    <td><input type="text" class="layui-input jdrq appraisalDt"></td>
+                    <td>鉴定结论</td>
+                    <td><input type="text" class="layui-input appraisalResult"></td>
+                </tr>
+                <tr>
+                    <td>理赔金额</td>
+                    <td><input type="text" class="layui-input claimsPrice"></td>
+                    <td>业务经理</td>
+                    <td><input type="text" class="layui-input businessManagger"></td>
+                </tr>
+                <tr>
+                    <td>理赔状态</td>
+                    <td><select name="" class="claimsStatus " id=""></select></td>
+                    <td>客户确认</td>
+                    <td><input type="text" class="layui-input clientsQ"></td>
+                    <td>交接日期</td>
+                    <td><input type="text" class="layui-input jjrq handoverDt"></td>
+                    <td>财务经办</td>
+                    <td><input type="text" class="layui-input financialAttn"></td>
+                    <td>物料去向</td>
+                    <td><select name="" class="matarialsTo" id=""></select></td>
+                </tr>
+            </tbody>
+        </table>
+    	<button type="button" class="layui-btn" id="uploadImg">
+		  	<i class="layui-icon">&#xe67c;</i>上传图片
+		</button>
+    </div>
+	<div class="search" style="display: none;">
+		<table class="layui-table">
+			<thead>
+                <tr>
+                    <th>序号</th>
+                    <th>工作单号</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>胎号</th>
+                    <th>销售日期</th>
+                    <th>销售价格</th>
+                    <th>现胎位</th>
+                    <th>选择</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+		</table>
+	</div>
+</body>
+<script>
+    let layer = ''
+    let form = ' '
+    console.log(loadUserInfo)
+    $('.tbr').val(loadUserInfo.user.realName)
+    layui.use(['layer','form'], function () {
+        layer = layui.layer
+        form = layui.form
+    })
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=理赔状态`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+            })
+            $('.claimsStatus').html(str)
+            form.render()
+        }
+    })
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=理赔去向`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+            })
+            $('.matarialsTo').html(str)
+            form.render()
+        }
+    })
+    layui.use('laydate', function () {
+        laydate = layui.laydate
+        laydate.render({
+            elem: '.slrq'
+        })
+        laydate.render({
+            elem: '.xsrq'
+        })
+        laydate.render({
+            elem: '.cjrq'
+        })
+        laydate.render({
+            elem: '.jdrq'
+        })
+        laydate.render({
+            elem: '.jjrq'
+        })
+    })
+    let imgList = []  //  上传图片路径
+	layui.use('upload', function(){
+	  	var upload = layui.upload;
+	   
+	  //执行实例
+	  	var uploadInst = upload.render({
+	    	elem: '#uploadImg' //绑定元素
+	    	,url: `${API}/erpClaims/upload` //上传接口
+	    	,accept: 'images'
+            ,multiple: true
+            ,number:6
+            ,before: function(res){
+	    		console.log(res)
+	      		//上传完毕回调
+                  res.preview(function(index, file, result){
+                $('#images').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+      		});
+
+	    	}
+	    	,done: function(res){
+	    		console.log(res)
+	      		//上传完毕回调
+                  imgList.push(res.data.src)
+	    	}
+	    	,error: function(){
+	      	//请求异常回调
+	    	}
+	  	});
+	});
+    
+	function seeInfo() {
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                area: ['740px'],
+                title: '车辆牌号',
+                content: $('.winbody')
+            });
+        })
+    }
+
+    $.ajax({
+        url: `${API}/erpClaims/selectClaims?userId=${loadUserInfo.user.id}&type=2`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.reverse()
+            
+            let str = ``
+            $.each(arr, function (i) {
+                // let json = arr[i].saleRepairOrder
+                let json = arr[i]
+                str +=
+                    `<tr><td>${arr.length - i}</td>
+		            <td><a href=wuliaosuopeidetail.html?claimsId=${json.claimsId}>${typeof (json.claimsId) == 'undefined' ? '' : json.claimsId}</a></td>
+		            <td>${typeof (json.claimsDt) == 'undefined' ? '' : json.claimsDt}</td>
+		            <td>${typeof (json.claimsUnit) == 'undefined' ? '' : json.claimsUnit}</td>
+		            <td>${typeof (json.customerName) == 'undefined' ? '' : json.customerName}</td>
+		            <td>${typeof (json.carPalte) == 'undefined' ? '' : json.carPalte}</td>
+		            <td>${typeof (json.mname) == 'undefined' ? '' : json.mname}</td>
+		            <td>${typeof (json.specification) == 'undefined' ? '' : json.specification}</td>
+		            <td>${typeof (json.brand) == 'undefined' ? '' : json.brand}</td>
+		            <td>${typeof (json.size) == 'undefined' ? '' : json.size}</td>
+		            <td>${typeof (json.produceId) == 'undefined' ? '' : json.produceId}</td>
+		            <td>${typeof (json.oneDt) == 'undefined' ? '' : json.oneDt}</td>
+		            <td>${typeof (json.appraisalDt) == 'undefined' ? '' : json.appraisalDt}</td>
+		            <td>${typeof (json.claimsPrice) == 'undefined' ? '' : json.claimsPrice}</td>
+		            <td>${typeof (json.matarialsTo) == 'undefined' ? '' : json.matarialsTo}</td>
+		            <td>${typeof (json.claimsStatus) == 'undefined' ? '' : json.claimsStatus}</td>
+		            <td>${typeof (json.createBy) == 'undefined' ? '' : json.createBy}</td> </tr>`
+            })
+            $('.zllp').html(str)
+        }
+    })
+    
+    // 查询
+    function search(){
+    	
+    	$.ajax({
+    		type:"post",
+    		url:`${API}/erpClaims/selectSaleAndOrderList`,
+    		async:true,
+    		data:{
+    			word: $('.produceId').val(),
+    			customerCode: loadUserInfo.customer.cusCode,
+    			custId: loadUserInfo.customer.id
+    		},
+    		success: function(res) {
+    			let data = res.data;
+    			let htmlStr = "";
+    			$.each(data,function(i){
+    				let json = data[i];
+    				htmlStr += `<tr>
+				                    <td>${i + 1}</td>
+				                    <td>${typeof (json.sale_repair_sheet_id) == 'undefined' ? '' : json.sale_repair_sheet_id}</td>
+				                    <td>${typeof (json.materiel_brand) == 'undefined' ? '' : json.materiel_brand}</td>
+				                    <td>${typeof (json.materiel_Specifications) == 'undefined' ? '' : json.materiel_Specifications}</td>
+				                    <td>${typeof (json.materiel_model) == 'undefined' ? '' : json.materiel_model}</td>
+				                    <td>${typeof (json.materiel_production_id) == 'undefined' ? '' : json.materiel_production_id}</td>
+				                    <td>${typeof (json.sale_repair_date) == 'undefined' ? '' : json.sale_repair_date}</td>
+				                    <td>${typeof (json.materiel_price) == 'undefined' ? '' : json.materiel_price}</td>
+				                    <td>${typeof (json.materiel_out_to) == 'undefined' ? '' : json.materiel_out_to}</td>
+				                    <td><button class="layui-btn layui-btn-sm choose" srId=${typeof (json.srId) == 'undefined' ? '' : json.srId} type="button">选择</buttton></td>
+				                </tr>`
+    			});
+    			$('.search tbody').html(htmlStr);
+    		}
+    	});
+    	
+    	layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                title: '查询',
+                content: $('.search'),
+                area: ['800px', '500px']
+            })
+        })
+    }
+    
+    $('.search').on('click','.choose',function(){
+    	let srId = $(this).attr('srId');
+    	$.ajax({
+    		type: "post",
+    		url: `${API}/erpClaims/selectDateilBySrsId`,
+    		async:true,
+    		data: {
+    			srId: srId
+    		},
+    		success: function(res){
+    			let json = res.data;
+                $('.saleId').val(typeof (json.sale_repair_sheet_id) == 'undefined' ? '' : json.sale_repair_sheet_id);					// 销售单号
+                $('.produceId').val(typeof (json.materiel_production_id) == 'undefined' ? '' : json.materiel_production_id);			// 生产编号
+    			$('.brand').val(typeof (json.materiel_brand) == 'undefined' ? '' : json.materiel_brand);								// 品牌
+    			$('.specification').val(typeof (json.materiel_Specifications) == 'undefined' ? '' : json.materiel_Specifications); 		// 规格
+    			$('.size').val(typeof (json.materiel_model) == 'undefined' ? '' : json.materiel_model); 								// 型号
+    			$('.saleDt').val(typeof (json.sale_repair_date) == 'undefined' ? '' : json.sale_repair_date); 							// 销售日期
+    			$('.sellingPrice').val(typeof (json.materiel_price) == 'undefined' ? '' : json.materiel_price);							// 销售价格   			    			
+    			$('.tirePlace').val(typeof (json.materiel_out_to) == 'undefined' ? '' : json.materiel_out_to.split('-')[1]); 			// 胎位
+    			$('.carPalte').val(typeof (json.materiel_out_to) == 'undefined' ? '' : json.materiel_out_to.split('-')[0]); 			// 车牌号
+                
+    			layer.close(layer.index);
+    		}
+    	});
+    });
+    
+    // 新增
+    function add() {
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                title: '新增',
+                content: $('.winbody'),
+                area: ['1220px'],
+                btn: ['保存', '取消'],
+                yes: function (index) {
+					$.ajax({
+			    		type:"post",
+			    		url: `${API}/erpClaims/addClaims`,
+			    		data: {
+			    			// 少一个销售价格
+                            sellingPrice: $('.sellingPrice').val(),
+			    			claimsId: $('.claimsId').val(), 							// 理赔单号
+			    			claimsDt: $('.claimsDt').val(), 							// 受理日期
+			    			claimsUnit: $('.claimsUnit').val(), 						// 受理单位
+			    			customerName: $('.customerName').val(), 					// 客户名称
+			    			carPalte: $('.carPalte').val(), 							// 车牌号码
+			    			MName: $('.MName').val(), 									// 品名
+			    			specification: $('.specification').val(), 					// 规格
+			    			clientsQ: $('.clientsQ').val(), 							// 客户确认
+			    			brand: $('.brand').val(),						 			// 品牌
+			    			size: $('.size').val(), 									// 型号
+			    			produceId: $('.produceId').val(), 							// 生产编号
+			    			oneContent: $('.oneContent').val(), 						// 初检内容
+			    			oneDt: $('.oneDt').val(), 									// 初检日期
+			    			oneAttn: $('.oneAttn').val(), 								// 初检经办
+			    			appraisalContent: $('.appraisalContent').val(), 			// 鉴定内容
+			    			appraisalDt: $('.appraisalDt').val(), 						// 鉴定日期
+			    			appraisalResult: $('.appraisalResult').val(), 				// 鉴定结论
+			    			claimsPrice: $('.claimsPrice').val(),			 			// 理赔金额
+			    			matarialsTo: $('.matarialsTo').val(), 						// 物料去向
+			    			claimsStatus: $('.claimsStatus').val(),	 					// 理赔状态
+			    			saleId: $('.saleId').val(), 								// 销售编号
+			    			saleDt: $('.saleDt').val(), 								// 销售日期
+			    			useMileage: $('.useMileage').val(), 						// 使用里程
+			    			dotId: $('.dotId').val(), 									// dt号
+			    			carSize: $('.carSize').val(), 								// 车辆型号
+			    			tirePlace: $('.tirePlace').val(), 							// 胎位
+			    			handoverDt: $('.handoverDt').val(), 						// 交接日期
+			    			financialAttn: $('.financialAttn').val(), 					// 财务经办
+			    			businessManagger: $('.businessManagger').val(), 			// 业务经理
+			    			createBy: $('.createBy').val(),								// 填表人
+			    			masterId: imgList.toString(), 								// 连接
+			    			type: 1, 													// 1、质量理赔  2、物料索赔
+                            custId:loadUserInfo.user.id
+                        },
+			    		success: function(res){
+			    			
+			    		},
+			    		
+			    	});
+                }
+            })
+        })
+    }    
+   
+   
+</script>

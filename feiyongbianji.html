@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+            margin: 0 auto;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-input-inline {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-btn layui-btn-sm">添加</div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>服务项目</th>
+                    <th>数量</th>
+                    <th>金额</th>
+                    <th>单位</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="fybj">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <div class="layui-btn layui-btn-xs" onclick="addChild()">新增</div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        服务项目
+                    </th>
+                    <th>
+                        数量
+                    </th>
+                    <th>
+                        金额
+                    </th>
+                    <th>
+                        单位
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="xg">
+
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="2">具体项目</th>
+                    <th colspan="2">数量</th>
+                </tr>
+            </thead>
+            <tbody class="change">
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+
+
+
+    let json = {}
+    $.ajax({
+        url: `${API}/erpProject/getProject`,
+        type: 'get',
+        success: function (res) {
+            json = res.data
+
+            let str = ''
+            $.each(json, function (j, n) {
+                let bz = ''
+                $.each(n.projectLists, function (i) {
+                    bz += ` ${n.projectLists[i].projectName}  ${n.projectLists[i].projectCount} `
+                })
+                str += `<tr>
+                    <td>${n.projectName}</td>
+                    <td>${n.projectNum}</td>
+                    <td>${n.projectMoney} </td>
+                    <td>${n.projectUnit}</td>
+                    <td>${bz}</td>
+                    <td>
+                       <div class="layui-btn layui-btn-xs" onclick="update(${n.id})">修改</div>
+                       <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deletes(${n.id})">删除</div>
+                    </td>
+                </tr>`
+            })
+
+            $('.fybj').append(str)
+        }
+    })
+    // 修改费用
+    let ids
+    function update(id) {
+        ids = id
+        $.ajax({
+            url: `${API}/erpProject/getProjectById?projectId=${id}`,
+            type: 'get',
+            success: function (res) {
+                let json = res.data
+                let str = `<tr class="saves"><td>
+                        <input type="hidden" data-name = "projectAttn" value="${json.projectAttn}"
+                        <input type="text" class="layui-input" data-name="projectName" value="${json.projectName}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectNum" value="${json.projectNum}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectMoney" value="${json.projectMoney}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectUnit" value="${json.projectUnit}">
+                    </td></tr>`
+                $('.xg').html(str)
+                let sle = ``
+                $.each(json.projectLists, function (i) {
+                    sle += `<tr class="arrdata">
+                    <td colspan="2"><input type="hidden" class="lzid" data-name="projectId" value="${id}"><input class="lzname layui-input" data-name="projectName" value="${json.projectLists[i].projectName}"></td>
+                    <td colspan="2" data-id="${json.projectLists[i].id}"><input type="hidden" class="lzid" data-name="id" value="${json.projectLists[i].id}"><input class="layui-input lzp" data-name="projectCount" value="${json.projectLists[i].projectCount}"></td></tr>`
+                })
+                $('.change').html(sle)
+                layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        area: ['740px'],
+                        title: '修改',
+                        maxmin: true,
+                        content: $('.winbody'),
+                        btn: ['保存', '取消'],
+                        yes: function (index) {
+                            let data = {}
+
+                            $('.saves input ').each(function (i, n) {
+                                data[$(this).data('name')] = $(this).val()
+                            })
+                            let arr = []
+                            $('.arrdata ').each(function (i, n) {
+                                let datai = {}
+                                datai.id = $(this).find('.lzid').val()
+                                datai.projectCount = $(this).find('.lzp').val()
+                                arr.push(datai)
+                            })
+                            data.projectLists = arr
+                            data.projectDate = new Date().getTime()
+                            $.ajax({
+                                url: `${API}/erpProject/inertOrUpdateProject`,
+                                type: 'post',
+                                dataType: 'json',
+                                traditional: true,
+                                data: { json: JSON.stringify(data) },
+                                success: function (res) {
+                                    window.location.reload()
+                                },
+                                error: function () {
+                                    alert('系统错误,请稍后重试!')
+                                }
+                            })
+                            // layer.close(index)
+                        }
+                    });
+                })
+            }
+        })
+    }
+    //  删除费用
+    function deletes(id) {
+        if (confirm('是否删除?')) {
+            $.ajax({
+                url: `${API}/erpServiceOrderProject/removeErpProject?projectId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    window.location.reload()
+                }
+            })
+        }
+    }
+    // 新增子服务
+    function addChild() {
+        $('.change').append(`
+            <tr class="arrdata">
+                <td colspan="2">
+                    <input type="hidden" class="lzid" data-name="projectId" value="${ids}">
+                    <input class="lzname layui-input" data-name="projectName" value="">
+                    </td>
+                <td colspan="2" >
+                    <input type="hidden" class="lzid" data-name="id" value="">
+                    <input class="layui-input lzp" data-name="projectCount" value="">
+                </td>
+            </tr>`)
+    }
+</script>

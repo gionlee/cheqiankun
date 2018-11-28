@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/glset.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .info {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .info td {
+            min-width: 100px;
+        }
+
+        .info td:nth-of-type(2n+1) {
+            min-width: 80px;
+        }
+
+        .layui-input {
+            padding-left: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-btn layui-btn-sm" onclick="add()">新增</div>
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead id="head">
+                <tr>
+                    <th class="num">序号</th>
+                    <th>车辆牌号</th>
+                    <th>产权所属</th>
+                    <th colspan="2">保险公司</th>
+                    <th>服务电话</th>
+                    <th>业务员</th>
+                    <th>联系电话</th>
+                    <th>保险单号</th>
+                    <th>投保日期</th>
+                    <th>保费总额</th>
+                    <th>交强险</th>
+                    <th>车辆损失</th>
+                    <th>三者责任</th>
+                    <th>玻璃破碎</th>
+                    <th>司机保险</th>
+                    <th>乘客保险</th>
+                    <th>车辆盗抢</th>
+                    <th>不计免赔</th>
+                    <th>车辆自燃</th>
+                    <th>车辆刮痕</th>
+                    <th class="control">操作</th>
+                </tr>
+            </thead>
+            <tbody class="tlist">
+
+
+            </tbody>
+        </table>
+
+    </div>
+    <div class="info add" style="display:none;">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <td>车辆牌号</td>
+                    <td><input type="text" data-name="carNumber" class="layui-input"></td>
+                    <td>产权归属</td>
+                    <td><input type="text" data-name="insProperty" class="layui-input"></td>
+                    <td>保险公司</td>
+                    <td colspan="3"><input data-name="insuranceCompany" type="text" class="layui-input"></td>
+                    <td>服务电话</td>
+                    <td><input type="text" data-name="telephoneService" class="layui-input"></td>
+                </tr>
+                <tr>
+                    <td>业务员</td>
+                    <td><input type="text" data-name="insSalesman" class="layui-input"></td>
+                    <td>联系电话</td>
+                    <td><input type="text" data-name="contactTelephone" class="layui-input"></td>
+                    <td>保险单号</td>
+                    <td><input type="text" data-name="insurancepolicyno" class="layui-input"></td>
+                    <td>投保日期</td>
+                    <td><input type="text" data-name="insureDt" class="layui-input tbdate"></td>
+                    <td>失效日期</td>
+                    <td><input type="text" data-name="failureDt" class="layui-input sxdate"></td>
+                </tr>
+                <tr>
+                    <td>保费总额</td>
+                    <td><input type="text" data-name="insPremium" class="layui-input"></td>
+                    <td>交强险</td>
+                    <td><input type="text" data-name="jiaoqiangxian" class="layui-input"></td>
+                    <td>司机保险</td>
+                    <td><input type="text" data-name="driversInsurance" class="layui-input"></td>
+                    <td>乘客保险</td>
+                    <td><input type="text" data-name="passengerInsurance" class="layui-input"></td>
+                    <td>三方责任</td>
+                    <td><input type="text" data-name="insLiability" class="layui-input"></td>
+                </tr>
+                <tr>
+                    <td>不计免赔</td>
+                    <td><input type="text" data-name="insDeductible" class="layui-input"></td>
+                    <td>车辆自燃</td>
+                    <td><input type="text" data-name="insBurning" class="layui-input"></td>
+                    <td>车辆盗抢</td>
+                    <td><input type="text" data-name="insRobbery" class="layui-input"></td>
+                    <td>车身刮痕</td>
+                    <td><input type="text" data-name="insScratch" class="layui-input"></td>
+                    <td>玻璃破碎</td>
+                    <td><input type="text" data-name="insGlass" class="layui-input"></td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="info update" style="display:none;">
+
+    </div>
+</body>
+<script>
+    var layer
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '.tbdate'
+        });
+        laydate.render({
+            elem: '.sxdate'
+        });
+    })
+    layui.use('layer', function () {
+        layer = layui.layer;
+
+    });
+    function update() {
+        layer.open({
+            type: 1,
+            content: $('.info'),
+            title: '修改',
+            area: '940px',
+            btn: ['保存', '取消'],
+            maxmin: true,
+        })
+    }
+    let datas = []
+    // const API = 'http://7int69.natappfree.cc'
+    $.ajax({
+        url: `${API}/erpInsurance/getInsuranceBycustIdPage?custId=1&?page=1&limit=20`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.records
+            arr = arr.reverse()
+            datas = res.data.records.reverse()
+            datas = datas.reverse()
+            let str = ''
+            $.each(arr, function (i) {
+                let json = arr[i]
+                str += `<tr class='title'>
+                    <td>${arr.length - i}</td>
+                    <td>${json.carNumber == null ? '' : json.carNumber}</td>
+                    <td></td>
+                    <td colspan="2">${json.insuranceCompany == null ? '' : json.insuranceCompany}</td>
+                    <td></td>
+                    <td></td>
+                    <td>${json.contactTelephone == null ? '' : json.contactTelephone}</td>
+                    <td></td>
+                    <td>${json.insureDt == null ? '' : json.insureDt}</td>
+                    <td>${json.failureDt == null ? '' : json.failureDt}</td>
+                    <td>${json.insPremium == null ? '' : json.insPremium}</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="update(${i})">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick=deletes(${json.id})>删除</button></td>
+                </tr>`
+            })
+            $('.tlist').append(str)
+        }
+    })
+    function add() {
+
+        layer.open({
+            type: 1,
+            content: $('.add'),
+            title: '新增',
+            area: '940px',
+            btn: ['保存', '取消'],
+            maxmin: true,
+            yes: function (index, layero) {
+                let data = {
+                    customerId: 1,
+                    custId: 1
+                }
+
+                $('.add input').each(function () {
+                    data[$(this).data('name')] = $(this).val()
+                })
+                $.ajax({
+                    url: `${API}/erpInsurance/inertOrUpdateInsurance`,
+                    data: data,
+                    type: 'post',
+                    success: function (res) {
+                        layer.close(index);
+                        window.location.reload()
+                    }
+                })
+
+            }
+        })
+    }
+    function update(index) {
+        let json = datas[index]
+        $('.update').html(`<table class="layui-table">
+            <thead>
+                <tr>
+                    <td>车辆牌号</td>
+                    <td><input type="text" data-name="carNumber" class="layui-input" value="${json.carNumber}"><input type="hidden" data-name="id" value="${json.id}"></td>
+                    <td>产权归属</td>
+                    <td><input type="text" data-name="insProperty" class="layui-input" value="${json.insProperty}"></td>
+                    <td>保险公司</td>
+                    <td colspan="3"><input data-name="insuranceCompany" type="text" class="layui-input" value="${json.insuranceCompany}"></td>
+                    <td>服务电话</td>
+                    <td><input type="text" data-name="telephoneService" class="layui-input" value="${json.telephoneService}"></td>
+                </tr>
+                <tr>
+                    <td>业务员</td>
+                    <td><input type="text" data-name="insSalesman" class="layui-input" value="${json.insSalesman}"></td>
+                    <td>联系电话</td>
+                    <td><input type="text" data-name="contactTelephone" class="layui-input" value="${json.contactTelephone}"></td>
+                    <td>保险单号</td>
+                    <td><input type="text" data-name="insurancepolicyno" class="layui-input" value="${json.insurancepolicyno}"></td>
+                    <td>投保日期</td>
+                    <td><input type="text" data-name="insureDt" class="layui-input tbdate" value="${json.insureDt}"></td>
+                    <td>失效日期</td>
+                    <td><input type="text" data-name="failureDt" class="layui-input sxdate" value="${json.failureDt}"></td>
+                </tr>
+                <tr>
+                    <td>保费总额</td>
+                    <td><input type="text" data-name="insPremium" class="layui-input" value="${json.insPremium}"></td>
+                    <td>交强险</td>
+                    <td><input type="text" data-name="jiaoqiangxian" class="layui-input" value="${json.jiaoqiangxian}"></td>
+                    <td>司机保险</td>
+                    <td><input type="text" data-name="driversInsurance" class="layui-input" value="${json.driversInsurance}"></td>
+                    <td>乘客保险</td>
+                    <td><input type="text" data-name="passengerInsurance" class="layui-input" value="${json.passengerInsurance}"></td>
+                    <td>三方责任</td>
+                    <td><input type="text" data-name="insLiability" class="layui-input" value="${json.insLiability}"></td>
+                </tr>
+                <tr>
+                    <td>不计免赔</td>
+                    <td><input type="text" data-name="insDeductible" class="layui-input" value="${json.insDeductible}"></td>
+                    <td>车辆自燃</td>
+                    <td><input type="text" data-name="insBurning" class="layui-input" value="${json.insBurning}"></td>
+                    <td>车辆盗抢</td>
+                    <td><input type="text" data-name="insRobbery" class="layui-input" value="${json.insRobbery}"></td>
+                    <td>车身刮痕</td>
+                    <td><input type="text" data-name="insScratch" class="layui-input" value="${json.insScratch}"></td>
+                    <td>玻璃破碎</td>
+                    <td><input type="text" data-name="insGlass" class="layui-input" value="${json.insGlass}"></td>
+                </tr>
+            </thead>
+        </table>`)
+        layer.open({
+            type: 1,
+            content: $('.update'),
+            title: '修改',
+            area: '940px',
+            btn: ['保存', '取消'],
+            maxmin: true,
+            yes: function (index, layero) {
+                let data = {
+                    customerId: 1,
+                    custId: 1
+                }
+                let str = 'customerId=1'
+                $('.update input').each(function () {
+                    data[$(this).data('name')] = $(this).val()
+                })
+                $.ajax({
+                    url: `${API}/erpInsurance/inertOrUpdateInsurance`,
+                    data: data,
+                    type: 'post',
+                    success: function (res) {
+                        layer.close(index);
+                        window.location.reload()
+                    }
+                })
+
+            }
+        })
+    }
+    // 删除
+    function deletes(id) {
+        if (confirm('是否删除？')) {
+            $.ajax({
+                url: `${API}/erpInsurance/removeInsurance?insuranceId=${id}`,
+                type: 'get',
+                success: function () {
+                    window.location.reload()
+                }
+            })
+        }
+    }
+</script>
+
+</html>

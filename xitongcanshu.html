@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+            border: 1px solid #ccc;
+
+        }
+
+        select {
+            height: 36px;
+        }
+
+        .layui-input {
+            border: 0;
+            /* outline: none; */
+            text-align: center;
+            line-height: 30px;
+            height: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .info {
+            padding: 20px;
+        }
+
+        .info .select {
+            padding: 5px;
+        }
+
+        .info .select:last-of-type {
+            border: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="select">
+            参数类型名称：
+            <div class="search">
+                <input id="addval" class="layui-input" type="text" placeholder="">
+            </div>
+            <div class="btn">
+                <button id="add" class="layui-btn " onClick="addType()">添加</button>
+                <button id="add" class="layui-btn " onClick="selType()">查询</button>
+            </div>
+        </div>
+        <!-- 列表    -->
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width: 5%">id</th>
+                    <th style="width: 10%;  ">参数类型</th>
+                    <th style="width: 5%">详情</th>
+                    <th>操作</th>
+                    <th style="width: 5%">id</th>
+                    <th style="width: 10%;  ">参数类型</th>
+                    <th style="width: 5%">详情</th>
+                    <th>操作</th>
+                    <th style="width: 5%">id</th>
+                    <th style="width: 10%;  ">参数类型</th>
+                    <th style="width: 5%">详情</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="xtbody">
+            </tbody>
+        </table>
+    </div>
+    <div class="info" style="display:none;">
+        <div class="select">
+            参数类型名称：
+            <div class="search">
+                <input class="layui-input child" type="text" placeholder="">
+            </div>
+            <div class="btn">
+                <button class="layui-btn " onClick="addChildType()">添加</button>
+            </div>
+        </div>
+        <div class="select" style="text-align: left;">
+            <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="deleteChildren()">删除</button>
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width:10%">选择</th>
+                    <th style="width: 20%">id</th>
+                    <th style="width: 30%;">参数类型</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="infobody">
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    let parentId = '';
+    let parentName = '';
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '.date'
+        })
+    })
+    layui.use('table', function () {
+        var table = layui.table
+        table.on('edit(table)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.log(obj.value); //得到修改后的值
+            console.log(obj.field); //当前编辑的字段名
+            console.log(obj.data); //所在行的所有相关数据  
+        });
+    })
+
+    function info(id) {
+        parentId = id
+        $('.infobody').html('')
+        layer.open({
+            title: '详情',
+            type: 1,
+            area: '500px',
+            content: $('.info') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+        });
+
+        selectChild(id)
+
+    }
+    // 查询子类型
+    function selectChild(id) {
+        $('.infobody').html('')
+        $.ajax({
+            url: `${API}/erpSystemParametersChild/getParametersChildById?childId=${id}`,
+            success: function (res) {
+                let data = res.data
+                if (data.constructor != Array) {
+                    let arr = []
+                    arr.push(data)
+                    console.log(arr)
+                    data = arr
+                }
+                let str = ''
+                for (let i = 0; i < data.length; i++) {
+                    let json = data[i]
+                    str +=
+                        `<tr><td ><input type="checkbox" class="changes" data-id="${json.id}" /></td><td>
+                        ${json.id}
+                    </td>
+                    <td><input type="text" class="layui-input getid${json.id}" value="${json.name}"></td>
+                    <td class="control"><button class="layui-btn  layui-btn-xs" onclick="upChildType(${json.id})">保存</button> <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="deleteChild(${json.id})">删除</button></td></tr>`
+                }
+                $('.infobody').html(str)
+
+            }
+        })
+    }
+    layui.use('table', function () {
+        var table = layui.laydate
+    })
+    // 删除子类
+    function deleteChildren() {
+        layer.open({
+            type: 1,
+            title: '提示' //不显示标题栏
+                ,
+            closeBtn: false,
+            area: '300px;',
+            shade: 0.8,
+            id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                ,
+            resize: false,
+            btn: ['是', '否'],
+            btnAlign: 'c',
+            moveType: 1 //拖拽模式，0或者1
+                ,
+            content: '<p style="text-align:center;">是否删除</p>',
+            success: function (layero) {
+                var btn = layero.find('.layui-layer-btn');
+                btn.find('.layui-layer-btn0').on('click', function () {
+                    $('.changes').each(function () {
+                        let id = $(this).data('id')
+                        if ($(this).is(':checked')) {
+                            deleteChild(id,true)
+                        }
+                    })
+                })
+            }
+        })
+
+    }
+    // 添加参数类型
+    function addType() {
+        let addval = $('#addval').val()
+        if (addval) {
+            $.ajax({
+                url: `${API}/erpSystemParameters/inertOrUpdateParameters?name=${addval}`,
+                type: 'get',
+                success: function (res) {
+                    console.log(res)
+                    if (res.code == 0) {
+                        layer.msg('添加成功！');
+                        $('#addval').val('')
+                        selType()
+                    }
+                }
+            })
+        } else {
+
+
+        }
+
+    }
+    // 删除参数类型
+    function deleteType(id) {
+        layer.open({
+            type: 1,
+            title: '提示' //不显示标题栏
+                ,
+            closeBtn: false,
+            area: '300px;',
+            shade: 0.8,
+            id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                ,
+            resize: false,
+            btn: ['是', '否'],
+            btnAlign: 'c',
+            moveType: 1 //拖拽模式，0或者1
+                ,
+            content: '<p style="text-align:center;">是否删除</p>',
+            success: function (layero) {
+                var btn = layero.find('.layui-layer-btn');
+                btn.find('.layui-layer-btn0').on('click', function () {
+                    $.ajax({
+                        url: `${API}/erpSystemParameters/removeParameters?id=${id}`,
+                        type: 'get',
+                        success: function (res) {
+                            if (res.code == 0) {
+                                layer.msg('删除成功');
+                                selType()
+                            }
+                        }
+                    })
+                })
+
+            }
+
+        })
+    }
+    // 修改参数类型
+    function saveType(id) {
+        let clsname = '.getid' + id
+        let name = $(clsname).val()
+        $.ajax({
+            url: `${API}/erpSystemParameters/inertOrUpdateParameters?id=${id}&name=${name}`,
+            type: 'get',
+            success: function (res) {
+                if (res.code == 0) {
+                    layer.msg('修改成功！');
+                    getList()
+                }
+            }
+        })
+    }
+    // 添加子类型
+    function addChildType() {
+        let name = $('.child').val()
+        $.ajax({
+            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}`,
+            type: 'get',
+            success: function (res) {
+                layer.msg('添加成功！')
+                $('.child').val('')
+                selectChild(parentId)
+            }
+        })
+    }
+    // 修改子类型
+    function upChildType(id) {
+        let name = $(`.getid${id}`).val()
+        $.ajax({
+            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}&id=${id}`,
+            type: 'get',
+            success: function (res) {
+                layer.msg('修改成功！')
+            }
+        })
+    }
+    // 删除子类型
+    function deleteChild(id, bol) {
+        if (bol) {
+            $.ajax({
+                url: `${API}/erpSystemParametersChild/removeParametersChild?parChildId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    selectChild(parentId)
+                }
+            })
+        } else {
+            if (confirm('是否删除？'))
+                $.ajax({
+                    url: `${API}/erpSystemParametersChild/removeParametersChild?parChildId=${id}`,
+                    type: 'get',
+                    success: function (res) {
+                        selectChild(parentId)
+                    }
+                })
+        }
+    }
+    selType()
+
+    function selType() {
+        $.ajax({
+            url: `${API}/erpSystemParameters/getparametersLikeByName?name=${$('#addval').val()}`,
+            type: 'get',
+            success: function (res) {
+                layer.msg('查询成功！')
+                let data = res.data.reverse()
+                let str = '<tr>'
+                for (let i = 0; i < data.length; i++) {
+                    let json = data[i]
+                    if (i % 3 == 2 && i != 0) {
+                        str +=
+                            `<td>
+                        ${json.id}
+                    </td>
+                    <td><input type="text" class="layui-input" value="${json.name}"></td>
+                    <td><button class="layui-btn layui-btn-primary layui-btn-xs" onClick="info(${json.id},'${json.name}')">查看</button></td>
+                    <td class="control"><button class="layui-btn  layui-btn-xs" onClick="saveType('${json.id}')">保存</button> <button class="layui-btn layui-btn-danger layui-btn-xs" onClick="deleteType(${json.id})">删除</button></td></tr><tr>`
+                    } else {
+                        str +=
+                            `<td>
+                        ${json.id}
+                    </td>
+                    <td><input type="text" class="layui-input getid${json.id}" value="${json.name}"></td>
+                    <td><button class="layui-btn layui-btn-primary layui-btn-xs" onClick="info(${json.id},'${json.name}')">查看</button></td>
+                    <td class="control"><button class="layui-btn  layui-btn-xs" onClick="saveType('${json.id}')">保存</button> <button class="layui-btn layui-btn-danger layui-btn-xs" onClick="deleteType(${json.id})">删除</button></td>`
+                    }
+
+                }
+                str += `</tr>`
+                $('.xtbody').html(str)
+            }
+        })
+
+    }
+</script>
+
+</html>

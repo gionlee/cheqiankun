@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>车乾坤</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .zhuce {
+            display: inline-block;
+            vertical-align: middle;
+            padding: 12px  0px;
+            margin: 0px;
+            font-size: 18px;
+            line-height: 24px;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            color: #ffffff;
+            background-color: #189F92;
+            border-radius: 3px;
+            border: none;
+            -webkit-appearance: none;
+            outline: none;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body class="login-bg">
+
+    <div class="login">
+        <div class="message">欢迎使用车乾坤</div>
+        <div id="darkbannerwrap"></div>
+
+        <form method="post" class="layui-form">
+            <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+            <a class="zhuce" href="./zhuce.html">注册</a>
+            <hr class="hr20">
+        </form>
+    </div>
+
+    <script>
+        $('.zhuce').on('click', function () {
+            window.location.href = './zhuce.html'
+        })
+        $(function () {
+            layui.use(['form','layer'], function () {
+                var form = layui.form;
+                var layer = layui.layer
+                // layer.msg('玩命卖萌中', function(){
+                //   //关闭后的操作
+                //   });
+                //   //监听提交
+                var url = API;
+                console.log(url);
+                form.on('submit(login)', function (data) {
+                    // alert(888)
+                    var msg = ''
+                    var bol = false
+                    $.ajax({
+                        type: "POST",
+                        url: url + "/erpUser/getcustUserByPro",
+                        data: {
+                            phone: data.field.username,
+                            password: data.field.password
+                        },
+                        dataType: 'json',
+                        success: function (res) {
+                            
+                            if(res.code == 1) {
+                                layer.msg(res.msg, function () {
+                            }); 
+                        }else if(res.code == 0)  {
+                            sessionStorage.loadUserInfo = JSON.stringify(res.data)
+                            // loadUserCustId = res.data.customer.id
+                            // loadUserInfo.customer.cusCode = res.data.customer.cusCode
+                            // loadUserUserId = res.data.user.id
+                            // loadUserInfo.customer.cusName = res.data.user.branchName
+                            layer.msg(`登陆成功,请稍等`, function () {
+                                 location.href = 'main.html' 
+                            });
+                        }
+
+
+                            return false;
+                        }
+                    });
+
+                    return false;
+                });
+
+            })
+        })
+        // 模拟登陆
+
+       /* $.ajax({
+            url: `${API}/erpUser/getcustUserByPro?phone=13323292685&password=88886666`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+            }
+        })*/
+
+    </script>
+    <!-- 底部结束 -->
+    <script>
+            function convertDateFromString(dateString) {
+                if (dateString) {
+                    var date = new Date(dateString.replace(/-/, "/"))
+                    return date;
+                }
+            }
+            var time = convertDateFromString("2018-04-23");
+            Date.prototype.Format = function (fmt) {
+                var o = {
+                    "M+": this.getMonth() + 1, //月份 
+                    "d+": this.getDate(), //日 
+                    "h+": this.getHours(), //小时 
+                    "m+": this.getMinutes(), //分 
+                    "s+": this.getSeconds(), //秒 
+                    "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                    "S": this.getMilliseconds() //毫秒 
+                };
+                if (/(y+)/.test(fmt))
+                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")").test(fmt)) {
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    }
+                }
+                return fmt;
+            }
+
+            var time1 = time.Format("yyyy/MM/dd");
+            console.log(time1);
+            //百度统计可去掉
+            var _hmt = _hmt || [];
+            (function () {
+                var hm = document.createElement("script");
+                hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+                var s = document.getElementsByTagName("script")[0];
+                s.parentNode.insertBefore(hm, s);
+            })();
+    </script>
+</body>
+
+</html>

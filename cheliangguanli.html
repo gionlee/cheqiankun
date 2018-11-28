@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-input-inline {
+            width: 100% !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>车辆牌号</th>
+                    <th>产权所有</th>
+                    <th>运营状态</th>
+                    <th>车辆品牌</th>
+                    <th>车辆型号</th>
+                    <th>发动机号</th>
+                    <th>车辆识别号</th>
+                    <th>注册日期</th>
+                    <th>车辆尺寸</th>
+                    <th>运营里程</th>
+                    <th>保险单号</th>
+                    <th>保险日期</th>
+                    <th>失效日期</th>
+                </tr>
+            </thead>
+            <tbody class="fybj" id="list">
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+
+	var cokeid = 1;
+	
+     
+    let json = {}
+    $.ajax({
+        url: `${API}/erpCustomerCar/getCatInsurance?page=1&limit=20&custId=1`,
+        type: 'get',
+        success: function (res) {
+            console.log(res)
+        }
+    })
+    
+    
+    $(function() {
+
+			$.ajax({
+				url: API+'/erpCustomerCar/getCatInsurance?custId=' + cokeid,
+				type: 'get',
+				dataType: 'json',
+				success: function(ret) {
+					var obj = ret.data.reverse()
+					var html = '';
+
+					for(var key in obj) {
+						html += ' <tr>'+
+ '                    <td>' + (obj[key].id == null ?　'' : obj[key].id) + '</td>'+
+ '                    <td>' + (obj[key].car_number == null ?　'' : obj[key].car_number)  + '</td>'+
+ '                    <td>' + (obj[key].insProperty == null ?　'' : obj[key].insProperty) + '</td>'+
+ '                    <td>' + (obj[key].car_operate_type == null ?　'' : obj[key].car_operate_type) + '</td>'+
+ '                    <td>' + (obj[key].car_brand == null ?　'' : obj[key].car_brand) + '</td>'+
+ '                    <td>' + (obj[key].car_model == null ?　'' : obj[key].car_model) + '</td>'+
+ '                    <td>' + (obj[key].car_engine == null ?　'' : obj[key].car_engine) + '</td>'+
+ '                    <td>' + (obj[key].car_number == null ?　'' : obj[key].car_number) + '</td>'+
+ '                    <td>' + (obj[key].car_dj_date == null ?　'' : obj[key].car_dj_date) + '</td>'+
+ '                    <td>' + (obj[key].car_rims == null ?　'' : obj[key].car_rims) + '</td>'+
+ '                    <td>' + (obj[key].car_mileage == null ?　'' : obj[key].car_mileage) + '</td>'+
+ '                    <td onclick="seeBx(\' +obj[key].insurancepolicyno+\')">' + (obj[key].insurancepolicyno == null ?　'' : obj[key].insurancepolicyno) + '</td>'+
+ '                    <td>' + (obj[key].insureDt == null ?　'' : obj[key].insureDt) + '</td>'+
+ '                    <td>' + (obj[key].failureDt == null ?　'' : obj[key].failureDt) + '</td>'+
+ '                </tr>';
+						
+						
+					}
+					$("#list").html(html);
+				},
+				error: function(err) {
+					alert("系统错误");
+
+				}
+			});
+
+		})
+    function seeBx() {
+        window.location.href = './insurance.html'
+    }
+</script>

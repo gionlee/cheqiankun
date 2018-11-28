@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+            min-height: 600px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            /* border: 0; */
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 36px;
+            line-height: 36px;
+            font-size: 14px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+            border: 1px solid #ccc;
+        }
+
+        .winbody {
+            width: 1200px;
+            padding: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="search">
+            <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel" name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        </div>
+        <div class="btn">
+            <button class="layui-btn layui-btn-normal">查询</button>
+        </div>
+        <div style="margin:10px 0;"><button class="layui-btn layui-btn-normal">新增</button> </div>
+        <table class="layui-table" lay-filter="table">
+            <thead>
+                <tr>
+                    <th width="5%" class="num">序号</th>
+                    <th width="10%">日期</th>
+                    <th width="20%">单位</th>
+                    <th width="5%">业务经理</th>
+                    <th width="10%">品名</th>
+                    <th width="10%">品牌</th>
+                    <th width="10%">规格</th>
+                    <th width="10%">型号</th>
+                    <th width="10%">产地</th>
+                    <th width="5%">单位</th>
+                    <th width="5%">需求量</th>
+                    <th class="control">操作</th>
+                </tr>
+            </thead>
+            <tbody class="dlists">
+
+            </tbody>
+        </table>
+        <ul class="top-nav">
+            <li><a href="#">电器-GPS主机</a>
+                <ul>
+                    <li><a href="#">下一级</a>
+                        <ul>
+                            <li><a href="#">下一级</a>
+                                <ul>
+                                    <li><a href="#">下一级</a>
+                                        <ul>
+                                            <li><a href="#">下一级</a></li>
+
+                                        </ul>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+        </ul>
+
+
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+            <tbody class="dbody">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    
+
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '7':
+                    $('.ksdate').val(`${years - 1}-01-01`)
+                    $('.jsdate').val(`${years - 1}-12-31`)
+                    break;
+            }
+        });
+    })
+    let demand = {
+        page: 1,
+        limit: 10,
+        custId: 1
+    }
+    let arr = []
+    $.ajax({
+        url: `${API}/erpOrderd/getOrderdPage`,
+        type: 'post',
+        data: demand,
+        success: function (res) {
+            arr = res.data.records
+            let str = ''
+            $.each(arr, function (i, json) {
+                str += `<tr>
+                    <td>${i + 1}</td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="dt" value="${json.sheetId}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="grounp" value="${json.grounp}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="bManager" value="${json.bManager}">
+                    </td>`
+                if (json.orderdMateriels != null) {
+                    str += `<td onclick="setValue()">
+                        <input type="text" class="layui-input" data-name="materielName" value="${json.orderdMateriels.materielName}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielBrand" value="${json.orderdMateriels.materielBrand}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${json.orderdMateriels.materielSpecifications}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielModel" value="${json.orderdMateriels.materielModel}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielPlace" value="${json.orderdMateriels.materielPlace}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielState" value="${json.orderdMateriels.materielState}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="${json.orderdMateriels.materielUnit}">
+                    </td>`
+                } else {
+                    str += `<td onclick="setValue()">
+                        <input type="text" class="layui-input" data-name="materielName" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielBrand" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielModel" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielPlace" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielState" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                    </td>`
+                }
+                str += ` <td>
+                        <button class="layui-btn  layui-btn-sm" onclick="update(${i})">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="del(${json.id})">删除</button>
+                    </td>
+                </tr>`
+            })
+            $('.dlists').html(str)
+
+        }
+    })
+    // 修改
+    function update(index) {
+        let json = arr[index]
+        let str = ''
+        str += `<tr>
+                    <td>日期 <input type="hidden" data-name="id" value="${json.id}"> <input type="hidden" data-name="materield" value="${json.materield}"></td>
+                    <td><input type="text" class="layui-input" data-name="dt" value="${json.sheetId}"></td>
+                    <td>业务经理</td>
+                    <td><input type="text" class="layui-input" data-name="bManager" value="${json.bManager}"></td>
+                    <td>上报部门</td>
+                    <td colspan="2"><input type="text" class="layui-input" data-name="grounp" value="${json.grounp}"></td>
+                    <td>订单号</td>
+                    <td><input type="text" class="layui-input" data-name="sheetId" value="${json.sheetId}"></td>
+                </tr>
+                <tr>
+                    <td>品名</td>
+                    <td>品牌</td>
+                    <td>规格</td>
+                    <td>型号</td>
+                    <td>产地</td>
+                    <td>物料新旧</td>
+                    <td>单位</td>
+                    <td>需求数量</td>
+                    <td>备注</td>
+                </tr>`
+        if (json.orderdMateriels != null) {
+            str += `<tr class="mlist"><td onclick="setValue()">
+                        <input type="text" class="layui-input" data-name="materielName" value="${json.orderdMateriels.materielName}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielBrand" value="${json.orderdMateriels.materielBrand}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${json.orderdMateriels.materielSpecifications}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielModel" value="${json.orderdMateriels.materielModel}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielPlace" value="${json.orderdMateriels.materielPlace}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielState" value="${json.orderdMateriels.materielState}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="${json.orderdMateriels.materielUnit}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielAmount" value="${json.orderdMateriels.materielAmount}">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="bz" value="">
+                    </td></tr>`
+        } else {
+            str += `<tr class="mlist"><td onclick="setValue()">
+                        <input type="text" class="layui-input" data-name="materielName" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielBrand" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielModel" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielPlace" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielState" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                    </td></tr>`
+        }
+        $('.dbody').html(str)
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                title: '修改',
+                content: $('.winbody'),
+                area: ['1220px'],
+                btn: ['保存', '取消'],
+                yes: function (index) {
+                    layer.close(index)
+                    $('.mlist input').each(function () {
+
+                    })
+                }
+            })
+        })
+    }
+    // 删除
+    function del(id) {
+        if (confirm('是否删除?')) {
+            $.ajax({
+                url: `${API}/erpOrderd/removeOrderdById?orderId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    console.log(res)
+                    window.location.reload()
+                }
+            })
+        }
+    }
+</script>

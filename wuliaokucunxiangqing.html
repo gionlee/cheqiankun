@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>状态</th>
+                    <th>期初数量</th>
+                    <th>本期入库</th>
+                    <th>本期出库</th>
+                    <th>期末数量</th>
+                    <th>未税单价</th>
+                    <th>含税单价</th>
+                    <th>客户名称</th>
+                    <th>仓库</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+
+    layui.use('table', function () {
+        var table = layui.table;
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        laydate = layui.laydate;
+        laydate.render({
+            elem: '.dddate'
+        });
+    })
+    let data = {
+        startDate : getUrlParam('startDate'),
+        endDate : getUrlParam('endDate'),
+        custId : getUrlParam('custId'),
+        matId : getUrlParam('matId')
+    }
+    console.log(data)
+    $.ajax({
+        url:`${API}//erpWarehouse/getWarehouseMaterielBycustId?${loadUserInfo.customer.id}`,
+        type:'post',
+        data:data,
+        success: function (res) {
+            console.log(res)
+            let arr = res.data.reverse()
+            let str = ''
+            $.each(arr,function (i,json) {
+                str += `<tr>
+                    <td>${arr.length - i}</td>
+                    <td>${json.materielName == null ? '' : json.materielName}</td>
+                    <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
+                    <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
+                    <td>${json.materielModel == null ? '' : json.materielModel}</td>
+                    <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
+                    <td>${json.materielState == null ? '' : json.materielState}</td>
+                    <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+                    <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
+                    <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
+                    <td style="cursor:pointer;" onclick="seeInfo('${json.warehouseId}','${json.materielId}')">${json.materielWarnAmount == null ? '' : json.materielWarnAmount}</td>
+                    <td>${json.materielOccupyNumber == null ? '' : json.materielOccupyNumber}</td>
+                    <td>${json.matNum == null ? '' : json.matNum}</td>
+                    <td>${json.materielTax == null ? '' : json.materielTax}</td>
+                    <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
+                    <td>${json.custName == null ? '' : json.custName}</td>
+                    <td>${json.wareName == null ? '' : json.wareName}</td>
+                </tr>`
+            })
+            $('.list').html(str)
+        }
+    })
+    function seeInfo (warehouseId,id) {
+        window.location.href = `./kucunmingxi.html?warehouseId=${warehouseId}&materielId=${id}`
+    }
+</script>
+
+</html>

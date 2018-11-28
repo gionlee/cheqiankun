@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+            text-align: center;
+
+        }
+
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .title {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .other .layui-input {
+            border-bottom: 1px solid #ccc;
+            height: 20px;
+        }
+
+        .layui-form-radio>i {
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">协议信息</li>
+                <li>商品价格</li>
+                <li>维修/维护价格</li>
+                <li>积分消费</li>
+                <li>其它</li>
+            </ul>
+            <!-- 协议信息 -->
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+
+                    <table class="layui-table">
+                        <tbody class="xyxx">
+                            <tr class="">
+                                <td>协议名称</td>
+                                <td colspan="4"><input type="text" class="layui-input" data-name="conName" value=""></td>
+                                <td>协议编码</td>
+                                <td colspan="4"><input type="text" class="layui-input" data-name="conCode" value=""></td>
+                            </tr>
+                            <td>协议文本</td>
+                            <td colspan="9"><textarea name="desc" placeholder="请输入内容" data-name="conText" class="layui-textarea"></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">
+                        <div class="layui-btn layui-btn-sm " onclick="saveXyxx()">保存</div>
+                    </div>
+                </div>
+                <!-- 商品价格 -->
+                <div class="layui-tab-item">
+                    <div class="title" style="text-align:left;">
+                        <div class="layui-btn layui-btn-sm layui-btn-normal" onclick="add()">新增</div>
+                    </div>
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th style="width:40px;">序号</th>
+                                <th>品名</th>
+                                <th>规格</th>
+                                <th>品牌</th>
+                                <th>型号</th>
+                                <th>产地</th>
+                                <th>物料新旧</th>
+                                <th>单位</th>
+                                <th>单价</th>
+                                <th>币种</th>
+                                <th style="width:10%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="spjg">
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="layui-tab-item">
+                    <!-- 维修/维护价格 -->
+                    <div class="layui-btn layui-btn-xs layui-btn-normal" onclick="addWhwx()">增加</div>
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>价格</th>
+                                <th>单位</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="wxwhjg">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 积分消费 -->
+                    <div class="layui-btn layui-btn-xs" onclick="addjf()">新增</div>
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>活动名称</th>
+                                <th>起始日期</th>
+                                <th>终止日期</th>
+                                <th>服务网点</th>
+                                <th>积分标的</th>
+                                <th>%</th>
+                                <th>积分使用</th>
+                            </tr>
+                        </thead>
+                        <tbody class="jflist">
+                            <tr>
+                                <td></td>
+                                <td><input type="text" data-name="intName" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="dateStart" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="dateEnd" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intDot" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intBid" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intPercentage" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intKy" class="layui-input"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align:center;">
+                        <div class="layui-btn layui-btn-xs" onclick="savejf()">保存</div>
+                    </div>
+                </div>
+                <div class="layui-tab-item layui-form other">
+                    <!-- 其它 -->
+                    <div class="title">时点设定</div>
+                    <table class="layui-table">
+                        <tbody>
+                            <tr>
+                                <td>财务结算</td>
+                                <td style="width:50%;">每月日<input type="text" name="finReportStart" class="layui-input ksjs"
+                                        style="width:30px;display: inline-block;" />点 -- 下月日<input type="text" name="finReportEnd"
+                                        class="layui-input jsjs" style="width:30px;display: inline-block;" />点</td>
+                                <td> <input type="checkbox" class="workReport" lay-filter="alls" lay-skin="primary" name="workReport"
+                                        title="工作报告"></td>
+                                <td> <input type="checkbox" class="weekly" lay-skin="primary" name="weekly" title="周报"></td>
+                                <td> <input type="checkbox" class="monthly" lay-skin="primary" name="monthly" title="月报"></td>
+                                <td> <input type="checkbox" class="quarterly" lay-skin="primary" name="quarterly" title="季报"></td>
+                                <td> <input type="checkbox" class="year" lay-skin="primary" name="year" title="年报"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">结算账期</div>
+                    <table class="layui-table layui-form-item">
+                        <tbody>
+                            <tr class="">
+
+                                <td><input type="text" name="days" class="layui-input nums" style="width:30px;display: inline-block;"
+                                    />天</td>
+                                <td> <input type="radio" class="afprq" name="setType" value="按发票日期" title="按发票日期"></td>
+                                <td> <input type="radio" class="addrq" name="setType" value="按订单日期" title="按订单日期"></td>
+                                <td> <input type="radio" class="azcrq" name="setType" value="按装车日期" title="按装车日期"></td>
+                                <td> <input type="radio" class="ajsrq" name="setType" value="按结算日期" title="按结算日期"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="title">价格条件</div>
+                    <table class="layui-table layui-form-item">
+                        <tbody>
+                            <tr class="">
+                                <td> <input type="radio" name="priType" class="bx" name="quarterly" value="不选" title="不选"></td>
+                                <td> <input type="radio" name="priType" class="hs" value="含税" title="含税"></td>
+                                <td> <input type="radio" name="priType" class="bhs" value="不含税" title="不含税"></td>
+                                <td> <input type="radio" name="priType" class="zzsp" value="增值税票" title="增值税票"></td>
+                                <td> <input type="radio" name="priType" class="ptfp" value="普通发票" title="普通发票"></td>
+                                <td> <input type="radio" name="priType" class="wfp" value="无发票" title="无发票"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div style="text-align:center;margin: 20px;">
+                        <div class="layui-btn layui-btn-sm" onclick="otherSave()">保存</div>
+                    </div>
+
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 仓库管理 -->
+                    <table class="layui-table" lay-filter="table">
+                        <thead>
+                            <tr>
+                                <th class="num">序号</th>
+                                <th colspan="2">仓库名</th>
+                                <th colspan="4">地址</th>
+                                <th>负责人</th>
+                                <th>电话</th>
+                                <th colspan="2">录入人</th>
+                                <th class="control">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td colspan="4">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script src="./js/xadmin.js"></script>
+<script>
+    let pid = loadUserInfo.customer.id
+    let xyxxId = loadUserInfo.user.id
+    let id = 0
+    // $.ajax({
+    //     url: `${API}/erpContract/getContractById?contractId=${pid}`,
+    //     type: 'get',
+    //     success: function (res) {
+    //         console.log(res)
+    //         let json = res.data
+    //         xyxxId = json.customerId
+    //         let str = `<tr class="">
+    //             <td>协议名称</td>
+    //             <td colspan="4"><input type="text" class="layui-input" data-name="conName" value="${json.conName == null ? '' : json.conName}"></td>
+    //             <td>协议编码</td>
+    //             <td colspan="4"><input type="text" class="layui-input" data-name="conCode" value="${json.conCode == null ? '' : json.conCode}"></td>
+    //         </tr>
+    //         <td>协议文本</td>
+    //         <td colspan="9"><textarea name="desc" placeholder="请输入内容" data-name="conText" class="layui-textarea">${json.conText == null ? '' : json.conText}</textarea></td></tr>`
+    //         $('.xyxx').append(str)
+    //     }
+    // })
+    // // 商品价格 查询
+    let spjg = 0
+
+
+    // 维修 维护 查询
+    let wxwhid = 0
+    // function selWhwx() {
+    //     $.ajax({
+    //         url: `${API}/ErpContractRepair/getRepairtByConId?conId=${pid}`,
+    //         type: 'get',
+    //         success: function (res) {
+    //             $('.wxwhjg').html('')
+    //             wxwhid = 0
+    //             let arr = res.data
+
+    //             let str = ''
+
+    //             $.each(arr, function (i) {
+    //                 let json = arr[i]
+    //                 console.log(json.pid)
+    //                 wxwhid++
+    //                 str += `<tr class="wxwh_${i}"><td><input class="layui-input" data-name="repName" value="${json.repName}"></td>
+    //             <td><input class="layui-input" data-name="repPrice" value="${json.repPrice}"></td>
+    //             <td><select class="layui-form select_${i}" repUnit="type" lay-verify="">
+    //                 <option value=""></option>
+    //                 <option value="条">条</option>
+    //                 <option value="套">套</option>
+    //                 <option value="只">只</option>
+    //                 <option value="桶">桶</option>
+    //                 <option value="瓶">瓶</option>
+    //                 <option value="盒">盒</option>
+    //                 <option value="升">升</option>
+    //                 <option value="克">克</option>
+    //                 <option value="处">处</option>
+    //                 <option value="次">次</option>
+    //                 </select>
+    //             </td>
+    //             <td><div class="layui-btn layui-btn-xs"  onclick="saveWxwh(${json.id},${i})">保存</div><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deleteJg(${json.id})">删除</div></td></tr>`
+    //                 // $(`.select_${i}`).val(json.repUnit)    
+
+
+    //             })
+
+    //             $('.wxwhjg').append(str)
+    //             $.each(arr, function (i) {
+    //                 let json = arr[i]
+    //                 $(`.select_${i}`).val(json.repUnit)
+    //             })
+    //         }
+    //     })
+    // }
+    // selWhwx()
+    //　维护维修新增
+    function addWhwx() {
+        $('.wxwhjg').append(`<tr class="wxwh_${wxwhid}"><td><input class="layui-input" data-name="repName" value=""></td>
+                <td><input class="layui-input" data-name="repPrice" value=""></td>
+                <td><select class="layui-form select_${wxwhid}" repUnit="type" lay-verify="">
+                    <option value=""></option>
+                    <option value="条">条</option>
+                    <option value="套">套</option>
+                    <option value="只">只</option>
+                    <option value="桶">桶</option>
+                    <option value="瓶">瓶</option>
+                    <option value="盒">盒</option>
+                    <option value="升">升</option>
+                    <option value="克">克</option>
+                    <option value="处">处</option>
+                    <option value="次">次</option>
+                    </select></td>
+                <td><div class="layui-btn layui-btn-xs"  onclick="saveWhwx(${wxwhid})">保存</div><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deleteJg()">删除</div></td></tr>`)
+    }
+    //　维护维修新增保存
+    function saveWhwx(index) {
+        let url = ''
+        let datas = {}
+        $(`.wxwh_${index} input`).each(function (i) {
+            datas[$(this).data('name')] = $(this).val()
+        })
+        datas.repUnit = $(`.select_${index}`).val()
+        $.ajax({
+            url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}`,
+            type: 'get',
+            data: datas,
+            success: function (res) {
+                selWhwx()
+            }
+        })
+    }
+    // 维修维护保存
+    function saveWxwh(id, index) {
+        let datas = {}
+        $(`.wxwh_${index} input`).each(function (i) {
+            datas[$(this).data('name')] = $(this).val()
+        })
+        datas.repUnit = $(`.select_${index}`).val()
+        $.ajax({
+            url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}&id=${id}`,
+            type: 'get',
+            data: datas,
+            success: function (res) {
+                selWhwx()
+            }
+        })
+    }
+    // $.ajax({
+    //     url: `${API}/erpContractCommodity/getCommodityById?contractId=${pid}`,
+    //     type: 'get',
+    //     success: function (res) {
+    //         let str = ''
+    //         let arr = res.data
+    //         $.each(arr, function (i) {
+    //             id++
+    //             let json = arr[i]
+    //             str += `<tr class="upspjg_${i}">
+    //             <td>${i + 1}<input type="hidden"  data-name="id" value="${json.id}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comName" value="${json.comName}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comSpec" value="${json.comSpec}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comBrand" value="${json.comBrand}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comMdel" value="${json.comMdel}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comAddress" value="${json.comAddress}"></td>
+    //             <td><input type="text" class="layui-input"  data-name="comState" value="${json.comState}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comUnit" value="${json.comUnit}"></td>
+    //             <td><input type="text" class="layui-input" data-name="comPrice" value="${json.comPrice}"></td>
+    //             <td>
+    //                     <select class="layui-form selspjg_${i}" repUnit="type" lay-verify="">
+    //                 <option value="人民币">人民币</option>
+    //                 <option value="美元">美元</option>
+    //                 <option value="欧元">欧元</option>
+    //                 </select>
+    //             </td>
+    //             <td>
+    //                 <div class="layui-btn layui-btn-xs" onclick="saveJg(${i})">保存</div>
+    //                 <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delSpjg(${i},${json.id})">删除</div>
+    //             </td>
+
+    //         </tr>`
+    //         })
+
+
+    //         $('.spjg').append(str)
+    //         $.each(arr, function (i) {
+    //             let json = arr[i]
+    //             console.log(json.comCurrency, '22')
+    //             $(`.selspjg_${i}`).val(json.comCurrency)
+    //         })
+    //     }
+    // })
+    // 商品价格增加
+    function add() {
+
+        $('.spjg').append(`<tr class="spjg_${id}">
+                <td></td>
+                <td><input type="text" class="layui-input" data-name="comName" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comSpec" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comBrand" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comMdel" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comAddress" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comState" value=""></td>
+                <td><input type="text" class="layui-input" data-name="comUnit" value=""></td>
+                <td>
+                    <input class="layui-input" data-name="comPrice" value="">
+                </td>
+                <td><select class="layui-form select_${id} shanpin" repUnit="type" lay-verify="">
+                    </select></td>
+                
+                <td>
+                    <div class="layui-btn layui-btn-xs" onclick="save(${id})">保存</div>
+                    <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delthis(${id})">删除</div>
+                </td></tr>`)
+                $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=结算币种`,
+        type: 'get',
+        success: function (res) {
+            let arr = res.data.parametersChildList
+            let str = '<option></option>'
+            $.each(arr, function (i, k) {
+                str += `<option value="${k.name}" >${k.name}</option>`
+            })
+            $('.shanpin').html(str)
+            form.render()
+        }
+    })
+        id++
+    }
+    // 商品价格 新增 保存
+    function save(id) {
+        let str = `.spjg_${id} input`
+        let tags = `.select_${id}`
+        let url = ``
+        $(str).each(function () {
+            url += `&${$(this).data('name')}=${$(this).val()}`
+        })
+        url += `&comCurrency=${$(tags).val()}`
+        $.ajax({
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=${pid}${url}`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    }
+    // 商品价格 修改 保存
+    function saveJg(index) {
+        let str = `.upspjg_${index} input`
+        let tags = `.selspjg_${index}`
+        let url = ``
+        $(str).each(function () {
+            url += `&${$(this).data('name')}=${$(this).val()}`
+        })
+        url += `&comCurrency=${$(tags).val()}`
+        $.ajax({
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=${pid}${url}`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    }
+    // 商品价格 新增后 删除
+    function delthis(id) {
+        let str = `.spjg_${id}`
+        $(str).remove()
+    }
+    function delSpjg(index, id) {
+        if (confirm('是否删除')) {
+            $.ajax({
+                url: `${API}/erpContractCommodity/removetCommodityById?contractId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    let str = `.upspjg_${index}`
+                    $(str).remove()
+                }
+            })
+        }
+
+    }
+
+    // 保存协议信息
+    function saveXyxx() {
+        let url = ''
+        $('.xyxx input').each(function () {
+            url += `&${$(this).data('name')}=${$(this).val()}`
+        })
+        url += `&conText=${$('.xyxx textarea').val()}`
+        console.log(url)
+        $.ajax({
+            url: `${API}/erpContract/inertOrUpdateContract?customerId=${xyxxId}&id=${url}`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+            }
+        })
+    }
+    // 维修维护删除
+    function deleteJg(id) {
+        if (confirm('是否删除？')) {
+            $.ajax({
+                url: `${API}/ErpContractRepair/removetRepairById?contractId=${id}`,
+                type: 'get',
+                success: function (res) {
+                    selWhwx()
+                }
+            })
+        }
+
+    }
+
+
+    // 积分消费
+    function selectJfxf() {
+        $.ajax({
+            url: `${API}/erpContractIntegral/getIntegraltByConId?conId=${pid}`,
+            type: 'get',
+            success: function (res) {
+                let arr = []
+                if (typeof (res.data) == 'object') {
+                    arr = [res.data]
+                } else {
+                    arr = res.data
+                }
+                let str = ``
+                console.log(arr)
+                $.each(arr, function (i) {
+                    let json = arr[i]
+                    str += `<tr>
+                                <td>${i + 1}</td>
+                                <td><input type="text" data-name="intName" class="layui-input" value="${json.intName == null ? '' : json.intName}"></td>
+                                <td><input type="text" data-name="dateStart" class="layui-input" value="${json.dateStart == null ? '' : json.dateStart}"></td>
+                                <td><input type="text" data-name="dateEnd" class="layui-input" value="${json.dateEnd == null ? '' : json.dateEnd}"></td>
+                                <td><input type="text" data-name="intDot" class="layui-input" value="${json.intDot == null ? '' : json.intDot}"></td>
+                                <td><input type="text" data-name="intBid" class="layui-input" value="${json.intBid == null ? '' : json.intBid}"></td>
+                                <td><input type="text" data-name="intPercentage" class="layui-input" value="${json.intPercentage == null ? '' : json.intPercentage}"></td>
+                                <td><input type="text" name="intKy" class="layui-input"></td>
+                            </tr>`
+                })
+                $('.jflist').append(str)
+            }
+        })
+    }
+    // // 其他查询
+    // let otherId = ''
+    // let otherPid = ''
+    // $.ajax({
+    //     url: `${API}/erpContractComprehensive/getComprehensivetByConId?conId=1`,
+    //     type: 'get',
+    //     success: function (res) {
+    //         let json = res.data
+    //         otherId = json.id
+    //         otherPid = json.id
+    //         $('.ksjs').val(json.finReportStart)
+    //         $('.jsjs').val(json.finReportEnd)
+    //         if (json.workReport == '1') {
+    //             $('.workReport').attr("checked", true)
+    //             $('.weekly').attr("checked", true)
+    //             $('.monthly').attr("checked", true)
+    //             $('.quarterly').attr("checked", true)
+    //             $('.year').attr("checked", true)
+
+    //         }
+    //         if (json.setType == '1') {
+    //             $('.afprq').attr("checked", true)
+    //         }
+    //         if (json.setType == '2') {
+    //             $('.addrq').attr("checked", true)
+    //         }
+    //         if (json.setType == '3') {
+    //             $('.azcrq').attr("checked", true)
+    //         }
+    //         if (json.setType == '4') {
+    //             $('.ajsrq').attr("checked", true)
+    //         }
+    //         if (json.priType == '1') {
+    //             $('.bx').attr("checked", true)
+    //         }
+    //         if (json.priType == '2') {
+    //             $('.hs').attr("checked", true)
+    //         }
+    //         if (json.priType == '3') {
+    //             $('.bhs').attr("checked", true)
+    //         }
+    //         if (json.priType == '4') {
+    //             $('.zzsp').attr("checked", true)
+    //         }
+    //         if (json.priType == '5') {
+    //             $('.ptfp').attr("checked", true)
+    //         }
+    //         if (json.priType == '6') {
+    //             $('.wfp').attr("checked", true)
+    //         }
+    //         $('.nums').val(json.days)
+    //         layui.form.render();
+    //         layui.form.on('checkbox(alls)', function (data) {
+    //             console.log(data.elem.checked); //得到checkbox原始DOM对象
+    //             if (data.elem.checked) {
+    //                 $('.weekly').prop("checked", true)
+    //                 $('.monthly').prop("checked", true)
+    //                 $('.quarterly').prop("checked", true)
+    //                 $('.year').prop("checked", true)
+    //             } else {
+    //                 $('.weekly').prop("checked", false)
+    //                 $('.monthly').prop("checked", false)
+    //                 $('.quarterly').prop("checked", false)
+    //                 $('.year').prop("checked", false)
+    //             }
+    //             layui.form.render();
+    //             console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+    //             console.log(data.othis); //得到美化后的DOM对象
+    //         });
+    //     }
+    // })
+    // 其他 保存
+    function otherSave() {
+        let data = {}
+        data.id = otherId
+        data.pid = otherPid
+        data.finReportStart = $('.ksjs').val()
+        data.finReportEnd = $('.jsjs').val()
+        if ($('.workReport').attr('checked')) {
+            data.workReport = 1
+        } else {
+            data.workReport = 0
+        }
+        if ($('.weekly').attr('checked')) {
+            data.weekly = 1
+        } else {
+            data.weekly = 0
+        }
+        if ($('.monthly').attr('checked')) {
+            data.monthly = 1
+        } else {
+            data.monthly = 0
+        }
+        if ($('.quarterly').attr('checked')) {
+            data.quarterly = 1
+        } else {
+            data.quarterly = 0
+        }
+        if ($('.year').attr('checked')) {
+            data.year = 1
+        } else {
+            data.year = 0
+        }
+
+        // 结算账期设置
+        if ($('.afprq').attr('checked')) {
+            data.setType = 1
+        }
+        if ($('.addrq').attr('checked')) {
+            data.setType = 2
+        }
+        if ($('.azcrq').attr('checked')) {
+            data.setType = 3
+        }
+        if ($('.ajsrq').attr('checked')) {
+            data.setType = 4
+        }
+
+        // 价格条件
+        if ($('.bx').attr('checked')) {
+            data.priType = 1
+        }
+        if ($('.hs').attr('checked')) {
+            data.priType = 2
+        }
+        if ($('.bhs').attr('checked')) {
+            data.priType = 3
+        }
+        if ($('.zzsp').attr('checked')) {
+            data.priType = 4
+        }
+        if ($('.ptfp').attr('checked')) {
+            data.priType = 5
+        }
+        if ($('.wfp').attr('checked')) {
+            data.priType = 6
+        }
+        data.days = $('.nums').val()
+        $.ajax({
+            url: `${API}/erpContractComprehensive/inertOrUpdateComprehensive`,
+            type: 'post',
+            data: data,
+            success: function (res) {
+                console.log('2')
+            }
+        })
+    }
+    //  积分新增
+    function addJf () {
+        $('.jflist').append(`<tr class="jf">
+                                <td></td>
+                                <td><input type="text" data-name="intName" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="dateStart" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="dateEnd" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intDot" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intBid" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="intPercentage" class="layui-input" value=""></td>
+                                <td><input type="text" name="intKy" class="layui-input" value=""></td>
+                                <td><div class="layui-btn layui-btn-xs" onclick="saveJf()">保存</div></td>
+                            </tr>`)
+    }
+    function saveJf (index) {
+        let str = '.jf input'
+        let data = {}
+        let id = ''
+        if(index) {
+            str = '.jf_'+index + 'input'
+
+        }
+        $(str).each (function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $.ajax({
+            url:`${API}/erpContractIntegral/inertOrUpdateIntegral?pid=${loadUserInfo.customer.id}&id=${id}`,
+            type:'post',
+            data:data,
+            success: function (res) {
+                layer.msg('保存成功！')
+            },error: function () {
+                alert('系统错误，请稍后重试！')
+            }
+        })
+    }
+</script>
+
+</html>

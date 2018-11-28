@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 720px;
+            padding: 10px;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .select {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .layui-input {
+            width: 140px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        客户名称
+                    </th>
+                    <th>
+                        车辆品牌
+                    </th>
+                    <th>
+                        车辆型号
+                    </th>
+                    <th>
+                        车辆类型
+                    </th>
+                    <th>
+                        驱动方式
+                    </th>
+                    <th>
+                        车轴/轮数
+                    </th>
+                    <th>
+                        车辆用途
+                    </th>
+                    <th>
+                        运营范围
+                    </th>
+                    <th>
+                        能源类型
+                    </th>
+                    <th>
+                        车辆承载
+                    </th>
+                    <th>
+                        制动类型
+                    </th>
+                    <th>
+                        悬架类型
+                    </th>
+
+                    <th>
+                        前桥提升
+                    </th>
+                    <th>
+                        后桥提升
+                    </th>
+                    <th>
+                        随动转向
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="cheliang">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+    $.ajax({
+        url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=20`,
+        type: 'post',
+        success: function (res) {
+            let str = ''
+            $.each(res.data, function (i) {
+                let json = res.data[i]
+                str += `<tr><td>${i + 1}</td>
+                <td>${json.customer_name == null ? '' : json.customer_name}</td>
+                <td>${json.car_brand == null ? '' : json.car_brand}</td>
+                <td>${json.car_model == null ? '' : json.car_model}</td>
+                <td>${json.car_type == null ? '' : json.car_type}</td>
+                <td>${json.car_drive == null ? '' : json.car_drive}</td>
+                <td>${json.car_wheel == null ? '' : json.car_wheel}</td>
+                <td>${json.car_use == null ? '' : json.car_use}</td>
+             <td>${json.car_operation_type == null ? '' : json.car_operation_type}</td>
+                    <td>${json.car_service_centre == null ? '' : json.car_service_centre}</td>   //未找到字段
+       <td>${json.car_load == null ? '' : json.car_load}</td>
+              <td>${json.car_braking_type == null ? '' : json.car_braking_type}</td>
+                     <td>${json.car_suspension_type == null ? '' : json.car_suspension_type}</td>
+                            <td>${json.car_front_axle == null ? '' : json.car_front_axle}</td>
+                                   <td>${json.car_rear_axle == null ? '' : json.car_rear_axle}</td>
+                                          <td>${json.car_turn == null ? '' : json.car_turn}</td>
+                </tr>`
+            })
+            $('.cheliang').append(str)
+        }
+    })
+
+
+
+    function goInfo() {
+        window.location.href = './wuliaogengxinxiangqing.html'
+    }
+</script>

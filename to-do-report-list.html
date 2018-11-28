@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			.start-time,
+			.end-time {
+				width: 30%;
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+
+			<div class="layui-row">
+				<div class="layui-col-xs6 layui-col-xs-offset3">
+					<div class="layui-tab layui-tab-brief">
+						<ul class="layui-tab-title">
+							<li class="layui-this">周报</li>
+							<li>月报</li>
+							<li>季报</li>
+							<li>年报</li>
+							<li>自定</li>
+						</ul>
+						<div class="layui-tab-content">
+							<div class="layui-tab-item layui-show">
+								<table class="layui-table week-report">
+									<!--<tr>
+										<td>
+											<a href="to-do-report.html">周报</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="to-do-report.html">周报</a>
+										</td>
+									</tr>-->
+								</table>
+							</div>
+							<div class="layui-tab-item">
+								<table class="layui-table month-report">
+									<!--<tr>
+										<td>
+											<a href="to-do-report.html">月报</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="to-do-report.html">月报</a>
+										</td>
+									</tr>-->
+								</table>
+							</div>
+							<div class="layui-tab-item">
+								<table class="layui-table">
+									<tr>
+										<td>
+											<a href="to-do-report.html">季报</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="to-do-report.html">季报</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="layui-tab-item">
+								<table class="layui-table">
+									<tr>
+										<td>
+											<a href="to-do-report.html">年报</a>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<a href="to-do-report.html">年报</a>
+										</td>
+									</tr>
+								</table>
+							</div>
+							<div class="layui-tab-item">
+								<input type="text" class="layui-input start-time" name="" id="" value="" /> -
+								<input type="text" class="layui-input end-time" name="" id="" value="" />
+								<button class="layui-btn layui-btn-sm">提交</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		var layer = ''
+		layui.use('layer', function() {
+			layer = layui.layer
+		})
+		layui.use('element', function() {
+			element = layui.element;
+		});
+
+		layui.use('laydate', function() {
+			laydate = layui.laydate
+			laydate.render({
+				elem: '.start-time'
+			})
+			laydate.render({
+				elem: '.end-time'
+			})
+		});
+		
+		
+		var current_date = new Date();
+		var current_year = current_date.getFullYear();
+		
+		// 周报列表
+		var current_year_start = new Date( current_year + '/01/01 00:00:00');
+		var ele;
+		var week_start_dt = current_year_start.getTime();
+		var week_end_dt;
+		
+		first_start_week = current_year_start.getDay();
+		switch (first_start_week){
+			case 1: // 今年的第一天是周一
+				week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
+				break;
+				
+			case 2: // 今年的第一天是周二
+				week_end_dt = week_start_dt + 6*24*60*60*1000 - 1000;
+				break;
+				
+			case 3: // 今年的第一天是周三
+				week_end_dt = week_start_dt + 5*24*60*60*1000 - 1000;
+				break;
+				
+			case 4: // 今年的第一天是周四
+				week_end_dt = week_start_dt + 4*24*60*60*1000 - 1000;
+				break;
+				
+			case 5: // 今年的第一天是周五
+				week_end_dt = week_start_dt + 3*24*60*60*1000 - 1000;
+				break;
+				
+			case 6: // 今年的第一天是周六
+				week_end_dt = week_start_dt + 2*24*60*60*1000 - 1000;
+				break;
+				
+			case 0: // 今年的第一天是周日
+				week_end_dt = week_start_dt + 1*24*60*60*1000 - 1000;
+				break;
+		}
+		ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + 1 + '周</td></tr>');
+		$('.week-report').append(ele);
+		for (var i = 2; ; i++) {
+			week_start_dt = week_end_dt + 1000;
+			week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
+			ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + i + '周</td></tr>');
+			var current_year_end = new Date(week_end_dt);
+			if (current_year_end.getFullYear() != current_year) {
+				ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + current_year + '/12/31 23:59:59">' + current_year + '年第' + i + '周</td></tr>');
+				$('.week-report').append(ele);
+				break;
+			}
+			$('.week-report').append(ele);
+		}
+		
+		$('.week-report').on('mouseover','td',function(){
+			$(this).css('cursor','pointer');
+		});
+		
+		$('.week-report').on('click','td',function(){
+			location.href="to-do-report-week.html";
+			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+			obj.workDtS = $(this).attr('dt_S');
+			obj.workDtE = $(this).attr('dt_E');
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		});
+		
+		
+		// 月报列表
+		for (var i = 1; i <= 12; i++) {
+			switch (i){
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+				case 8:
+				case 10:
+				case 12:
+					ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/31 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+					break;
+				case 4:
+				case 6:
+				case 9:
+				case 11:
+					ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/30 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+					break;
+				case 2:
+					if (current_year % 4 == 0 && current_year % 100 != 0) {
+						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/29 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+					} else {
+						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/28 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+					}
+					break;
+				default:
+					break;
+			}
+			// ele = $('<tr><td dt_S="" dt_E="">' + current_year + '年' + i + '月</td></tr>');
+			$('.month-report').append(ele);
+		}
+		
+		$('.month-report').on('mouseover','td',function(){
+			$(this).css('cursor','pointer');
+		});
+		
+		$('.month-report').on('click','td',function(){
+			location.href="to-do-report-month.html";
+			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+			obj.workDtS = $(this).attr('dt_S');
+			obj.workDtE = $(this).attr('dt_E');
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		});
+	</script>
+
+</html>

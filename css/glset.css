@@ -1,0 +1,61 @@
+.wrap {
+    padding: 20px;
+}
+
+.select {
+    height: 40px;
+    padding: 20px 0;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+.search {
+    width: 200px;
+    height: 38px;
+    margin: 0 auto;
+    display: inline-block;
+    padding-top: 1px;
+
+}
+
+select {
+    height: 36px;
+}
+
+.layui-input {
+    border: 0;
+    outline: none;
+}
+
+.btn {
+    display: inline-block;
+
+}
+
+.next {
+    text-align: center;
+}
+
+.layui-table td,
+.layui-table th {
+    padding: 0;
+    text-align: center;
+    height: 40px;
+}
+
+.hanf {
+    width: 49%;
+}
+
+.layui-input-block {
+    margin-left: 0px;
+    padding: 0 5px;
+}
+
+.control {
+    min-width: 110px;
+}
+
+.num {
+    min-width: 50px;
+}

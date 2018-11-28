@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table" lay-filter="table">
+            <thead>
+                <tr>
+                    <th width="5%" class="num">序号</th>
+                    <th width="7.5%">日期</th>
+                    <th width="7.5%">采购单号</th>
+                    <th width="15%">采购单位</th>
+                    <th width="15%">客户名称</th>
+                    <th width="15%">内容</th>
+                    <th width="7.5%">审批</th>
+                    <th width="7.5%">入库</th>
+                    <th width="7.5%">发票号</th>
+                    <th width="7.5%">付款</th>
+                    <th width="5%">状态</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                
+            </tbody>
+        </table>
+        <!-- 采购订单 -->
+        <div class="show-list" style="display:none;padding:20px;">
+            <table class="layui-table" lay-filter="table">
+                <tbody>
+                    <tr>
+                        <td colspan="1">客户名称</td>
+                        <td colspan="4">天津港保税区金方舟国际贸易有限公司</td>
+                        <td colspan="1">订单日期</td>
+                        <td colspan="2">2018-08-08</td>
+                        <td colspan="1">订单编号</td>
+                        <td colspan="3">CGDD18080801</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">付款方式</td>
+                        <td colspan="4">现金付款</td>
+                        <td colspan="1">经办人</td>
+                        <td colspan="2">薛骥</td>
+                        <td colspan="1">总金额</td>
+                        <td colspan="3">207936.0</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">序号</td>
+                        <td colspan="1">品名</td>
+                        <td colspan="1">规格</td>
+                        <td colspan="1">品牌</td>
+                        <td colspan="1">型号</td>
+                        <td colspan="1">产地</td>
+                        <td colspan="1">物料新旧</td>
+                        <td colspan="1">数量</td>
+                        <td colspan="1">单价</td>
+                        <td colspan="1">总价</td>
+                        <td colspan="1">发票类型</td>
+                        <td colspan="1">优惠</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>电器-定位器</td>
+                        <td>固定式</td>
+                        <td>胎客</td>
+                        <td>TM-CFQ-A</td>
+                        <td>国产</td>
+                        <td>旧物品</td>
+                        <td>456</td>
+                        <td>456.0</td>
+                        <td>207936.0</td>
+                        <td>服务增值</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td colspan="2">部门经理</td>
+                        <td colspan="2">薛骥</td>
+                        <td colspan="2">财务经理</td>
+                        <td colspan="2">薛骥</td>
+                        <td colspan="2">总经理</td>
+                        <td colspan="2">薛骥</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 付款单 -->
+        <div class="pay-list" style="display:none;padding:20px;">
+            
+        </div>
+        <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>日期</th>
+                        <th>工作单号</th>
+                        <th>车辆牌号</th>
+                        <th colspan="2">服务项目</th>
+                        <th>金额</th>
+                        <th>已付金额</th>
+                        <th>本次金额</th>
+                        <th>发票号</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>2018-08-08</td>
+                        <td>CGDD18080801</td>
+                        <td></td>
+                        <td colspan="2">电器-定位器胎客固定式TM-CFQ-A国产456套</td>
+                        <td>207936.00</td>
+                        <td>0</td>
+                        <td>207936.00</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+    </div>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+    function showList() {
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                content: $('.show-list'),
+                title: '采购订单',
+                area: '940px',
+                btn: ['确定'],
+                maxmin: true,
+            })
+        });
+    }
+    
+    function pay(index) {
+        let json = cgList[index]
+        $('.show-list').html(`
+        <table class="layui-table" lay-filter="table">
+                <tbody>
+                    <tr>
+                        <td width="10%" colspan="1">客户名称</td>
+                        <td width="30%" colspan="3"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td width="10%" colspan="1">付款日期</td>
+                        <td width="10%" colspan="1"><input id="payDate" type="text" class="layui-input" value="${json.dt == null ? '' :　json.dt}"></td>
+                        <td width="10%" colspan="1">付款编号</td>
+                        <td width="10%" colspan="1">${json.reFormId == null ? '' :　json.reFormId}</td>
+                        <td width="10%" colspan="1">凭证号</td>
+                        <td width="10%" colspan="1"><input type="text" class="layui-input" value="${json.voucherNo == null ? '' :　json.voucherNo}"></td>
+                    </tr>
+                    <tr>
+                        <td width="10%" colspan="1">付款类型</td>
+                        <td width="10%" colspan="1">
+                            <select name="" id="">
+                                <option value=""></option>
+                            
+                            </select>
+                        </td>
+                        <td width="10%" colspan="1">付款方式</td>
+                        <td width="10%" colspan="1">
+                            <select name="" id="">
+                                <option value="0"></option>
+                                <option value="1">银行支票</option>
+                                <option value="2">网银电汇</option>
+                                <option value="3">银行承兑</option>
+                                <option value="4">现金付款</option>
+                                <option value="5">应付账款</option>
+                                <option value="6">免费</option>
+                                <option value="7">预付账款</option>
+                            </select>
+                        </td>
+                        <td width="10%" colspan="1">发票号</td>
+                        <td width="10%" colspan="1"><input type="text" class="layui-input" value="${json.inFormId == null ? '' :　json.inFormId}"></td>
+                        <td width="10%" colspan="1">工作单号</td>
+                        <td width="30%" colspan="3"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">结余账款</td>
+                        <td colspan="1"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td colspan="1">用结余款</td>
+                        <td colspan="1"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td colspan="1">用后余额</td>
+                        <td colspan="1"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td colspan="1">付款账号</td>
+                        <td colspan="3">
+                            <select name="" id="">
+                                <option value="0"></option>
+                                <option value="1">0302040509300173124</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>备注</td>
+                        <td colspan="5"><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td>付款金额</td>
+                        <td><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                        <td>财务经办</td>
+                        <td><input type="text" class="layui-input" value="${json.branchName == null ? '' :　json.branchName}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+        `)
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                content: $('.pay-list'),
+                title: '采购订单',
+                area: '940px',
+                btn: ['确定'],
+                maxmin: true,
+            })
+        });
+    }
+    let cgList = []
+    
+    //查询采购列表
+    $.ajax({
+        url :`${API}/erpClients/getClientsPageBycustId?custId=1`,
+        type:'get',
+        success: function (res) {
+            console.log(res)
+            let arr = res.data.records.reverse()
+            cgList = res.data.records.reverse()
+            let str = ''
+            $.each(arr,function (i,n) {
+                str +=`<tr>
+                    <td>${arr.length - i}</td>
+                    <td>
+                        ${n.workDt}
+                    </td>
+                    <td onclick="showList()">
+                        ${n.sheetId}
+                    </td>
+                    <td>
+                        ${n.branchName}
+                    </td>
+                    <td>
+                        ${n.customerName}
+                    </td>
+                    <td>
+                        
+                    </td>
+                    <td>
+                       ${n.comeLib == 0  ? '已审批' : '未审批'}
+                    </td>
+                    `
+                    if(n.comeLib == 0) {
+                        str+=`<td>未入库</td>`
+                    } else if(n.comeLib == 1) {
+                        str +=`<td style="cursor:pointer;"onclick="comLib()">
+                            未入库
+                    </td>`
+                    } else {
+                        str+=`<td>已入库</td>`
+                    }
+                    str +=`<td>${n.fapiaoId}</td>`
+                    if(n.payList == 0) {
+                        str+=`<td>未付款</td>`
+                    } else if(n.payList == 1) {
+                        str +=`<td style="cursor:pointer;" style="onclick="pay(${i})">
+                        未付款
+                    </td>`
+                    } else {
+                        str+=`<td>以付款</td>`
+                    }
+                    
+                    str +=`
+                    <td>
+                       ${n.workState == 0 ? '未开始' : '已完成'}
+                    </td>
+                </tr>`
+            })
+            $('.list').html(str)
+        }
+         
+    })
+</script>

@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+	<script src="./lib/layui/layui.js" charset="utf-8"></script>
+	<script type="text/javascript" src="./js/Global.js"></script>
+	<style>
+		.wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+			box-sizing: border-box;
+			text-align: center;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            font-size: 12px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .title {
+            text-align: center;
+            margin: 10px;
+		}
+		.nums {
+			display: inline-block;
+			margin: 0;
+			padding: 0;
+			width: 48px;
+			height: 26px;
+			font-size: 16px;
+			line-height: 26px;
+			text-align: center;
+			color: #666;
+			border: 1px solid #CCC;
+			outline: 0;
+			background: #FFF;
+			ime-mode: disabled;
+		}
+		.btns {
+			*zoom: 1;
+			display: inline-block;
+			width: 26px;
+			height: 26px;
+			border: 1px solid #ccc;
+			line-height: 26px;
+			padding: 0;
+			vertical-align: top;
+			overflow: hidden;
+			text-align: center;
+			background-color: #ededed;
+			overflow: hidden;
+		}
+		.layui-table {
+			width: 800px;
+			margin: 0 auto;
+			margin-bottom: 30px;
+		}
+		.head {
+			display: inline-block;
+			width: 200px;
+			line-height: 30px;
+		}
+		.title {
+			width: 520px;
+			margin: 0 auto;
+			/* text-align: left; */
+		}
+		.winbody {
+			text-align: center;
+			display: none;
+			padding: 10px;
+		}
+		.body {
+			width: 300px;
+			display: inline-block;
+			text-align: left;
+		}
+		.btns {
+			cursor: pointer;
+			
+		}
+    </style>
+</head>
+
+<body>
+	<div class="wrap">
+		<table class="layui-table" style="width:800px;margin:0 auto;">
+			<thead>
+				<tr>
+					<th>
+						服务项目
+					</th>
+					<th>数量</th>
+					<th>金额</th>
+					<th>单位</th>
+					<th>订购数量</th>
+					<th class="zprice">费用合计</th>
+					<th>备注</th>
+				</tr>
+			</thead>
+			<tbody class="lists">
+				<tr>
+					<td>套餐</td>
+					<td>1</td>
+					<td>1200</td>
+					<td>元/年</td>
+					<td><a class="btns "> ━ </a><input type="text" class="nums"><a class="btns"> ✚ </a>
+					</td>
+					<td></td>
+					<td>管理用户1 操作用户1 业务客户10</td>
+				</tr>
+				<tr>
+					<td>操作用户</td>
+					<td>1</td>
+					<td>60</td>
+					<td>元/年</td>
+					<td><a class="btns "> ━ </a><input type="text" class="nums"><a class="btns"> ✚ </a>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>业务客户</td>
+					<td>1</td>
+					<td>120</td>
+					<td>元/年</td>
+					<td><a class="btns "> ━ </a><input type="text" class="nums"><a class="btns"> ✚ </a>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>广告</td>
+					<td>1</td>
+					<td>10</td>
+					<td>元/屏天</td>
+					<td><a class="btns "> ━ </a><input type="text" class="nums"><a class="btns"> ✚ </a>
+					</td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="layui-btn layui-btn-sm" style="margin-top:30px;" onclick="ok()">确认</div>
+	</div>
+	<div class="winbody layui-form">
+		<div class="title">
+			<div class="head">您的订单编号为：</div>
+			<div class="body ddbh">GMFW20160902001</div>
+		</div>
+		<div class="title">
+			<div class="head">需缴纳的金额为：</div>
+			<div class="body ddje"> 1000 元</div>
+		</div>
+		<div class="title  ">
+			<div class="head">请选择支付方式：</div>
+			<div class="body  layui-form-item">
+				<input type="radio" name="type" value="支付宝" title="支付宝" checked>
+				<input type="radio" name="type" value="微信" title="微信" >
+				<input type="radio" name="type" value="汇款" title="汇款" >
+			</div>
+		</div>
+		<div class="title">
+			<div class="head">是否需要发票：</div>
+			<div class="body layui-form">
+				<input type="radio" name="kfp" value="是" title="是">
+				<input type="radio" name="kfp" value="否" title="否" checked>
+			</div>
+		</div>
+
+		<table class="layui-table">
+			<tbody>
+				<tr>
+					<td style="width:15%">收件人</td>
+					<td><input type="text" class="layui-input"></td>
+					<td style="width:15%">联系电话</td>
+					<td><input type="text" class="layui-input"></td>
+					<td style="width:15%">邮政编码</td>
+					<td><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td style="width:15%">收件地址</td>
+					<td colspan="5"><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td style="width:15%">收票单位名称</td>
+					<td colspan="5"><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td style="width:15%">纳税人识别号</td>
+					<td colspan="5"><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td style="width:15%">地址、电话</td>
+					<td colspan="5"><input type="text" class="layui-input"></td>
+				</tr>
+				<tr>
+					<td style="width:15%">开户行及账号</td>
+					<td colspan="5"><input type="text" class="layui-input"></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="layui-btn layui-btn-sm">去支付</div>
+	</div>
+</body>
+<script>
+	function ok() {
+		$.each(tclist,function (i) {
+			tclist[i].projectNum = $('.fnums').eq(i).html()
+			
+		})
+		console.log(tclist)
+		tclist[0].custId = 1
+		$.ajax({
+			url:`${API}/erpServiceOrderProject/insertErpServiceOrder`,
+			type:"post",
+			data:{
+				json:  JSON.stringify(tclist)
+			},
+			success:function (res) {
+
+				if(!res.data) {
+					alert(res.msg)
+				} else {
+					$('.ddbh').html(`${res.data.orderId}`)
+					$('.ddje').html(`${res.data.moneySum}元`)
+					layui.use('layer', function () {
+			var layer = layui.layer;
+			layer.open({
+				title: '提交订单',
+				type: 1,
+				content: $('.winbody'),
+				area: ['820px']
+
+			})
+		})
+				}
+			}
+		})
+		
+	}
+	// 套餐查询
+	var tclist = []
+	function select() {
+		$.ajax({
+			url:`${API}/erpServiceOrderProject/selectErpProject`,
+			type:'get',
+			success: function (res) {
+				let arr = res.data
+				tclist = res.data
+				let nums = 0
+				let str = ''
+				$.each(arr,function (i,n) {
+					str +=`<tr class="flist">
+					<td>${n.projectName}</td>
+					<td class="fnums n_${n.id}">${n.projectNum}</td>
+					<td class=" money">${n.projectMoney}</td>
+					<td>${n.projectUnit}</td>
+					<td><a class="btns" onclick="reduce(${n.id},${n.projectMoney})"> ━ </a><input type="text" class="nums nums_${n.id}" value="${n.projectNum}"><a class="btns" onclick="add(${n.id},${n.projectMoney})"> ✚ </a>
+					</td>
+					<td class="z_${n.id}">${n.projectNum * n.projectMoney}</td>
+					<td></td>
+				</tr>`
+				nums+= n.projectNum * n.projectMoney
+				})
+				$('.zprice').html(`费用合计：${nums} 元`)
+				$('.lists').html(str)
+			}
+		})
+	}
+	select()
+	// 减少
+	function reduce(id,price) {
+		let nums = $(`.nums_${id}`).val()
+		nums -- 
+		console.log(nums)
+		if (nums < 0) {
+			nums = 0
+		}
+		$(`.nums_${id}`).val(nums)
+		$(`.n_${id}`).html(nums)
+		
+		$(`.n_${id}`).html(nums)
+		$(`.z_${id}`).html(nums*price)
+		let prices = 0
+		$('.lists .money').each(function () {
+			if ($(this).html() > 0 && $(this).prev().html() > 0) {
+				prices += $(this).html() * $(this).prev().text()
+			}
+			
+		})
+		$('.zprice').html(`费用合计：${prices} 元`)
+	}
+	// 增加
+	function add (id,price) {
+		let nums = $(`.nums_${id}`).val()
+		nums ++ 
+		console.log(nums)
+		if (nums < 0) {
+			nums = 0
+		}
+		
+		$(`.nums_${id}`).val(nums)
+		$(`.n_${id}`).html(nums)
+		$(`.z_${id}`).html(nums*price)
+		let prices = 0
+		$('.lists .money').each(function () {
+			if ($(this).html() > 0 && $(this).prev().html() > 0) {
+				prices += $(this).html() * $(this).prev().text()
+			}
+			
+		})
+		$('.zprice').html(`费用合计：${prices} 元`)
+	}
+	layui.use('form', function(){
+  var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+  
+  //……
+  
+  //但是，如果你的HTML是动态生成的，自动渲染就会失效
+  //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+  form.render();
+});      
+      
+</script>
+
+</html>

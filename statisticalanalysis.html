@@ -1,0 +1,133 @@
+<!-- 统计分析 -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="./css/font.css">
+  <link rel="stylesheet" href="./css/xadmin.css">
+  <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+  <script src="./lib/layui/layui.js" charset="utf-8"></script>
+  <script type="text/javascript" src="./js/Global.js"></script>
+  <style>
+    .wrap {
+      padding: 20px;
+    }
+
+    .select {
+      height: 40px;
+      padding: 20px 0;
+      border-bottom: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .search {
+      width: 200px;
+      height: 38px;
+      margin: 0 auto;
+      display: inline-block;
+      padding-top: 1px;
+
+    }
+
+    .layui-input {
+      width: 200px;
+    }
+
+    .btn {
+      display: inline-block;
+
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <div class="select">
+      <div class="search layui-form">
+        <div class="layui-input-inline">
+          <select name="interest" lay-filter="aihao" stlyle="height:36px;">
+            <option value="0">上月</option>
+            <option value="1" selected="">上半年</option>
+            <option value="1" selected="">下半年</option>
+            <option value="1" selected="">默认当月</option>
+          </select>
+        </div>
+      </div>
+      <div class="btn">
+        <button class="systemsetup layui-btn layui-btn-sm">Excel</button>
+      </div>
+    </div>
+    <table id="table" lay-filter="table" class="layui-table">
+      <thead id="head">
+        <tr>
+          <th>车辆数</th>
+          <th rowspan="2">客户名称</th>
+          <th rowspan="2">车辆牌号</th>
+          <th colspan="3">正常</th>
+          <th colspan="3">±10%内</th>
+          <th colspan="3">±10%外</th>
+          <th colspan="3">出险</th>
+        </tr>
+        <tr>
+          <th class="nums"> 22</th>
+          <th>数量</th>
+          <th>时长</th>
+          <th>%</th>
+          <th>数量</th>
+          <th>时长</th>
+          <th>%</th>
+          <th>数量</th>
+          <th>时长</th>
+          <th>%</th>
+          <th>数量</th>
+          <th>时长</th>
+          <th>%</th>
+        </tr>
+      </thead>
+      <tbody class="weblist">
+      </tbody>
+    </table>
+  </div>
+</body>
+<script>
+  $.ajax({
+				url: `${API}/real/statistics?`,
+				// dataType:'json',
+				type: 'get',
+        success: function (res) {
+          let arr = res.data
+          let str = ''
+          $('.nums').html(arr.length)
+          $.each(arr,function (i,n) {
+            str+=`<tr>
+            <td>${i+1}</td>
+          <td>${n.cus_name}</td>
+          <td>${n.car_plate}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          
+
+          <td></td>
+          <td></td>
+          <td></td><td></td>
+          <td></td>
+          <td></td>
+
+        </tr>`
+          })
+          $('.weblist').html(str)
+        }
+  })
+</script>
+
+</html>

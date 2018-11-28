@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>欢迎页面-X-admin2.0</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+	/>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<link rel="stylesheet" type="text/css" href="css/common.css" />
+
+	<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+	<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+	<!--[if lt IE 9]>
+		    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+		    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+	<style>
+		.layui-table td {
+			padding: 0px;
+			height: 30px;
+			line-height: 0px;
+			text-align: center;
+		}
+
+		.layui-table td {
+			margin: 0px;
+		}
+
+		.list {
+			float: left;
+			width: 40%;
+			/* border-right: 1px solid #ccc; */
+			padding-right: 20px;
+			height: 720px;
+		}
+
+		.view {
+			float: left;
+			width: 1100px;
+			display: contents;
+		}
+
+		.cartype {
+			width: calc(60% - 300px);
+			height: 720px;
+			overflow: inherit;
+			float: left;
+		}
+
+		.infos {
+			width: 200px;
+			float: left;
+			padding: 20px;
+		}
+
+		.infos li {
+			height: 30px;
+			line-height: 30px;
+			overflow: hidden;
+		}
+
+		b {
+			width: 40px;
+			height: 20px;
+			float: left;
+			margin: 5px;
+		}
+
+		.normal {
+			background: #33c40c;
+		}
+
+		.danger {
+			background: #ffc000;
+		}
+
+		.battery {
+			background: #ff0000;
+		}
+
+		.nosignal {
+			background: #0070c0;
+		}
+
+		.nohave {
+			background: #000;
+		}
+
+		.taiwenshend {
+			background: #0070c0;
+		}
+
+		.jjxy {
+			background: #0070c0;
+			animation: bh 0.5s infinite;
+		}
+
+		@keyframes bh {
+			from {
+				background: #ff0000;
+			}
+			to {
+				background: #0070c0;
+			}
+		}
+
+		.head_t th {
+			width: 160px;
+		}
+
+		.inputs {
+			width: 140px;
+			height: 22px;
+			display: inline-block;
+			font-size: 12px;
+			margin-left: 20px;
+			margin-right: 5px;
+		}
+
+		.pointer {
+			cursor: pointer;
+		}
+		.layui-table td {
+			line-height: 30px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="x-body">
+		<xblock>
+			<!-- <button id="btn_list_danger" class="layui-btn layui-btn-xs layui-btn-danger">报警列表</button>
+			<button id="btn_list_all" class="layui-btn layui-btn-xs layui-btn-normal">全部列表</button> -->
+			<input class="layui-input inputs" type="text" placeholder="车辆牌号       自编车号">
+			<button class="layui-btn layui-btn-xs layui-btn-normal search" type="button">查询</button>
+		</xblock>
+		<div class="list">
+			<!-- 全部列表  -->
+			<table id="list_all" class="layui-table">
+				<thead>
+					<tr class="head_t ">
+						<th style="width:9% ">序号</th>
+						<th style="width:35% ">客户名称</th>
+						<th style="width:14% ">车辆牌号</th>
+						<th style="width:14% ">自编车号</th>
+						<th style="width:14% ">当前车速</th>
+						<th style="width:14% ">报警状态</th>
+					</tr>
+				</thead>
+				<tbody id="quan_list">
+
+				</tbody>
+			</table>
+		</div>
+		<ul class="view ">
+			<ul class="infos ">
+				<li>
+					<b class="normal "></b>
+					<span>监测状态正常</span>
+				</li>
+				<li>
+					<b class="danger "></b>
+					<span>超出阈值10%内</span>
+				</li>
+				<li>
+					<b class="battery "></b>
+					<span>超出阈值10%外</span>
+				</li>
+				<li>
+					<b class="taiwenshend "></b>
+					<span>胎纹深度报警</span>
+				</li>
+				<li>
+					<b class="jjxy "></b>
+					<span>急剧泄压、超高温</span>
+				</li>
+				<li>
+					<b class="nohave "></b>
+					<span>无胎压温度传感器</span>
+				</li>
+			</ul>
+			<iframe id="iframe" class="cartype" style="border:0;"></iframe>
+	</div>
+	<!-- 单车监控  -->
+	<div id="item-monitor ">
+
+	</div>
+	</div>
+	<div class="sss"></div>
+	<script src="js/jquery-2.1.0.js " type="text/javascript " charset="utf-8 "></script>
+	<script src="./js/Global.js"></script>
+	<script>
+		// const API = 'http://m3323744.imwork.net:56230'
+		 
+		$(function () {
+			// shua();
+			$('.search').click(function(){
+				getList();
+			});
+			getList();
+			function getList(){
+				$.ajax({
+					url: `${API}/real/getListByCustomerId?custId=${loadUserInfo.customer.id}`,
+					// url:`${API}/real/getListByCar`,
+					// dataType:'json',
+					type: 'get',
+					data:{
+						keyWord: $('.inputs').val()
+					},
+					success: function (res) {
+						let data = res.data.reverse()
+						console.log(data)
+						let str = ''
+						if (data.length == 0) {
+							str = `<tr><td colspan=6>暂无数据</td></tr>`
+						} else {
+							$(data).each((i) => {
+								let json = data[i]
+								if (!json.car_number) {
+									json.car_number = ''
+								}
+								let name = '正常'
+								if (json.police_states == 1) {
+									name = '低压/高压/高温'
+								}
+								if (json.police_states == 2) {
+									name = '电池/花纹异常'
+								}
+								if (json.police_states == 3) {
+									name = '无信号'
+								}
+	
+								str += `<tr data-id=${json.id}><td>${data.length - i}</td>
+								<td class="pointer " onclick="changeCar( '${json.id}', '${json.car_plate}', '${json.carType}','${json.car_number}') ">${json.cus_name}</td>
+								<td class="pointer " onclick="changeCar( '${json.id}', '${json.car_plate}', '${json.carType}','${json.car_number}') ">${json.car_plate}</td>
+								<td>${json.car_number}</td>
+								<td>${json.speed}</td>
+								<td>${name}</td>
+								</tr>`
+							})
+							changeCar(`${data[0].id}`, `${data[0].car_plate}`, `${data[0].carType}`, `${data[0].car_number}`)
+						}
+						$('#quan_list').html('');
+						$('#quan_list').append(str)
+					}
+				})
+			}
+				
+		});
+		//  获取车辆详细信息
+		function changeCar(id, carname, num, car_number) {
+			$.ajax({
+				url: `${API}/real/selectCarTyre?carId=${id}`,
+				type: 'get',
+				success: function (res) {
+					let str = `carname=${encodeURI(encodeURI(carname))}&id=${id}&carnum=${car_number}`
+					console.log(`./rounds-infos-${num}.html?${str}`)
+					$('#iframe').attr('src', `./rounds-infos-${num}.html?${str}`)
+
+				}
+			})
+		}
+	</script>
+</body>
+
+</html>

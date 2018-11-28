@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 300px;
+            overflow: auto;
+            box-sizing: border-box;
+            text-align: center;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <tr>
+                <td>用户名</td>
+                <td class="user"></td>
+            </tr>
+            <tr>
+                <td>昵称</td>
+                <td><input type="text" class="layui-input nicheng"></td>
+            </tr>
+        </table>
+        <div>
+            <a class="layui-btn layui-btn-sm" onclick="save()">保存</a>
+            <a class="layui-btn layui-btn-sm layui-btn-danger">取消</a>
+        </div>
+    </div>
+</body>
+<script>
+    let userId = 1
+    let custId = 1
+    $.ajax({
+        url: `${API}/erpUser/getcustUserById?custId=1`,
+        type: 'get',
+        success: function (res) {
+            $('.user').text(res.data.cusCode)
+            $('.nicheng').val(res.data.cusNickname)
+        }
+    })
+    function save() {
+        let data = {}
+        data.realName = $('.nicheng').val()
+        data.userId = 1
+        data.custId = 1
+        $.ajax({
+            url: `${API}/erpUser/UpdateUserRealName`,
+            data: data,
+            type: 'post',
+            success: function (res) {
+                window.location.reload()
+                $('.nicheng').val(res.data.cusNickname)
+            }
+        })
+    }
+
+</script>
+
+</html>

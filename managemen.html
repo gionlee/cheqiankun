@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            width: 150px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        table .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+            <div class="search">
+                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select lay-filter="datesel" name="quiz2">
+                                <option value="">请选时段</option>
+                                <option value="0">一季度</option>
+                                <option value="1">二季度</option>
+                                <option value="2">三季度</option>
+                                <option value="3">四季度</option>
+                                <option value="4">上半年</option>
+                                <option value="5">下半年</option>
+                                <option value="6">本年度</option>
+                                <option value="7">上年度</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal">查询</button>
+                </div>
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead id="head">
+                <tr>
+                    <th style="width:25%;">工作单位</th>
+                    <th style="width:7.5%;">工作单数</th>
+                    <th style="width:7.5%;">客户数</th>
+                    <th style="width:7.5%;">车辆数</th>
+                    <th style="width:7.5%;">采购</th>
+                    <th style="width:7.5%;">销售</th>
+                    <th style="width:7.5%;">维修</th>
+                    <th style="width:7.5%;">维护</th>
+                    <th style="width:7.5%;">现款</th>
+                    <th style="width:7.5%;">应收</th>
+                    <th style="width:7.5%;">应付</th>
+                </tr>
+                <tr id="listAll">
+
+                </tr>
+            </thead>
+            <tbody id="list">
+
+            </tbody>
+        </table>
+
+    </div>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+    var coke = 1;
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    function goUrl(name) {
+        window.location.href = `./managemeninfo.html?name=${encodeURI(encodeURI(name))}`
+    }
+
+    //  const API = 'http://106.12.18.163:3340'
+    //  $.ajax({
+    //      url: `${API}/erpManagement/getManagements?custId=1`,
+    //      type: 'get',
+    //      success: function (res) {
+    //          console.log(res)
+    //      }
+    //  })
+
+    function seeInfo() {
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                area: ['1200px'],
+                title: '车辆牌号',
+                content: $('.winbody')
+            });
+        })
+    }
+
+    function GetRequest() {
+        var url = location.search; //获取url中"?"符后的字串  
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    $(function () {
+        var userid = GetRequest().userid;
+        var id = GetRequest().id;
+        $.ajax({
+            url: API + '/erpManagement/getManagements?custId=' + coke,
+            type: 'get',
+            dataType: 'json',
+            success: function (ret) {
+                var objkacha = ret.data.mapList;
+                var objkAll = ret.data.topMap;
+                var html = '';
+                var htmlAll = '<th>合计</th>' +
+                    '                    <th>' + objkAll.allNum + '</th>' +
+                    '                    <th>' + objkAll.allcustomerNum + '</th>' +
+                    '                    <th>' + objkAll.allCarNum + '</th>' +
+                    '                    <th>' + objkAll.allPurchase + '</th>' +
+                    '                    <th>' + objkAll.allSail + '</th>' +
+                    '                    <th>' + objkAll.allRepair + '</th>' +
+                    '                    <th>' + objkAll.allMaintian + '</th>' +
+                    '                    <th>' + objkAll.allCash + '</th>' +
+                    '                    <th>' + objkAll.allAccounts + '</th>' +
+                    '                    <th>' + objkAll.allCope + '</th>';
+                $("#listAll").html(htmlAll);
+                
+                
+                	$.each(objkacha, function(i,n) {
+                		html += ` <tr  style="cursor:pointer;" onclick="goUrl('${n.cusName}')">` +
+                        '                    <td>' +
+                        '                        ' + (n.cusName || '') + '' +
+                        '                    </td>' +
+                        '                    <td >' +
+                        '                        ' + n.custallNum +
+                        '                    </td>' +
+                        '                    <td>' +
+                        ''+n.custallcustomerNum  +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '' + n.custallCarNum + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + (n.custallPurchase==null?0:n.custallPurchase) + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + (n.custallSail==null?0:n.custallSail) + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + (n.custallRepair==null?0:n.custallRepair) + '' +
+                        '                    </td>' +
+                        '' +
+                        '                    <td>' +
+                        '                        ' + (n.custallMaintian==null?0:n.custallMaintian) + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + (n.custallCash==null?0:n.custallCash) + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + (n.custallAccounts==null?0:n.custallAccounts) + '' +
+                        '                    </td>' +
+                        '' +
+                        '                    <td>' +
+                        '                        ' + (n.custallCope==null?0:n.custallCope) + '' +
+                        '                    </td>' +
+
+                        '                </tr>';
+                
+                });
+                   $("#list").html(html); 
+
+            },
+            error: function (err) {
+                alert("系统错误");
+
+            }
+        });
+
+    })
+
+    $("#cx").click(function () {
+
+        var startDate = $("#startDate").val();
+        var endDate = $("#endDate").val();
+        //'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
+        $.ajax({
+            url: API + '/erpManagement/getManagements?startDate=' + startDate + '&endDate=' + endDate + '&custId=' + coke,
+            type: 'get',
+            dataType: 'json',
+            success: function (ret) {
+                var objkacha = ret.data.mapList;
+                var objkAll = ret.data.topMap;
+                var html = '';
+                var htmlAll = '<th>合计</th>' +
+                    '                    <th>' + objkAll.allNum + '</th>' +
+                    '                    <th>' + objkAll.allcustomerNum + '</th>' +
+                    '                    <th>' + objkAll.allCarNum + '</th>' +
+                    '                    <th>' + objkAll.allPurchase + '</th>' +
+                    '                    <th>' + objkAll.allSail + '</th>' +
+                    '                    <th>' + objkAll.allRepair + '</th>' +
+                    '                    <th>' + objkAll.allMaintian + '</th>' +
+                    '                    <th>' + objkAll.allCash + '</th>' +
+                    '                    <th>' + objkAll.allAccounts + '</th>' +
+                    '                    <th>' + objkAll.allCope + '</th>';
+                $("#listAll").html(htmlAll);
+                for (var key in objkacha) {
+                    html += '  <tr>' +
+                        '                    <td>' +
+                        '                        ' + (objkacha[key].custallNum || '') + '' +
+                        '                    </td>' +
+                        '                    <td onclick="goUrl()">' +
+                        '                        ' + (objkacha[key].custallNum || '') + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '' + (objkacha[key].custallNum || '') + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '' + objkacha[key].custallCarNum + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallPurchase + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallSail + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallRepair + '' +
+                        '                    </td>' +
+                        '' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallMaintian + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallCash + '' +
+                        '                    </td>' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallAccounts + '' +
+                        '                    </td>' +
+                        '' +
+                        '                    <td>' +
+                        '                        ' + objkacha[key].custallCope + '' +
+                        '                    </td>' +
+
+                        '                </tr>';
+
+
+
+
+
+                }
+                $("#list").html(html);
+
+            },
+            error: function (err) {
+                alert("系统错误");
+
+            }
+        });
+    })
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '7':
+                    $('.ksdate').val(`${years - 1}-01-01`)
+                    $('.jsdate').val(`${years - 1}-12-31`)
+                    break;
+            }
+        });
+    })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+</script>
+
+</html>

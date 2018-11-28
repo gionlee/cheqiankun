@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            width: 200px;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap" style="padding-top: 0;">
+
+        <div class="select" style="padding-bottom:0;border-bottom:none;">
+            <div class="search">
+                <input class="layui-input names" type="text" placeholder="客户名称       编码">
+            </div>
+            <div class="btn">
+                <button class="layui-btn layui-btn-normal" onclick="select()">查询</button>
+            </div>
+        </div>
+        <table id="table" lay-filter="test" class="layui-table">
+
+        </table>
+
+    </div>
+</body>
+<script src="./js/jquery-2.1.0.js"></script>
+<script>
+     
+    $.ajax({
+        url: `${API}/erpCustomer/getLikeErpCustor?userId=${loadUserInfo.user.id}&code=${loadUserInfo.customer.cusCode}`,
+        type: 'get',
+        success: function (res) {
+            if (res.data == null) {
+                alert('暂无数据！')
+                return false
+            }
+            $('#table').append(`
+                <thead id="head">
+                <tr>
+                    <th rowspan="4" style="width: 20%;">合计</th>
+                    <th colspan="3">客户总数 ${res.data.customerNum}</th>
+                    <th colspan="5">车辆总数 ${res.data.carNum}</th>
+                </tr>
+                <tr>
+                    <th>集团客户</th>
+                    <th>VIP客户</th>
+                    <th>金牌客户</th>
+                    <th>小型车</th>
+                    <th>客车</th>
+                    <th>单机</th>
+                    <th>拖头</th>
+                    <th>挂车</th>
+                <tr>
+                </tr>
+                    <th class="groups"></th>
+                    <th class="vips"></th>
+                    <th class="golds"></th>
+                    <th>${res.data.numMap.xcarnum == null ? 0 : res.data.numMap.xcarnum}</th>
+                    <th>${res.data.numMap.psacarnum == null ? 0 : res.data.numMap.psacarnum}</th>
+                    <th>${res.data.numMap.dcarnum == null ? 0 : res.data.numMap.dcarnum}</th>
+                    <th>${res.data.numMap.tcarnum == null ? 0 : res.data.numMap.tcarnum}</th>
+                    <th>${res.data.numMap.gcarnum == null ? 0 : res.data.numMap.gcarnum}</th>
+                </tr>
+                <tbody class="cbody"></tbody>`);
+                //    <th>${res.data.customerList.length}</th>
+
+            let data = res.data.customerList
+            let str = ''
+            let groups = 0
+            let vips = 0
+            let golds = 0
+            for (let i = 0; i < data.length; i++) {
+                
+                let json = data[i]
+                if(json.groupNum > 0) {
+                    groups += json.groupNum
+                }
+                if(json.vIPNum > 0) {
+                    vips += json.vIPNum
+                }
+                if(json.goldNum > 0) {
+                    golds += json.goldNum
+                }
+                str += `<tr >
+                <td style="cursor:pointer" onclick="update(${json.id},'${json.cusName}')">${json.cusName}</td>
+                <td>${json.groupNum == null ? 0 : json.groupNum}</td>
+                <td>${json.vIPNum == null ? 0 : json.vIPNum}</td>
+                <td>${json.goldNum == null ? 0 : json.goldNum}</td>
+                <td>${json.cusXCar == null ? 0 : json.cusXCar}</td>
+                <td>${json.cusPsacar == null ? 0 : json.cusPsacar}</td>
+                <td>${json.cusDCar == null ? 0 : json.cusDCar}</td>
+                <td>${json.cusTCar == null ? 0 : json.cusTCar}</td>
+                <td>${json.cusGCar == null ? 0 : json.cusGCar}</td>
+                </tr>`
+            }
+            adds = data.length
+            $('.cbody').append(str)
+            $('.groups').text(groups)
+            $('.vips').text(vips)
+            $('.golds').text(golds)
+        },
+        error: function (res) {
+            console.log(res)
+        }
+    })
+    function select () {    
+        let data = {
+            userId:1,
+            code: $('.names').val()
+        }
+        $.ajax({
+        url: `${API}/erpCustomer/getErpCustor`,
+        type: 'get',
+        success: function (res) {
+            $('#table').append(`            <thead id="head">
+                <tr>
+                    <th rowspan="3" style="width: 20%;">合计</th>
+                    <th colspan="3">客户总数 ${res.data.customerNum}</th>
+                    <th colspan="5">车辆总数 ${res.data.carNum}</th>
+                </tr><tr>
+                    <th>集团客户</th>
+                    <th>VIP客户</th>
+                    <th>金牌客户</th>
+                    <th>小型车</th>
+                    <th>客车</th>
+                    <th>单机</th>
+                    <th>拖头</th>
+                    <th>挂车</th>
+                <tr></tr>
+                    <th>0</th>
+                    <th>0</th>
+                    <th>1</th>
+                    <th>5</th>
+                    <th>${res.data.numMap.xcarnum == null ? 0 : res.data.numMap.xcarnum}</th>
+                    <th>${res.data.numMap.psacarnum == null ? 0 : res.data.numMap.psacarnum}</th>
+                    <th>${res.data.numMap.dcarnum == null ? 0 : res.data.numMap.dcarnum}</th>
+                    <th>${res.data.numMap.tcarnum == null ? 0 : res.data.numMap.tcarnum}</th>
+                    <th>${res.data.numMap.gcarnum == null ? 0 : res.data.numMap.gcarnum}</th>
+                
+                </tr><tbody class="cbody"></tbody>`)
+            let data = res.data.customerList
+            let str = ''
+            for (let i = 0; i < data.length; i++) {
+                let json = data[i]
+                str += `<tr >
+                <td>${json.cusName}</td>
+                <td>${json.groupNum}</td>
+                <td>${json.goldNum}</td>
+                <td>${json.vIPNum}</td>
+                <td>${json.cusXCar == null ? 0: json.cusXCar}</td>
+                <td>${json.cusPsacar == null ? 0 : json.cusPsacar}</td>
+                <td>${json.cusDCar == null ? 0 : json.cusDCar}</td>
+                <td>${json.cusTCar == null ? 0 : json.cusTCar}</td>
+                <td>${json.cusGCar == null ? 0 : json.cusGCar}</td>
+                </tr>`
+            }
+            $('.cbody').append(str)
+        },
+        error: function (res) {
+            console.log(res)
+        }
+    })
+    }
+    function update (id,name) {
+        window.location.href = `./customerlist.html?id=${id}&name=${encodeURI (name)}`
+    }
+</script>
+<!-- <script>
+    // layui.use('table', function () {
+    //     var table = layui.table;
+    // })
+    console.log($('#table'))
+    $('#table').append(`            <thead id="head">
+                <tr>
+                    <th rowspan="3" style="width: 20%;">合计</th>
+                    <th colspan="3">客户总数 6</th>
+                    <th colspan="5">车辆总数 29</th>
+                </tr>
+                <tr>
+                    <th>集团客户</th>
+                    <th>VIP客户</th>
+                    <th>金牌客户</th>
+                    <th>小型车</th>
+                    <th>客车</th>
+                    <th>单机</th>
+                    <th>拖头</th>
+                    <th>挂车</th>
+                </tr>
+                <tr>
+                    <th>0</th>
+                    <th>1</th>
+                    <th>5</th>
+                    <th>0</th>
+                    <th>6</th>
+                    <th>5</th>
+                    <th>5</th>
+                    <th>13</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class='title'>
+                    <td >
+                        天津港保税区金方舟国际贸易有限公司
+                    </td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td >
+                        天津港保税区金方舟国际贸易有限公司
+                    </td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td >
+                        天津港保税区金方舟国际贸易有限公司
+                    </td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                </tr>
+                <tr>
+                    <td >
+                        天津港保税区金方舟国际贸易有限公司
+                    </td>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>0</td>
+                    <td>5</td>
+                    <td>3</td>
+                    <td>3</td>
+                    <td>11</td>
+                </tr>
+            </tbody>`)
+
+    function golist() {
+
+    }
+    $('.title').on('click', function () {
+        console.log(1)
+        window.location.href = './customerlist.html'
+    })
+</script> -->
+
+</html>

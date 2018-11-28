@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            /* width: 200px; */
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+        .layui-form-item {
+            margin: 0;
+        }
+        .winbody {
+            text-align: center;
+            display: none;
+        }
+        .qianming {
+            display: flex;
+            margin: 30px 0;
+        }
+        .qianming li {
+            float: left;
+            flex: 1;
+            line-height: 30px;
+        }
+        .qianming li .layui-input {
+            border: 0;
+            border-bottom: 1px solid #ccc;
+            width: 60%;
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+
+        <div class="select">
+            <div class="search">
+                <input class="layui-input" type="text" placeholder="客户名称       编码">
+            </div>
+            <div class="btn">
+                <button class="layui-btn layui-btn-normal">查询</button>
+            </div>
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th rowspan="2">序号</th>
+                    <th rowspan="2">日期</th>
+                    <th rowspan="2">工作单号</th>
+                    <td rowspan="2">工作单位</td>
+                    <td>客户名称</td>
+                    <th>车牌号</th>
+                    <th rowspan="2">工作项目</th>
+                    <th>采购</th>
+                    <th>销售</th>
+                    <th>维修</th>
+                    <th>维护</th>
+                    <th>现款</th>
+                    <th>应收</th>
+                    <th>应付</th>
+                    <th>业务经办人</th>
+                    <th>客户经办人</th>
+                </tr>
+                <tr>
+                    <!-- <th>合计</th> -->
+                    <!-- <th class="gzdh"></th> -->
+                    <th class="khmc"></th>
+                    <th class="cph"></th>
+                    <th class="cg"></th>
+                    <th class="xs"></th>
+                    <th class="wx"></th>
+                    <th class="wh"></th>
+                    <th class="xk"></th>
+                    <th class="ys"></th>
+                    <th class="yf"></th>
+                    <th class="ywjbr"></th>
+                    <th class="khjbr"></th>
+                </tr>
+            </thead>
+            <tbody class="gzlist">
+
+            </tbody>
+        </table>
+
+    
+    <div class="winbody">
+
+    </div>
+</div>
+</body>
+<script src="./js/Global.js"></script>
+<script src="./js/jquery.jqprint-0.3.js"></script>
+<script src="./js/print.js"></script>
+<script>
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
+    let name = decodeURI(decodeURI(getUrlParam('name')))
+
+    let obj_response = {};
+    function selWork () {
+        $.ajax({
+            url:`${API}/erpManagement/getManagementsBycustId`,
+            data:{
+                startDate:'',
+                endDate:'',
+                custName:name
+            },
+            type:'post',
+            success:function (res) {
+                console.log ( res );
+                obj_response = res;
+                let arr = res.data.custList.reverse()
+                let str =''
+                $.each(arr,function (i,n) {
+                    str+=`<tr>
+                            <td>${arr.length - i}</td>
+                            <td>${n.dt == null ? '' : n.dt}</td>
+                            <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                            <td>${n.purchase == null ? '' : n.purchase}</td>
+                            <td>${n.sail == null ? '' : n.sail}</td>
+                            <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                            <td>${n.maintian == null ? '' : n.maintian}</td>
+                            <td>${n.cash == null ? '' : n.cash}</td>
+                            <td>${n.accounts == null ? '' : n.accounts}</td>
+                            <td>${n.cope == null ? '' : n.cope}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                            <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+                        </tr>`
+                        
+                })
+                $('.gzlist').html(str)
+                $('.gzdh').html(res.data.topMap.custallNum)
+                $('.xs').html(res.data.topMap.custallSail)
+                $('.ys').html(res.data.topMap.custallAccounts)
+                $('.yf').html(res.data.topMap.custallCope)
+                $('.xk').html(res.data.topMap.custallCash)
+                $('.wh').html(res.data.topMap.custallMaintian)
+                $('.wx').html(res.data.topMap.custallRepair)
+                $('.cg').html(res.data.topMap.custallPurchase)
+                $('.cph').html(res.data.topMap.custallCarNum)
+                $('.khmc').html(res.data.topMap.custallcustomerNum)
+                $('.ywjbr').html(res.data.topMap.workAttnNum)
+                $('.khjbr').html(res.data.topMap.projectNum)
+
+            }
+        })
+    }
+    selWork ()
+
+    // 过滤工作单位
+    function fn_filterOrg( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.workPlace != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+    // 过滤客户名称
+    function fn_filterName( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.clientName != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+    // 过滤车牌号
+    function fn_filterNumb( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.carNumber != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;   
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+    // 过滤工作项目
+    function fn_filterWork( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.workProject != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+    // 过滤业务经办人
+    function fn_filterBusiness( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.workAttn != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+    // 过滤客户经办人
+    function fn_filterClient( filter ) {
+        let arr = obj_response.data.custList.reverse()
+        let str =''
+        $.each(arr,function (i,n) {
+            if ( n.clientAttn != filter ) {
+                return;
+            }
+            str+=`<tr>
+                <td>${arr.length - i}</td>
+                <td>${n.dt == null ? '' : n.dt}</td>
+                <td style="cursor:pointer;"  onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                <td style="cursor:pointer;" onclick="fn_filterOrg('${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
+                <td style="cursor:pointer;" onclick="fn_filterName('${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
+                <td style="cursor:pointer;" onclick="fn_filterNumb('${n.carNumber == null ? '' : n.carNumber}')"">${n.carNumber == null ? '' : n.carNumber}</td>
+                <td style="cursor:pointer;" onclick="fn_filterWork('${n.workProject == null ? '' : n.workProject}')">${n.workProject == null ? '' : n.workProject}</td>
+                <td>${n.purchase == null ? '' : n.purchase}</td>
+                <td>${n.sail == null ? '' : n.sail}</td>
+                <td>${n.erpRepair == null ? '' : n.erpRepair}</td>
+                <td>${n.maintian == null ? '' : n.maintian}</td>
+                <td>${n.cash == null ? '' : n.cash}</td>
+                <td>${n.accounts == null ? '' : n.accounts}</td>
+                <td>${n.cope == null ? '' : n.cope}</td>
+                <td style="cursor:pointer;" onclick="fn_filterBusiness('${n.workAttn == null ? '' : n.workAttn}')">${n.workAttn == null ? '' : n.workAttn}</td>
+                <td style="cursor:pointer;" onclick="fn_filterClient('${n.clientAttn == null ? '' : n.clientAttn}')">${n.clientAttn == null ? '' : n.clientAttn}</td>
+            </tr>`;
+        })
+        $('.gzlist').html(str)
+        $('.gzdh').html(obj_response.data.topMap.custallNum)
+        $('.xs').html(obj_response.data.topMap.custallSail)
+        $('.ys').html(obj_response.data.topMap.custallAccounts)
+        $('.yf').html(obj_response.data.topMap.custallCope)
+        $('.xk').html(obj_response.data.topMap.custallCash)
+        $('.wh').html(obj_response.data.topMap.custallMaintian)
+        $('.wx').html(obj_response.data.topMap.custallRepair)
+        $('.cg').html(obj_response.data.topMap.custallPurchase)
+        $('.cph').html(obj_response.data.topMap.custallCarNum)
+        $('.khmc').html(obj_response.data.topMap.custallcustomerNum)
+        $('.ywjbr').html(obj_response.data.topMap.workAttnNum)
+        $('.khjbr').html(obj_response.data.topMap.projectNum)
+    }
+
+
+    function seeInfo(id) {
+        $.ajax({
+            url:`${API}/erpManagement/getManDetailsBycustId?sheetId=${id}`,
+            success: function (res) {
+                let json = res.data
+                $('.winbody').html(`<table class="layui-table">
+            <thead>
+                <tr>
+                    <th>工作日期</th>
+                    <th>里程表数</th>
+                    <th>工作单号</th>
+                    <th colspan="2">客户名称</th>
+                    <th>车辆牌号</th>
+                    <th>挂车牌号</th>
+
+                </tr>
+            </thead>
+            <tbody class="saveOne">
+                
+            </tbody>
+
+        </table>
+        <div class="title">
+            商品销售
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width:10%;">来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th colspan="2">规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>单位</th>
+                    <th>生产编号</th>
+                    <th>物料新旧</th>
+                    <th>去向</th>
+                    <th style="width:5%;">数量</th>
+                    <th style="width:5%;">单价</th>
+                    <th style="width:5%;">金额</th>
+                </tr>
+            </thead>
+            <tbody class="spxs">
+
+
+            </tbody>
+        </table>
+        <div class="title">
+            轮胎维修
+        </div>
+        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+        <table class="layui-table">
+            <thead>
+                    <tr>
+                    <th style="width:10%;">来源</th>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th colspan="2">规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>单位</th>
+                    <th>生产编号</th>
+                    <th>物料新旧</th>
+                    <th>去向</th>
+                    <th style="width:5%;">数量</th>
+                    <th style="width:5%;">单价</th>
+                    <th style="width:5%;">金额</th>
+                </tr>
+            </thead>
+
+            <tbody class="ltwx">
+            </tbody>
+        </table>
+        <div class="title">
+            车辆维修
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>汽修项目</th>
+                    <th>维修科目</th>
+                    <th>维修方式</th>
+                    <th>工时费用</th>
+                    <th>备注</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="clwx">
+            
+            </tbody>
+        </table>
+
+        <table class="layui-table">
+            <tbody class="fyjf">
+            </tbody>
+        </table>
+        <ul class="qianming">
+            
+        </ul>
+
+    </div>`)
+    if(json.saleRepairOrder.length > 0) {
+        let str = ''
+        $.each(json.saleRepairOrder,function (i,n) {
+            str += `<tr>
+                    <td>${n.saleRepairDate}</td>
+                    <td>${n.saleRepairMileage}</td>
+                    <td>${n.saleRepairSheetId}</td>
+                    <td colspan="2">${n.customerName}</td>
+                    <td>${n.carPlate}</td>
+                    <td>${n.trailerPlate}</td>
+                </tr>`
+        })
+        $('.saveOne').html(str)
+    }
+    if(json.saleRepairSales.length > 0) {
+        let str = ''
+        $.each(json.saleRepairSales,function (i,n) {
+            str +=`<tr><td>${n.warehouseId}
+                </td>
+                <td>${n.materielName}</td>
+                <td>${n.materielBrand}</td>
+                <td>${n.materielpecifications}</td>
+                <td>${n.materielModel}</td>
+                <td>${n.materielPlace}</td>
+                <td>${n.materielUnit}</td>
+                <td>${n.materielProduction_id}</td>
+                <td>${n.materielState}</td>
+                <td>${n.materielOutTo}</td>
+                <td>${n.materielNumber}</td>
+                <td>${n.materielPrice}</td>
+                <td>${n.materielTotal}</td>
+                </tr>`
+        })
+        $('.spxs').html(str)
+    }
+    if(json.saleRepairRepairs.length > 0) {
+        let str = ''
+        $.each(json.saleRepairRepairs,function (i,n) {
+            str +=`<tr><td>${n.warehouseId}
+                </td>
+                <td>${n.materielName}</td>
+                <td>${n.materielBrand}</td>
+                <td>${n.materielpecifications}</td>
+                <td>${n.materielModel}</td>
+                <td>${n.materielPlace}</td>
+                <td>${n.materielUnit}</td>
+                <td>${n.materielProduction_id}</td>
+                <td>${n.materielState}</td>
+                <td>${n.materielOutTo}</td>
+                <td>${n.materielNumber}</td>
+                <td>${n.materielPrice}</td>
+                <td>${n.materielTotal}</td>
+                </tr>`
+        })
+        $('.spxs').html(str)
+    }
+    if(json.saleRepairGarages.length > 0) {
+        let str = ''
+        $.each(json.saleRepairGarages,function (i,n) {
+            str +=`<tr><td>${n.garageProject}
+                </td>
+                <td>${n.repairProject}</td>
+                <td>${n.materielBrand}</td>
+                <td>${n.repairMode}</td>
+                <td>${n.repairCost}</td>
+                <td>${n.repairRemarks}</td>
+                </tr>`
+        })
+        $('.spxs').html(str)
+    }
+    layer.open({
+        type:1,
+        content:$('.winbody'),
+        maxmin: true,
+        title:'详情',
+        area:['1200px'],
+        btn:['打印'],
+        yes: function (index) {
+            console.log(index)
+            $('.winbody').jqprint()
+        }
+    })
+            }
+        })
+    }
+</script>
+</html>

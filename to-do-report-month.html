@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			h3.title {
+				line-height: 50px;
+				font-size: 24px;
+				text-align: center;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			h4.title {
+				line-height: 40px;
+				font-size: 20px;
+				border-bottom: 1px solid #eee;
+				margin-top: 50px;
+			}
+			
+			.business_progress,
+			.analysis,
+			.repair,
+			.imagine {
+				height: 150px;
+			}
+			
+			.business_progress textarea,
+			.analysis textarea,
+			.repair textarea,
+			.imagine textarea {
+				width: 98%;
+				height: 80%;
+				margin: 10px;
+				padding: 10px;
+				line-height: 30px;
+				border: 0;
+				background: #f7f7f7;
+			}
+			
+			.wx_money {
+				display: inline-block;
+				width: 50px;
+				text-align: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+
+			<div class="layui-row">
+				<div class="layui-col-xs12">
+					<h3 class="title">
+						<span class="name">天津港保税区金方舟国际贸易有限公司</span>
+						<span class="time">2018年09月</span>
+						工作报告
+					</h3>
+
+					<h4 class="title">一、业务进展</h4>
+					<div class="business_progress">
+						<textarea name="" rows="" cols=""></textarea>
+					</div>
+
+					<h4 class="title">二、运营情况</h4>
+					<h4>1、购置</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="3">单位</th>
+								<th rowspan="2">金额合计</th>
+								<th colspan="2">轮胎</th>
+								<!--<th></th>-->
+								<th colspan="2">轮辋</th>
+								<!--<th></th>-->
+								<th colspan="2">机油</th>
+								<!--<th></th>-->
+								<th colspan="2">柴油</th>
+								<!--<th></th>-->
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<th>金额</th>
+								<th>数量</th>
+								<th>金额</th>
+								<th>数量</th>
+								<th>金额</th>
+								<th>数量</th>
+								<th>金额</th>
+								<th>数量</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="listPurchase"></tbody>
+					</table>
+
+					<h4>2、更换</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>单位</th>
+								<th>轮胎</th>
+								<th>轮辋</th>
+								<th>内胎</th>
+								<th>机油</th>
+								<th>空滤</th>
+								<th>气滤</th>
+								<th>防冻滤</th>
+								<th>齿轮油</th>
+								<th>其他</th>
+							</tr>
+						</thead>
+						<tbody class="listReplacement"></tbody>
+					</table>
+
+					<h4>3、维修&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总金额<span class="wx_money">0</span>元</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>单位</th>
+								<th>金额合计</th>
+								<th>动平衡</th>
+								<th>外胎修补</th>
+								<th>内胎修补</th>
+								<th>轮胎拆装</th>
+								<th>轮胎换位</th>
+								<th>轮胎翻新</th>
+								<th>车辆维修</th>
+								<th>其他</th>
+							</tr>
+						</thead>
+						<tbody class="listRepair"></tbody>
+					</table>
+
+					<h4>4、维护&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;总金额<span class="wx_money">0</span>元</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>单位</th>
+								<th>金额合计</th>
+								<th>胎压调整</th>
+								<th>异物清理</th>
+								<th>小洞修补</th>
+								<th>换芯/帽</th>
+								<th>检查评估</th>
+								<th>胎纹检测</th>
+								<th>使用建议</th>
+								<th>其他</th>
+							</tr>
+						</thead>
+						<tbody class="listMaintenance"></tbody>
+					</table>
+
+					<h4>5、库存</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>单位</th>
+								<th>轮胎</th>
+								<th>轮辋</th>
+								<th>内胎</th>
+								<th>机油</th>
+								<th>空滤</th>
+								<th>气滤</th>
+								<th>防冻滤</th>
+								<th>齿轮油</th>
+								<th>其他</th>
+							</tr>
+						</thead>
+						<tbody class="listStock"></tbody>
+					</table>
+
+					<h4 class="title">三、运营情况/分析</h4>
+					<h4>1、运营里程/成本</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="2">单位</th>
+								<th>车辆总数</th>
+								<th>运营车辆</th>
+								<th>运营百分比</th>
+								<th>运营里程</th>
+								<th>燃油费用</th>
+								<th>维修维护</th>
+								<th>油耗/千公里</th>
+								<th>轮胎/千公里</th>
+								<th>综合/千公里</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>21</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="listMileage"></tbody>
+					</table>
+
+					<h4>2、轮胎更新/胎压/胎纹</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="3">单位</th>
+								<th colspan="4">轮胎更新</th>
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<th colspan="3">胎压</th>
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<th colspan="2">胎温</th>
+								<!--<th></th>-->
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>轮胎总数</th>
+								<th>里程达限</th>
+								<th>胎纹达限</th>
+								<th>意外损耗</th>
+								<th>超高限</th>
+								<th>正常</th>
+								<th>超低限</th>
+								<th>正常</th>
+								<th>超高</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>74</th>
+								<th>0</th>
+								<th>74</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="listTireSituation"></tbody>
+					</table>
+
+					<h4>3、轮胎胎纹/状态</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="3">单位</th>
+								<th colspan="4">剩余胎纹</th>
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<th colspan="5">轮胎状态</th>
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<!--<th></th>-->
+								<!--<th></th>-->
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>＞ 11mm</th>
+								<th>≥ 5 -≤ 11mm</th>
+								<th>≥ 2.5 -＜ 5mm</th>
+								<th>＜ 2.5mm</th>
+								<th>平磨</th>
+								<th>偏磨</th>
+								<th>磨心</th>
+								<th>划伤</th>
+								<th>其他</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="listTreadSituation"></tbody>
+					</table>
+					<p>分析：</p>
+					<div class="analysis">
+						<textarea name="" rows="" cols=""></textarea>
+					</div>
+
+					<h4 class="title">四、下月计划</h4>
+					<h4>1、更新/购置</h4>
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th rowspan="2">单位</th>
+								<th>轮胎</th>
+								<th>轮辋</th>
+								<th>内胎</th>
+								<th>机油</th>
+								<th>空滤</th>
+								<th>气滤</th>
+								<th>防冻滤</th>
+								<th>齿轮油</th>
+								<th>其他</th>
+							</tr>
+							<tr>
+								<!--<th></th>-->
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+								<th>0</th>
+							</tr>
+						</thead>
+						<tbody class="listReportChild">
+							<!--<tr>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+							</tr>
+							<tr>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+								<td><input type="text" class="layui-input" /></td>
+							</tr>-->
+						</tbody>
+					</table>
+					<h4>2、维修/维护</h4>
+					<div class="repair">
+						<textarea name="" rows="" cols=""></textarea>
+					</div>
+
+					<h4 class="title">五、建议/设想</h4>
+					<div class="imagine">
+						<textarea name="" rows="" cols=""></textarea>
+					</div>
+					<div style="text-align:center;margin: 20px auto;">
+						<div class="layui-btn layui-btn-sm" onclick="">提交</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+	</body>
+	<script>
+		var layer = ''
+		layui.use('layer', function() {
+			layer = layui.layer
+		})
+		layui.use('element', function() {
+			element = layui.element;
+		});
+
+		layui.use('laydate', function() {
+			laydate = layui.laydate
+			laydate.render({
+				elem: '.start-time'
+			})
+			laydate.render({
+				elem: '.end-time'
+			})
+		});
+		var data_obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+		data_obj.workDtS = data_obj.workDtS.replace(/\//ig, '-');
+		data_obj.workDtE = data_obj.workDtE.replace(/\//ig, '-');
+		$.ajax({
+			type: "post",
+			url: `${API}/erpSaleRepairOrder/findMon`,
+			async: true,
+			data: {
+				custId: data_obj.custId,
+				workDtS: data_obj.workDtS,
+				workDtE: data_obj.workDtE
+			},
+			success: function (res){
+				// 二、运营情况 
+				// 1、购置
+				let listPurchase = res.data.listPurchase;
+				let listPurchaseStr = '';
+				// 2、更换
+				let listReplacement = res.data.listReplacement;
+				let listReplacementStr = '';
+				// 3、维修
+				let listRepair = res.data.listRepair;
+				let listRepairStr = '';
+				// 4、维护
+				let listMaintenance = res.data.listMaintenance;
+				let listMaintenanceStr = '';
+				// 5、库存
+				let listStock = res.data.listStock;
+				let listStockStr = '';
+				// 三、运营情况/分析
+				// 1、运营里程/成本
+				let listMileage = res.data.listMileage;
+				let listMileageStr = '';
+				// 2、轮胎更新/胎压/胎纹
+				let listTireSituation = res.data.listTireSituation;
+				let listTireSituationStr = '';
+				// 3、轮胎胎纹/状态
+				let listTreadSituation = res.data.listTreadSituation;
+				let listTreadSituationStr = '';
+				// 四、下月计划
+				// 1、更新/购置
+				let listReportChild = res.data.listReportChild;
+				let listReportChildStr = '';
+				
+				
+				
+				// 二、运营情况 
+				// 1、购置
+				$.each(listPurchase, function(i,item) {
+					listPurchaseStr += `<tr>
+											<td>${item.name}</td>
+											<td>${item.price}</td>
+											<td>${item.tirePrice}</td>
+											<td>${item.tireCount}</td>
+											<td>${item.rimPrice}</td>
+											<td>${item.rimCount}</td>
+											<td>${item.gasolinePrice}</td>
+											<td>${item.gasolineCount}</td>
+											<td>${item.dieselPrice}</td>
+											<td>${item.dieselCount}</td>
+										</tr>`;
+				});
+				$('.listPurchase').html(listPurchaseStr);
+				// 2、更换
+				$.each(listReplacement, function(i,item) {
+					listReplacementStr += `<tr>
+											<td>${item.name}</td>
+											<td>${item.tire}</td>
+											<td>${item.rim}</td>
+											<td>${item.inner}</td>
+											<td>${item.oil}</td>
+											<td>${item.airFilter}</td>
+											<td>${item.steamFilter}</td>
+											<td>${item.antifreeze}</td>
+											<td>${item.gearil}</td>
+											<td>${item.elsedata}</td>
+										</tr>`;
+				});
+				$('.listReplacement').html(listReplacementStr);
+				// 3、维修
+				$.each(listRepair, function(i,item) {
+					listRepairStr += `<tr>
+										<td>${item.name}</td>
+										<td>${item.Price}</td>
+										<td>${item.DynamicBalance}</td>
+										<td>${item.Tyre}</td>
+										<td>${item.Inner}</td>
+										<td>${item.Disassembly}</td>
+										<td>${item.Transposition}</td>
+										<td>${item.Refurbished}</td>
+										<td>${item.Rescue}</td>
+										<td>${item.Other}</td>
+									</tr>`;
+				});
+				$('.listRepair').html(listRepairStr);
+				// 4、维护
+				$.each(listMaintenance, function(i,item) {
+					listMaintenanceStr += `<tr>
+											<td>${item.name}</td>
+											<td>${item.Price}</td>
+											<td>${item.Pressure}</td>
+											<td>${item.ForeignBody}</td>
+											<td>${item.SmallHole}</td>
+											<td>${item.Change}</td>
+											<td>${item.Safety}</td>
+											<td>${item.Tread}</td>
+											<td>${item.Archives}</td>
+											<td>${item.Other}</td>
+										</tr>`;
+				});
+				$('.listMaintenance').html(listMaintenanceStr);
+				// 5、库存
+				$.each(listStock, function(i,item) {
+					listStockStr += `<tr>
+										<td>${item.name}</td>
+										<td>${item.tire}</td>
+										<td>${item.rim}</td>
+										<td>${item.inner}</td>
+										<td>${item.oil}</td>
+										<td>${item.airFilter}</td>
+										<td>${item.steamFilter}</td>
+										<td>${item.antifreeze}</td>
+										<td>${item.gearil}</td>
+										<td>${item.elsedata}</td>
+									</tr>`;
+				});
+				$('.listStock').html(listStockStr);
+				// 三、运营情况/分析
+				// 1、运营里程/成本
+				$.each(listMileage, function(i,item) {
+					listMileageStr += `<tr>
+										<td>${item.name}</td>
+										<td>${item.carPrice}</td>
+										<td>${item.operateCar}</td>
+										<td>(${item.operateCar} / ${item.carPrice} * 100).tofixed(2)%</td>
+										<td>${item.mileage}</td>
+										<td>${item.fuel}</td>
+										<td>${item.repair}</td>
+										<td>${item.oil}</td>
+										<td>${item.tire}</td>
+										<td>${item.comprehensive}</td>
+									</tr>`;
+				});
+				$('.listMileage').html(listMileageStr);
+				// 2、轮胎更新/胎压/胎纹
+				$.each(listTireSituation, function(i,item) {
+					listTireSituationStr += `<tr>
+												<td>${item.name}</td>
+												<td>${item.tireCount}</td>
+												<td>${item.mileage}</td>
+												<td>${item.tread}</td>
+												<td>${item.accident}</td>
+												<td>${item.pressureH}</td>
+												<td>${item.pressure}</td>
+												<td>${item.pressureL}</td>
+												<td>${item.temperature}</td>
+												<td>${item.temperatureH}</td>
+											</tr>`;
+				});
+				$('.listTireSituation').html(listTireSituationStr);
+				// 3、轮胎胎纹/状态
+				$.each(listTreadSituation, function(i,item) {
+					listTreadSituationStr += `<tr>
+												<td>${item.name}</td>
+												<td>${item.eleven}</td>
+												<td>${item.five}</td>
+												<td>${item.three}</td>
+												<td>${item.two}</td>
+												<td>${item.flat}</td>
+												<td>${item.partial}</td>
+												<td>${item.heart}</td>
+												<td>${item.scratch}</td>
+												<td>${item.bite}</td>
+											</tr>`;
+				});
+				$('.listTreadSituation').html(listTreadSituationStr);
+				// 四、下月计划
+				// 1、更新/购置
+				$.each(listReportChild, function(i,item) {
+					listReportChildStr += `<tr>
+												<td><input type="text" class="layui-input" value="${item.repName}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repTire}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repRim}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repInner}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repSteamFilter}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repOil}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repAirFilter}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repAntifreeze}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repGearil}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repElsedata}" /></td>
+											</tr>`;
+				});
+				$('.listReportChild').html(listReportChildStr);
+			}
+		});
+	</script>
+
+</html>

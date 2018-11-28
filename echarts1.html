@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>车乾坤车辆服务/管理平台</title>
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+	<link rel="stylesheet" type="text/css" href="lib/layui/css/layui.css" />
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<!--<link rel="stylesheet" type="text/css" href="css/common.css"/>-->
+	<style>
+		.layui-input {
+			width: 200px;
+			display: inline-block;
+			text-align: center;
+		}
+		.title span {
+			font-size: 18px;
+			font-weight: bold;
+		}
+		.x-body {
+			padding: 0 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="title" style="margin: 20px 0;padding-left:calc(50% - 690px)">
+		<span>车辆牌号： </span><span class="carname" style="margin-right:50px;"></span>
+		<span>自编车号： </span><span class="carnum" style="width:150px;display: inline-block;"></span>
+		<input type="text" id="startTime" class="layui-input" placeholder="开始时间"> -
+		<input type="text" id="endTime" class="layui-input" placeholder="截止时间">&nbsp;&nbsp;&nbsp;&nbsp;
+		<button class="layui-btn layui-btn-sm" style="margin-right:50px;" onclick="chaxun()">查询</button>
+
+	</div>
+	<div class="x-body">
+		<!--<blockquote class="layui-elem-quote">
+                	特别声明：ECharts，一个纯 Javascript 的图表库，可以流畅的运行在 PC 和移动设备上，兼容当前绝大部分浏览器（IE8/9/10/11，Chrome，Firefox，Safari等），底层依赖轻量级的 Canvas 类库 ZRender，提供直观，生动，可交互，可高度个性化定制的数据可视化图表。如需使用，详细了解可以访问官网 <a href="http://echarts.baidu.com/" style="color:red">ECharts</a>。 x-admin不承担任何版权问题。
+            </blockquote>-->
+		<!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+		<div id="main" style="width: 100%;height:calc(33vh - 30px);"></div>
+		<div id="main1" style="width: 100%;height:calc(33vh - 30px);"></div>
+		<div id="main2" style="width: 100%;height:calc(33vh - 30px);"></div>
+		<!--<blockquote class="layui-elem-quote">
+                	注意：本案例的Echarts图表库由cdn引入，需要在线才能正常使用，如想离想，请至Echarts官网下载。
+            </blockquote>-->
+	</div>
+	<script type="text/javascript" src="js/jquery-2.1.0.js"></script>
+	<script src="lib/layui/layui.js" type="text/javascript" charset="utf-8"></script>
+	<script src="./js/echarts.min.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		Date.prototype.toLocaleString = function () {
+			return this.getFullYear() + "-" + (this.getMonth() + 1) + "-" + this.getDate() + " " + this.getHours() + ":" + this.getMinutes() + ":" + this.getSeconds();
+		};
+		function getQueryString(name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.search.substr(1).match(reg);
+			if (r != null) return unescape(r[2]); return null;
+		}
+		$('.carname').text(decodeURI(getQueryString('name')))
+		$('.carnum').text((getQueryString('carnum') == 'null' ? '暂无' : getQueryString('carnum')))
+		// 基于准备好的dom，初始化echarts实例
+		var myChart = echarts.init(document.getElementById('main'));
+		var myChart1 = echarts.init(document.getElementById('main1'));
+		var myChart2 = echarts.init(document.getElementById('main2'));
+		$.ajax({
+			url: `http://120.79.205.40:3340/real/selectCarTyre?carId=${getQueryString("carId")}`,
+			type: 'get',
+			success: function (res) {
+				console.log(res)
+			}
+		})
+		// 指定图表的配置项和数据
+		let endTime = (new Date()).toLocaleString()
+		let startTime = new Date(new Date().getTime() - 95 * 1000 * 60 * 60).toLocaleString()
+		function tian(startTime, endTime) {
+
+			var carId = getQueryString("carId");
+			var po = getQueryString("po");
+			$.ajax({
+				url: 'http://120.79.205.40:3340/real/getEcharts',
+				type: 'GET', //GET
+				data: {
+					startTime: startTime,
+					endTime: endTime,
+					type: 1,
+					carId: carId,
+				},
+				async: true,    //或false,是否异步
+				// timeout: 5000,    //超时时间
+				dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function (data, textStatus, jqXHR) {
+					var option = data;
+					let num = data.xAxis[0].data.length
+					// 使用刚指定的配置项和数据显示图表。
+					option.xAxis = data.xAxis[0]
+					option.yAxis = data.yAxis[0]
+					option.xAxis.axisLabel = {
+						interval: parseInt(num / 7),
+					}
+					option.grid = {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					}
+					option.title.textStyle = { //设置主标题风格
+						fontSize: 16,
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+					}
+					option.toolbox = {
+						feature: {
+							dataZoom: {
+								yAxisIndex: 'none'
+							},
+							restore: {},
+							saveAsImage: {}
+						}
+					},
+						// option.dataZoom = [
+						// 	{
+						// 		show: true,
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+						// 	},
+						// 	{
+						// 		type: 'inside',
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+
+						// 	}
+						// ]
+						myChart.setOption(option);
+				}
+			});
+			$.ajax({
+				url: 'http://120.79.205.40:3340/real/getEcharts',
+				type: 'GET', //GET
+				data: {
+					startTime: startTime,
+					endTime: endTime,
+					type: 2,
+					carId: carId,
+				},
+				async: true,    //或false,是否异步
+				// timeout: 5000,    //超时时间
+				dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function (data, textStatus, jqXHR) {
+					var option = data;
+					let num = data.xAxis[0].data.length
+					// 使用刚指定的配置项和数据显示图表。
+					option.xAxis = data.xAxis[0]
+					option.yAxis = data.yAxis[0]
+					option.xAxis.axisLabel = {
+						interval: parseInt(num / 7),
+					}
+					option.title.textStyle = { //设置主标题风格
+						fontSize: 16,
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+					},
+						option.toolbox = {
+							feature: {
+								dataZoom: {
+									yAxisIndex: 'none'
+								},
+								restore: {},
+								saveAsImage: {}
+							}
+						},
+						option.grid = {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						// option.dataZoom = [
+						// 	{
+						// 		show: true,
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+						// 	},
+						// 	{
+						// 		type: 'inside',
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+
+						// 	}
+						// ]
+						myChart1.setOption(option);
+				}
+			});
+			$.ajax({
+				url: 'http://120.79.205.40:3340/real/getEcharts',
+				type: 'GET', //GET
+				data: {
+					startTime: startTime,
+					endTime: endTime,
+					type: 3,
+					carId: carId,
+				},
+				async: true,    //或false,是否异步
+				// timeout: 5000,    //超时时间
+				dataType: 'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+				success: function (data, textStatus, jqXHR) {
+					var option = data;
+					let num = data.xAxis[0].data.length
+					// 使用刚指定的配置项和数据显示图表。
+					option.xAxis = data.xAxis[0]
+					option.yAxis = data.yAxis[0]
+					option.xAxis.axisLabel = {
+						interval: parseInt(num / 7),
+					}
+					option.title.textStyle = { //设置主标题风格
+						fontSize: 16,
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+					},
+						option.grid = {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						// option.dataZoom = [
+						// 	{
+						// 		show: true,
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+						// 	},
+						// 	{
+						// 		type: 'inside',
+						// 		realtime: true,
+						// 		start: 0,
+						// 		end: 100,
+						// 	}
+						// ]
+						console.log(option)
+					myChart2.setOption(option);
+				}
+			});
+		}
+		$(function () {
+			tian(startTime, endTime)
+
+		});
+		function chaxun() {
+			clearInterval(times)
+			tian($('#startTime').val(), $('#endTime').val())
+		}
+		let times = setInterval(function () {
+			endTime = (new Date()).toLocaleString()
+			startTime = new Date(new Date().getTime() - 95 * 1000 * 60 * 60).toLocaleString()
+			tian(startTime, endTime)
+		}, 12000)
+	</script>
+	<script>
+		var _hmt = _hmt || [];
+		(function () {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+			var s = document.getElementsByTagName("script")[0];
+			s.parentNode.insertBefore(hm, s);
+		})();
+
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			let enddate = new Date(new Date().getTime())
+			let startdate = new Date(new Date().getTime() - 96 * 1000 * 60 * 60)
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#startTime', //指定元素
+				type: 'datetime',
+				value: startdate
+			});
+
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#endTime', //指定元素
+				type: 'datetime',
+				value: enddate
+			});
+		})
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-btn layui-btn-sm" onclick="add()">添加</div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+
+                    <th rowspan="2">
+                        序号
+                    </th>
+                    <th rowspan="2">
+                        时间
+                    </th>
+                    <th rowspan="2">
+                        车辆牌号
+                    </th>
+                    <th rowspan="2">
+                        司机姓名
+                    </th>
+                    <th>
+                        汽油
+                    </th>
+                    <th>
+                        柴油
+                    </th>
+                    <th>
+                        单价
+                    </th>
+                    <th>
+                        金额
+                    </th>
+
+                </tr>
+                <tr>
+                    <th>0</th>
+                    <th>0</th>
+                    <th>0</th>
+                    <th>0</th>
+                </tr>
+            </thead>
+            <tbody class="jiayou">
+
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        时间
+                    </th>
+                    <th>车辆牌号</th>
+                    <th>司机</th>
+                    <th>汽油(元)</th>
+                    <th>柴油(元)</th>
+                    <th>单价</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="add">
+                    <td><input type="text" data-name="refDt" class="layui-input sj" value=""></td>
+                    <td><input type="text" data-name="refCarNumber" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refDriver" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refGasoline" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refDiesel" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refTotal" class="layui-input" value=""></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+
+    $.ajax({
+        url: `${API}/erpRefueling/getrefuelingIdbPage?custId=1&page=1&limit=20`,
+        type: 'get',
+        success: function (res) {
+            let str = ''
+            $.each(res.data.records, function (i) {
+                let json = res.data.records[i]
+                refPrice = Number(json.refDiesel ? json.refDiesel : json.refGasoline) * json.refTotal
+                console.log(refPrice)
+                str += `<tr><td>${i + 1}</td>
+                <td>${json.refDt == null ? '' : json.refDt}</td>
+                <td>${json.refCarNumber == null ? '' : json.refCarNumber}</td>
+                <td>${json.refDriver == null ? '' : json.refDriver}</td>
+                <td>${json.refGasoline == null ? '' : json.refGasoline}</td>
+                <td>${json.refDiesel == null ? '' : json.refDiesel}</td>
+                <td>${json.refTotal == null ? '' : json.refTotal}</td>
+                <td>${refPrice.toFixed(2)}</td>
+                </tr>`
+            })
+            $('.jiayou').append(str)
+        }
+    })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '.sj'
+        });
+    })
+    function add() {
+        layui.use('layer', function () {
+            let layer = layui.layer;
+            layer.open({
+                type: 1,
+                content: $('.winbody'),
+                title: '添加',
+                area: ['720px'],
+                btn: ['保存', '取消'],
+                maxmin: true,
+                yes: function () {
+                    let str = ''
+                    $('.add input').each(function () {
+                        str += `&${$(this).data('name')}=${$(this).val()}`
+                    })
+
+                    $.ajax({
+                        url: `${API}/erpRefueling/inertOrUpdaterefuelingId?custId=1${str}`,
+                        type: 'get',
+                        success: function (res) {
+                            window.location.reload()
+                        }
+                    })
+
+                }
+            })
+        });
+    }
+    function save() {
+
+    }
+
+</script>

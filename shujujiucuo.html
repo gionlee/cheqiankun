@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        table .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="search">
+            <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel" name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        </div>
+        <div class="btn">
+            <button class="layui-btn layui-btn-normal">查询</button>
+        </div>
+
+
+
+        <!-- <div>
+        <button class="layui-btn layui-btn-normal layui-btn-sm">代办列表</button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm">完成列表</button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm">换里程表</button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm">改胎信息</button>
+        <button class="layui-btn layui-btn-normal layui-btn-sm">改车牌号</button>
+    </div> -->
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">待办列表</li>
+                <li>完成列表</li>
+                <li>换里程表</li>
+                <li>改胎信息</li>
+                <li>改车牌号</li>
+            </ul>
+            <div class="layui-tab-content">
+                <!-- 待办列表 -->
+                <div class="layui-tab-item layui-show">
+
+                    <table id="table" lay-filter="table" class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>日期</th>
+                                <th>分支结构</th>
+                                <th>单号</th>
+                                <th>客户名称</th>
+                                <th>车辆牌号</th>
+                                <th>问题</th>
+                                <th>处理进程</th>
+                                <th>处理方式</th>
+                                <th>经办人</th>
+                                <th>处理</th>
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 完成列表 -->
+                <div class="layui-tab-item">
+                    <div class="search">
+                        <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                    </div>
+                    <div class="search">
+                        <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                    </div>
+                    <div class="btn">
+                        <button class="layui-btn layui-btn-normal">查询</button>
+                    </div>
+
+                    <table id="table" lay-filter="table" class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>日期</th>
+                                <th>科目</th>
+                                <th>源数据</th>
+                                <th>现数据</th>
+                                <th>经办人</th>
+                            </tr>
+                        </thead>
+                        <tbody class="wlist">
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 改里程表 -->
+                <div class="layui-tab-item">
+                    <div class="select">
+                        <div class="search">
+                            <input class="layui-input" style="border:1px solid #ccc;" type="text" placeholder="客户编码 名称 车辆牌号">
+                        </div>
+                        <div class="btn">
+                            <button class="layui-btn layui-btn-normal">查询</button>
+                        </div>
+                    </div>
+                    <table id="table" lay-filter="table" class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>客户名称</th>
+                                <th>客户编号</th>
+                                <th>更换时间</th>
+                                <th>车辆牌号</th>
+                                <th>旧里程表</th>
+                                <th>新里程表</th>
+                                <th>录入人</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="hlcb">
+                            
+                        </tbody>
+                    </table>
+                    <!-- <div>
+                        <div class="layui-btn layui-btn-xs latui-btn-normal">保存</div>
+                    </div> -->
+                </div>
+                <!-- 改胎信息 -->
+                <div class="layui-tab-item">
+                    <table id="table" lay-filter="table" class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>客户名称</th>
+                                <th>日期</th>
+                                <th>品名</th>
+                                <th>品牌</th>
+                                <th>规格</th>
+                                <th>型号</th>
+                                <th>问题</th>
+                                <th>生产编号</th>
+                                <th>单价</th>
+                                <th>DOT号</th>
+                                <th>胎压ID</th>
+                                <th style="width:10%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="gtxx">
+                            
+                        </tbody>
+                    </table>
+                </div>
+                <!-- 改车牌号 -->
+                <div class="layui-tab-item">
+                    <table id="table" lay-filter="table" class="layui-table" style="width:500px;margin:0 auto;">
+                        <thead>
+                            <tr>
+                                <th style="width:25%;">客户编号</th>
+                                <th style="width:25%;">原车牌号</th>
+                                <th style="width:25%;">现车牌号</th>
+                                <th style="width:25%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class='gcph'>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '7':
+                    $('.ksdate').val(`${years - 1}-01-01`)
+                    $('.jsdate').val(`${years - 1}-12-31`)
+                    break;
+            }
+        });
+    })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('table', function () {
+        var table = layui.table;
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        laydate = layui.laydate;
+        laydate.render({
+            elem: '.dddate'
+        });
+    })
+    // 待办 完成列表
+    $.ajax({
+        url: `${API}/erpDataError/getErrorBycustId?custId=1`,
+        type: 'get',
+        success: function (res) {
+            console.log(res, '22')
+            let arr = res.data
+            let str = ''
+            let dstr = ''
+            let wnum = 0
+            let dnum = 0
+            $.each(arr, function (i, n) {
+                if (n.treat == 2) {
+                    str += `<tr>
+                                <td>${wnum++}</td>
+                                <td>${n.dt}</td>
+                                <td>${n.branch}</td>
+                                <td>${n.formId}</td>
+                                <td>${n.customerName}</td>
+                                <td>${n.carPalte}</td>
+                                <td>${n.problem}</td>
+                                <td>${n.treatmentProcess}</td>
+                                <td>${n.treat}</td>
+                                <td>${n.attn}</td>
+                                <td></td>
+                            </tr>`
+                } else {
+                    dstr += `<tr>
+                                <td>${dnum++}</td>
+                                <td>${n.dt}</td>
+                                <td></td>
+                                <td>${n.oldData}</td>
+                                <td>${n.newData}</td>
+                                <td>${n.attn}</td>
+                            </tr>`
+                }
+                
+            })
+            $('.list').html(str)
+            $('.wlist').html(dstr)
+            
+        } 
+    })
+    let lcblist = []
+    
+    $.ajax({
+        url:`${API}/erpDataError/getCarLikePro?custId=1&carPro=1`,
+        type:'get',
+        success:function  (res) {
+            let str =''
+            let cpstr = ''
+            let arr = res.data
+            lcblist = res.data
+            $.each(arr,function (i,n) {
+                str +=`<tr class="lcb_${i}">
+                                <td><input type="text" class="layui-input" value=""></td>
+                                <td><input type="text" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="carAddDate" class="layui-input" value="${n.carAddDate}"></td>
+                                <td><input type="text" data-name="carPlate" class="layui-input" value="${n.carPlate}"></td>
+                                <td><input type="text" data-name="carMileage" class="layui-input" value="${n.carMileage}"></td>
+                                <td><input type="text" data-name="carMileage" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="inputAttn" class="layui-input" value="${n.inputAttn}"></td>
+                                <td><div class='layui-btn layui-btn-xs' onclick="saveLcb(${i})">保存</div></td>
+                            </tr>`
+                            cpstr +=`<tr class="cp_${i}">
+                                <td></td>
+                                <td>${n.carPlate}</td>
+                                <td><input type="text" data-name="carPlate" class="layui-input" value="">
+                                <td>
+                                    <div class="layui-btn layui-btn-xs " onclick="saveCp(${i})">保存</div>
+                                </td>
+                            </tr>`
+            })
+            $('.hlcb').html(str)
+            $('.gcph').html(cpstr)
+        }
+    })
+    // 保存里程表
+    function saveLcb(index) {
+        let json = lcblist[index]
+        $(`.lcb_${i} input`).each (function () {
+            json[$(this).data('name')] = $(this).val() 
+        })
+        $.ajax({
+            url:`${API}/erpDataError/updateCat`,
+            type:'post',
+            data:json,
+            success:function (res) {
+                console.log(res)
+            }
+        })
+    }
+    // 保存改车牌号
+    function saveCp(index) {
+        let json = lcblist[index]
+        $(`.cp_${i} input`).each (function () {
+            json[$(this).data('name')] = $(this).val() 
+        })
+        $.ajax({
+            url:`${API}/erpDataError/updateCat`,
+            type:'post',
+            data:json,
+            success:function (res) {
+                console.log(res)
+            }
+        })
+    }
+    // 保存改胎信息
+    function saveCp(index) {
+        let json = gtXx[index]
+        $(`.gtxx_${i} input`).each (function () {
+            json[$(this).data('name')] = $(this).val() 
+        })
+        $.ajax({
+            url:`${API}/erpDataError/updateMaterielByPro`,
+            type:'post',
+            data:json,
+            success:function (res) {
+                console.log(res)
+            }
+        })
+    }
+    let gtXx = []
+    $.ajax({
+        url:`${API}/erpDataError/getMaterielLikePro?custId=1&matPro=1`,
+        type:'get',
+        success:function  (res) {
+            let str =''
+            let arr = res.data
+            let gtstr = ''
+            gtXx = res.data
+            $.each(arr,function (i,n) {
+                str +=
+                            gtstr +=`<tr class='gtxx_${i}'>
+                                <td><input type="text" data-name="materielNam" class="layui-input" value="${n.materielName}"></td>
+                                <td><input type="text" data-name="materielStorageDate" class="layui-input" value="${n.materielStorageDate}"></td>
+                                <td><input type="text" data-name="materielName" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielBrand" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielSpecifications" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielModel" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielProductionId" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielDot" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="materielId" class="layui-input" value=""></td>
+                                <td>
+                                    <div class="layui-btn layui-btn-xs" onclick="saveGt(${i})">保存</div>
+                                </td>
+                            </tr>`
+            })
+            $('.gtxx').html(str)
+        }
+    })
+</script>
+
+</html>

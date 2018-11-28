@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <h3>库存明细</h3>
+        <div style="text-align: center;">出库</div>
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>日期</th>
+                    <th>单号</th>
+                    <th>科目</th>
+                    <th>来源</th>
+                    <th>去向</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>单价</th>
+                    <th>总价</th>
+                    <th>经办人</th>
+                </tr>
+            </thead>
+            <tbody class="cklist">
+                
+            </tbody>
+        </table>
+        <div style="text-align: center;">入库</div>
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>日期</th>
+                    <th>单号</th>
+                    <th>科目</th>
+                    <th>来源</th>
+                    <th>去向</th>
+                    <th>数量</th>
+                    <th>单位</th>
+                    <th>单价</th>
+                    <th>总价</th>
+                    <th>经办人</th>
+                </tr>
+            </thead>
+            <tbody class="rklist">
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+
+    layui.use('table', function () {
+        var table = layui.table;
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        laydate = layui.laydate;
+        laydate.render({
+            elem: '.dddate'
+        });
+    })
+    let data = {
+        startDate : getUrlParam('startDate'),
+        endDate : getUrlParam('endDate'),
+        // matId : getUrlParam('materielId'),
+        matId:9,
+        // wareId : getUrlParam('warehouseId')
+        wareId:1
+    }
+    $.ajax({
+        url:`${API}/erpWarehouse/getGoMaterielToDate`,
+        type:'post',
+        data:data,
+        success: function (res) {
+            console.log(res)
+            let arr = res.data
+            let ckstr = ''
+            let rkstr = ''
+            let cknum = 0
+            let rknum = 0
+            $.each(arr,function (i,json) {
+                if (json.materielFlowType == 1 ){
+                    cknum ++
+                    ckstr += `<tr>
+                    <td>${cknum}</td>
+                    <td>${json.materielFlowDate == null ? '' : json.materielFlowDate}   </td>
+                    <td>${json.workSheetId == null ? '' : json.workSheetId}</td>
+                    <td>${json.flowSubject == null ? '' : json.flowSubject}</td>
+                    <td>${json.materielSource == null ? '' : json.materielSource}</td>
+                    <td>${json.materielWhereabouts == null ? '' : json.materielWhereabouts}</td>
+                    <td>${json.materielOutflowNumber == null ? '' : json.materielOutflowNumber}</td>
+                    <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+                    <td>${json.materielOutflowPrice == null ? '' : json.materielOutflowPrice}</td>
+                    <td>${json.materielOutflowPrice == null || json.materielOutflowNumber == null  ? '' : json.materielOutflowPrice * json.materielOutflowNumber}</td>
+                    <td>${json.flowAttn == null ? '' : json.flowAttn}</td>
+                </tr>`
+            } else {
+                rknum ++
+                    rkstr += `<tr>
+                    <td>${rknum}</td>
+                    <td>${json.materielFlowDate == null ? '' : json.materielFlowDate}   </td>
+                    <td>${json.workSheetId == null ? '' : json.workSheetId}</td>
+                    <td>${json.flowSubject == null ? '' : json.flowSubject}</td>
+                    <td>${json.materielSource == null ? '' : json.materielSource}</td>
+                    <td>${json.materielWhereabouts == null ? '' : json.materielWhereabouts}</td>
+                    <td>${json.materielStorageNumber == null ? '' : json.materielStorageNumber}</td>
+                    <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+                    <td>${json.materielStoragePrice == null ? '' : json.materielStoragePrice}</td>
+                    <td>${json.materielStoragePrice == null || json.materielStorageNumber == null  ? '' : json.materielStoragePrice * json.materielStorageNumber}</td>
+                    <td>${json.flowAttn == null ? '' : json.flowAttn}</td>
+                    </tr>`
+            }
+            })
+            $('.cklist').html(ckstr)
+            $('.rklist').html(rkstr)
+        }
+    })
+</script>
+
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 720px;
+            padding: 10px;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .select {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .layui-input {
+            width: 140px;
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        工作日期
+                    </th>
+                    <th>
+                        客户名称
+                    </th>
+                    <th>
+                        工作单号
+                    </th>
+                    <th>
+                        服务中心
+                    </th>
+                    <th>
+                        来源
+                    </th>
+                    <th>
+                        品名
+                    </th>
+                    <th>
+                        品牌
+                    </th>
+                    <th>
+                        规格
+                    </th>
+                    <th>
+                        型号
+                    </th>
+                    <th>
+                        生产编号
+                    </th>
+                    <th>
+                        去向
+                    </th>
+                    <th>
+                        物料状态
+                    </th>
+                    <th>
+                        经办人
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody class="gengxin">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script src="./js/Global.js"></script>
+<script>
+    $.ajax({
+        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=1&startDate=1&endDate=1`,
+        type: 'post',
+        success: function (res) {
+            let str = ''
+
+            // let str1 = ''
+            $.each(res.data, function (i, n) {
+
+                let json = n;
+
+                //              str += `
+                //              <td>${json.car_model == null ? '' : json.car_model}</td>
+                //              <td>${json.car_type == null ? '' : json.car_type}</td>
+                // </tr>`
+                $.each(n.flowSummaryList, function (i, m) {
+                    let json1 = m;
+                    // console.log(res.data[0].flowSummaryList[1].id,'222');
+                    //          alert(res.data[0].flowSummaryList[1].id);
+                    str += `
+            <tr><td>${i + 1}</td>
+                <td>${json.id == null ? '' : json.id}</td>
+                <td>${json.customerName == null ? '' : json.customerName}</td>
+                <td>${json.materielFlowSheetId == null ? '' : json.materielFlowSheetId}</td>
+                <td>${json1.carServiceCentre == null ? '' : json1.carServiceCentre}</td>
+                <td>${json1.materielSource == null ? '' : json1.materielSource}</td>
+
+
+
+        //缺少四个字段
+             <td>${json.car_operation_type == null ? '' : json.car_operation_type}</td>
+                    <td>${json.car_service_centre == null ? '' : json.car_service_centre}</td>   //未找到字段
+       <td>${json.car_load == null ? '' : json.car_load}</td>
+              <td>${json.car_braking_type == null ? '' : json.car_braking_type}</td>
+
+
+
+                     <td>${json1.flowMateriel == null ? '' : json.flowMateriel}</td>
+                            <td>${json1.materielWhereabouts == null ? '' : json1.materielWhereabouts}</td>
+                                   <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
+                                             <td>${json1.warehouseName == null ? '' : json1.warehouseName}</td>
+                </tr>`
+                })
+            })
+            $('.gengxin').append(str)
+        }
+    })
+
+
+    function goInfo() {
+        window.location.href = './wuliaogengxinxiangqing.html'
+    }
+</script>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="./css/select.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/xadmin.js"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+            min-height: 600px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 36px;
+            line-height: 36px;
+            font-size: 12px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+
+        .infos {
+            color: red;
+        }
+
+        .double select {
+            width: 49%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title">
+            代销出库
+        </div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>出库单号</th>
+                    <th colspan="2">来源</th>
+                    <th colspan="">去向</th>
+                    <th>收款方式</th>
+                    <th colspan="2">承运企业</th>
+                    <th>车辆牌号</th>
+                    <th>运杂费</th>
+                    <th>发票类型</th>
+                    <th>经办人</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="time"></td>
+                    <td><input type="text" class="layui-input"></td>
+                    <td colspan="2">
+                        <select name="" id="" class="ly"></select>
+                    </td>
+                    <td colspan=""><input type="text" class="layui-input"></td>
+                    <td><select name="" id=""></select></td>
+                    <td colspan="2">承运企业</td>
+                    <td>车辆牌号</td>
+                    <td>运杂费</td>
+                    <td>发票类型</td>
+                    <td>经办人</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script>
+    $('.time').val(getDays())
+</script>
+
+</html>

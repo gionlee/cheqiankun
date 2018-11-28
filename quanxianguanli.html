@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script src="./js/jquery.ztree.all.js"></script>
+    <link rel="stylesheet" href="./css/zTreeStyle.css">
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .winbody {
+            width: 700px;
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-form-item {
+            margin: 0;
+        }
+
+        .layui-input-inline {
+            width: 100% !important;
+        }
+        .ztree {
+            padding-left: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <!-- <div> <button class="layui-btn layui-btn-sm ">添加</button><button class="layui-btn layui-btn-sm layui-btn-danger ">删除</button></div> -->
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th> <input type="checkbox" class="allchange"></th>
+                    <th>序号</th>
+                    <th>权限名称</th>
+                    <th>公司权限</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody class="fybj">
+            </tbody>
+        </table>
+    </div>
+    <div class="winbody">
+        <div class="wtitle layui-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label">客户名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" lay-verify="title" autocomplete="off" value="商户/车队" class="layui-input titles">
+                </div>
+            </div>
+
+        </div>
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+
+</body>
+<script src="./js/Global.js"></script>
+<script>
+    let arr = []
+    let list = []
+    var setting = {
+        check: {
+            enable: true,
+            nocheckInherit: true
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                pIdKey: "pid",
+                idKey: 'id'
+            },
+            key: {
+                children: "children"
+            }
+        },
+        callback: {
+            onCheck: zTreeOnCheck
+        }
+    };
+    $.ajax({
+        url: `${API}/erpUser/selectPowers`,
+        type: 'get',
+        success: function (res) {
+            list = res.data
+
+        }
+
+    })
+    $.ajax({
+        url: `${API}/erpUser/selectPostCustomerPage?page=1&limit=10`,
+        type: 'get',
+        success: function (res) {
+            arr = res.data
+            let str = ''
+            $.each(arr, function (i, n) {
+                str += `<tr>
+                    <td><input type="checkbox" class="changes c_${n.id}" data-name="id" value="${n.id}"></td>
+                    <td>${n.roleName}</td>
+                    <td><button class="layui-btn layui-btn-xs layui-btn-normal" onclick="seeInfo(${i})">查看</button></td>
+                    <td><button class="layui-btn layui-btn-xs" onclick="update(${i})">修改</button><button class="layui-btn layui-btn-xs layui-btn-danger" onclick="del(${n.id})">删除</button></td>
+                </tr>`
+            })
+            $('.fybj').append(str)
+            $('.changes').on('click', function () {
+                if (!$(this).is(':checked')) {
+                    $('.allchange').prop("checked", false)
+                }
+                let bol = true
+                $('.changes').each(function () {
+                    if (!$(this).is(':checked')) {
+                        bol = false
+                    }
+                })
+                if (bol) {
+                    $('.allchange').prop("checked", true)
+                }
+            })
+            $('.allchange').on('click', function () {
+                if ($(this).is(':checked')) {
+                    $('.changes').each(function () {
+
+                        $(this).prop("checked", true)
+                    })
+                } else {
+                    $('.changes').each(function () {
+
+                        $(this).prop("checked", false)
+                    })
+                }
+
+            })
+            // 分页
+            layui.use('laypage', function () {
+
+                layui.laypage.render({
+                    elem: 'page'
+                    , count: res.data.total //数据总数
+                    , jump: function (obj) {
+
+                        pages(obj.curr)
+
+                    }
+                });
+            })
+        }
+    })
+
+    function update(index) {
+        let json = arr[index].erpPowersList
+        let qxlist = []
+        $('.wtitle').show()
+        $('.titles').val(arr[index].roleName)
+        $.each(list, function (i, n) {
+            $.each(json, function (j, k) {
+                if (n.id == k.id) {
+                    list[i].checked = true
+                    console.log('22')
+                }
+            })
+        })
+        console.log(list, '222')
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, list);
+
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                content: $('.winbody'),
+                area: ['720px'],
+                btn: ['保存', '取消'],
+                title: "权限",
+                yes: function (lindex) {
+                    $.each(list,function (i,n) {
+                        if (n.checked) {
+                            qxlist.push(n.id)
+                        }
+                    })
+                    let data  = {id:arr[index].id} 
+                    data.roleAction = qxlist.toString()
+                    data.roleName = $('.titles').val()
+                    $.ajax({
+                        url:`${API}/erpUser/updatePostCustomer`,
+                        type:`post`,
+                        data:data,
+                        success: function (res) {
+                            window.location.reload()
+                            layer.close(lindex)
+                        } 
+                    })
+                }
+            })
+        })
+    }
+    function seeInfo(index) {
+        let json = arr[index].erpPowersList
+        let qxlist = []
+        $('.wtitle').hide()
+        $.each(list, function (i, n) {
+            $.each(json, function (j, k) {
+                if (n.id == k.id) {
+                    list[i].checked = true
+                    console.log('22')
+                }
+            })
+        })
+        console.log(list, '222')
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, list);
+
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                content: $('.winbody'),
+                area: ['720px'],
+                btn: ['关闭'],
+                title: "权限",
+                yes: function (lindex) {
+
+                            layer.close(lindex)
+                }
+            })
+        })
+    }
+    // 分页查询
+    function pages(page) {
+        $.ajax({
+            url: `${API}/erpUser/selectPostCustomerPage?page=${page}&limit=10`,
+            type: 'get',
+            success: function (res) {
+                arr = res.data
+                let str = ''
+                $.each(arr, function (i, n) {
+                    str += `<tr>
+                    <td><input type="checkbox" class="changes c_${n.id}" data-name="id" value="${n.id}"></td>
+                    <td>${i + 1}</td>
+                    <td>${n.roleName}</td>
+                    <td><button class="layui-btn layui-btn-xs layui-btn-normal" onclick="seeInfo(${i})">查看</button></td>
+                    <td><button class="layui-btn layui-btn-xs" onclick="update(${i})">修改</button><button class="layui-btn layui-btn-xs layui-btn-danger" onclick="del(${n.id})">删除</button></td>
+                </tr>`
+                })
+                $('.fybj').html(str)
+                $('.changes').on('click', function () {
+                    if (!$(this).is(':checked')) {
+                        $('.allchange').prop("checked", false)
+                    }
+                    let bol = true
+                    $('.changes').each(function () {
+                        if (!$(this).is(':checked')) {
+                            bol = false
+                        }
+                    })
+                    if (bol) {
+                        $('.allchange').prop("checked", true)
+                    }
+                })
+                $('.allchange').on('click', function () {
+                    if ($(this).is(':checked')) {
+                        $('.changes').each(function () {
+
+                            $(this).prop("checked", true)
+                        })
+                    } else {
+                        $('.changes').each(function () {
+
+                            $(this).prop("checked", false)
+                        })
+                    }
+
+                })
+            }
+        })
+    }
+    function zTreeOnCheck(event, treeId, treeNode) {
+        $.each(list, function (i, n) {
+            if (n.id == treeNode.id) {
+ 
+                    list[i].checked = treeNode.checked
+            }
+            if (treeNode.children) {
+                $.each(treeNode.children, function (j, k) {
+                    if (n.id == k.id) {
+                            list[i].checked = k.checked
+                    }
+
+
+                })
+            }
+        })
+        console.log(list, '555')
+    }
+</script>

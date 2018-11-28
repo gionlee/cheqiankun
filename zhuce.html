@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>车乾坤</title>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
+    />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .winbody {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .info {
+            line-height: 30px;
+            margin-bottom: 10px;
+        }
+        .layui-form-radio:last-of-type{
+            opacity: 0;
+        }
+    </style>
+</head>
+
+<body class="login-bg">
+
+    <div class="login">
+        <div class="message">欢迎使用车乾坤</div>
+        <div id="darkbannerwrap"></div>
+
+        <!-- <form method="post" class="layui-form">
+                <input name="username" placeholder="客户名称" type="text" placeholder="可使用昵称" lay-verify="required" class="layui-input">
+                <hr class="hr15">
+                <input name="username" placeholder="用户名" type="text" placeholder="建议手机号" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="username" placeholder="登录密码" type="password" placeholder="大于六位数字、字母或符号" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="username" placeholder="确认密码" type="password" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="username" placeholder="手机号" type="text" placeholder="便于通知及操作安全验证" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="username" placeholder="电子邮箱" placeholder="便于通知及操作安全验证" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="微信号码" placeholder="便于通知及操作安全验证" type="password" class="layui-input">
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="QQ号码" placeholder="便于通知及操作安全验证" type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="注册" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+            <span><input type="checkbox" style="width:10px;"><a href="">我已阅读并同意遵守《注册条款》</a></span>
+        </form> -->
+
+
+        <form method="post" class="layui-form" action="">
+            <input type="radio" name="rolesId" value="1" checked title="商户/车队">
+            <input type="radio" name="rolesId" value="2" title="私家车" >
+            <input type="radio" name="rolesId" value="3" title="" style="opacity:0" >
+            <hr class="hr15">
+            <input name="realName" placeholder="客户名称" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="userName" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="password" placeholder="登录密码" type="password" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="password1" placeholder="确认密码" type="password" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="phone" placeholder="手机号" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="eMail" placeholder="电子邮箱" type="text" lay-verify="required" class="layui-input">
+            <hr class="hr15">
+            <input name="wx" lay-verify="required" placeholder="微信号码" type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="注册" lay-submit lay-filter="login" style="width:100%;" type="submit">
+            <hr class="hr20">
+            <span><input type="checkbox" style="width:10px;"><a href="">我已阅读并同意遵守《注册条款》</a></span>
+        </form>
+    </div>
+    <div class="winbody sjcar" style="display:none;">
+        <div class="info"></div>
+        <div class="layui-btn layui-btn-normal " onclick="login()">立即登录</div>
+    </div>
+    <div class="winbody shcar" style="display:none;">
+        <div class="shinfo"></div>
+        <div class="layui-btn layui-btn-normal " onclick="buy()">立即购买</div>
+    </div>
+    <script type="text/javascript">
+        function IbtnEnter_onclick() {
+            checklogin();
+        }
+        function checklogin() {
+            $.ajax({
+                url: `${API}/erpUser/getcustUserByPro?phone=13323292685&password=88886666`,
+                type: 'get',
+                success: function (res) {
+                    console.log(res)
+                }
+            })
+        }
+
+
+    </script>
+
+
+    <script>
+        $(function () {
+            layui.use('form', function () {
+                var form = layui.form;
+                var url = API;
+
+                // layer.msg('玩命卖萌中', function(){
+                //   //关闭后的操作
+                //   });
+                //   //监听提交
+                form.on('submit(login)', function (data) {
+                    console.log(data);
+                    $.ajax({
+                        type: "POST",
+                        url: url + "/erpUser/userRegister",
+                        data: {
+                            eMail: data.field.eMail,
+                            password: data.field.password,
+                            phone: data.field.phone,
+                            qq: data.field.qq,
+                            realName: data.field.realName,
+                            rolesId: data.field.rolesId,
+                            userName: data.field.userName,
+                            wx: data.field.wx
+                        },
+                        dataType: 'json',
+                        success: function (date) {
+                            console.log(date);
+
+                            //alert(msg);
+                            if (date.data == 1) {
+                                if (data.field.rolesId != 1) {
+                                    $('.info').append(`恭喜您注册成功，您的客户编码为${data.field.userName}，密码为${data.field.password},该信息已发送至您的邮箱，请查收。感谢支持，我们为您提供免费服务，欢迎随时登录。`)
+                                    layui.use('layer', function () {
+                                        var layer = layui.layer;
+                                        layer.open({
+                                            title: '温馨提示',
+                                            type: 1,
+                                            content: $('.sjcar'),
+                                            area: ['600px']
+
+                                        })
+                                    })
+                                } else {
+                                    $('.shinfo').append(`恭喜您注册成功，您的客户编码为${data.field.userName}，密码为${data.field.password},该信息已发送至您的邮箱，请查收。您还须进行购买服务科目流程。`)
+                                    layui.use('layer', function () {
+                                        var layer = layui.layer;
+                                        layer.open({
+                                            title: '温馨提示',
+                                            type: 1,
+                                            content: $('.shcar'),
+                                            area: ['600px']
+
+                                        })
+                                    })
+                                }
+                            } else {
+                                var layer = layui.layer;
+                                layer.open({
+                                    title: '注册失败,请重新填写,确认您的数据正常和手机号未被注册',
+                                    type: 1,
+                                    content: $('.shcar'),
+                                    area: ['600px']
+
+                                })
+                            }
+                        }
+
+                    });
+
+
+
+                    return false;
+                });
+            });
+        })
+        // 模拟登陆
+
+        /*$.ajax({
+            url: `${API}/erpUser/getcustUserByPro?phone=13323292685&password=88886666`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+            }
+        })*/
+
+        function login() {
+            window.location.href = './index.html'
+        }
+        function buy() {
+            window.location.href = './zhucejiaofei.html'
+        }
+    </script>
+
+
+    <!-- 底部结束 -->
+    <script>
+        function convertDateFromString(dateString) {
+            if (dateString) {
+                var date = new Date(dateString.replace(/-/, "/"))
+                return date;
+            }
+        }
+        var time = convertDateFromString("2018-04-23");
+        Date.prototype.Format = function (fmt) {
+            var o = {
+                "M+": this.getMonth() + 1, //月份 
+                "d+": this.getDate(), //日 
+                "h+": this.getHours(), //小时 
+                "m+": this.getMinutes(), //分 
+                "s+": this.getSeconds(), //秒 
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+                "S": this.getMilliseconds() //毫秒 
+            };
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o) {
+                if (new RegExp("(" + k + ")").test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                }
+            }
+            return fmt;
+        }
+
+        var time1 = time.Format("yyyy/MM/dd");
+        console.log(time1);
+        //百度统计可去掉
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</body>
+
+</html>

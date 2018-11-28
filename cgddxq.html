@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta data-name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-btn layui-btn-sm" onclick="add()">新增</div>
+
+        <table id="table" lay-filter="table" class="layui-table">
+            <tr>
+                <th>客户名称</th>
+                <th>订单日期</th>
+                <th>订单编号</th>
+                <th>付款方式</th>
+                <th>经办人</th>
+                <th>总金额</th>
+            </tr>
+            <tbody>
+                <tr class="cgdd">
+
+                </tr>
+
+            </tbody>
+        </table>
+        <table lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th style="width:10%;">品名</th>
+                    <th style="width:7.5%;">品牌</th>
+                    <th style="width:10%;">规格</th>
+                    <th style="width:10%;">型号</th>
+                    <th style="width:7.5%;">产地</th>
+                    <th style="width:10%;">物料新旧</th>
+                    <th style="width:5%;">单位</th>
+                    <th style="width:5%;">数量</th>
+                    <th style="width:5%;">单价</th>
+                    <th style="width:5%;">总价</th>
+                    <th style="width:10%;">发票类型</th>
+                    <th style="width:5%;">优惠</th>
+                    <th style="width:15%;">操作</th>
+                </tr>
+            </thead>
+            <tbody class="ddlist">
+
+            </tbody>
+        </table>
+        <!-- <div class="layui-btn layui-btn-sm">确定</div> -->
+        <h3>需求汇总</h3>
+        <table lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>品名</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>产地</th>
+                    <th>物料新旧</th>
+                    <th>单位</th>
+                    <th>需求数量</th>
+                    <th>库存数量</th>
+                    <th>预警数量</th>
+                    <th>订购数量</th>
+                </tr>
+            </thead>
+            <tbody class="xqlist">
+                <tr>
+                    <td>电位器-定位器</td>
+                    <td>胎客</td>
+                    <td>固定式</td>
+                    <td>TM-CFQ-A</td>
+                    <td>国产</td>
+                    <td>旧物料</td>
+                    <td>只</td>
+                    <td>5468</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    let layer;
+    layui.use('layer', function () {
+        layer = layui.layer;
+    });
+
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg); //匹配目标参数
+        if (r != null) return unescape(r[2]);
+        return null; //返回参数值
+    }
+    let id = getUrlParam('id');
+    let arr = []
+    let json = {}
+    fn_getDate();
+    function fn_getDate() {
+        $ ( '.cgdd' ).empty ();
+        $.ajax({
+            url: `${API}/erpClients/getClientsById?clientsId=${id}`,
+            type: 'get',
+            success: function (res) {
+                console.log(res)
+                json = res.data
+                datas = res.data
+                let str = ''
+                arr = json.materiels
+                $('.cgdd').html(
+                    `<td><input type="text" class="layui-input" data-name="branchName" value="${json.branchName}"></td>
+                        <td><input type="text" class="layui-input data-name="workDt" dddate" value="${json.workDt}"></td>
+                        <td><input type="text" class="layui-input" data-name="sheetId" value="${json.sheetId}"></td>
+                        <td>
+                                <select class="layui-form selects" style="height:30px;"  lay-verify="">
+                        <option value="免费">免费</option>
+                        <option value="银行支票">银行支票</option>
+                        <option value="网银电汇">网银电汇</option>
+                        <option value="银行承兑">银行承兑</option>
+                        <option value="现金付款">现金付款</option>
+                        <option value="应付账款">应付账款</option>
+                        <option value="预付账款">预付账款</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="text" class="layui-input" data-name="workAttn" value="${json.workAttn}"></td>
+                        <td><input type="text" class="layui-input" data-name="totalMoney" value="${json.totalMoney}"></td>`
+                )
+                $.each(json.materiels, function (i, n) {
+                    str +=
+                        `<tr class="lz${i}">
+                        <td><input type="hidden" data-name="id" value=${n.id} >
+                            <input type="hidden" data-name="clientsId" value = ${n.clientsId}>
+                            <input type="text" data-name="materielName" class="layui-input" value="${n.materielName}">
+                        </td>
+                        <td><input type="text" data-name="materielBrand" class="layui-input" value="${n.materielBrand}"></td>
+                        <td><input type="text" data-name="materielSpecifications" class="layui-input" value="${n.materielSpecifications}"></td>
+                        <td><input type="text" data-name="materielModel" class="layui-input" value="${n.materielModel}"></td>
+                        <td><input type="text" data-name="materielPlace" class="layui-input" value="${n.materielPlace}"></td>
+                        <td><input type="text" data-name="materielState" class="layui-input" value="${n.materielState}"></td>
+                        <td><input type="text" data-name="materielUnit" class="layui-input" value="${n.materielUnit}"></td>
+                        <td><input type="text" data-name="materielAmount" class="layui-input" value="${n.materielAmount}"></td>
+                        <td><input type="text" data-name="materielPrice" class="layui-input" value="${n.materielPrice}"></td>
+                        <td><input type="text" data-name="materielTotal" class="layui-input" value="${n.materielTotal}"></td>
+                        <td>
+                                <select class="layui-form selects_${i}" style="height:30px;"  lay-verify="">
+                        <option value="无发票">无发票</option>
+                        <option value="商品普票">商品普票</option>
+                        <option value="商品增值">商品增值</option>
+                        <option value="服务普票">服务普票</option>
+                        <option value="服务增值">服务增值</option>
+                        <option value="运输发票">运输发票</option>
+                                    </select>
+                        </td>
+                        <td><input type="text" data-name="materielDiscount" class="layui-input" value="${n.materielDiscount}"></td>
+                        <td>
+                            <div class="layui-btn layui-btn-xs" onclick="upSave(${i})">保存</div>
+                            <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="fn_delete(${n.id})">删除</div>
+                            <div></div>
+                        </td>
+                    </tr>`
+                })
+                $('.ddlist').html(str)
+                $.each(json.materiels, function (i, n) {
+                    $(`.selects_${i}`).val(n.invoiceType)
+                })
+
+            },
+            error: function (res) {
+                alert('系统错误！')
+            }
+        })
+    }
+    // 查询需求汇总、
+    function selXuQiu() {
+        $.ajax({
+            url:`${API}/erpOrderd/getListOrderd?custId=${id}`,
+            type:'get',
+            success: function (res) {
+                let str = ''
+                let arr = res.data
+                $.each(arr,function (i,n){
+                    
+                    str += `<tr>
+                        <td>${n.materielName == null ? '' : n.materielName}</td>
+                        <td>${n.materielBrand == null ? '' : n.materielBrand}</td>
+                        <td>${n.materielSpecifications == null ? '' : n.materielSpecifications}</td>
+                        <td>${n.materielModel == null ? '' : n.materielModel}</td>
+                        <td>${n.materielPlace == null ? '' : n.materielPlace}</td>
+                        <td>${n.materielState == null ? '' : n.materielState}</td>
+                        <td>${n.materielUnit == null ? '' : n.materielUnit}</td>
+                        <td>${n.materielAmount == null ? '' : n.materielAmount}</td>
+                        <td>${n.materielName == null ? '' : n.materielName}</td>
+                        <td>${n.materielName == null ? '' : n.materielName}</td>
+
+                    </tr>`
+                })
+            }
+        })
+    }
+    // 新增
+    function add() {
+        $('.ddlist').append(
+            `<tr>
+                    <td><input type="hidden" data-name="id" value="" >
+                        <input type="text" data-name="materielName" class="layui-input" value="">
+                    </td>
+                    <td><input type="text" data-name="materielBrand" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="materielSpecifications" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="materielModel" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="materielPlace" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="materielState" class="layui-input" value=""></td>
+                    <td><input type="number" data-name="materielUnit" class="layui-input" value=""></td>
+                    <td><input type="number" data-name="materielAmount" class="layui-input" value=""></td>
+                    <td><input type="number" data-name="materielPrice" class="layui-input" value=""></td>
+                    <td><input type="number" data-name="materielTotal" class="layui-input" value=""></td>
+                    <td>
+                            <select class="layui-form selects_" style="height:30px;"  lay-verify="">
+                    <option value="无发票">无发票</option>
+                    <option value="商品普票">商品普票</option>
+                    <option value="商品增值">商品增值</option>
+                    <option value="服务普票">服务普票</option>
+                    <option value="服务增值">服务增值</option>
+                    <option value="运输发票">运输发票</option>
+                                </select>
+                    </td>
+                    <td><input type="number" data-name="materielDiscount" class="layui-input" value=""></td>
+                    <td>
+                        <div class="layui-btn layui-btn-xs" onclick="upSave()">保存</div>
+                        <div class="layui-btn layui-btn-danger layui-btn-xs">删除</div>
+                        <div></div>
+                    </td>
+                </tr>`
+        )
+    }
+    // 修改后保存
+    function upSave(index) {
+        let data = {}
+        data.id = Number(data.id)
+        data.clientsId = Number(data.clientsId)
+        if (index) {
+            $(`.lz${index} input`).each(function (i, n) {
+                data[$(this).attr('data-name')] = $(this).val()
+            })
+            json.materiels[index] = data
+        } else {
+
+            $(`.ddlist input`).each(function (i, n) {
+                data[$(this).attr('data-name')] = $(this).val()
+            })
+        }
+        json.materiels.push(data)
+        $.ajax({
+            url: `${API}/erpClients/inertOrUpdateClients`,
+            type: 'post',
+            // contentType: "application/json; charset=utf-8",
+            data: {
+                json: JSON.stringify(json)
+            },
+            // dataType: 'json',
+            success: function (res) {
+                console.log(res, '222')
+                fn_getDate();
+                if ( res.code == 0 ) {
+                    layer.msg ( '保存成功' );
+                }
+            }
+        })
+    }
+    //删除
+    function fn_delete( argv ) {
+        $.ajax({
+            url: `${API}/erpClients/removeClientsById`,
+            type: 'post',
+            // contentType: "application/json; charset=utf-8",
+            data: {
+                id: argv
+                // json: JSON.stringify(json)
+            },
+            // dataType: 'json',
+            success: function (res) {
+                console.log(res, '222')
+                fn_getDate();
+                if ( res.code == 0 ) {
+                    layer.msg ( '删除成功' );
+                }
+            }
+        })
+    }
+</script>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            /* border-bottom: 1px solid #ccc; */
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            margin: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            margin: 0px !important;
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 100%;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>报废时间</th>
+                    <th>来源</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>生产编号</th>
+                    <th>使用日期</th>
+                    <th>购置翻新</th>
+                    <th>维护维修</th>
+                    <th>运营里程</th>
+                    <th>预计里程</th>
+                    <th>元/千公里</th>
+                    <th>轮胎状态</th>
+                    <th>轮胎深度</th>
+                    <th>经办人</th>
+                </tr>
+            </thead>
+            <tbody class="list">
+                
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+    })
+    layui.use(['form', 'layedit', 'laydate'], function () {
+        laydate = layui.laydate;
+        laydate.render({
+            elem: '.dddate'
+        });
+    })
+    $.ajax({
+        url:`${API}/erpScrapTire/getScrapTirePageBycustId?custId=1`,
+        type:'get',
+        success: function (res) {
+            console.log(res)
+            let arr = res.data.records
+            let str = ``
+            $.each(arr,function (i,n) {
+                str +=`<tr>
+                    <td>${i+1}</td>
+                    <td>${n.scrDt == null ? '' : n.scrDt}</td>
+                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+                    <td>${n.scrBrand == null ? '' : n.scrBrand}</td>
+                    <td>${n.scrSpecifications == null ? '' : n.scrSpecifications}</td>
+                    <td>${n.scrModel == null ? '' : n.scrModel}</td>
+                    <td>${n.scrProduceid == null ? '' : n.scrProduceid}</td>
+                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+                    <td>${n.purchaseRefurbishment == null ? '' : n.purchaseRefurbishment}</td>
+                    <td>${n.scrMileage == null ? '' : n.scrMileage}</td>
+                    <td>${n.scrPperatingmileage == null ? '' : n.scrPperatingmileage}</td>
+                    <td>${n.scrEstimatedmileage == null ? '' : n.scrEstimatedmileage}</td>
+                    <td>${n.scrPricerepair == null ? '' : n.scrPricerepair}</td>
+                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+                    <td>胎纹1：${n.scrTread1} 胎纹2：${n.scrTread2} 胎纹3：${n.scrTread3} 胎纹4：${n.scrTread4}</td>
+                    <td>${n.scrInput == null ? '' : n.scrInput}</td>
+                </tr>`
+            })
+            $('.list').html(str)
+        }
+    })
+</script>
+
+</html>

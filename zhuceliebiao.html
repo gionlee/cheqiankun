@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+            min-height: 600px;
+        }
+
+        .wrap {
+            padding: 20px;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+        }
+
+        .layui-input {
+            /* border: 0; */
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 40px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            width: 720px;
+            padding: 10px;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+            <div class="search">
+                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select lay-filter="datesel" name="quiz2">
+                                <option value="">请选时段</option>
+                                <option value="0">一季度</option>
+                                <option value="1">二季度</option>
+                                <option value="2">三季度</option>
+                                <option value="3">四季度</option>
+                                <option value="4">上半年</option>
+                                <option value="5">下半年</option>
+                                <option value="6">本年度</option>
+                                <option value="7">上年度</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+                </div>
+        
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>日期</th>
+                    <th>客户类型</th>
+                    <th>客户编码</th>
+                    <th>客户名称</th>
+                    <th>手机号码</th>
+                    <th>电子邮箱</th>
+                    <th>微信号码</th>
+                    <th>QQ号码</th>
+                    <th>管理用户</th>
+                    <th>操作用户</th>
+                    <th>业务用户</th>
+                </tr>
+            </thead>
+        
+        <tbody class="zclb">
+
+        </tbody>
+    </table>
+    </div>
+</body>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+     
+    function sel () {
+        $.ajax({
+        url: `${API}/erpUser/getUserBycustIdPage?custId=${loadUserInfo.customer.id}&startDate=${$('.ksdate').val()}&endDate=${$('.jsdate').val()}`,
+        type: 'get',
+        success: function (res) {
+            var str ="";
+            $.each(res.data.records, function (i,n) {
+                
+        	   str+=`<tr><td>
+                        ${i+1}
+                    </td>
+                    <td>
+                        ${n.changeDate}
+                    </td>`;
+                    var roleId=n.roleId;
+                    var role="";
+                    if(roleId==1){
+                    	role="商户/车队";
+                    }else if(roleId==2){
+                    	role="私家车";
+                    }else if(roleId==3){
+                    	role="业务客户";
+                    }else if(roleId==4){
+                    	role="超级用户";
+                    }else if(roleId==5){
+                    	role="零星用户";
+                    }
+                    str+=`<td>
+                        ${role}
+                    </td>
+                    <td>
+                        ${n.customerId}
+                    </td>
+                    <td>
+                        ${n.branchName}
+                    </td>
+                    <td>
+                        ${n.phone}
+                    </td>
+                    <td>
+                        ${n.eMail}
+                    </td>
+                    <td>
+                        ${n.wx}
+                    </td>
+                    <td>
+                        ${n.qq==null?' ':n.qq}
+                    </td>
+                    <td title="${n.groupName}">`
+                        if(n.groupName) {
+                            str += `${ n.groupName.length > 15 ? n.groupName.substring(0,15)+'...' : n.groupName}
+                    </td>`
+                        } else {
+                            str += `<td><td>`
+                        }
+                     str +=`  
+                    <td>
+                        ${n.customerName==null?' ':n.customerName}
+                    </td>
+                    <td>
+                        ${n.erpCustomer==null?' ':n.erpCustomer}
+                    </td></tr>`;
+                    
+                    })
+                    console.log(str);
+                    $('.zclb').html(str);
+        }
+    })
+    }
+    sel()
+</script>
