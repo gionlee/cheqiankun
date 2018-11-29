@@ -178,14 +178,13 @@
                         <input type="text" data-name="tireNum" class="layui-input save-data" value="">
                     </td>
                     <td>
-                        <span class="scbh"></span>
-                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
+                        <input type="text" class="layui-input tireProductionId" data-name="tireProductionId">
                     </td>
                     <td class="ercode">
-
+                        <input type="text" class="layui-input qrCode" data-name="qrCode">
                     </td>
                     <td class="rfid">
-
+                        <input type="text" class="layui-input rfId" data-name="rfId">
                     </td>
                     <td rowspan="2" class="ai">
                         <input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
@@ -217,11 +216,10 @@
                         <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
                         <td><input data-name="rimsNum" type="text" class="layui-input rimsNum"></td>
                         <td>
-                                <span class="scbhlw"></span>
-                                <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="lwInfo">上传</button>
+                            <input type="text" class="layui-input rimsProductionId" data-name="rimsProductionId">
                         </td>
-                        <td class="rimsQrCode"></td>
-                        <td class="rimsRfId"></td>
+                        <td ><input type="text" class="layui-input rimsQrCode" data-name="rimsQrCode"></td>
+                        <td class=""><input type="text" class="layui-input rimsRfId" data-name="rimsRfId"></td>
                     </tr>
             </tbody>
         </table>
@@ -446,11 +444,11 @@
                     if(n.isZhiNeng) { 
                         str += 
                         `<tr>
-                    <td rowspan="3">${n.tireocation == null ? '' : n.tireocation}</td>`
+                    <td rowspan="3">${n.tireLocation == null ? '' : n.tireLocation}</td>`
                     } else {
                         str +=
                         `<tr>
-                    <td rowspan="2">${n.tireocation == null ? '' : n.tireocation}</td>`
+                    <td rowspan="2">${n.tireLocation == null ? '' : n.tireLocation}</td>`
                     }
                     
                     
@@ -464,7 +462,7 @@
                     <td>${n.tireNum == null ? '' : n.tireNum}</td>
                     <td>${n.tireProductionId == null ? '' : n.tireProductionId}</td>
                     <td>${n.qrCode == null ? '' : n.qrCode}</td>
-                    <td>${n.rfid == null ? '' : n.rfid}</td>`
+                    <td>${n.rfId == null ? '' : n.rfId}</td>`
                     
                         if(n.isZhiNeng) {
                           str +=`<td  rowspan="3">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
@@ -479,7 +477,7 @@
                     <td>${n.tireNum == null ? '' : n.tireNum}</td>
                     <td>${n.tireProductionId == null ? '' : n.tireProductionId}</td>
                     <td>${n.qrCode == null ? '' : n.qrCode}</td>
-                    <td>${n.rfid == null ? '' : n.rfid}</td></tr>`
+                    <td>${n.rfId == null ? '' : n.rfId}</td></tr>`
                         } else {
                             str +=`<td  rowspan="2">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
                     <td  rowspan="2">${n.tireMileage == null ? '' : n.tireMileage}</td>
@@ -511,15 +509,15 @@
             data[$(this).data('name')] = $(this).val()
         })
         data.tireocation = $('.tireocation').val()
-        data.tireProductionId = tireProductionId.toString()
-        data.qrCode = qrCode.toString()
-        data.rfId = rfId.toString()
-        data.sensorProductionId = sensorProductionId.toString()
-        data.sensorRfId = sensorRfId.toString()
-        data.sensorQrCode = sensorQrCode.toString()
-        data.rimsProductionId = rimsProductionId.toString()
-        data.rimsRfId = rimsRfId.toString()
-        data.rimsQrCode = rimsQrCode.toString()
+        // data.tireProductionId = tireProductionId.toString()
+        // data.qrCode = qrCode.toString()
+        // data.rfId = rfId.toString()
+        // data.sensorProductionId = sensorProductionId.toString()
+        // data.sensorRfId = sensorRfId.toString()
+        // data.sensorQrCode = sensorQrCode.toString()
+        // data.rimsProductionId = rimsProductionId.toString()
+        // data.rimsRfId = rimsRfId.toString()
+        // data.rimsQrCode = rimsQrCode.toString()
         data.custId = loadUserInfo.customer.id
         data.userId = loadUserInfo.user.id
         data.carPlate = decodeURI(decodeURI(getUrlParam('carnum')))
@@ -805,14 +803,13 @@
                         <input type="text" data-name="sensorNum" class="layui-input ai-data sensorNum" value="">
                     </td>
                     <td>
-                        <span class="sensorProductionId"></span>
-                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="znInfo">上传</button>
+                        <input  class="layui-input sensorProductionId " data-name="sensorProductionId">
                     </td>
                     <td class="sensorQrCode">
-
+                        <input  class="layui-input sensorQrCode " data-name="sensorQrCode">
                     </td>
                     <td class="sensorRfId">
-
+                        <input  class="layui-input sensorRfId " data-name="sensorRfId">
                     </td>
                     </tr>`
             )

@@ -136,6 +136,10 @@
     </div>
 </body>
 <script>
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
     $.ajax({
         url: `${API}/erpDriverRepair/getdriverRepair`,
         type: 'get',
@@ -149,16 +153,16 @@
                     <td><input type="text" data-name="supervisorPhone" class="layui-input" value="${json.supervisorPhone}"></td>
                     <td><input type="text" data-name="personnelName" class="layui-input" value="${json.personnelName}"></td>
                     <td><input type="text" data-name="personnelPhone" class="layui-input" value="${json.personnelPhone}"></td>
-                    <td><input type="text" data-name="supervisorNameo" class="layui-input" value="${json.personnelNameo}"></td>
-                    <td><input type="text" data-name="supervisorNameo" class="layui-input" value="${json.personnelPhoneo}"></td>
+                    <td><input type="text" data-name="personnelNameo" class="layui-input" value="${json.personnelNameo}"></td>
+                    <td><input type="text" data-name="personnelPhoneo" class="layui-input" value="${json.personnelPhoneo}"></td>
                 </tr>`
             })
-            $('.cars').append(str)
+            $('.cars').html(str)
         }
     })
 
     $.ajax({
-        url: `${API}/erpDriver/getdriverBycustId?custId=1`,
+        url: `${API}/erpDriver/getdriverBycustId?custId=${loadUserInfo.customer.id}`,
         type: 'get',
         success: function (res) {
             let str = ''
@@ -178,21 +182,24 @@
                     </td>
                 </tr>`
             })
-            $('.lists').append(str)
+            $('.lists').html(str)
         }
     })
     function save() {
-        let str = ''
+        let data = {
+            pid:loadUserInfo.customer.id
+        }
         $('.cars input').each(function () {
-            str += '&' + $(this).data('name') + '=' + $(this).val()
+           data[$(this).data('name')]=$(this).val()
         })
         $.ajax({
-            url: `${API}/erpDriverRepair/inertOrUpdateRepair?${str}`,
-            type: 'get',
+            url: `${API}/erpDriverRepair/inertOrUpdateRepair`,
+            type: 'post',
+            data:data,
             success: function (res) {
-                console.log(res)
-
-
+                if(res.code == 0) {
+                    layer.msg('保存成功!')
+                }
             }
         })
     }
@@ -207,6 +214,9 @@
             url: `${API}/erpDriver/inertOrUpdateDriver?${json}`,
             type: 'get',
             success: function (res) {
+                if(res.code == 0) {
+                    layer.msg('保存成功!')
+                }
             }
         })
     }
@@ -216,8 +226,10 @@
                 url: `${API}/erpDriver/removedriverById?Id=${id}`,
                 type: 'get',
                 success: function (res) {
-                    console.log(res)
-                    window.reload()
+                    if(res.code == 0) {
+                    layer.msg('删除成功!')
+                }
+                    window.location.reload()
                 }
             })
         }

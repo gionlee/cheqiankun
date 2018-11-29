@@ -85,11 +85,58 @@
             font-size: 14px;
             display: inline-block;
         }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+
     </style>
 </head>
 
 <body>
     <div class="wrap">
+            <div class="search">
+                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                </div>
+                <div class="layui-form">
+                    <div >
+                        <div >
+                            <select >
+                                <option value="">请选时段</option>
+                                <option value="0">一季度</option>
+                                <option value="1">二季度</option>
+                                <option value="2">三季度</option>
+                                <option value="3">四季度</option>
+                                <option value="4">上半年</option>
+                                <option value="5">下半年</option>
+                                <option value="6">本年度</option>
+                                <option value="7">上年度</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal">查询</button>
+                </div>
+
         <div class="layui-btn layui-btn-sm" onclick="add()">添加</div>
         <table class="layui-table">
             <thead>
@@ -163,7 +210,7 @@
 <script>
 
     $.ajax({
-        url: `${API}/erpRefueling/getrefuelingIdbPage?custId=1&page=1&limit=20`,
+        url: `${API}/erpRefueling/getrefuelingIdbPage?custId=${loadUserInfo.customer.id}&page=1&limit=20`,
         type: 'get',
         success: function (res) {
             let str = ''
@@ -184,6 +231,10 @@
             $('.jiayou').append(str)
         }
     })
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
     layui.use('laydate', function () {
         var laydate = layui.laydate;
         laydate.render({
@@ -201,16 +252,22 @@
                 btn: ['保存', '取消'],
                 maxmin: true,
                 yes: function () {
-                    let str = ''
+                    let data = {
+                        customerId:loadUserInfo.customer.id
+                    }
                     $('.add input').each(function () {
-                        str += `&${$(this).data('name')}=${$(this).val()}`
+                        data[$(this).data('name')]=$(this).val()
                     })
 
                     $.ajax({
-                        url: `${API}/erpRefueling/inertOrUpdaterefuelingId?custId=1${str}`,
-                        type: 'get',
+                        url: `${API}/erpRefueling/inertOrUpdaterefuelingId`,
+                        type: 'post',
+                        data:data,
                         success: function (res) {
+                            if(res.code == 0) {
+                                layer.msg('添加成功!')
                             window.location.reload()
+                            }
                         }
                     })
 

@@ -220,10 +220,10 @@
                 <div class="layui-tab-item">
                     <div class="select">
                         <div class="search">
-                            <input class="layui-input" style="border:1px solid #ccc;" type="text" placeholder="客户编码 名称 车辆牌号">
+                            <input class="layui-input" id="lcb" style="border:1px solid #ccc;" type="text" placeholder="客户编码 名称 车辆牌号">
                         </div>
                         <div class="btn">
-                            <button class="layui-btn layui-btn-normal">查询</button>
+                            <button class="layui-btn layui-btn-normal" onclick="selLcb()">查询</button>
                         </div>
                     </div>
                     <table id="table" lay-filter="table" class="layui-table">
@@ -400,7 +400,7 @@
     let lcblist = []
     
     $.ajax({
-        url:`${API}/erpDataError/getCarLikePro?custId=1&carPro=1`,
+        url:`${API}/erpDataError/getCarLikePro?custId=${loadUserInfo.customer.id}&carPro=1`,
         type:'get',
         success:function  (res) {
             let str =''
@@ -411,11 +411,11 @@
                 str +=`<tr class="lcb_${i}">
                                 <td><input type="text" class="layui-input" value=""></td>
                                 <td><input type="text" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="carAddDate" class="layui-input" value="${n.carAddDate}"></td>
-                                <td><input type="text" data-name="carPlate" class="layui-input" value="${n.carPlate}"></td>
-                                <td><input type="text" data-name="carMileage" class="layui-input" value="${n.carMileage}"></td>
+                                <td><input type="text" data-name="carAddDate" class="layui-input" value="${n.carAddDate == null ? '' : n.carAddDate}"></td>
+                                <td><input type="text" data-name="carPlate" class="layui-input" value="${n.carPlate == null ? '' : n.carPlate}"></td>
+                                <td><input type="text" data-name="carMileage" class="layui-input" value="${n.carMileage == null ? '' : n.carMileage}"></td>
                                 <td><input type="text" data-name="carMileage" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="inputAttn" class="layui-input" value="${n.inputAttn}"></td>
+                                <td><input type="text" data-name="inputAttn" class="layui-input" value="${n.inputAttn == null ? '' : n.inputAttn }"></td>
                                 <td><div class='layui-btn layui-btn-xs' onclick="saveLcb(${i})">保存</div></td>
                             </tr>`
                             cpstr +=`<tr class="cp_${i}">
@@ -431,6 +431,10 @@
             $('.gcph').html(cpstr)
         }
     })
+    //　查询里程表
+    function selLcb () {
+        
+    }
     // 保存里程表
     function saveLcb(index) {
         let json = lcblist[index]
@@ -449,9 +453,11 @@
     // 保存改车牌号
     function saveCp(index) {
         let json = lcblist[index]
-        $(`.cp_${i} input`).each (function () {
+        console.log(lcblist[index])
+        $(`.cp_${index} input`).each (function () {
             json[$(this).data('name')] = $(this).val() 
         })
+        console.log(json)
         $.ajax({
             url:`${API}/erpDataError/updateCat`,
             type:'post',
@@ -462,11 +468,13 @@
         })
     }
     // 保存改胎信息
-    function saveCp(index) {
+    function saveGt(index) {
         let json = gtXx[index]
-        $(`.gtxx_${i} input`).each (function () {
+        let data = []
+        $(`.gtxx_${index} input`).each (function () {
             json[$(this).data('name')] = $(this).val() 
         })
+        console.log(json,'666')
         $.ajax({
             url:`${API}/erpDataError/updateMaterielByPro`,
             type:'post',
@@ -478,7 +486,7 @@
     }
     let gtXx = []
     $.ajax({
-        url:`${API}/erpDataError/getMaterielLikePro?custId=1&matPro=1`,
+        url:`${API}/erpDataError/getMaterielLikePro?custId=${loadUserInfo.customer.id}&matPro=1`,
         type:'get',
         success:function  (res) {
             let str =''

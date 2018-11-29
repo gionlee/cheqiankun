@@ -84,7 +84,7 @@
 						<input class="layui-input jsdate" type="text" placeholder="结束日期">
 					</div>
 					<div class="btn">
-						<button class="layui-btn layui-btn-normal">查询</button>
+						<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
 					</div>
 					<form class="layui-form layui-col-md2" style="float: right;">
 							<select onchange="figure()"  lay-filter="tu" class=" ttt">
@@ -132,11 +132,14 @@
 <script src="./js/Global.js"></script>
 <script src="./js/echarts.min.js" charset="utf-8"></script>
 <script>
-	let ddata = {
-		startDate :'',
-		endDate:''
-	}
-	$.ajax({
+	
+    sel()
+	function sel() {
+        let ddata = {
+		startDate :$('.ksdate').val(),
+		endDate:$('.jsdate').val()
+    }
+        $.ajax({
 		url: `${API}/real/selectBaoPolice?custId=${loadUserInfo.customer.id}`,
 		type: 'post',
 		data:ddata,
@@ -175,6 +178,7 @@
 			$('.baojing').html(str)
 		}
 	})
+    }
 	layui.use('form',function () {
 		let forms = layui.form
 		forms.on('select(tu)',function (data) {
@@ -233,6 +237,22 @@
         }	
     ]
 };
+function selTu() {
+    let data = {
+    startTime:$('.ksdate').val(),
+    endTime:$('.jsdate').val(),
+    type:1
+}
+$.ajax({
+    url:`${API}/real/getEchartsBing`,
+    type:'post',
+    data:data,
+    success: function (res) {
+        console.log(res)
+    }
+})
+}
+selTu()
 var option1 = {
     title : {
         x:'center'
@@ -289,6 +309,14 @@ var myChart2 = echarts.init(document.getElementById('zxt'));
 myChart2.setOption(option2);
 </script>
 <script>
+    layui.use('laydate',function () {
+        layui.laydate.render({
+            elem:'.ksdate'
+        })
+        layui.laydate.render({
+            elem:'.jsdate'
+        })
+    })
 layui.use('form', function () {
         var form = layui.form
         form.on('select(datesel)', function (data) {

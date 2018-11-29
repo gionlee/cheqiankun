@@ -42,14 +42,45 @@
       display: inline-block;
 
     }
+    .layui-form {
+      display: inline-block;
+      margin: 0;
+      padding: 0;
+      height: 24px;
+    }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-
-    <div class="select">
-      <div class="search layui-form">
+    <div class="layui-row">
+      <div class="search">
+        <input class="layui-input ksdate" type="text" placeholder="开始日期">
+      </div>
+      <div class="layui-form">
+        <div class="layui-form-item">
+          <div class="layui-input-inline">
+            <select lay-filter="datesel" name="quiz2">
+              <option value="">请选时段</option>
+              <option value="0">一季度</option>
+              <option value="1">二季度</option>
+              <option value="2">三季度</option>
+              <option value="3">四季度</option>
+              <option value="4">上半年</option>
+              <option value="5">下半年</option>
+              <option value="6">本年度</option>
+              <option value="7">上年度</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="search">
+        <input class="layui-input jsdate" type="text" placeholder="结束日期">
+      </div>
+      <div class="btn">
+        <button class="layui-btn layui-btn-normal" onclick="chaxun()">查询</button>
+      </div>
+      <!-- <div class="search layui-form">
         <div class="layui-input-inline">
           <select name="interest" lay-filter="aihao" stlyle="height:36px;">
             <option value="0">上月</option>
@@ -58,11 +89,14 @@
             <option value="1" selected="">默认当月</option>
           </select>
         </div>
-      </div>
+      </div> -->
       <div class="btn">
         <button class="systemsetup layui-btn layui-btn-sm">Excel</button>
       </div>
     </div>
+    <!-- <div class="select">
+      
+    </div> -->
     <table id="table" lay-filter="table" class="layui-table">
       <thead id="head">
         <tr>
@@ -95,39 +129,110 @@
     </table>
   </div>
 </body>
+<script type="text/javascript">
+  var date=new Date();
+  var year=date.getFullYear();
+  var month=date.getMonth()+1;
+  date.setMonth(month);
+  date.setDate(0);
+  var date_all=date.getDate();//当月总天数
+  console.log(date.getMonth()+1);
+  console.log(date.getDate());
+  $('.ksdate').val(year+'-'+month+'-'+'1');
+  $('.jsdate').val(year+'-'+month+'-'+date_all);
+</script>
 <script>
-  $.ajax({
-				url: `${API}/real/statistics?`,
-				// dataType:'json',
-				type: 'get',
-        success: function (res) {
-          let arr = res.data
-          let str = ''
-          $('.nums').html(arr.length)
-          $.each(arr,function (i,n) {
+  
+  chaxun();
+  function chaxun(){
+    var starttime=$('.ksdate').val();
+    var endtime=$('.jsdate').val();
+    var code=loadUserInfo.customer.cusCode;
+    console.log(starttime);
+    console.log(endtime);
+    console.log(code);
+    $.ajax({
+          url: `${API}/real/statistics?`,
+          // dataType:'json',
+          type: 'get',
+          data:{
+            startTime:starttime,
+            endTime:endtime,
+            code:code,
+          },
+          success: function (res) {
+            let arr = res.data;
+            console.log(res.data);
+            let str = ''
+            $('.nums').html(arr.length)
+            $.each(arr,function (i,n) {
             str+=`<tr>
-            <td>${i+1}</td>
-          <td>${n.cus_name}</td>
-          <td>${n.car_plate}</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          
+            <td>${n.carNumber}</td>
+            <td>${n.name}</td>
+            <td>${n.plate}</td>
+            <td>${n.znumber}</td>
+            <td>${n.zdate}</td>
+            <td>${n.zproportion}</td>
+            <td>${n.dnumber}</td>
+            <td>${n.ddate}</td>
+            <td>${n.dproportion}</td>
+            <td>${n.cnumber}</td>
+            <td>${n.cdate}</td>
+            <td>${n.cproportion}</td>
+            <td>${n.gnumber}</td>
+            <td>${n.gdate}</td>
+            <td>${n.gproportion}</td>
 
-          <td></td>
-          <td></td>
-          <td></td><td></td>
-          <td></td>
-          <td></td>
+          </tr>`
+            })
+            $('.weblist').html(str)
+          }
+    })
+  }
+</script>
 
-        </tr>`
-          })
-          $('.weblist').html(str)
-        }
-  })
+<script>
+layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '7':
+                    $('.ksdate').val(`${years - 1}-01-01`)
+                    $('.jsdate').val(`${years - 1}-12-31`)
+                    break;
+            }
+        });
+    })
 </script>
 
 </html>
