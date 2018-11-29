@@ -364,7 +364,7 @@
                     <td class="layui-form">
                         <select name="" class="sel" id=""></select>
                     </td>
-                    <td><input type="text" class="layui-input materielName" data-name="materielName" onclick="showLv1(false,true,'saleWindow')"></td>
+                    <td><input type="text" class="layui-input materielName" data-name="materielName" onclick="showLv1(true,'spxsList')"></td>
                     <td><input type="text" class="layui-input materielBrand" data-name="materielBrand"></td>
                     <td><input type="text" class="layui-input materielSpecifications" data-name="materielSpecifications"></td>
                     <td><input type="text" class="layui-input materielModel" data-name="materielModel"></td>
@@ -527,19 +527,19 @@
             <tbody class="wlwxList">
                 <tr>
                     <td><input type="text" class="layui-input" data-name="materielSource"></td>
-                    <td><input type="text" class="layui-input" data-name="materielName"></td>
-                    <td><input type="text" class="layui-input" data-name="materielBrand"></td>
-                    <td><input type="text" class="layui-input" data-name="materielSpecifications"></td>
-                    <td><input type="text" class="layui-input" data-name="materielModel"></td>
-                    <td><input type="text" class="layui-input" data-name="materielPlace"></td>
-                    <td><input type="text" class="layui-input" data-name="materielState"></td>
-                    <td><input type="text" class="layui-input" data-name="materielUnit"></td>
-                    <td><input type="text" class="layui-input" data-name="materielOutTo"></td>
-                    <td><input type="text" class="layui-input" data-name="materielProductionId"></td>
-                    <td><input type="text" class="layui-input" data-name="materiel_sensor_id"></td>
-                    <td><input type="text" class="layui-input" data-name="materielPressure"></td>
-                    <td><input type="text" class="layui-input" data-name="materielNumber"></td>
-                    <td><input type="text" class="layui-input" data-name="materielTotal"></td>
+                    <td><input type="text" class="layui-input materielName" data-name="materielName" onclick="showLv1(true,'wlwxList')"></td>
+                    <td><input type="text" class="layui-input materielBrand" data-name="materielBrand"></td>
+                    <td><input type="text" class="layui-input materielSpecifications" data-name="materielSpecifications"></td>
+                    <td><input type="text" class="layui-input materielModel" data-name="materielModel"></td>
+                    <td><input type="text" class="layui-input materielPlace" data-name="materielPlace"></td>
+                    <td><input type="text" class="layui-input materielState" data-name="materielState"></td>
+                    <td><input type="text" class="layui-input materielUnit" data-name="materielUnit"></td>
+                    <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo"></td>
+                    <td><input type="text" class="layui-input materielProductionId" data-name="materielProductionId"></td>
+                    <td><input type="text" class="layui-input materiel_sensor_id" data-name="materiel_sensor_id"></td>
+                    <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+                    <td><input type="text" class="layui-input materielNumber" data-name="materielNumber"></td>
+                    <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
                 </tr>
             </tbody>
         </table>
@@ -571,12 +571,12 @@
                     <tr>
                         <td rowspan="2">动平衡</td>
                         <td>
-                            <input type="text" class="layui-input">
+                            <input type="text" data-name="dynamicBalancingLeft" onclick="setDph(this)" class="layui-input">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <input type="text" class="layui-input">
+                            <input type="text" data-name="dynamicBalancingRight" onclick="setDph(this)" class="layui-input">
                         </td>
                     </tr>
                 </table>
@@ -658,19 +658,21 @@
                     <th>保险单号</th>
                     <th>保险公司</th>
                     <th>备注</th>
+                    <th style="width:100px;">操作</th>
                 </tr>
             </thead>
-            <tbody class="clwx">
-                <tr>
+            <tbody class="clwxxq">
+                <tr id="clwx">
                     <td><input type="text" class="layui-input" data-name="garageProject" value=""></td>
                     <td><input type="text" class="layui-input" data-name="repairProject" value=""></td>
                     <td><input type="text" class="layui-input" data-name="repairMode" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairCost" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="money" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
                     <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
+                    <td><div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div></td>
                 </tr>
             </tbody>
         </table>
@@ -694,7 +696,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="lzhcmx">
                     <td class="layui-form">
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
@@ -705,19 +707,17 @@
                             </div>
                         </div>
                     </td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
-                    <td><input type="text" class="layui-input" value=""></td>
+                    <td onclick="showLv1(true,'lzhcmx')"><input type="text" class="layui-input materielName" data-name="scrName" value=""></td>
+                    <td><input type="text" class="layui-input materielBrand" data-name="scrBrand" value=""></td>
+                    <td><input type="text" class="layui-input materielSpecifications" data-name="scrSpecifications" value=""></td>
+                    <td><input type="text" class="layui-input materielModel" data-name="scrModel" value=""></td>
+                    <td><input type="text" class="layui-input materielPlace" data-name="chanDi" value=""></td>
+                    <td><input type="text" class="layui-input materielState" data-name="state" value=""></td>
+                    <td><input type="text" class="layui-input materielUnit" data-name="danWei" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="number" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="bz" value=""></td>
                     <td>
-
-                        <div class="layui-btn  layui-btn-xs layui-btn-normal">保存</div>
-                        <div class="layui-btn  layui-btn-xs layui-btn-danger">删除</div>
+                        <div class="layui-btn  layui-btn-xs layui-btn-normal" onclick="saveHcmx()">保存</div>
                     </td>
                 </tr>
             </tbody>
@@ -916,18 +916,41 @@
         })
     }
     // 保存物料维修
+    let Wxdata = {}
     function saveWx() {
         let data = {}
         $('.wxbj input').each(function () {
-            data[$(this).data('name')] = $(this).val()
+            Wxdata[$(this).data('name')] = $(this).val()
         })
         $('.wlwxList input').each(function () {
-            data[$(this).data('name')] = $(this).val()
+            Wxdata[$(this).data('name')] = $(this).val()
         })
-        $('.wxhclist input').each(function () {
-            data[$(this).data('name')] = $(this).val()
+        Wxdata.json = []
+        $('.wxhclist').each(function () {
+            let d = {}
+            $(this).find('input').each(function () {
+                d[$(this).data('name')] = $(this).val()
+            })
+            Wxdata.json.push(d)
+        }) 
+        data = Wxdata
+        data.json = JSON.stringify(data.json)
+        $.ajax({
+            url:`${API}/erpXiaoShouWeiXiu/addWuLiaoWeiXiuNew`,
+            type:'post',
+            data:data,
+            success: function (res) {
+                if(res.code == 0) {
+                    layer.msg('保存成功!')
+                    Wxdata.weixiutaiweiCount = res.data.weixiutaiweiCount[0]
+                    $.each(Wxdata.json,function(i,n) {
+                        Wxdata.json[i] = res.data.weixiuhaocaiCount[i]
+                    })
+                }
+                
+            }
         })
-        console.log(data)
+        
     }
     // 商品销售
     function saleEdit() {
@@ -993,6 +1016,7 @@
             success: function (res) {
                 let arr = res.data
                 let str = ''
+                let strxq = ''
                 $.each(arr, function (i, n) {
                     str +=
                         `<tr>
@@ -1007,7 +1031,23 @@
                         <td>${n.repairRemarks == null ? '' : n.repairRemarks}</td>
                         </tr>`
                 })
-                $('.clwx').html(str)
+                $.each(arr, function (i, n) {
+                    strxq +=
+                        `<tr>
+                        <td>${n.garageProject == null ? '' : n.garageProject}</td>
+                        <td>${n.repairProject == null ? '' : n.repairProject}</td>
+                        <td>${n.repairMode == null ? '' : n.repairMode}</td>
+                        <td>${n.workTime == null ? '' : n.workTime}</td>
+                        <td>${n.money == null ? '' : n.money}</td>
+                        <td>${n.moneyC == null ? '' : n.moneyC}</td>
+                        <td>${n.insurancepolicyno == null ? '' : n.insurancepolicyno}</td>
+                        <td>${n.insuranceCompany == null ? '' : n.insuranceCompany}</td>
+                        <td>${n.repairRemarks == null ? '' : n.repairRemarks}</td>
+                        <td><div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
+                        </tr>`
+                })
+                $('.clwx').append(str)
+                $('.clwxxq').append(strxq)
             }
         })
     }
@@ -1040,13 +1080,13 @@
             'width': '1180px'
         })
         $('.wxhclist').append(
-            `<tr>
-                <td class="layui-form"><select class="wxsel"></select></td>
-                <td><input class="layui-input "></td>
-                <td><input class="layui-input "></td>
-                <td><input class="layui-input "></td>
-                <td><input class="layui-input "></td>
-                <td><input class="layui-input "></td>
+            `<tr class="lzwxhc">
+                <td class="layui-form"><input class="layui-input" data-name="pid"></td>
+                <td><input class="layui-input " data-name="materielName"></td>
+                <td><input class="layui-input " data-name="materielBrand"></td>
+                <td><input class="layui-input " data-name="materielSpecifications"></td>
+                <td><input class="layui-input " data-name="materielModel"></td>
+                <td><input class="layui-input " data-name="materielNumber"></td>
                 <td><div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
             </tr>`
         )
@@ -1107,6 +1147,30 @@
         $(dphTags).val(nums)
         $('.dphnum').html('')
         dph = []
+    }
+    // 保存车辆维修
+    function saveClwx () {
+        let data = {}
+        $('#clwx input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $.ajax({
+            url:`${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
+            type:'post',
+            data:data,
+            success: function (res) {
+                console.log(res,'222')
+            }
+        })
+    }
+    // 耗材明细保存
+    function saveHcmx() {
+        let data = {}
+        $('.lzhcmx input').each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        data.pid = $('.lzhcmx select').val()
+        console.log(data,'666')
     }
 
     function saveOne(bol) {
@@ -1210,10 +1274,10 @@
             }
         })
     }
-
+    let osCls
     //  查找大类
-    function showLv1(show, bol) {
-
+    function showLv1(show, cla) {
+        osCls = cla
         $.ajax({
             url: `${API}/erpMaterielFlow/selectTop`,
             type: 'get',
@@ -1228,8 +1292,6 @@
                 if (show) {
                     $('.hover-show').show()
                 }
-
-                isAI = bol
             }
         })
     }
@@ -1372,17 +1434,14 @@
     $(document).on('click', function () {
         $('.hover-show').hide()
     })
-    let par = ''
-
     function setWlVal(_this) {
-        par = 'saleWindow'
-        $(`.${par} .materielUnit`).val($(_this).text())
-        $(`.${par} .materielPlace`).val($(_this).parents('.list-8').prev().text())
-        $(`.${par} .materielState`).val($(_this).parents('.list-7').prev().text())
-        $(`.${par} .materielModel`).val($(_this).parents('.list-6').prev().text())
-        $(`.${par} .materielBrand`).val($(_this).parents('.list-5').prev().text())
-        $(`.${par} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
-        $(`.${par} .materielName`).val($(_this).parents('.list-3').prev().text())
+        $(`.${osCls} .materielUnit`).val($(_this).text())
+        $(`.${osCls} .materielPlace`).val($(_this).parents('.list-8').prev().text())
+        $(`.${osCls} .materielState`).val($(_this).parents('.list-7').prev().text())
+        $(`.${osCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+        $(`.${osCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+        $(`.${osCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+        $(`.${osCls} .materielName`).val($(_this).parents('.list-3').prev().text())
     }
     let fkfs = []
     $.ajax({

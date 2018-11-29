@@ -240,7 +240,7 @@
 		var userid =GetRequest().userid;
 		var id =GetRequest().id;
 			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+id+'&custId='+userid,
+				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&custId='+ loadUserInfo.customer.id,
 				type: 'get',
 				dataType: 'json',
 				success:function(ret) {

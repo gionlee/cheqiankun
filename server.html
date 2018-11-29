@@ -49,10 +49,10 @@
 
         <div class="select">
             <div class="search">
-                <input class="layui-input" type="text" placeholder="单位名称      编码">
+                <input class="layui-input" id="key" type="text" placeholder="单位名称      地址">
             </div>
             <div class="btn">
-                <button class="layui-btn layui-btn-normal">查询</button>
+                <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
             </div>
         </div>
         <table id="table" lay-filter="table" class="layui-table">
@@ -79,8 +79,9 @@
     })
 
 
-    $.ajax({
-        url: `${API}/erpServiceWeb/getServiceWebPage`,
+    function sel () {
+        $.ajax({
+        url: `${API}/erpServiceWeb/getServiceWebPage?keyWord=${$('#key').val()}`,
         type: 'get',
         success: function (res) {
             let arr = res.data.records
@@ -97,9 +98,11 @@
                 </tr>`
             })
 
-            $('.weblist').append(str)
+            $('.weblist').html(str)
         }
     })
+    }
+    sel()
 </script>
 
 </html>

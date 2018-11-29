@@ -103,11 +103,7 @@
         </div>
     </div>
 </body>
-<script>
-	var cokeid = 1;
-
-	
-
+<script>	
 		function seeInfo(id) {
 
 			$.ajax({
@@ -118,13 +114,18 @@
 					var objkacha = ret.data.putongche
 					var objdagua = ret.data.guache;
 					var html = '';
-
-					for(var key in objkacha) {
-						html += '<a href="taiweimosunxiangqing.html?userid='+cokeid+'&id=' + objkacha[key].id + '" class="carlist">' + objkacha[key].carPlate + '</a>';
-					}
-					for(var key in objdagua) {
-						html += '<a href="taiweimosunxiangqing.html?userid='+cokeid+'&id=' + objdagua[key].id + '" class="carlist">' + objdagua[key].carPlate + '</a>';
-					}
+                    $.each(objkacha,function (i,n) {
+                        if(n.carPlate) {
+                            html += `<a href="taiweimosunxiangqing.html?carnum=${encodeURI(encodeURI(n.carPlate))}" class="carlist"> ${n.carPlate}</a>`;
+                        }
+                        
+                    })
+                    $.each(objdagua,function (i,n) {
+                        if(n.carPlate){
+                            html += `<a href="taiweimosunxiangqing.html?carnum=${encodeURI(encodeURI(n.carPlate))}" class="carlist"> ${n.carPlate}</a>`;
+                        }
+                        
+                    })
 					$(".lists").html(html);
 				},
 				error: function(err) {
@@ -144,7 +145,7 @@
 		$(function() {
 
 			$.ajax({
-				url: API+'/erpManagement/gojianceweihu?custId=' + cokeid,
+				url: API+'/erpManagement/gojianceweihu?custId=' + loadUserInfo.customer.id,
 				type: 'get',
 				dataType: 'json',
 				success: function(ret) {

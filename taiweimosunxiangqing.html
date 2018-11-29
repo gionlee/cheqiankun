@@ -138,7 +138,7 @@
             <input class="layui-input jsdate" id="endDate" type="text" placeholder="结束日期">
         </div>
         <div class="search">
-             &nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" id="cx">查询</button>
+             &nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
         </div>
 
         <table class="layui-table">
@@ -213,33 +213,25 @@
             }
         });
     })
-    
-    function GetRequest() {
-			var url = location.search; //获取url中"?"符后的字串  
-			var theRequest = new Object();
-			if(url.indexOf("?") != -1) {
-				var str = url.substr(1);
-				strs = str.split("&");
-				for(var i = 0; i < strs.length; i++) {
-					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-				}
-			}
-			return theRequest;
-		}
-    $(function() {
-		var userid =GetRequest().userid;
-		var id =GetRequest().id;
+    sel ()
+    function sel () {
+        let data = {
+            custId:loadUserInfo.customer.id,
+            catPlate:decodeURI(decodeURI(getUrlParam('carnum'))),
+            startDate: $('#startDate').val(),
+            endDate: $('#endDate').val()
+        }
 			$.ajax({
-				url:API + '/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1',// url+'/erpTireArchivesWork/tongjiguanliLTMH?catPlate='+id+'&custId='+userid,
-				type: 'get',
-				dataType: 'json',
+				url:API + `/erpTireArchivesWork/tongjiguanliLTMH`,
+                type: 'post',
+                data:data,
 				success:function(ret) {
 					var objkacha = ret.data;
 					var html = '';
 
-					for(var key in objkacha) {
+					for(var key = 0; key < objkacha.length;key ++) {
 						
-							html +=' <tr onclick="seeInfo()">'+
+							html +=' <tr>'+
  '                    <td>'+(objkacha[key].carType1 == null ? '' : objkacha[key].carType1)+' '+(objkacha[key].carType2 == null ? '' : objkacha[key].carType2)+' '+(objkacha[key].carType3  == null ? '' : objkacha[key].carType3)+'</td>'+
  '                    <td>'+(objkacha[key].carWheel  == null ? '' : objkacha[key].carWheel)+'</td>'+
  '                    <td>'+(objkacha[key].carDrive  == null ? '' : objkacha[key].carDrive)+'</td>'+
@@ -262,46 +254,6 @@
 
 				}
 			});
+    }
 
-		})
-    $("#cx").click(function(){
-    	var userid =GetRequest().userid;
-		var id =GetRequest().id;
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		//'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
-			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliLTMH?catPlate='+id+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
-				type: 'get',
-				dataType: 'json',
-				success:function(ret) {
-					var objkacha = ret.data;
-					var html = '';
-
-					for(var key in objkacha) {
-						
-							html +=' <tr onclick="seeInfo()">'+
- '                    <td>'+objkacha[key].carType1+' '+objkacha[key].carType2+' '+objkacha[key].carType3+'</td>'+
- '                    <td>'+objkacha[key].carWheel+'</td>'+
- '                    <td>'+objkacha[key].carDrive+'</td>'+
- '                    <td>'+objkacha[key].zuoOne+'</td>'+
- '                    <td>'+objkacha[key].youOne+'</td>'+
- '                    <td>'+objkacha[key].zuoTwo+'</td>'+
- '                    <td>'+objkacha[key].zuoTwo+'</td>'+
- '                    <td>'+objkacha[key].beitai+'</td>'+
- '                </tr>';
-					
-						
-						
-						
-					}
-					$("#list").html(html);
-								           		         		
-				},
-				error:function(err) {
-					alert("系统错误");
-
-				}
-			});
-    })
 </script>

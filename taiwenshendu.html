@@ -91,39 +91,10 @@
 <body>
     <div class="wrap">
         <ul id="list">
-            <li onclick="seeInfo()">
-                <a>
-                    天津港保税区金方舟贸易有限公司
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    天津港保税区金方舟贸易有限公司
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    天津港保税区金方舟贸易有限公司
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    天津港保税区金方舟贸易有限公司
-                </a>
-            </li>
-            <li>
-                <a href="">
-                    天津港保税区金方舟贸易有限公司
-                </a>
-            </li>
         </ul>
     </div>
     <div class="winbody" style="display:none;">
         <div class="lists">
-            <a href="./taiwenshenduxiangqing.html" class="carlist">津KYD178(001)</a>
-            <a href="" class="carlist">津KYD178(001)</a>
-            <a href="" class="carlist">津KYD178(001)</a>
-            <a href="" class="carlist">津KYD178(001)</a>
         </div>
     </div>
 </body>
@@ -143,12 +114,18 @@
 					var objdagua = ret.data.guache;
 					var html = '';
 
-					for(var key in objkacha) {
-						html += '<a href="taiwenshenduxiangqing.html?userid='+cokeid+'&id=' + objkacha[key].id + '" class="carlist">' + objkacha[key].carPlate + '</a>';
-					}
-					for(var key in objdagua) {
-						html += '<a href="taiwenshenduxiangqing.html?userid='+cokeid+'&id=' + objdagua[key].id + '" class="carlist">' + objdagua[key].carPlate + '</a>';
-					}
+					$.each(objkacha,function (i,n) {
+                        if(n.carPlate) {
+                            html += `<a href="taiwenshenduxiangqing.html?carnum=${encodeURI(encodeURI(n.carPlate))}" class="carlist"> ${n.carPlate}</a>`;
+                        }
+                        
+                    })
+                    $.each(objdagua,function (i,n) {
+                        if(n.carPlate){
+                            html += `<a href="taiwenshenduxiangqing.html?carnum=${encodeURI(encodeURI(n.carPlate))}" class="carlist"> ${n.carPlate}</a>`;
+                        }
+                        
+                    })
 					$(".lists").html(html);
 				},
 				error: function(err) {

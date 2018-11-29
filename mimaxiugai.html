@@ -43,10 +43,12 @@
     </div>
 </body>
 <script>
-    let userId = 1
-    let custId = 1
+	var layer = '';
+	layui.use('layer', function() {
+		layer = layui.layer;
+	})
     $.ajax({
-        url: `${API}/erpUser/getcustUserById?custId=1`,
+        url: `${API}/erpUser/getcustUserById?custId=${loadUserInfo.customer.id}`,
         type: 'get',
         success: function (res) {
             $('.user').text(res.data.cusCode)
@@ -55,16 +57,17 @@
     })
     function save() {
         let data = {}
-        data.realName = $('.nicheng').val()
-        data.userId = 1
-        data.custId = 1
+        data.password  = $('.nicheng').val()
+        data.userId = loadUserInfo.user.id
+        data.custId = loadUserInfo.customer.id
         $.ajax({
-            url: `${API}/erpUser/UpdateUserRealName`,
+            url: `${API}/erpUser/UpdateUserPassword`,
             data: data,
             type: 'post',
             success: function (res) {
                 window.location.reload()
-                $('.nicheng').val(res.data.cusNickname)
+                // $('.nicheng').val(res.data.cusNickname)
+                layer.msg('修改成功！');
             }
         })
     }

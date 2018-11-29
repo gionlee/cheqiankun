@@ -106,7 +106,7 @@
     <table class="layui-table">
         <thead>
             <tr>
-                <th colspan="23">苏D9623挂 车辆物料档案</th>
+                <th colspan="23"><span id="car"></span> 车辆物料档案</th>
             </tr>
             <tr>
                 <th>序号</th>
@@ -152,20 +152,17 @@
 			}
 			return theRequest;
 		}
-	 const url = 'http://120.79.205.40:3340'
 	$(function() {
-		var userid =GetRequest().userid;
 		var id =GetRequest().id;
-        console.log(id)
 			$.ajax({
-				url: API+'/erpCarTireArchives/getTireByCarId?carId='+id+'&custId='+userid,
+				url: API+'/erpCarTireArchives/getTireByCarId?carId='+id+'&custId='+loadUserInfo.customer.id,
 				type: 'get',
 				dataType: 'json',
 				success:function(ret) {
 					var objkacha = ret.data.reverse();
 					var html = '';
-
-					for(var key in objkacha) {
+                    
+					for(var key = 0; key < objkacha.length;key ++) {
 							html += ' <tr>'+
 					 '                <td>'+(objkacha.length -key)+'</td>'+
 					 '                <td>'+(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)+'</td>'+
@@ -191,7 +188,7 @@
 					 '                <td>'+(objkacha[key].car_rim_type == null ? '' : objkacha[key].car_rim_type)+'</td>'+
 					 '            </tr>';
 						
-						
+						$('#car').html(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)
 					}
 					$("#list").html(html);
 								           		         		

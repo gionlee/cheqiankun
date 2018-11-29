@@ -78,7 +78,7 @@
                     <td>产权归属</td>
                     <td><input type="text" data-name="insProperty" class="layui-input"></td>
                     <td>保险公司</td>
-                    <td colspan="3"><input data-name="insuranceCompany" type="text" class="layui-input"></td>
+                    <td><input data-name="insuranceCompany" type="text" class="layui-input"></td>
                     <td>服务电话</td>
                     <td><input type="text" data-name="telephoneService" class="layui-input"></td>
                 </tr>
@@ -91,32 +91,40 @@
                     <td><input type="text" data-name="insurancepolicyno" class="layui-input"></td>
                     <td>投保日期</td>
                     <td><input type="text" data-name="insureDt" class="layui-input tbdate"></td>
-                    <td>失效日期</td>
-                    <td><input type="text" data-name="failureDt" class="layui-input sxdate"></td>
+                   
                 </tr>
                 <tr>
+                        <td>失效日期</td>
+                        <td><input type="text" data-name="failureDt" class="layui-input sxdate"></td>
                     <td>保费总额</td>
                     <td><input type="text" data-name="insPremium" class="layui-input"></td>
                     <td>交强险</td>
                     <td><input type="text" data-name="jiaoqiangxian" class="layui-input"></td>
-                    <td>司机保险</td>
-                    <td><input type="text" data-name="driversInsurance" class="layui-input"></td>
-                    <td>乘客保险</td>
-                    <td><input type="text" data-name="passengerInsurance" class="layui-input"></td>
-                    <td>三方责任</td>
-                    <td><input type="text" data-name="insLiability" class="layui-input"></td>
+                    <td>车辆损失</td>
+                    <td><input type="text" data-name="vehiclesLoss" class="layui-input"></td>
                 </tr>
                 <tr>
-                    <td>不计免赔</td>
-                    <td><input type="text" data-name="insDeductible" class="layui-input"></td>
-                    <td>车辆自燃</td>
-                    <td><input type="text" data-name="insBurning" class="layui-input"></td>
-                    <td>车辆盗抢</td>
-                    <td><input type="text" data-name="insRobbery" class="layui-input"></td>
-                    <td>车身刮痕</td>
-                    <td><input type="text" data-name="insScratch" class="layui-input"></td>
+                        
+                        <td>三方责任</td>
+                        <td><input type="text" data-name="insLiability" class="layui-input"></td>
+                    
                     <td>玻璃破碎</td>
                     <td><input type="text" data-name="insGlass" class="layui-input"></td>
+                    <td>司机保险</td>
+                        <td><input type="text" data-name="driversInsurance" class="layui-input"></td>
+                        <td>乘客保险</td>
+                        <td><input type="text" data-name="passengerInsurance" class="layui-input"></td>
+                </tr>
+                <tr>
+                        <td>车辆盗抢</td>
+                        <td><input type="text" data-name="insRobbery" class="layui-input"></td>
+                        <td>不计免赔</td>
+                        <td><input type="text" data-name="insDeductible" class="layui-input"></td>
+                        <td>车辆自燃</td>
+                        <td><input type="text" data-name="insBurning" class="layui-input"></td>
+                        
+                        <td>车身刮痕</td>
+                        <td><input type="text" data-name="insScratch" class="layui-input"></td>
                 </tr>
             </thead>
         </table>
@@ -153,7 +161,7 @@
     let datas = []
     // const API = 'http://7int69.natappfree.cc'
     $.ajax({
-        url: `${API}/erpInsurance/getInsuranceBycustIdPage?custId=1&?page=1&limit=20`,
+        url: `${API}/erpInsurance/getInsuranceBycustIdPage?custId=${loadUserInfo.customer.id}&?page=1&limit=20`,
         type: 'get',
         success: function (res) {
             let arr = res.data.records
@@ -166,24 +174,24 @@
                 str += `<tr class='title'>
                     <td>${arr.length - i}</td>
                     <td>${json.carNumber == null ? '' : json.carNumber}</td>
-                    <td></td>
+                    <td>${json.insProperty == null ? '' : json.insProperty}</td>
                     <td colspan="2">${json.insuranceCompany == null ? '' : json.insuranceCompany}</td>
-                    <td></td>
-                    <td></td>
+                    <td>${json.telephoneService == null ? '' : json.telephoneService}</td>
+                    <td>${json.insSalesman == null ? '' : json.insSalesman}</td>
                     <td>${json.contactTelephone == null ? '' : json.contactTelephone}</td>
-                    <td></td>
+                    <td>${json.insurancepolicyno == null ? '' : json.insurancepolicyno}</td>
                     <td>${json.insureDt == null ? '' : json.insureDt}</td>
-                    <td>${json.failureDt == null ? '' : json.failureDt}</td>
                     <td>${json.insPremium == null ? '' : json.insPremium}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${json.jiaoqiangxian == null ? '' : json.jiaoqiangxian}</td>
+                    <td>${json.vehiclesLoss == null ? '' : json.vehiclesLoss}</td>
+                    <td>${json.insLiability == null ? '' : json.insLiability}</td>
+                    <td>${json.insGlass == null ? '' : json.insGlass}</td>
+                    <td>${json.driversInsurance == null ? '' : json.driversInsurance}</td>
+                    <td>${json.passengerInsurance == null ? '' : json.passengerInsurance}</td>
+                    <td>${json.insRobbery == null ? '' : json.insRobbery}</td>
+                    <td>${json.insDeductible == null ? '' : json.insDeductible}</td>
+                    <td>${json.insBurning == null ? '' : json.insBurning}</td>
+                    <td>${json.insScratch == null ? '' : json.insScratch}</td>
                     <td><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="update(${i})">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick=deletes(${json.id})>删除</button></td>
                 </tr>`
             })
@@ -227,52 +235,68 @@
             <thead>
                 <tr>
                     <td>车辆牌号</td>
-                    <td><input type="text" data-name="carNumber" class="layui-input" value="${json.carNumber}"><input type="hidden" data-name="id" value="${json.id}"></td>
+                    <td><input type="text" data-name="carNumber" class="layui-input" value="${json.carNumber || ''}"><input type="hidden" data-name="id" value="${json.id}"></td>
                     <td>产权归属</td>
-                    <td><input type="text" data-name="insProperty" class="layui-input" value="${json.insProperty}"></td>
+                    <td><input type="text" data-name="insProperty" class="layui-input" value="${json.insProperty || ''}"></td>
                     <td>保险公司</td>
-                    <td colspan="3"><input data-name="insuranceCompany" type="text" class="layui-input" value="${json.insuranceCompany}"></td>
+                    <td><input data-name="insuranceCompany" type="text" class="layui-input" value="${json.insuranceCompany || ''}"></td>
                     <td>服务电话</td>
-                    <td><input type="text" data-name="telephoneService" class="layui-input" value="${json.telephoneService}"></td>
+                    <td><input type="text" data-name="telephoneService" class="layui-input" value="${json.telephoneService || ''}"></td>
                 </tr>
                 <tr>
                     <td>业务员</td>
-                    <td><input type="text" data-name="insSalesman" class="layui-input" value="${json.insSalesman}"></td>
+                    <td><input type="text" data-name="insSalesman" class="layui-input" value="${json.insSalesman || ''}"></td>
                     <td>联系电话</td>
-                    <td><input type="text" data-name="contactTelephone" class="layui-input" value="${json.contactTelephone}"></td>
+                    <td><input type="text" data-name="contactTelephone" class="layui-input" value="${json.contactTelephone || ''}"></td>
                     <td>保险单号</td>
-                    <td><input type="text" data-name="insurancepolicyno" class="layui-input" value="${json.insurancepolicyno}"></td>
+                    <td><input type="text" data-name="insurancepolicyno" class="layui-input" value="${json.insurancepolicyno || ''}"></td>
                     <td>投保日期</td>
-                    <td><input type="text" data-name="insureDt" class="layui-input tbdate" value="${json.insureDt}"></td>
-                    <td>失效日期</td>
-                    <td><input type="text" data-name="failureDt" class="layui-input sxdate" value="${json.failureDt}"></td>
+                    <td><input type="text" data-name="insureDt" class="layui-input tbdate${index}" value="${json.insureDt || ''}"></td>
+                   
                 </tr>
                 <tr>
+                        <td>失效日期</td>
+                    <td><input type="text" data-name="failureDt" class="layui-input sxdate${index}" value="${json.failureDt || ''}"></td>
                     <td>保费总额</td>
-                    <td><input type="text" data-name="insPremium" class="layui-input" value="${json.insPremium}"></td>
+                    <td><input type="text" data-name="insPremium" class="layui-input" value="${json.insPremium || ''}"></td>
                     <td>交强险</td>
-                    <td><input type="text" data-name="jiaoqiangxian" class="layui-input" value="${json.jiaoqiangxian}"></td>
-                    <td>司机保险</td>
-                    <td><input type="text" data-name="driversInsurance" class="layui-input" value="${json.driversInsurance}"></td>
+                    <td><input type="text" data-name="jiaoqiangxian" class="layui-input" value="${json.jiaoqiangxian || ''}"></td>
+                    <td>车辆损失</td>
+                    <td><input type="text" data-name="vehiclesLoss" class="layui-input" value="${json.vehiclesLoss || ''}"></td>
+                 </tr>   
+                <tr>
+                        <td>三方责任</td>
+                    <td><input type="text" data-name="insLiability" class="layui-input" value="${json.insLiability || ''}"></td>
+                    <td>玻璃破碎</td>
+                    <td><input type="text" data-name="insGlass" class="layui-input" value="${json.insGlass || ''}"></td>
+                        <td>司机保险</td>
+                    <td><input type="text" data-name="driversInsurance" class="layui-input" value="${json.driversInsurance || ''}"></td>
                     <td>乘客保险</td>
-                    <td><input type="text" data-name="passengerInsurance" class="layui-input" value="${json.passengerInsurance}"></td>
-                    <td>三方责任</td>
-                    <td><input type="text" data-name="insLiability" class="layui-input" value="${json.insLiability}"></td>
+                    <td><input type="text" data-name="passengerInsurance" class="layui-input" value="${json.passengerInsurance || ''}"></td>
+                    
                 </tr>
                 <tr>
+                        <td>车辆盗抢</td>
+                    <td><input type="text" data-name="insRobbery" class="layui-input" value="${json.insRobbery}"></td>
                     <td>不计免赔</td>
                     <td><input type="text" data-name="insDeductible" class="layui-input" value="${json.insDeductible}"></td>
                     <td>车辆自燃</td>
                     <td><input type="text" data-name="insBurning" class="layui-input" value="${json.insBurning}"></td>
-                    <td>车辆盗抢</td>
-                    <td><input type="text" data-name="insRobbery" class="layui-input" value="${json.insRobbery}"></td>
+                    
                     <td>车身刮痕</td>
                     <td><input type="text" data-name="insScratch" class="layui-input" value="${json.insScratch}"></td>
-                    <td>玻璃破碎</td>
-                    <td><input type="text" data-name="insGlass" class="layui-input" value="${json.insGlass}"></td>
+                   
                 </tr>
             </thead>
         </table>`)
+        layui.use('laydate',function () {
+            layui.laydate.render({
+                elem:`.tbdate${index}`
+            })
+            layui.laydate.render({
+                elem:`.sxdate${index}`
+            })
+        })
         layer.open({
             type: 1,
             content: $('.update'),

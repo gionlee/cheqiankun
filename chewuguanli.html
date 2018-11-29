@@ -148,7 +148,7 @@
             let str = ''
             $.each(res.data, function (i) {
                 let json = res.data[i]
-                str += `<tr>
+                str += `<tr class="cwgl">
                     <td><input type="text" data-name="supervisorName" class="layui-input" value="${json.supervisorName}"></td>
                     <td><input type="text" data-name="supervisorPhone" class="layui-input" value="${json.supervisorPhone}"></td>
                     <td><input type="text" data-name="personnelName" class="layui-input" value="${json.personnelName}"></td>
@@ -189,7 +189,7 @@
         let data = {
             pid:loadUserInfo.customer.id
         }
-        $('.cars input').each(function () {
+        $('.cwgl input').each(function () {
            data[$(this).data('name')]=$(this).val()
         })
         $.ajax({

@@ -424,7 +424,7 @@
 							<tbody>
 								<tr class="dtxx">
 									<td>
-										<input type="text" data-name="feedAddDate" lay-verify="date" value="2018-06-05" autocomplete="off" class="layui-input dttjsj">
+										<input type="text" data-name="feedAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input dttjsj">
 									</td>
 									<td colspan="10"><input data-name="feedContent" type="text" class="layui-input"></td>
 									<td><input data-name="feedAddPerson" type="text" class="layui-input dtxxlrr" readonly value=""></td>
@@ -1340,7 +1340,7 @@
 				data.cusOperateType = typeStr
 				data.cusServiceCom = loadUserInfo.customer.cusCode
 				data.cusServiceComs = loadUserInfo.customer.cusCode
-				console.log(data)
+				data.cusSupCompany = loadUserInfo.customer.cusCode
 				data.cusNature = $('.cusNature').val();
 				$.ajax({
 					url: `${API}/erpCustomer/inertOrUpdateCustomer`,
@@ -1366,13 +1366,12 @@
 				data[$(this).data('name')] = $(this).val()
 			})
 			data.customerId = custId
-			data.cusOperateType = typeStr
+			// data.cusOperateType = typeStr
 			$.ajax({
 				url: `${API}/erpCustomerNewfeed/inertOrUpdateCustNewfeed`,
 				type: 'post',
 				data: data,
 				success: function(res) {
-					custId = res.data.id
 					layer.msg('保存成功', {
 						time: 1000 //2秒关闭（如果不配置，默认是3秒）
 					}, function() {
@@ -1398,7 +1397,6 @@
 				type: 'get',
 				data: data,
 				success: function(res) {
-					custId = res.data.id
 					layer.msg('保存成功', {
 						time: 1000 //2秒关闭（如果不配置，默认是3秒）
 					}, function() {
@@ -1415,13 +1413,12 @@
 				data[$(this).data('name')] = $(this).val()
 			})
 			data.customerId = custId
-			// console.log(data, '333')
+			console.log(data, '333')
 			$.ajax({
 				url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
 				type: 'post',
 				data: data,
 				success: function(res) {
-					custId = res.data.id
 					layer.msg('保存成功', {
 						time: 1000 //2秒关闭（如果不配置，默认是3秒）
 					}, function() {
@@ -1470,7 +1467,6 @@
 
 			data.carOperateType = $('.carOperateType').val()
 			data.carUse = $('.carUse').val()
-			data.id = custId
 			data.customerId = custId
 			data.userId = loadUserInfo.user.id
 			data.carServiceCentre = $('.Ele_energy_type').val()
@@ -1479,7 +1475,6 @@
 				type: 'post',
 				data: data,
 				success: function(res) {
-					data.id = custId
 					selCar()
                 	layer.msg('保存成功！');
 				},
@@ -1493,7 +1488,7 @@
 		function saveWl() {
 
 			let data = {}
-			$('.ckgl input').each(function() {
+			$('.wlsm input').each(function() {
 				data[$(this).data('name')] = $(this).val()
 			})
 			data.customerId = custId
@@ -1504,7 +1499,6 @@
 				type: 'post',
 				data: data,
 				success: function(res) {
-					data.id = custId
                 	layer.msg('保存成功！');
 				}
 			})
@@ -1522,7 +1516,6 @@
 				type: 'post',
 				data: data,
 				success: function(res) {
-					data.id = custId
                	 	layer.msg('保存成功！');
 				}
 			})

@@ -1,6 +1,6 @@
-const API = 'http://120.79.205.40:3340'
+// const API = 'http://120.79.205.40:3340'
 // const API = 'http://192.168.1.2:3340' 
-// const API = 'http://192.168.1.6:3340'
+const API = 'http://192.168.1.6' 
 
 
 // 客户信息

@@ -110,32 +110,35 @@
 
 <body>
     <div class="wrap">
+        <div style="text-align:center;">
+
             <div class="search">
-                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
-                </div>
-                <div class="layui-form">
-                    <div >
-                        <div >
-                            <select >
-                                <option value="">请选时段</option>
-                                <option value="0">一季度</option>
-                                <option value="1">二季度</option>
-                                <option value="2">三季度</option>
-                                <option value="3">四季度</option>
-                                <option value="4">上半年</option>
-                                <option value="5">下半年</option>
-                                <option value="6">本年度</option>
-                                <option value="7">上年度</option>
-                            </select>
-                        </div>
+                <input class="layui-input ksdate" type="text" placeholder="开始日期">
+            </div>
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <select lay-filter="datesel" name="quiz2">
+                            <option value="">请选时段</option>
+                            <option value="0">一季度</option>
+                            <option value="1">二季度</option>
+                            <option value="2">三季度</option>
+                            <option value="3">四季度</option>
+                            <option value="4">上半年</option>
+                            <option value="5">下半年</option>
+                            <option value="6">本年度</option>
+                            <option value="7">上年度</option>
+                        </select>
                     </div>
                 </div>
-                <div class="search">
-                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
-                </div>
-                <div class="btn">
-                    <button class="layui-btn layui-btn-normal">查询</button>
-                </div>
+            </div>
+            <div class="search">
+                <input class="layui-input jsdate" type="text" placeholder="结束日期">
+            </div>
+            <div class="search">
+                <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+            </div>
+        </div>
 
         <div class="layui-btn layui-btn-sm" onclick="add()">添加</div>
         <table class="layui-table">
@@ -169,10 +172,10 @@
 
                 </tr>
                 <tr>
-                    <th>0</th>
-                    <th>0</th>
-                    <th>0</th>
-                    <th>0</th>
+                    <th class="qprice">0</th>
+                    <th class="cprice">0</th>
+                    <th class="dprice">0</th>
+                    <th class="zprice">0</th>
                 </tr>
             </thead>
             <tbody class="jiayou">
@@ -201,36 +204,118 @@
                     <td><input type="text" data-name="refDriver" class="layui-input" value=""></td>
                     <td><input type="text" data-name="refGasoline" class="layui-input" value=""></td>
                     <td><input type="text" data-name="refDiesel" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="refTotal" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refPrice" class="layui-input" value=""></td>
                 </tr>
             </tbody>
         </table>
     </div>
 </body>
 <script>
+layui.use('laydate', function () {
+        var laydate = layui.laydate;
 
-    $.ajax({
-        url: `${API}/erpRefueling/getrefuelingIdbPage?custId=${loadUserInfo.customer.id}&page=1&limit=20`,
-        type: 'get',
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+</script>
+<script>
+
+    function sel () {
+        let data = {
+            custId:loadUserInfo.customer.id,
+            startTime:$('.ksdate').val(),
+            endTime:$('.jsdate').val()
+        }
+        $.ajax({
+        url: `${API}/erpRefueling/getrefuelingIdbPage`,
+        type: 'post',
+        data:data,
         success: function (res) {
             let str = ''
-            $.each(res.data.records, function (i) {
-                let json = res.data.records[i]
-                refPrice = Number(json.refDiesel ? json.refDiesel : json.refGasoline) * json.refTotal
-                console.log(refPrice)
-                str += `<tr><td>${i + 1}</td>
+            let arr = res.data.reverse()
+            let qprice = 0
+            let cprice = 0
+            let dprice = 0
+            let zprice = 0
+            $.each(arr,function (i,json) {
+                if (json.refGasoline) {
+                    qprice+= json.refGasoline
+                }
+                if (json.refDiesel) {
+                    cprice+= json.refDiesel
+                }
+                if (json.refPrice) {
+                    dprice+= json.refPrice
+                }
+                if (json.refTotal) {
+                    zprice+= json.refTotal
+                }
+                str += `<tr><td>${arr.length - i }</td>
                 <td>${json.refDt == null ? '' : json.refDt}</td>
                 <td>${json.refCarNumber == null ? '' : json.refCarNumber}</td>
                 <td>${json.refDriver == null ? '' : json.refDriver}</td>
                 <td>${json.refGasoline == null ? '' : json.refGasoline}</td>
                 <td>${json.refDiesel == null ? '' : json.refDiesel}</td>
+                <td>${json.refPrice == null ? '' : json.refPrice}</td>
                 <td>${json.refTotal == null ? '' : json.refTotal}</td>
-                <td>${refPrice.toFixed(2)}</td>
                 </tr>`
             })
-            $('.jiayou').append(str)
+            $('.jiayou').html(str)
+            $('.qprice').html(qprice.toFixed(2))
+            $('.cprice').html(cprice.toFixed(2))
+            $('.dprice').html(dprice.toFixed(2))
+            $('.zprice').html(zprice.toFixed(2))
         }
     })
+    
+    }
+    sel()
     let layer = ''
     layui.use('layer',function () {
         layer = layui.layer
