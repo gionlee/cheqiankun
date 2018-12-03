@@ -696,7 +696,7 @@
 										</td>
 										<td>关联车辆</td>
 										<td colspan="2">
-											<input type="text" data-name="carShiBieNumber" class="layui-input carInfos" value="">
+											<input type="text" data-name="" class="layui-input carInfos" value="">
 										</td>
 									</tr>
 									<tr>
@@ -1734,17 +1734,17 @@
                     </tr>
                     <tr>
 						<td colspan="3" class="layui-form">`
-							if(json.carFrontAxle == 'false') {
+							if(json.carFrontAxle) {
                                         str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" >`
                                     } else {
                                         str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" checked >`
                                     }
-                                    if(json.carRearAxle == 'false') {
+                                    if(json.carRearAxle) {
                                         str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升" >`
                                     } else {
                                         str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升"checked >`
                                     }
-                                    if(json.carTurn == 'false') {
+                                    if(json.carTurn) {
                                         str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向" >`
                                     } else {
                                         str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向" checked >`
@@ -1755,7 +1755,7 @@
                                     </td>
                                     <td>关联车辆</td>
                                     <td colspan="2">
-                                        <input type="text" data-name="glCarId" class="layui-input carInfos" value="${json.carShiBieNumber == null ? '' : json.carShiBieNumber}">
+                                        <input type="text" data-name="glCarId" class="layui-input carInfos" value="${json.glCarId == null ? '' : json.glCarId}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -1787,7 +1787,7 @@
                             </tbody>
                         </table>`
 			$('.winbody').html(str)
-			form.render()
+			setSelect()
 			$('.carDrive').val(json.carDrive) // 驱动方式
 			$('.carWheel').val(json.carWheel) // 车轴轮数
 			$('.carLoad').val(json.carLoad)
@@ -1833,6 +1833,7 @@
 					elem: '.cardjrq'
 				})
 			})
+			layui.form.render()
 			layui.use('layer', function() {
 				layui.layer.open({
 					type: 1,
