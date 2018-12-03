@@ -562,9 +562,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="layui-form">
-                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" checked="">
-                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" checked="">
-                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" checked="">
+                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" >
+                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" >
+                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" >
                                     </td>
                                     <td>产权所有</td>
                                     <td colspan="5">
@@ -572,7 +572,7 @@
                                     </td>
                                     <td>关联车辆</td>
                                     <td colspan="2">
-                                        <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
+                                        <input type="text" data-name="glCarId" class="layui-input carInfos">
                                     </td>
                                 </tr>
                                 <tr>
@@ -744,7 +744,7 @@
                     <tr>
 						<td>识别号</td>
                         <td colspan="2">
-                            <input type="text" data-name="carEngine" class="layui-input carInfos">
+                            <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
                         </td>
 						<td>变速箱号</td>
 						<td colspan="2">
@@ -881,13 +881,13 @@
                         </td>
                         <td>关联车辆</td>
                         <td colspan="2">
-                            <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
+                            <input type="text" data-name="glCarId" class="layui-input carInfos">
                         </td>
                     </tr>
                     <tr>
                         <td>运营日期</td>
                         <td colspan="2">
-                            <input type="text" data-name="carOperateDate" class="layui-input caryyrq carInfos">
+                            <input type="text" data-name="carOperateDate" class="layui-input caryyrq2 carInfos">
                         </td>
                         <td>运营状态</td>
                         <td colspan=""><select name="" id="Ele_operate_states" class="carOperateType">
@@ -915,6 +915,7 @@
         </div>
 </body>
 <script>
+	var flag_car = true; // 是否是新增
     function getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
         var r = window.location.search.substr(1).match(reg); //匹配目标参数
@@ -940,6 +941,9 @@
         })
         laydate.render({
             elem: '.caryyrq'
+        })
+        laydate.render({
+            elem: '.caryyrq2'
         })
         laydate.render({
             elem: '.dttjsj'
@@ -1233,46 +1237,51 @@
         })
     }
     // 保存车辆信息
-    function saveCarInfo(i) {
+    function saveCarInfo(i,cls) {
         let data = {}
 
-        $('.carInfos').each(function () {
+        $(`${cls} .carInfos`).each(function () {
             data[$(this).data('name')] = $(this).val()
         })
-        data.carDrive = $('.carDrive').val() // 驱动方式
-        data.carWheel = $('.carWheel').val() // 车轴轮数
-        data.carLoad = $('.carLoad').val()
-        data.carColor1 = $('.carColor1').val()
-        data.carColor2 = $('.carColor2').val()
-        data.carType1 = $('.carType1').val()
-        data.carType2 = $('.carType2').val()
-        data.carRimType = $('.carRimType').val()
-        data.carBrakingType = $('.carBrakingType').val()
-        data.carSuspensionType = $('.carSuspensionType').val()
-        data.carOperationType = $('.carOperationType').val()
-        data.carOperateType = $('.carOperateType').val()
-        data.carUse = $('.carUse').val()
+        data.carDrive = $(`${cls} .carDrive`).val() // 驱动方式
+        data.carWheel = $(`${cls} .carWheel`).val() // 车轴轮数
+        data.carLoad = $(`${cls} .carLoad`).val()
+        data.carColor1 = $(`${cls} .carColor1`).val()
+        data.carColor2 = $(`${cls} .carColor2`).val()
+        data.carType1 = $(`${cls} .carType1`).val()
+        data.carType2 = $(`${cls} .carType2`).val()
+        data.carRimType = $(`${cls} .carRimType`).val()
+        data.carBrakingType = $(`${cls} .carBrakingType`).val()
+        data.carSuspensionType = $(`${cls} .carSuspensionType`).val()
+        data.carOperationType = $(`${cls} .carOperationType`).val()
+        data.carOperateType = $(`${cls} .carOperateType`).val()
+        data.carUse = $(`${cls} .carUse`).val()
         data.customerId = custId
-        data.carServiceCentre = $('.carServiceCentre').val()
+        data.carServiceCentre = $(`${cls} .carServiceCentre`).val()
         data.userId = loadUserInfo.user.id
-        if (i) {
-            data.id = ''
+        console.log($(`.qqts_${i}`).val())
+        debugger
+        if (i < 0) {
+            delete data.id
+        } else {
+        	data.id = i;
         }
-        $.ajax({
-            url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if(res.code == 2) {
-                    alert('车辆已存在！')
-                }
-                if(res.code == 0) {
-                    layer.msg('保存成功！')
-                    selCar()
-                }
-                
-            }
-        })
+
+        	$.ajax({
+	            url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
+	            type: 'post',
+	            data: data,
+	            success: function (res) {
+	                if(res.code == 2) {
+	                    alert('车辆已存在！')
+	                }
+	                if(res.code == 0) {
+	                    layer.msg('保存成功！')
+	                    selCar()
+	                }
+	                
+	            }
+	        })
 
     }
     // 新增物料
@@ -1677,7 +1686,7 @@
 
     function selWl() {
         $.ajax({
-            url: `${API}//erpCustomerLimit/getcustLimitByCustId?custId=${custId}`,
+            url: `${API}/erpCustomerLimit/getcustLimitByCustId?custId=${custId}`,
             type: 'get',
             success: function (res) {
                 let arr = res.data.reverse()
@@ -1846,7 +1855,7 @@
                 content: $('.addbody'),
                 btn: ['保存', '取消'],
                 yes: function (index) {
-                    saveCarInfo(true)
+                    saveCarInfo(-10,'.addbody')
                     layui.layer.close(index)
                 }
             })
@@ -1855,9 +1864,8 @@
     // 修改车辆信息
     function seeCar(index) {
         let json = carList[index]
-        console.log(json);
-        $('.winbody').html(
-            `<table class="layui-table">
+        flag_car = false;
+        let str = `<table class="layui-table">
                             <tbody>
                                 <tr>
                                     <td>登记日期 <input type="hidden" class="carInfos" data-name="id" value="${json.id}"></td>
@@ -2022,19 +2030,29 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="3" class="layui-form">
-                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" checked="">
-                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" checked="">
-                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" checked="">
-                                    </td>
-                                    <td>产权所有</td>
+                                <tr><td colspan="3" class="layui-form tabs" >`
+                                    if(json.carFrontAxle == 'false') {
+                                        str += `<input type="checkbox"  class="qqts_${index}" name="" lay-skin="primary" title="前桥提升" >`
+                                    } else {
+                                        str += `<input type="checkbox"  class="qqts_${index}" name="" lay-skin="primary" title="前桥提升" checked >`
+                                    }
+                                    if(json.carRearAxle == 'false') {
+                                        str += `   <input type="checkbox"  class="hqts_${index}" name="" lay-skin="primary" title="后桥提升" >`
+                                    } else {
+                                        str += `   <input type="checkbox"  class="hqts_${index}" name="" lay-skin="primary" title="后桥提升"checked >`
+                                    }
+                                    if(json.carTurn == 'false') {
+                                        str += ` <input type="checkbox"  class="zdzx_${index}" name="" lay-skin="primary" title="随动转向" >`
+                                    } else {
+                                        str += ` <input type="checkbox"  class="zdzx_${index}" name="" lay-skin="primary" title="随动转向" checked >`
+                                    }
+                                    str += ` </td><td>产权所有</td>
                                     <td colspan="5">
                                         <input type="text" data-name="chanQuan" class="layui-input carInfos" value="${json.chanQuan == null ? '' : json.chanQuan}">
                                     </td>
                                     <td>关联车辆</td>
                                     <td colspan="2">
-                                        <input type="text" data-name="carShiBieNumber" class="layui-input carInfos" value="${json.carShiBieNumber == null ? '' : json.carShiBieNumber}">
+                                        <input type="text" data-name="glCarId" class="layui-input carInfos" value="${json.carShiBieNumber == null ? '' : json.carShiBieNumber}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -2065,7 +2083,7 @@
                                 </tr>
                             </tbody>
                         </table>`
-        )
+        $('.winbody').html(str)
         setSelect()
         $('.carDrive').val(json.carDrive) // 驱动方式
         $('.carWheel').val(json.carWheel) // 车轴轮数
@@ -2086,7 +2104,7 @@
         layui.use('laydate', function () {
             var laydate = layui.laydate;
             laydate.render({
-                elem: `.cardjrq_${index}`
+                elem: `.dj_${index}`
             })
             laydate.render({
                 elem: `.sc_${index}`
@@ -2111,11 +2129,11 @@
                 content: $('.winbody'),
                 btn: ['保存', '另存', '取消'],
                 yes: function (index) {
-                    saveCarInfo()
+                    saveCarInfo(json.id,'.winbody')
                     layui.layer.close(index)
                 },
                 btn2: function (index) {
-                    saveCarInfo(true)
+                    saveCarInfo(-10,'.winbody')
                     layer.close(index)
                 }
             })
@@ -2314,7 +2332,7 @@
             type: 'get',
             data: data,
             success: function (res) {
-                layer.msg('删除成功！');
+                layer.msg('保存成功！');
                 selLxr()
                 // window.location.reload()
             }

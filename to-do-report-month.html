@@ -386,7 +386,7 @@
 						<textarea name="" rows="" cols=""></textarea>
 					</div>
 					<div style="text-align:center;margin: 20px auto;">
-						<div class="layui-btn layui-btn-sm" onclick="">提交</div>
+						<div class="layui-btn layui-btn-sm" onclick="uploadData()">提交</div>
 					</div>
 
 				</div>
@@ -495,15 +495,15 @@
 				$.each(listRepair, function(i,item) {
 					listRepairStr += `<tr>
 										<td>${item.name}</td>
-										<td>${item.Price}</td>
-										<td>${item.DynamicBalance}</td>
-										<td>${item.Tyre}</td>
-										<td>${item.Inner}</td>
-										<td>${item.Disassembly}</td>
-										<td>${item.Transposition}</td>
-										<td>${item.Refurbished}</td>
-										<td>${item.Rescue}</td>
-										<td>${item.Other}</td>
+										<td>${item.price}</td>
+										<td>${item.dynamicBalance}</td>
+										<td>${item.tyre}</td>
+										<td>${item.inner}</td>
+										<td>${item.disassembly}</td>
+										<td>${item.transposition}</td>
+										<td>${item.refurbished}</td>
+										<td>${item.rescue}</td>
+										<td>${item.other}</td>
 									</tr>`;
 				});
 				$('.listRepair').html(listRepairStr);
@@ -511,15 +511,15 @@
 				$.each(listMaintenance, function(i,item) {
 					listMaintenanceStr += `<tr>
 											<td>${item.name}</td>
-											<td>${item.Price}</td>
-											<td>${item.Pressure}</td>
-											<td>${item.ForeignBody}</td>
-											<td>${item.SmallHole}</td>
-											<td>${item.Change}</td>
-											<td>${item.Safety}</td>
-											<td>${item.Tread}</td>
-											<td>${item.Archives}</td>
-											<td>${item.Other}</td>
+											<td>${item.price}</td>
+											<td>${item.pressure}</td>
+											<td>${item.foreignBody}</td>
+											<td>${item.smallHole}</td>
+											<td>${item.change}</td>
+											<td>${item.safety}</td>
+											<td>${item.tread}</td>
+											<td>${item.archives}</td>
+											<td>${item.other}</td>
 										</tr>`;
 				});
 				$('.listMaintenance').html(listMaintenanceStr);
@@ -592,21 +592,23 @@
 				// 1、更新/购置
 				$.each(listReportChild, function(i,item) {
 					listReportChildStr += `<tr>
-												<td><input type="text" class="layui-input" value="${item.repName}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repTire}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repRim}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repInner}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repSteamFilter}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repOil}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repAirFilter}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repAntifreeze}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repGearil}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repElsedata}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repName || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repTire || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repRim || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repInner || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repSteamfilter || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repOil || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repAirfilter || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repAntifreeze || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repGearil || ''}" /></td>
+												<td><input type="text" class="layui-input" value="${item.repElsedata || ''}" /></td>
 											</tr>`;
 				});
 				$('.listReportChild').html(listReportChildStr);
 			}
 		});
+		
+		
 	</script>
 
 </html>

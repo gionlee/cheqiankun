@@ -188,17 +188,15 @@
                         <td><input type="text" class="layui-input data-name="workDt" dddate" value="${json.workDt}"></td>
                         <td><input type="text" class="layui-input" data-name="sheetId" value="${json.sheetId}"></td>
                         <td>
-                                <select class="layui-form selects" style="height:30px;"  lay-verify="">
-                        <option value="免费">免费</option>
-                        <option value="银行支票">银行支票</option>
-                        <option value="网银电汇">网银电汇</option>
-                        <option value="银行承兑">银行承兑</option>
-                        <option value="现金付款">现金付款</option>
-                        <option value="应付账款">应付账款</option>
-                        <option value="预付账款">预付账款</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <select class="layui-form selects" style="height:30px;" value="${json.invoiceType}" data-name="invoiceType" lay-verify="">
+		                        <option value="免费">免费</option>
+		                        <option value="银行支票">银行支票</option>
+		                        <option value="网银电汇">网银电汇</option>
+		                        <option value="银行承兑">银行承兑</option>
+		                        <option value="现金付款">现金付款</option>
+		                        <option value="应付账款">应付账款</option>
+		                        <option value="预付账款">预付账款</option>
+							</select>
                         </td>
                         <td><input type="text" class="layui-input" data-name="workAttn" value="${json.workAttn}"></td>
                         <td><input type="text" class="layui-input" data-name="totalMoney" value="${json.totalMoney}"></td>`
@@ -220,14 +218,14 @@
                         <td><input type="text" data-name="materielPrice" class="layui-input" value="${n.materielPrice}"></td>
                         <td><input type="text" data-name="materielTotal" class="layui-input" value="${n.materielTotal}"></td>
                         <td>
-                                <select class="layui-form selects_${i}" style="height:30px;"  lay-verify="">
-                        <option value="无发票">无发票</option>
-                        <option value="商品普票">商品普票</option>
-                        <option value="商品增值">商品增值</option>
-                        <option value="服务普票">服务普票</option>
-                        <option value="服务增值">服务增值</option>
-                        <option value="运输发票">运输发票</option>
-                                    </select>
+                            <select class="layui-form selects_${i}" style="height:30px;" value="${n.invoiceType}" data-name="invoiceType" lay-verify="">
+		                        <option value="无发票">无发票</option>
+		                        <option value="商品普票">商品普票</option>
+		                        <option value="商品增值">商品增值</option>
+		                        <option value="服务普票">服务普票</option>
+		                        <option value="服务增值">服务增值</option>
+		                        <option value="运输发票">运输发票</option>
+                            </select>
                         </td>
                         <td><input type="text" data-name="materielDiscount" class="layui-input" value="${n.materielDiscount}"></td>
                         <td>
@@ -292,7 +290,7 @@
                     <td><input type="number" data-name="materielPrice" class="layui-input" value=""></td>
                     <td><input type="number" data-name="materielTotal" class="layui-input" value=""></td>
                     <td>
-                            <select class="layui-form selects_" style="height:30px;"  lay-verify="">
+                            <select class="layui-form selects_" data-name="invoiceType" style="height:30px;"  lay-verify="">
                     <option value="无发票">无发票</option>
                     <option value="商品普票">商品普票</option>
                     <option value="商品增值">商品增值</option>
@@ -315,18 +313,26 @@
         let data = {}
         data.id = Number(data.id)
         data.clientsId = Number(data.clientsId)
-        if (index) {
+        if (index || index == 0) {
             $(`.lz${index} input`).each(function (i, n) {
                 data[$(this).attr('data-name')] = $(this).val()
             })
+            $(`.lz${index} select`).each(function (i, n) {
+                json[$(this).attr('data-name')] = $(this).val()
+            })
             json.materiels[index] = data
+            console.log(json)
         } else {
-
             $(`.ddlist input`).each(function (i, n) {
                 data[$(this).attr('data-name')] = $(this).val()
             })
+            
+            $(`.ddlist select`).each(function (i, n) {
+                json[$(this).attr('data-name')] = $(this).val()
+            })
+            console.log(json)
         }
-        json.materiels.push(data)
+        console.log(json)
         $.ajax({
             url: `${API}/erpClients/inertOrUpdateClients`,
             type: 'post',

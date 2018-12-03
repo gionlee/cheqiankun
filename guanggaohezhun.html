@@ -100,7 +100,7 @@
 <body>
     <div class="wrap">
         <div>显示时长： <input type="number" style="width:60px;display: inline-block;" class="layui-input" value="1" /> <a
-                class="layui-btn layui-btn-sm">保存</a></div>
+                class="layui-btn layui-btn-sm" onclick="bao()">保存</a></div>
         <table class="layui-table">
             <thead>
                 <tr>
@@ -359,5 +359,9 @@ let json = {}
                     })
             }
         })
+    }
+    
+    function bao(){
+    	layer.msg('保存成功！')
     }
 </script>

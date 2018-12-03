@@ -761,10 +761,11 @@
         $('.trailerPlate').val(sessionStorage.gcar)
     }
     let saleList = []
+    let carNum = sessionStorage.pcar
     //  获取商品列表
     function selSaleList() {
         $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuShangPinLieBiao?carPai=津AW8838`,
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuShangPinLieBiao?carPai=${carNum}`,
             type: 'get',
             success: function (res) {
                 console.log(res)
@@ -965,7 +966,7 @@
     // 物料维修查询
     function wlList() {
         $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXiu?carPai=苏D23186`,
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXiu?carPai=${carNum}`,
             type: 'get',
             success: function (res) {
                 wwcList = res.data.weiwancheng
@@ -1011,12 +1012,23 @@
     // 车辆维修查询
     function selCar() {
         $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu//xiaoshouweixiuCheLiangWeiXiu?carPai=津AW8838`,
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuCheLiangWeiXiu?carPai=${carNum}`,
             type: 'get',
             success: function (res) {
                 let arr = res.data
                 let str = ''
-                let strxq = ''
+                let strxq = `<tr id="clwx">
+                    <td><input type="text" class="layui-input" data-name="garageProject" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairProject" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairMode" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="money" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
+                    <td><div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div></td>
+                </tr>`
                 $.each(arr, function (i, n) {
                     str +=
                         `<tr>
@@ -1047,7 +1059,7 @@
                         </tr>`
                 })
                 $('.clwx').append(str)
-                $('.clwxxq').append(strxq)
+                $('.clwxxq').html(strxq)
             }
         })
     }
@@ -1154,12 +1166,17 @@
         $('#clwx input').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
+        data.carPai = data.carNum
         $.ajax({
             url:`${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
             type:'post',
             data:data,
             success: function (res) {
-                console.log(res,'222')
+                if(res.code == 0) {
+                    layer.msg('保存成功!')
+                    selCar()
+                }
+                
             }
         })
     }
@@ -1170,9 +1187,7 @@
             data[$(this).data('name')] = $(this).val()
         })
         data.pid = $('.lzhcmx select').val()
-        console.log(data,'666')
     }
-
     function saveOne(bol) {
         let data = {}
         $('.saveOne input').each(function () {
@@ -1261,6 +1276,7 @@
         })
         data.orderId = '1'
         data.warehouseId = '1'
+        
         $.ajax({
             url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
             type: 'post',

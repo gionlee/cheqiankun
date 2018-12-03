@@ -201,11 +201,10 @@
         $('.dylist').show()
     }
     $.ajax({
-        url: `${API}/erpContract/getContractBycustIdPage?custId=${loadUserInfo.customer.id}`,
+        url: `${API}/erpContract/getContractBycustIdList?custId=${loadUserInfo.customer.id}`,
         type: 'get',
         success: function (res) {
-            console.log(res)
-            let arr = res.data.records
+            let arr = res.data.reverse()
             let str = ''
             $.each(arr, function (i) {
                 let json = arr[i]
@@ -280,6 +279,177 @@
     // 新增
     function add() {
         window.location.href = './hetongxieyixinzeng.html'
+    }
+
+
+    let osCls
+    //  查找大类
+    function showLv1(show, cla) {
+        osCls = cla
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTop`,
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arrs = res.data
+                $.each(arrs, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+                })
+                $('.hover-show').html(str)
+                if (show) {
+                    $('.hover-show').show()
+                }
+            }
+        })
+    }
+    // 查找品名
+    function showLv2(zid, _this) {
+        $(`.hover-show .list-2`).html('')
+        aiZid = zid
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找规格
+    function showLv3(zid, _this) {
+        $(`.hover-show .list-3`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找品牌
+    function showLv4(zid, _this) {
+        $(`.hover-show .list-4`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找型号
+    function showLv5(zid, _this) {
+        $(`.hover-show .list-5`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv6(zid, _this) {
+        $(`.hover-show .list-6`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                console.log(res)
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找
+    function showLv7(zid, _this) {
+        $(`.hover-show .list-7`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv8(zid, _this) {
+        $(`.hover-show .list-8`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    $(document).on('click', function () {
+        $('.hover-show').hide()
+    })
+    function setWlVal(_this) {
+        $(`.${osCls} .materielUnit`).val($(_this).text())
+        $(`.${osCls} .materielPlace`).val($(_this).parents('.list-8').prev().text())
+        $(`.${osCls} .materielState`).val($(_this).parents('.list-7').prev().text())
+        $(`.${osCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+        $(`.${osCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+        $(`.${osCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+        $(`.${osCls} .materielName`).val($(_this).parents('.list-3').prev().text())
     }
 </script>
 

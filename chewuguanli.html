@@ -178,13 +178,14 @@
                     <td><input class="layui-input" data-name="driverBPhone" value="${json.driverBPhone == null ? '' : json.driverBPhone}"></td>
                     <td>
                         <div class="layui-btn layui-btn-xs" onclick="saveList(${i},${json.id})">保存</div>
-                        <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="dele(${json.id})">删除</div>
+                        
                     </td>
                 </tr>`
             })
             $('.lists').html(str)
         }
     })
+    //<div class="layui-btn layui-btn-xs layui-btn-danger" onclick="dele(${json.id})">删除</div>
     function save() {
         let data = {
             pid:loadUserInfo.customer.id

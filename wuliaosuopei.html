@@ -486,11 +486,12 @@
 			    			businessManagger: $('.businessManagger').val(), 			// 业务经理
 			    			createBy: $('.createBy').val(),								// 填表人
 			    			masterId: imgList.toString(), 								// 连接
-			    			type: 1, 													// 1、质量理赔  2、物料索赔
+			    			type: 2, 													// 1、质量理赔  2、物料索赔
                             custId:loadUserInfo.user.id
                         },
 			    		success: function(res){
-			    			
+			    			location.reload();
+			    			layer.close(index);
 			    		},
 			    		
 			    	});

@@ -345,11 +345,10 @@
     layui.use('layer',function () {
         layer = layui.layer
     })
-    let pid = getUrlParam('id');
+    let id = getUrlParam('id');
     let xyxxId = 0
-    let id = 0
     $.ajax({
-        url: `${API}/erpContract/getContractById?contractId=${pid}`,
+        url: `${API}/erpContract/getContractById?contractId=${id}`,
         type: 'get',
         success: function (res) {
             console.log(res)
@@ -359,7 +358,7 @@
                 <td>协议名称</td>
                 <td colspan="4"><input type="text" class="layui-input" data-name="conName" value="${json.conName == null ? '' : json.conName}"></td>
                 <td>协议编码</td>
-                <td colspan="4"><input type="text" class="layui-input" data-name="conCode" value="${json.conCode == null ? '' : json.conCode}"></td>
+                <td colspan="4"><input type="text" class="layui-input" data-name="conCode" readonly value="${json.conCode == null ? '' : json.conCode}"></td>
             </tr>
             <td>协议文本</td>
             <td colspan="9"><textarea name="desc" placeholder="请输入内容" data-name="conText" class="layui-textarea">${json.conText == null ? '' : json.conText}</textarea></td>`
@@ -378,7 +377,7 @@
     let wxwhid = 0
     function selWhwx() {
         $.ajax({
-            url: `${API}/ErpContractRepair/getRepairtByConId?conId=${pid}`,
+            url: `${API}/ErpContractRepair/getRepairtByConId?contractId=${id}`,
             type: 'get',
             success: function (res) {
                 $('.wxwhjg').html('')
@@ -475,7 +474,7 @@
         datas.repUnit = $(`.select_${index}`).val()
         datas.repName = $(`.jcwhlist_${index}`).val()
         $.ajax({
-            url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}`,
+            url: `${API}/ErpContractRepair/inertOrUpdateRepair?contractId=${contractId}`,
             type: 'get',
             data: datas,
             success: function (res) {
@@ -495,7 +494,7 @@
         datas.repUnit = $(`.select_${index}`).val()
         datas.repName = $(`.wxwh_${index} select`).val()
         $.ajax({
-            url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}&id=${id}`,
+            url: `${API}/ErpContractRepair/inertOrUpdateRepair?contractId=${id}`,
             type: 'get',
             data: datas,
             success: function (res) {
@@ -507,7 +506,7 @@
         })
     }
     $.ajax({
-        url: `${API}/erpContractCommodity/getCommodityById?contractId=${pid}`,
+        url: `${API}/erpContractCommodity/getCommodityById?contractId=${id}`,
         type: 'get',
         success: function (res) {
             let str = ''
@@ -588,7 +587,7 @@
         })
         url += `&comCurrency=${$(tags).val()}`
         $.ajax({
-            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=${pid}${url}`,
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?materielId=${pid}${url}&contractId=${id}`,
             type: 'get',
             success: function (res) {
                 layer.msg('保存成功！')
@@ -608,7 +607,7 @@
         })
         url += `&comCurrency=${$(tags).val()}`
         $.ajax({
-            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=${pid}${url}`,
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?${url}&contractId=${id}`,
             type: 'get',
             success: function (res) {
                 layer.msg('保存成功！')
@@ -649,7 +648,7 @@
         url += `&conText=${$('.xyxx textarea').val()}`
         console.log(url)
         $.ajax({
-            url: `${API}/erpContract/inertOrUpdateContract?customerId=${xyxxId}&id=${pid}${url}`,
+            url: `${API}/erpContract/inertOrUpdateContract?customerId=${xyxxId}&${url}&contractId=${contractId}`,
             type: 'get',
             success: function (res) {
                 console.log(res)
@@ -702,7 +701,7 @@
     // 积分消费
     function selectJfxf() {
         $.ajax({
-            url: `${API}/erpContractIntegral/getIntegraltByConId?conId=${pid}`,
+            url: `${API}/erpContractIntegral/getIntegraltByConId?contractId=${id}`,
             type: 'get',
             success: function (res) {
                 let arr = []
@@ -756,7 +755,7 @@
             data[$(this).data('name')] = $(this).val()
         })
         $.ajax({
-            url:`${API}/erpContractIntegral/inertOrUpdateIntegral?pid=${loadUserInfo.customer.id}&id=${id}`,
+            url:`${API}/erpContractIntegral/inertOrUpdateIntegral?pid=${loadUserInfo.customer.id}&contractId=${id}`,
             type:'post',
             data:data,
             success: function (res) {
@@ -771,7 +770,7 @@
     let otherId = ''
     let otherPid = ''
     $.ajax({
-        url: `${API}/erpContractComprehensive/getComprehensivetByConId?conId=1`,
+        url: `${API}/erpContractComprehensive/getComprehensivetByConId?contractId=${id}`,
         type: 'get',
         success: function (res) {
             let json = res.data
@@ -843,8 +842,6 @@
     // 其他 保存
     function otherSave() {
         let data = {}
-        data.id = otherId
-        data.pid = otherPid
         data.finReportStart = $('.ksjs').val()
         data.finReportEnd = $('.jsjs').val()
         if ($('.workReport').attr('checked')) {
@@ -908,7 +905,7 @@
         }
         data.days = $('.nums').val()
         $.ajax({
-            url: `${API}/erpContractComprehensive/inertOrUpdateComprehensive`,
+            url: `${API}/erpContractComprehensive/inertOrUpdateComprehensive?contractId=${contractId}`,
             type: 'post',
             data: data,
             success: function (res) {

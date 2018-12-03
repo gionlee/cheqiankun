@@ -157,7 +157,7 @@
 <script src="./js/Global.js"></script>
 <script>
     $.ajax({
-        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=1&startDate=1&endDate=1`,
+        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=${loadUserInfo.customer.id}&startDate=1&endDate=1`,
         type: 'post',
         success: function (res) {
             let str = ''
