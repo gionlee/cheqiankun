@@ -146,8 +146,7 @@
         success: function (res) {
             console.log(res)
             let str = ''
-            $.each(res.data, function (i) {
-                let json = res.data[i]
+            $.each(res.data.reverse(), function (i,json) {
                 str += `<tr class="cwgl">
                     <td><input type="text" data-name="supervisorName" class="layui-input" value="${json.supervisorName}"></td>
                     <td><input type="text" data-name="supervisorPhone" class="layui-input" value="${json.supervisorPhone}"></td>
@@ -166,10 +165,9 @@
         type: 'get',
         success: function (res) {
             let str = ''
-            $.each(res.data, function (i) {
-                let json = res.data[i]
+            $.each(res.data.reverse(), function (i,json) {
                 str += `<tr>
-                    <td>${i + 1}</td>
+                    <td>${res.data.length -  i}</td>
                     <td><input class="layui-input" data-name="carNumber" value="${json.carNumber == null ? '' : json.carNumber}"></td>
                     <td><input class="layui-input" data-name="trailerNumber" value="${json.trailerNumber == null ? '' : json.trailerNumber}"></td>
                     <td><input class="layui-input" data-name="driverA" value="${json.driverA == null ? '' : json.driverA}"></td>

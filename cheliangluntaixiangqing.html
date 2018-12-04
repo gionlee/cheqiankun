@@ -138,19 +138,41 @@
                     <th style="width:15%;">生产编号</th>
                     <th style="width:10%;">二维码</th>
                     <th style="width:10%;">RFID</th>
+                    <th>价格</th>
                     <th>安装日期</th>
                     <th>里程表数</th>
                 </tr>
             </thead>
             <tbody class="saves">
+                    <tr>
+                            <td class="tai layui-form ai" rowspan="2">
+                                    <select class="tireLocation" name="" id="">
+            
+                                    </select>
+                                </td>
+                            <td>轮辋</td>
+                            <td ><input onclick="showLv1(true,true,this)" data-name="rimsBrand" type="text" class="layui-input rimsBrand"></td>
+                            <td><input data-name="rimsSpecifications" type="text" class="layui-input rimsSpecifications"></td>
+                            <td><input data-name="rimsModel" type="text" class="layui-input rimsModel"></td>
+                            <td><input data-name="rimsPlace" type="text" class="layui-input rimsPlace"></td>
+                            <td><input data-name="rimsState" type="text" class="layui-input rimsState"></td>
+                            <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
+                            <td><input data-name="rimsNum" type="text" class="layui-input rimsNum"></td>
+                            <td>
+                                <input type="text" class="layui-input rimsProductionId" data-name="rimsProductionId">
+                            </td>
+                            <td ><input type="text" class="layui-input rimsQrCode" data-name="rimsQrCode"></td>
+                            <td class=""><input type="text" class="layui-input rimsRfId" data-name="rimsRfId"></td>
+                            <td class=""><input type="text" class="layui-input rimsStoragePrice" data-name="rimsStoragePrice"></td>
+                            <td rowspan="2" class="ai">
+                                    <input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
+                                </td>
+                                <td rowspan="2" class="ai" style="width:100px;">
+                                        <input type="text" data-name="tireMileage" class="layui-input tireMileage" value="">
+                                </td>
+                        </tr>
                 <tr>
-                    <td class="tai layui-form ai" rowspan="2">
-                        <!-- <input type="text" class="layui-input" data-name="tireocation"> -->
-
-                        <select class="tireocation" name="" id="">
-
-                        </select>
-                    </td>
+                    
                     <td>
                         <input type="text" onclick="showLv1(true,true,this)" data-name="tireName" class="layui-input save-data ai-data tireName"
                             value="">
@@ -186,12 +208,10 @@
                     <td class="rfid">
                         <input type="text" class="layui-input rfId" data-name="rfId">
                     </td>
-                    <td rowspan="2" class="ai">
-                        <input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
+                    <td>
+                        <input type="text" class="layui-input tireStoragePrice" data-name="tireStoragePrice">
                     </td>
-                    <td rowspan="2" class="ai" style="width:100px;">
-                            <input type="text" data-name="tireMileage" class="layui-input tireMileage" value="">
-                    </td>
+                    
                 </tr>
                 <!-- <tr>
                     <td>轮辋</td>
@@ -206,21 +226,7 @@
                     <td><input data-name="sensorErcode" type="text" class="layui-input sensorErcode"></td>
                     <td><input data-name="sensorRfid" type="text" class="layui-input sensorRfid"></td>
                 </tr> -->
-                <tr>
-                        <td>轮辋</td>
-                        <td ><input onclick="showLv1(true,true,this)" data-name="rimsBrand" type="text" class="layui-input rimsBrand"></td>
-                        <td><input data-name="rimsSpecifications" type="text" class="layui-input rimsSpecifications"></td>
-                        <td><input data-name="rimsModel" type="text" class="layui-input rimsModel"></td>
-                        <td><input data-name="rimsPlace" type="text" class="layui-input rimsPlace"></td>
-                        <td><input data-name="rimsState" type="text" class="layui-input rimsState"></td>
-                        <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
-                        <td><input data-name="rimsNum" type="text" class="layui-input rimsNum"></td>
-                        <td>
-                            <input type="text" class="layui-input rimsProductionId" data-name="rimsProductionId">
-                        </td>
-                        <td ><input type="text" class="layui-input rimsQrCode" data-name="rimsQrCode"></td>
-                        <td class=""><input type="text" class="layui-input rimsRfId" data-name="rimsRfId"></td>
-                    </tr>
+                
             </tbody>
         </table>
         <div class="hover-body">
@@ -246,6 +252,7 @@
                     <th>生产编号</th>
                     <th>二维码</th>
                     <th>RFID</th>
+                    <th>价格</th>
                     <th>安装日期</th>
                     <th>里程表数 </th>
                 </tr>
@@ -281,6 +288,7 @@
     let rimsRfId = []   // 轮辋RFID
     let isAiClick = false
     let whoclick = 'lt'
+    let zhiNeng = false
     $('#seeInfo').on('click', function () {
         $('#excel-file').click()
         whoclick = 'lt'
@@ -427,7 +435,7 @@
             $.each(arr, function (i, k) {
                 str += `<option value="${k}" >${k}</option>`
             })
-            $('.tireocation').html(str)
+            $('.tireLocation').html(str)
             layform.render()
             selWl()
         }
@@ -441,50 +449,11 @@
                 let arr = res.data
                 let str = ''
                 $.each(arr, function (i, n) {
-                    if(n.isZhiNeng) { 
+                    if(n.zhiNeng) { 
                         str += 
                         `<tr>
-                    <td rowspan="3">${n.tireLocation == null ? '' : n.tireLocation}</td>`
-                    } else {
-                        str +=
-                        `<tr>
-                    <td rowspan="2">${n.tireLocation == null ? '' : n.tireLocation}</td>`
-                    }
-                    
-                    
-                    str +=`<td>${n.tireName == null ? '' : n.tireName}</td>
-                    <td>${n.tireBrand == null ? '' : n.tireBrand}</td>
-                    <td>${n.tireSpecifications == null ? '' : n.tireSpecifications}</td>
-                    <td>${n.tireModel == null ? '' : n.tireModel}</td>
-                    <td>${n.tirePlace == null ? '' : n.tirePlace}</td>
-                    <td>${n.tireState == null ? '' : n.tireState}</td>
-                    <td>${n.tireUnit == null ? '' : n.tireUnit}</td>
-                    <td>${n.tireNum == null ? '' : n.tireNum}</td>
-                    <td>${n.tireProductionId == null ? '' : n.tireProductionId}</td>
-                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
-                    <td>${n.rfId == null ? '' : n.rfId}</td>`
-                    
-                        if(n.isZhiNeng) {
-                          str +=`<td  rowspan="3">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
-                    <td  rowspan="3">${n.tireMileage == null ? '' : n.tireMileage}</td>
-                    </tr> <tr> <td>${n.tireName == null ? '' : n.tireName}</td>
-                    <td>${n.tireBrand == null ? '' : n.tireBrand}</td>
-                    <td>${n.tireSpecifications == null ? '' : n.tireSpecifications}</td>
-                    <td>${n.tireModel == null ? '' : n.tireModel}</td>
-                    <td>${n.tirePlace == null ? '' : n.tirePlace}</td>
-                    <td>${n.tireState == null ? '' : n.tireState}</td>
-                    <td>${n.tireUnit == null ? '' : n.tireUnit}</td>
-                    <td>${n.tireNum == null ? '' : n.tireNum}</td>
-                    <td>${n.tireProductionId == null ? '' : n.tireProductionId}</td>
-                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
-                    <td>${n.rfId == null ? '' : n.rfId}</td></tr>`
-                        } else {
-                            str +=`<td  rowspan="2">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
-                    <td  rowspan="2">${n.tireMileage == null ? '' : n.tireMileage}</td>
-                    </tr>`
-                        }
-                    str += `<tr>
-                            <td>${n.rimsName == null ? '' : n.rimsName}</td>
+                    <td rowspan="3">${n.tireLocation == null ? '' : n.tireLocation}</td>
+                    <td>${n.rimsName == null ? '' : n.rimsName}</td>
                     <td>${n.rimsBrand == null ? '' : n.rimsBrand}</td>
                     <td>${n.rimsSpecifications == null ? '' : n.rimsSpecifications}</td>
                     <td>${n.rimsModel == null ? '' : n.rimsModel}</td>
@@ -493,9 +462,63 @@
                     <td>${n.rimsUnit == null ? '' : n.rimsUnit}</td>
                     <td>${n.rimsNum == null ? '' : n.rimsNum}</td>
                     <td>${n.rimsProductionId == null ? '' : n.rimsProductionId}</td>
-                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
-                    <td>${n.rfid == null ? '' : n.rfid}</td>
+                    <td>${n.rimsQrCode == null ? '' : n.rimsQrCode}</td>
+                    <td>${n.rimsRfId == null ? '' : n.rimsRfId}</td>
+                    <td>${n.rimsStoragePrice == null ? '' : n.rimsStoragePrice}</td>
+                    
+                    <td  rowspan="3">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
+                    <td  rowspan="3">${n.tireMileage == null ? '' : n.tireMileage}</td>
+                    </tr> `
+                    } else {
+                        str +=
+                        `<tr>
+                    <td rowspan="2">${n.tireLocation == null ? '' : n.tireLocation}</td>
+                    <td>${n.rimsName == null ? '' : n.rimsName}</td>
+                    <td>${n.rimsBrand == null ? '' : n.rimsBrand}</td>
+                    <td>${n.rimsSpecifications == null ? '' : n.rimsSpecifications}</td>
+                    <td>${n.rimsModel == null ? '' : n.rimsModel}</td>
+                    <td>${n.rimsPlace == null ? '' : n.rimsPlace}</td>
+                    <td>${n.rimsState == null ? '' : n.rimsState}</td>
+                    <td>${n.rimsUnit == null ? '' : n.rimsUnit}</td>
+                    <td>${n.rimsNum == null ? '' : n.rimsNum}</td>
+                    <td>${n.rimsProductionId == null ? '' : n.rimsProductionId}</td>
+                    <td>${n.rimsQrCode == null ? '' : n.rimsQrCode}</td>
+                    <td>${n.rimsRfId == null ? '' : n.rimsRfId}</td>
+                    <td>${n.rimsStoragePrice == null ? '' : n.rimsStoragePrice}</td>
+                    <td  rowspan="2">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
+                    <td  rowspan="2">${n.tireMileage == null ? '' : n.tireMileage}</td>
+                    
                     </tr>`
+                    }
+                    
+                    
+                    str +=`<tr><td>${n.tireName == null ? '' : n.tireName}</td>
+                    <td>${n.tireBrand == null ? '' : n.tireBrand}</td>
+                    <td>${n.tireSpecifications == null ? '' : n.tireSpecifications}</td>
+                    <td>${n.tireModel == null ? '' : n.tireModel}</td>
+                    <td>${n.tirePlace == null ? '' : n.tirePlace}</td>
+                    <td>${n.tireState == null ? '' : n.tireState}</td>
+                    <td>${n.tireUnit == null ? '' : n.tireUnit}</td>
+                    <td>${n.tireNum == null ? '' : n.tireNum}</td>
+                    <td>${n.tireProductionId == null ? '' : n.tireProductionId}</td>
+                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
+                    <td>${n.rfId == null ? '' : n.rfId}</td>
+                    <td>${n.tireStoragePrice == null ? '' : n.tireStoragePrice}</td></tr>`
+                    
+                        if(n.zhiNeng) {
+                          str +=`<tr> <td>${n.sensorName == null ? '' : n.sensorName}</td>
+                    <td>${n.sensorBrand == null ? '' : n.sensorBrand}</td>
+                    <td>${n.sensorSpecifications == null ? '' : n.sensorSpecifications}</td>
+                    <td>${n.sensorModel == null ? '' : n.sensorModel}</td>
+                    <td>${n.sensorPlace == null ? '' : n.sensorPlace}</td>
+                    <td>${n.sensorState == null ? '' : n.sensorState}</td>
+                    <td>${n.sensorUnit == null ? '' : n.sensorUnit}</td>
+                    <td>${n.sensorNum == null ? '' : n.sensorNum}</td>
+                    <td>${n.sensorProductionId == null ? '' : n.sensorProductionId}</td>
+                    <td>${n.sensorQrCode == null ? '' : n.sensorQrCode}</td>
+                    <td>${n.sensorRfId == null ? '' : n.sensorRfId}</td>
+                    <td>${n.sensorStoragePrice == null ? '' : n.sensorStoragePrice}</td></tr>`
+                        } 
                 })
                 
                 $('.matlist').html(str)
@@ -508,7 +531,7 @@
         $('.saves input').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
-        data.tireocation = $('.tireocation').val()
+        data.tireLocation = $('.tireLocation').val()
         // data.tireProductionId = tireProductionId.toString()
         // data.qrCode = qrCode.toString()
         // data.rfId = rfId.toString()
@@ -521,12 +544,15 @@
         data.custId = loadUserInfo.customer.id
         data.userId = loadUserInfo.user.id
         data.carPlate = decodeURI(decodeURI(getUrlParam('carnum')))
+        data.rimsName = "轮辋"
+        data.zhiNeng = zhiNeng
+        if(isFcAi) {
+        }
         $.ajax({
-            url:`${API}//erpTireSensor/addCarDetailed`,
+            url:`${API}/erpTireSensor/addCarDetailed`,
             type:'post',
             data:data,
             success: function (res) {
-                console.log(res,'666')
             }
         })
     }
@@ -747,8 +773,8 @@
             $('.tireState').val($(_this).parents('.list-8').prev().text())
             $('.tirePlace').val($(_this).parents('.list-7').prev().text())
             $('.tireModel').val($(_this).parents('.list-6').prev().text())
-            $('.tireSpecifications').val($(_this).parents('.list-5').prev().text())
-            $('.tireBrand').val($(_this).parents('.list-4').prev().text())
+            $('.tireSpecifications').val($(_this).parents('.list-4').prev().text())
+            $('.tireBrand').val($(_this).parents('.list-5').prev().text())
             $('.tireName').val($(_this).parents('.list-3').prev().text())
             aiName = $(_this).parents('.list-2').prev().text()
         }
@@ -757,8 +783,8 @@
             $('.rimsState').val($(_this).parents('.list-8').prev().text())
             $('.rimsPlace').val($(_this).parents('.list-7').prev().text())
             $('.rimsModel').val($(_this).parents('.list-6').prev().text())
-            $('.rimsSpecifications').val($(_this).parents('.list-5').prev().text())
-            $('.rimsBrand').val($(_this).parents('.list-4').prev().text())
+            $('.rimsSpecifications').val($(_this).parents('.list-4').prev().text())
+            $('.rimsBrand').val($(_this).parents('.list-5').prev().text())
             $('.rimsName').val($(_this).parents('.list-3').prev().text())
             aiName = $(_this).parents('.list-2').prev().text()
         }
@@ -767,12 +793,14 @@
             $('.sensorState').val($(_this).parents('.list-8').prev().text())
             $('.sensorPlace').val($(_this).parents('.list-7').prev().text())
             $('.sensorModel').val($(_this).parents('.list-6').prev().text())
-            $('.sensorSpecifications').val($(_this).parents('.list-5').prev().text())
-            $('.sensorBrand').val($(_this).parents('.list-4').prev().text())
+            $('.sensorSpecifications').val($(_this).parents('.list-4').prev().text())
+            $('.sensorBrand').val($(_this).parents('.list-5').prev().text())
             $('.sensorName').val($(_this).parents('.list-3').prev().text())
             aiName = $(_this).parents('.list-2').prev().text()
+            zhiNeng = true
         }
         if (aiName == '轮胎(智能)' && isFcAi) {
+            zhiNeng == true 
             isFcAi = false
             $('.ai').prop('rowspan', '3')
             $('.saves').append(
@@ -810,6 +838,9 @@
                     </td>
                     <td class="sensorRfId">
                         <input  class="layui-input sensorRfId " data-name="sensorRfId">
+                    </td>
+                    <td class="sensorStoragePrice">
+                        <input  class="layui-input sensorStoragePrice " data-name="sensorStoragePrice">
                     </td>
                     </tr>`
             )

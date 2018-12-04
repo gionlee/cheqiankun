@@ -841,7 +841,7 @@
     })
     // 维修项目
     $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=维护项目`,
+        url: `${API}/erpSystemParameters/getparametersByName?name=物料维修`,
         type: 'get',
         success: function (res) {
             let arr = res.data.parametersChildList

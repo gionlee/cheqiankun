@@ -128,7 +128,7 @@
                 <tr>
                     <th style="min-width:60px;">入库时间</th>
                     <th>仓库</th>
-                    <th>品名</th>
+                    <th style="width:120px;">品名</th>
                     <th>品牌</th>
                     <th>规格</th>
                     <th>型号</th>
@@ -183,8 +183,7 @@
                         <input type="text" data-name="materielNumber" class="layui-input save-data" value="">
                     </td>
                     <td>
-                        <span class="scbh"></span>
-                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
+                        <input class="scbh layui-input" style="display:inline-block;width:calc(100% - 60px);">                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
                     </td>
                     <td class="ercode">
 
@@ -310,12 +309,8 @@
                     materielEqcodeai.push(bhlist[i]['二维码'])
                 })
                 $('#seeAiInfo').html('更改')
-                if (scbh.length > 26) {
-                    $('.scbhai').html(scbh.slice(0, 20) + '...')
-                    $('.scbhai').attr('title', scbh.slice(0, scbh.length - 1))
-                } else {
-                    $('.scbhai').html(scbh.slice(0, scbh.length - 1))
-                }
+                 $('.scbhai').val(scbh.slice(0, scbh.length - 1))
+
                 if (ercode.length > 26) {
                     $('.ercodeai').html(ercode.slice(0, 20) + '...')
                     $('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
@@ -338,12 +333,8 @@
                     materielEqcode.push(bhlist[i]['二维码'])
                 })
                 $('#seeInfo').html('更改')
-                if (scbh.length > 26) {
-                    $('.scbh').html(scbh.slice(0, 20) + '...')
-                    $('.scbh').attr('title', scbh.slice(0, scbh.length - 1))
-                } else {
-                    $('.scbh').html(scbh.slice(0, scbh.length - 1))
-                }
+                 $('.scbh').val(scbh.slice(0, scbh.length - 1))
+                
                 if (ercode.length > 26) {
                     $('.ercode').html(ercode.slice(0, 20) + '...')
                     $('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
@@ -675,7 +666,9 @@ $.ajax({
             $('.materielSpecificationsAI').val($(_this).parents('.list-5').prev().text())
             $('.materielBrandAI').val($(_this).parents('.list-4').prev().text())
         }
-        if ($('.materielName').val() == '智能轮胎' && isFcAi) {
+        let vals = $('.materielName').val()
+        if (vals.indexOf('轮胎(智能)')  != -1 && isFcAi) {
+            console.log(111)
             isFcAi = false
             $('.ai').prop('rowspan', '2')
             $('.saves').append(
@@ -702,8 +695,7 @@ $.ajax({
                         <input type="text" data-name="materielNumber" class="layui-input ai-data" value="">
                     </td>
                     <td>
-                        <span class="scbhai"></span>
-                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeAiInfo">上传</button>
+                        <input class="scbhai  layui-input" style="width: calc(100% - 60px);display:inline-block;"> <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeAiInfo">上传</button>
                     </td>
                     <td class="ercodeai">
 

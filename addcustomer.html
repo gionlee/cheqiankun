@@ -388,7 +388,7 @@
 									<td colspan="2"><input type="text" data-name="finvNumber" class="layui-input"></td>
 									<td>录入人</td>
 									<td colspan="2"><input type="text" readonly data-name="finvUser" class="layui-input cwlrr"></td>
-									<td colspan="2"><input type="text" data-name="finvDate" class="layui-input cwlrsj"></td>
+									<td colspan="2"><input type="text" readonly data-name="finvDate" class="layui-input cwlrsj"></td>
 									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCw()">保存</button></td>
 								</tr>
 							</tbody>
@@ -400,11 +400,11 @@
 							<tbody>
 								<tr class="jfxx">
 									<td>累计积分</td>
-									<td><input type="text" data-name="intLj" class="layui-input"></td>
+									<td><input type="number" min="0" data-name="intLj"  oninput="setUse(this)"class="layui-input intLj"></td>
 									<td>使用积分</td>
-									<td><input type="text" data-name="intSy" class="layui-input"></td>
+									<td><input type="number" min="0" data-name="intSy" oninput="setUse(this)" class="layui-input intSy"></td>
 									<td>可用积分</td>
-									<td><input type="text" data-name="intKy" class="layui-input"></td>
+									<td><input type="text" data-name="intKy" readonly class="layui-input canuse"></td>
 									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveJf()">保存</button></td>
 								</tr>
 							</tbody>
@@ -955,6 +955,20 @@
 			})
 
 		});
+		$('.cwlrsj').val(getDays())
+		let canuseJf = 0
+		function setUse (_this) {
+			if($(_this).val() < 0) {
+				$(_this).val(0)
+			}
+			console.log($('.intLj').val() - $('.intSy').val())
+			if($('.intLj').val() >= 0 && $('.intSy').val() >= 0) {
+				canuseJf = $('.intLj').val() - $('.intSy').val()
+				$('.canuse').val($('.intLj').val() - $('.intSy').val())
+			}
+			
+		}
+
 		//  关闭当前页面
 		function closes() {
 			alert('关闭失败，请手动关闭！')
@@ -1354,7 +1368,10 @@
 		}
 		// 保存积分信息
 		function saveJf() {
-			let data = {}
+			if (canuseJf < 0) {
+				alert('积分输入错误,请重新输入!')
+			} else {
+				let data = {}
 			$('.jfxx input').each(function() {
 				data[$(this).data('name')] = $(this).val()
 			})
@@ -1368,6 +1385,8 @@
                 	layer.msg('保存成功！');
 				}
 			})
+			}
+			
 		}
 		// 保存车辆信息
 		function saveCarInfo(bol) {

@@ -54,6 +54,10 @@
 				background: #f7f7f7;
 			}
 			
+			.layui-input{
+				text-align: center;
+			}
+			
 			.wx_money {
 				display: inline-block;
 				width: 50px;
@@ -412,9 +416,19 @@
 				elem: '.end-time'
 			})
 		});
+		
+		
 		var data_obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
 		data_obj.workDtS = data_obj.workDtS.replace(/\//ig, '-');
 		data_obj.workDtE = data_obj.workDtE.replace(/\//ig, '-');
+		
+		var date_c = new Date(data_obj.workDtS);
+		
+		var flag = 1; // 1:没有提交过   2：提交过
+		
+		$('.title .time').html(date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月');
+		
+		// 获取列表信息
 		$.ajax({
 			type: "post",
 			url: `${API}/erpSaleRepairOrder/findMon`,
@@ -592,23 +606,86 @@
 				// 1、更新/购置
 				$.each(listReportChild, function(i,item) {
 					listReportChildStr += `<tr>
-												<td><input type="text" class="layui-input" value="${item.repName || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repTire || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repRim || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repInner || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repSteamfilter || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repOil || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repAirfilter || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repAntifreeze || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repGearil || ''}" /></td>
-												<td><input type="text" class="layui-input" value="${item.repElsedata || ''}" /></td>
+												<td><input type="text" disabled class="layui-input repName" value="${item.repName || ''}" /></td>
+												<td><input type="text" class="layui-input repTire" value="${item.repTire || ''}" /></td>
+												<td><input type="text" class="layui-input repRim" value="${item.repRim || ''}" /></td>
+												<td><input type="text" class="layui-input repInner" value="${item.repInner || ''}" /></td>
+												<td><input type="text" class="layui-input repSteamfilter" value="${item.repSteamfilter || ''}" /></td>
+												<td><input type="text" class="layui-input repOil" value="${item.repOil || ''}" /></td>
+												<td><input type="text" class="layui-input repAirfilter" value="${item.repAirfilter || ''}" /></td>
+												<td><input type="text" class="layui-input repAntifreeze" value="${item.repAntifreeze || ''}" /></td>
+												<td><input type="text" class="layui-input repGearil" value="${item.repGearil || ''}" /></td>
+												<td><input type="text" class="layui-input repElsedata" value="${item.repElsedata || ''}" /></td>
 											</tr>`;
 				});
 				$('.listReportChild').html(listReportChildStr);
 			}
 		});
 		
+		// 获取输入框信息
 		
+		$.ajax({
+			type: "post",
+			// url: `${API}/erpSaleRepairOrder/selectByReportTime`,
+			url: "http://sjy.natapp1.cc/erpSaleRepairOrder/selectByReportTime",
+			async: false,
+			data:{
+				time: date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月'
+			},
+			success: function(res){
+				if (res.code == 0) {
+					if (data) {
+						flag = 2;
+					}
+				}
+			}
+		});
+		
+		function uploadData(){
+			
+			// 列表填写数据
+			var json = [{
+				repName: $('.repName').val(), // 名称
+				repTire: $('.repTire').val(), //轮胎
+				repRim: $('.repRim').val(), //轮辋
+				repInner: $('.repInner').val(), //内胎
+				repSteamfilter: $('.repSteamfilter').val(), //机油
+				repOil: $('.repOil').val(), //空滤
+				repAirfilter: $('.repAirfilter').val(), //汽滤
+				repAntifreeze: $('.repAntifreeze').val(), //防冻滤
+				repGearil: $('.repGearil').val(), //齿轮油
+				repElsedata: $('.repElsedata').val() //其他
+			}];
+			// console.log(json);
+			if(flag == 1){ // 1:没有提交过
+				$.ajax({
+					type:"post",
+					// url:`${API}/erpSaleRepairOrder/addReport`,
+					url: "http://sjy.natapp1.cc/erpSaleRepairOrder/addReport",
+					async:false,
+					data:{
+						branchId: 1, // 分支id
+						customerId: loadUserInfo.customer.id, // 客户ID
+						repDate: getDays().replace(/-/ig, '/'), // 报告日期
+						repType: data_obj.repType, // 报告类型
+						repProgress: $('.business_progress textarea').val(), // 工作进展
+						repAnalysis: $('.analysis textarea').val(), // 运营情况分析
+						repMaintain: $('.repair textarea').val(), // 维修维护
+						repImagine: $('.imagine textarea').val(), // 建议设想
+						submitName: loadUserInfo.user.id, // 提交人
+						submitDate: getDays().replace(/-/ig, '/'), // 提交时间
+						child: JSON.stringify(json)
+					},
+					success: function (res){
+						if (res.code == 0) {
+							layer.msg('提交成功！');
+						}
+					}
+				});
+			} else if (flag == 2) { // 已经提交过
+				layer.msg('禁止重复提交！');
+			}
+				
+		}
 	</script>
-
 </html>

@@ -104,13 +104,34 @@
 
 <body>
     <table class="layui-table">
+            <thead>
+                    <tr>
+                            <th colspan="23"><span id="car"></span> 车辆物料档案</th>
+                        </tr>
+                    <tr>
+                            <th>GPS接口</th>
+                            <th>GPS主机</th>
+                            <th>GPS卡号</th>
+                            <th>胎压接口</th>
+                            <th>胎压主机</th>
+                            <th>胎压卡号</th>
+                            <th>后视镜</th>
+                            <th>OBD</th>
+                            <th>多媒体</th>
+                            <th>行车记录</th>
+                        </tr>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+            </tbody>
+    </table>
+    <table class="layui-table">
+        
         <thead>
-            <tr>
-                <th colspan="23"><span id="car"></span> 车辆物料档案</th>
-            </tr>
+            
             <tr>
                 <th>序号</th>
-                <th>车牌号</th>
                 <th>胎位</th>
                 <th>品牌</th>
                 <th>规格</th>
@@ -130,6 +151,9 @@
                 <th>轮辋</th>
             </tr>
         </thead>
+        <tbody>
+            
+        </tbody>
         <tbody id="list">
            
         </tbody>
@@ -151,7 +175,17 @@
 				}
 			}
 			return theRequest;
-		}
+        }
+        
+        function  selBi () {
+        $.ajax({
+            url:`${API}/carId=${GetRequest().id}`,
+            type:'get',
+            success: function (res) {
+            }
+        })
+    }
+    let carNum = ''
 	$(function() {
 		var id =GetRequest().id;
 			$.ajax({
@@ -160,12 +194,30 @@
 				dataType: 'json',
 				success:function(ret) {
 					var objkacha = ret.data.reverse();
-					var html = '';
-                    
+                    var html = '';
+                    let arr = ret.data
+                    let narr = []
+                    $.each(arr,function (i,n) {
+                        let data = {}
+                        data.name = n.tire_location
+                        data.arr  = []
+                        $.each (arr,function (j,k) {
+                            
+                            if(n.tire_location == k.tire_location) {
+
+                                data.arr.push(n)
+                            }
+                        })
+                        console.log(data)
+                        if(narr.indexOf(data) == -1) {
+                            narr.push(data)
+                        }
+                        
+                    })
+                    console.log(narr)
 					for(var key = 0; key < objkacha.length;key ++) {
 							html += ' <tr>'+
 					 '                <td>'+(objkacha.length -key)+'</td>'+
-					 '                <td>'+(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)+'</td>'+
 					 '                <td>'+(objkacha[key].tire_location == null ? '' : objkacha[key].tire_location)+'</td>'+
 					 '                <td>'+(objkacha[key].car_brand == null ? '' : objkacha[key].car_brand)+'</td>'+
 					 '                <td>'+(objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications)+'</td>'+
@@ -188,7 +240,8 @@
 					 '                <td>'+(objkacha[key].car_rim_type == null ? '' : objkacha[key].car_rim_type)+'</td>'+
 					 '            </tr>';
 						
-						$('#car').html(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)
+                        $('#car').html(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)
+                        carNum = objkacha[key].car_plate == null ? '' : objkacha[key].car_plate
 					}
 					$("#list").html(html);
 								           		         		

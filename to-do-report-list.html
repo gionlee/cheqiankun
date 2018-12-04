@@ -128,62 +128,93 @@
 				elem: '.end-time'
 			})
 		});
-		
-		
-		var current_date = new Date();
-		var current_year = current_date.getFullYear();
-		
-		// 周报列表
-		var current_year_start = new Date( current_year + '/01/01 00:00:00');
-		var ele;
-		var week_start_dt = current_year_start.getTime();
-		var week_end_dt;
-		
-		first_start_week = current_year_start.getDay();
-		switch (first_start_week){
-			case 1: // 今年的第一天是周一
-				week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
-				break;
-				
-			case 2: // 今年的第一天是周二
-				week_end_dt = week_start_dt + 6*24*60*60*1000 - 1000;
-				break;
-				
-			case 3: // 今年的第一天是周三
-				week_end_dt = week_start_dt + 5*24*60*60*1000 - 1000;
-				break;
-				
-			case 4: // 今年的第一天是周四
-				week_end_dt = week_start_dt + 4*24*60*60*1000 - 1000;
-				break;
-				
-			case 5: // 今年的第一天是周五
-				week_end_dt = week_start_dt + 3*24*60*60*1000 - 1000;
-				break;
-				
-			case 6: // 今年的第一天是周六
-				week_end_dt = week_start_dt + 2*24*60*60*1000 - 1000;
-				break;
-				
-			case 0: // 今年的第一天是周日
-				week_end_dt = week_start_dt + 1*24*60*60*1000 - 1000;
-				break;
-		}
-		ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + 1 + '周</td></tr>');
-		$('.week-report').append(ele);
-		for (var i = 2; ; i++) {
-			week_start_dt = week_end_dt + 1000;
-			week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
-			ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + i + '周</td></tr>');
-			var current_year_end = new Date(week_end_dt);
-			if (current_year_end.getFullYear() != current_year) {
-				ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + current_year + '/12/31 23:59:59">' + current_year + '年第' + i + '周</td></tr>');
-				$('.week-report').append(ele);
-				break;
+		var now_date = new Date();
+		getList('2015/2/2 00:00:00');
+		function getList(params){
+			var current_date = new Date(params);
+			var current_year = current_date.getFullYear();
+			var i;
+			
+			// 周报列表
+			var current_year_start;
+			if (current_year != '2015') {
+				current_year_start = new Date(current_year + '/01/01 00:00:00');
+				i = 2;
+			} else {
+				current_year_start = new Date(current_year + '/02/02 00:00:00');
+				i = 7;
 			}
-			$('.week-report').append(ele);
+			var ele;
+			var week_start_dt = current_year_start.getTime();
+			var week_end_dt;
+			
+			first_start_week = current_year_start.getDay();
+			switch (first_start_week){
+				case 1: // 今年的第一天是周一
+					week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
+					break;
+					
+				case 2: // 今年的第一天是周二
+					week_end_dt = week_start_dt + 6*24*60*60*1000 - 1000;
+					break;
+					
+				case 3: // 今年的第一天是周三
+					week_end_dt = week_start_dt + 5*24*60*60*1000 - 1000;
+					break;
+					
+				case 4: // 今年的第一天是周四
+					week_end_dt = week_start_dt + 4*24*60*60*1000 - 1000;
+					break;
+					
+				case 5: // 今年的第一天是周五
+					week_end_dt = week_start_dt + 3*24*60*60*1000 - 1000;
+					break;
+					
+				case 6: // 今年的第一天是周六
+					week_end_dt = week_start_dt + 2*24*60*60*1000 - 1000;
+					break;
+					
+				case 0: // 今年的第一天是周日
+					week_end_dt = week_start_dt + 1*24*60*60*1000 - 1000;
+					break;
+			}
+			if (current_year != '2015') {
+				ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + 1 + '周</td></tr>');
+				ele.insertBefore($('.week-report tbody').children(":first"));
+			} else{
+				ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + 6 + '周</td></tr>');
+				$('.week-report').append(ele);
+			}
+			
+			for (; ; i++) {
+				week_start_dt = week_end_dt + 1000;
+				week_end_dt = week_start_dt + 7*24*60*60*1000 - 1000;
+				ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + msToDate(week_end_dt,1) + '">' + current_year + '年第' + i + '周</td></tr>');
+				var current_year_end = new Date(week_end_dt);
+				if (current_year_end.getFullYear() != current_year) {
+					if(msToDate(week_start_dt,1) == current_year + 1 + '/01/01 00:00:00'){
+						
+					} else {
+						ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + current_year + '/12/31 23:59:59">' + current_year + '年第' + i + '周</td></tr>');
+						// $('.week-report').insertBefore(ele,$('.week-report tbody').children(":first"));
+						ele.insertBefore($('.week-report tbody').children(":first"));
+					}
+						
+					// break;
+					current_year += 1;
+					// getList(current_year + '/01/01 00:00:00');
+					if (current_year == now_date.getFullYear() + 1) {
+						return;
+					} else {
+						getList(current_year + '/01/01 00:00:00');
+						break;
+					}
+				}
+				// $('.week-report').insertBefore(ele,$('.week-report tbody').children(":first"));
+				ele.insertBefore($('.week-report tbody').children(":first"));
+			}
 		}
-		
+			
 		$('.week-report').on('mouseover','td',function(){
 			$(this).css('cursor','pointer');
 		});
@@ -198,7 +229,7 @@
 		
 		
 		// 月报列表
-		for (var i = 1; i <= 12; i++) {
+		/*for (var i = 1; i <= 12; i++) {
 			switch (i){
 				case 1:
 				case 3:
@@ -238,8 +269,9 @@
 			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
 			obj.workDtS = $(this).attr('dt_S');
 			obj.workDtE = $(this).attr('dt_E');
+			obj.repType = 1;
 			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
-		});
+		});*/
 	</script>
 
 </html>
