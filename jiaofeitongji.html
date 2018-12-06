@@ -184,7 +184,7 @@
         <div class="layui-form">
             <div class="layui-form-item">
                 <div class="layui-input-inline">
-                    <select name="quiz2">
+                    <select name="quiz2" lay-filter="datesel">
                         <option value="">请选时段</option>
                         <option value="0">一季度</option>
                         <option value="1">二季度</option>
@@ -202,7 +202,7 @@
             <input class="layui-input jsdate" type="text" placeholder="结束日期">
         </div>
         <div class="btn">
-            <button class="layui-btn layui-btn-normal">查询</button>
+            <button class="layui-btn layui-btn-normal" id="cx">查询</button>
         </div>
 
         <table class="layui-table">
@@ -293,10 +293,30 @@
             });
         })
     }
+
+    var myDate = new Date();
+    var year=myDate.getFullYear(); 
+    var month=myDate.getMonth()+1;
+    var day=myDate.getDate();
+
+    var bydatestart=year+'-'+month+'-01';//本月开始日
+    var d = new Date(year, month, 0);
+    var bydateend=year+'-'+month+'-'+d.getDate();
+    console.log(bydatestart);
+    console.log(bydateend);
+    $('.ksdate').val(bydatestart);
+    $('.jsdate').val(bydateend);
+
     $.ajax({
-        url:`${API}/erpServiceOrderProject/selectOrder?custId=1`,
+        url:`${API}/erpServiceOrderProject/selectOrders`,
         type:'get',
+        data:{
+            startDate:bydatestart,
+            endDate:bydateend,
+            custId:loadUserInfo.customer.id,
+        },
         success: function (res) {
+            console.log(res);
             let arr= res.data
             let str = ''
             let nums = 0
@@ -321,5 +341,47 @@
             $('.nums').html(nums)
 
         }
+    })
+    $('#cx').click(function(){
+        var ksdate=$('.ksdate').val();
+        var jsdate=$('.jsdate').val();
+        console.log(ksdate);
+        console.log(jsdate);
+        console.log(loadUserInfo.customer.id);
+        $.ajax({
+            url:`${API}/erpServiceOrderProject/selectOrders`,
+            data:{
+                startDate:ksdate,
+                endDate:jsdate,
+                custId:loadUserInfo.customer.id,
+            },
+            type:'get',
+            success: function (res) {
+                console.log(res);
+                let arr= res.data
+                let str = ''
+                let nums = 0
+                $.each(arr,function (i,n) {
+                    str+=`<tr>
+                        <td>${i+1}</td>
+                        <td>${n.date == null ? '' : n.date}</td>
+                        <td>${n.orderId == null ? '' : n.orderId}</td>
+                        <td>${n.payWay == null ? '' : n.payWay}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>${n.moneySum == null ? '' : n.moneySum}</td>
+                        <td>${n.checkPeople == null ? '' : n.checkPeople}</td>
+                        <td>${n.bz == null ? '' : n.bz}</td>
+                        </tr>`
+                        nums += n.moneySum
+                })
+                $('.list').html(str)
+                $('.nums').html(nums)
+
+            }
+        })
     })
 </script>

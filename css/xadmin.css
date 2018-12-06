@@ -492,6 +492,9 @@ table th, table td {
 }
 
 @media screen and (max-width: 768px){
+    html {
+        overflow: scroll;
+    }
     .fast-add{
         display: none;
     }
@@ -505,7 +508,7 @@ table th, table td {
         /*float: right;*/
     }
     .left-nav{
-        left: -221px;
+        /* left: -221px; */
     }
     .page-content{
         left: 0px;

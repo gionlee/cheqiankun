@@ -476,19 +476,19 @@
     <div class="wlWindow">
         <table class="layui-table">
             <tr class="wxbj">
-                <td>
+                <td style="width:10%;">
                     维修项目
                 </td>
-                <td onclick="showWxxm()">
+                <td style="width:15%;" onclick="showWxxm()">
                     <input type="text" data-name="repairRepair" class="layui-input repairRepair">
                 </td>
-                <td>
+                <td style="width:10%;">
                     物品状态
                 </td>
-                <td onclick="showWpzt()">
+                <td style="width:15%;" onclick="showWpzt()">
                     <input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
                 </td>
-                <td>
+                <td style="width:10%;">
                     胎纹深度
                 </td>
                 <td>
@@ -545,9 +545,6 @@
         </table>
         <div style="text-align:center">维修耗材</div>
         <div>
-            <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="addWxhc()">新增</div>
-        </div>
-        <div>
             <div style="width:70%; float:left;">
                 <table class="layui-table">
                     <thead>
@@ -562,7 +559,15 @@
                         </tr>
                     </thead>
                     <tbody class="wxhclist">
-
+                        <tr class="lzwxhc">
+                            <td class="layui-form"><input class="layui-input" data-name="pid"></td>
+                            <td><input class="layui-input " data-name="materielName"></td>
+                            <td><input class="layui-input " data-name="materielBrand"></td>
+                            <td><input class="layui-input " data-name="materielSpecifications"></td>
+                            <td><input class="layui-input " data-name="materielModel"></td>
+                            <td><input class="layui-input " data-name="materielNumber"></td>
+                            <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="addWxhc()">新增</div> <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -582,6 +587,7 @@
                 </table>
             </div>
         </div>
+        <div style="clear:both;"></div>
         <div style="text-align:center">
             <div class="layui-btn layui-btn-xs" onclick="saveWx()">确认/重复</div>
             <div class="layui-btn layui-btn-xs">确认/新添</div>
@@ -927,6 +933,7 @@
             Wxdata[$(this).data('name')] = $(this).val()
         })
         Wxdata.json = []
+        let arr = []
         $('.wxhclist').each(function () {
             let d = {}
             $(this).find('input').each(function () {
@@ -934,6 +941,7 @@
             })
             Wxdata.json.push(d)
         }) 
+        
         data = Wxdata
         data.json = JSON.stringify(data.json)
         $.ajax({
@@ -944,9 +952,14 @@
                 if(res.code == 0) {
                     layer.msg('保存成功!')
                     Wxdata.weixiutaiweiCount = res.data.weixiutaiweiCount[0]
-                    $.each(Wxdata.json,function(i,n) {
-                        Wxdata.json[i] = res.data.weixiuhaocaiCount[i]
+                    Wxdata.json = JSON.parse(Wxdata.json)
+                    console.log(Wxdata)
+                    $.each(res.data.weixiuhaocaiCount,function(i,n) {
+                        console.log( Wxdata.json[i])
+                        Wxdata.json[i]["weixiuhaocaiCount"] = n
                     })
+                    console.log(Wxdata)
+                    
                 }
                 
             }

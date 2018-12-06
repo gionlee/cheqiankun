@@ -64,6 +64,11 @@
             padding: 10px;
             display: none;
         }
+        .winbody2 {
+            width: 1220px;
+            padding: 10px;
+            display: none;
+        }
 
         .carlist {
             width: 120px;
@@ -110,7 +115,7 @@
                     <th>大车数量</th>
                     <th>费用</th>
                     <th>缴费单号</th>
-                    <th colspan="2">服务期限</th>
+                    <th>服务期限</th>
                     <th>剩余天数</th>
                 </tr>
             </thead>
@@ -119,18 +124,98 @@
             </tbody>
         </table>
     </div>
-    <div class="winbody">
+    <div class="winbody2">
         <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>日期</th>
+                    <th>交费单号</th>
+                    <th>交费方式</th>
+                    <th>客户名称</th>
+                    <th>服务项目</th>
+                    <th>服务期限</th>
+                    <th>费用</th>
+                    <th>优惠</th>
+                    <th>实收</th>
+                    <th>备注</th>
+                </tr>
+            </thead>
+            <tbody class="danhao_table">
 
+            </tbody>
         </table>
     </div>
 
 </body>
 <script>
+	layui.use('layer', function() {
+		layer = layui.layer;
+	});
+	function openKuang(the){
+        var number=the.innerHTML;
+		layui.use('layer', function() {
+			layui.layer.open({
+				type: 1,
+				area: ['1240px','300px'],
+				title: '',
+				content: $('.winbody2'),
+				btn: ['核准', '取消'],
+				yes: function(index) {
+                    $.ajax({
+                        url: `${API}/erpServiceOrderProject/updateState`,
+                        type: 'post',
+                        data:{
+                            orderId:number,
+                            // orderId:20181028181029594,
+                        },
+                        success: function (res) {
+                            var data = res.data;
+                            console.log(res);
+                            if(res.msg){
+                                alert(res.msg);
+                                layui.layer.close(index);
+                                huoqunianfei();
+                            }
+                        }
+                    })
+				}
+			})
+		})
+        $.ajax({
+            url: `${API}/erpServiceOrderProject/selectOrder`,
+            type: 'post',
+            data:{
+                orderId:number,
+                // orderId:20181028181029594,
+            },
+            success: function (res) {
+                var data = res.data;
+                var arr=res.data.erpProjectInServices;
+                console.log(data);
+                console.log(arr);
+                $.each(arr, function(i,item) {
+                    $('.danhao_table').append(`
+                        <tr>
+                            <td>${data.date}</td>
+                            <td>${data.orderId}</td>
+                            <td>${data.payWay}</td>
+                            <td>${item.custName}</td>
+                            <td>${item.projectName}</td>
+                            <td>${data.startDate}~${data.endDate}</td>
+                            <td>${data.moneySum}</td>
+                            <td>${data.discount}</td>
+                            <td>${data.moneyReal ? data.moneyReal : ''}</td>
+                            <td>${data.bz ? data.bz : ''}</td>
+                        </tr>
+                    `);
+                });
+            }
+        })
+	}
+		
 
 
-
-    let json = {}
+    /*let json = {}
     $.ajax({
         url: `${API}/erpProject/getProjectById?projectId=1`,
         type: 'get',
@@ -174,5 +259,60 @@
                 })
             }
         })
+    }*/
+    
+    // $.ajax({
+    //     url: `${API}/erpServiceOrderProject/selectOrder?custId=${loadUserInfo.customer.id}`,
+    //     type: 'post',
+    //     success: function (res) {
+    //     	var data = res.data;
+    //     	$.each(data, function(i,item) {
+    //     		$('.fybj').append(`
+    //     			<tr>
+	   //                  <td>${item.userId}</td>
+	   //                  <td>客户名称</td>
+	   //                  <td>管理用户</td>
+	   //                  <td>操作用户</td>
+	   //                  <td>业务用户</td>
+	   //                  <td>大车数量</td>
+	   //                  <td>费用</td>
+	   //                  <td onclick="openKuang()">缴费单号</td>
+	   //                  <td>服务期限</td>
+	   //                  <td>剩余天数</td>
+	   //              </tr>	
+    //     		`);
+    //     	});
+    //     }
+    // })
+    huoqunianfei();
+    function huoqunianfei(){
+        $.ajax({
+            url: `${API}/erpServiceOrderProject/selectYears?custId=${loadUserInfo.customer.id}`,
+            type: 'post',
+            data:{
+                custId:loadUserInfo.customer.id,
+            },
+            success: function (res) {
+                var data = res.data;
+                // console.log(data);
+                $.each(data, function(i,item) {
+                    $('.fybj').append(`
+                        <tr>
+                            <td>${item.custCode}</td>
+                            <td>${item.custName}</td>
+                            <td>${item.guanNumber}</td>
+                            <td>${item.caoNumber}</td>
+                            <td>${item.yeNumber}</td>
+                            <td>${item.carNumber}</td>
+                            <td>${item.rich}</td>
+                            <td onclick="openKuang(this)" style="cursor:pointer;color:#0000ff;">${item.orderNumber}</td>
+                            <td>${item.startDate}~${item.endDate}</td>
+                            <td>${item.time}</td>
+                        </tr>
+                    `);
+                });
+            }
+        })
     }
+    
 </script>

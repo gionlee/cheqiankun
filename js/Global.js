@@ -1,5 +1,5 @@
 // const API = 'http://120.79.205.40:3340'
-const API = 'http://192.168.1.3' 
+const API = 'http://192.168.1.9:3340' 
 // const API = 'http://39.105.191.207:3340' 
 
 
