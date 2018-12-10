@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
-		<title>Document</title>
-		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-		<link rel="stylesheet" href="./css/font.css">
-		<link rel="stylesheet" href="./css/xadmin.css">
-		<link rel="stylesheet" href="./css/select.css">
-		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
-		<script src="./lib/layui/layui.js" charset="utf-8"></script>
-		<script src="./js/xadmin.js"></script>
-		<script type="text/javascript" src="./js/Global.js"></script>
-		<style>
-			.wrap {
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+	<link rel="stylesheet" href="./css/select.css">
+	<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+	<script src="./lib/layui/layui.js" charset="utf-8"></script>
+	<script src="./js/xadmin.js"></script>
+	<script type="text/javascript" src="./js/Global.js"></script>
+	<style>
+		.wrap {
 				padding: 20px;
 				width: 100%;
 				overflow: auto;
@@ -148,59 +148,59 @@
 				background: #ddd;
 			}
 		</style>
-	</head>
+</head>
 
-	<body>
-		<div class="wrap">
-			<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-				<ul class="layui-tab-title">
-					<li class="layui-this" lay-id="1">客户信息</li>
-					<li lay-id="2">联系人</li>
-					<li lay-id="3">财务信息</li>
-					<li lay-id="4">积分信息</li>
-					<li lay-id="5">动态信息</li>
-					<li lay-id="6">车辆信息</li>
-					<li lay-id="7">物料寿命</li>
-					<li lay-id="8">仓库管理</li>
-				</ul>
-				<div class="layui-tab-content">
-					<div class="layui-tab-item layui-show">
-						<table id="table" class="layui-table">
-							<tbody class="khbody">
-								<tr>
-									<td style="width: 6.25%">客户编码</td>
-									<td colspan="2" style="width: 12.5%;cursor: not-allowed; background: #efefef">
+<body>
+	<div class="wrap">
+		<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+			<ul class="layui-tab-title">
+				<li class="layui-this" lay-id="1">客户信息</li>
+				<li lay-id="2">联系人</li>
+				<li lay-id="3">财务信息</li>
+				<li lay-id="4">积分信息</li>
+				<li lay-id="5">动态信息</li>
+				<li lay-id="6">车辆信息</li>
+				<li lay-id="7">物料寿命</li>
+				<li lay-id="8">仓库管理</li>
+			</ul>
+			<div class="layui-tab-content">
+				<div class="layui-tab-item layui-show">
+					<table id="table" class="layui-table">
+						<tbody class="khbody">
+							<tr>
+								<td style="width: 6.25%">客户编码</td>
+								<td colspan="2" style="width: 12.5%;cursor: not-allowed; background: #efefef">
 
-									</td>
-									<td style="width: 6.25%"><span style="color:red;">*</span>登记日期</td>
-									<td colspan="2" style="width: 12.5%">
-										<input data-name="cusDjDate" type="text" required class="layui-input khxxdjrq necessary" value="">
-									</td>
-									<td style="width: 6.25%"><span style="color:red;">*</span>客户名称</td>
-									<td colspan="4" style="width: 25%">
-										<input data-name="cusName" required class="layui-input necessary" type="text" value="">
-									</td>
-									<td style="width: 6.25%"><span style="color:red;">*</span>客户地址</td>
-									<td colspan="4" style="width: 25%">
-										<input data-name="cusAddress" required type="text" class="layui-input necessary" value="">
-									</td>
-								</tr>
-								<tr>
-									<td>上级单位</td>
-									<td colspan="5" style="position: relative;">
-										<input data-name="cusSupCompanys" type="text" class="layui-input higher-unit-input" value="">
-										<div class="higher-unit-div" style="display: none;">
-											<ul>
-												<!--<li>1</li>
+								</td>
+								<td style="width: 6.25%"><span style="color:red;">*</span>登记日期</td>
+								<td colspan="2" style="width: 12.5%">
+									<input data-name="cusDjDate" type="text" required class="layui-input khxxdjrq necessary" value="">
+								</td>
+								<td style="width: 6.25%"><span style="color:red;">*</span>客户名称</td>
+								<td colspan="4" style="width: 25%">
+									<input data-name="cusName" required class="layui-input necessary" type="text" value="">
+								</td>
+								<td style="width: 6.25%"><span style="color:red;">*</span>客户地址</td>
+								<td colspan="4" style="width: 25%">
+									<input data-name="cusAddress" required type="text" class="layui-input necessary" value="">
+								</td>
+							</tr>
+							<tr>
+								<td>上级单位</td>
+								<td colspan="5" style="position: relative;">
+									<input data-name="cusSupCompanys" type="text" class="layui-input higher-unit-input" value="">
+									<div class="higher-unit-div" style="display: none;">
+										<ul>
+											<!--<li>1</li>
 												<li>1</li>
 												<li>1</li>
 												<li>1</li>-->
-											</ul>
-										</div>
-									</td>
-									<td><span style="color:red;">*</span>运营类型</td>
-									<td onclick="chooseOperationType()" class="operation-type-td" colspan="7">
-										<!--<select class="" xm-select="type" name="" id="" multiple>
+										</ul>
+									</div>
+								</td>
+								<td><span style="color:red;">*</span>运营类型</td>
+								<td onclick="chooseOperationType()" class="operation-type-td" colspan="7">
+									<!--<select class="" xm-select="type" name="" id="" multiple>
                                         <option value=""></option>
                                         <option value="客运公司">客运公司</option>
                                         <option value="货运公司">货运公司</option>
@@ -214,303 +214,303 @@
                                         <option value="其他">其他</option>
                                         <option value="配件经销">配件经销</option>
 										</select>-->
-									</td>
-									<td style="width:6.25%">客户类型</td>
-									<td><input data-name="cusCusType" type="text" class="layui-input " value="" readonly></td>
-								</tr>
-								<tr>
-									<td><span style="color:red;">*</span>企业性质</td>
-									<td colspan="2">
-										<select data-name="cus_nature" class="cusNature necessary" id="">
-											<option></option>
-										</select>
-									</td>
-									<td><span style="color:red;">*</span>法人名称</td>
-									<td colspan="2">
-										<input type="text" data-name="cusLegalPerson" class="layui-input necessary" value="">
-									</td>
-									<td><span style="color:red;">*</span>注册日期</td>
-									<td colspan="2">
-										<input data-name="cusZcDate" type="text" class="layui-input date khxxzcrq necessary" value="">
-									</td>
-									<td><span style="color:red;">*</span>注册金额（万）</td>
-									<td>
-										<input data-name="cusZcFunds" type="text" class="layui-input necessary" value="">
-									</td>
-									<td>企业微信</td>
-									<td colspan="2">
-										<input type="text" data-name="cusWx" class="layui-input" value="">
-									</td>
-									<td>企业电话</td>
-									<td>
-										<input type="text" data-name="cusPhone" class="layui-input" value="">
-									</td>
-								</tr>
-								<tr>
-									<td>车辆总数（辆）</td>
-									<td colspan="2">
-										<input data-name="cusVehicletotal" type="text" class="layui-input" value="" readonly>
-									</td>
-									<td>客车（辆）</td>
-									<td colspan="2">
-										<input data-name="cusPsacar" type="text" class="layui-input" value="" readonly>
-									</td>
-									<td>货车（辆）</td>
-									<td colspan="2">
-										<input data-name="cusTruck" type="text" class="layui-input date" value="" readonly>
-									</td>
-									<td>小型车（辆）</td>
-									<td>
-										<input data-name="cusXCar" type="text" class="layui-input" value="" readonly>
-									</td>
-									<td>管辖单位</td>
-									<td colspan="2">
-										<input data-name="cusServiceComs" type="text" class="layui-input gxdw" readonly value="">
-									</td>
-									<td>分管经理</td>
-									<td>
-										<input data-name="cusChargeManager" type="text" class="layui-input" value="">
-									</td>
-								</tr>
-							</tbody>
-						</table>
+								</td>
+								<td style="width:6.25%">客户类型</td>
+								<td><input data-name="cusCusType" type="text" class="layui-input " value="" readonly></td>
+							</tr>
+							<tr>
+								<td><span style="color:red;">*</span>企业性质</td>
+								<td colspan="2">
+									<select data-name="cus_nature" class="cusNature necessary" id="">
+										<option></option>
+									</select>
+								</td>
+								<td><span style="color:red;">*</span>法人名称</td>
+								<td colspan="2">
+									<input type="text" data-name="cusLegalPerson" class="layui-input necessary" value="">
+								</td>
+								<td><span style="color:red;">*</span>注册日期</td>
+								<td colspan="2">
+									<input data-name="cusZcDate" type="text" class="layui-input date khxxzcrq necessary" value="">
+								</td>
+								<td><span style="color:red;">*</span>注册金额（万）</td>
+								<td>
+									<input data-name="cusZcFunds" type="text" class="layui-input necessary" value="">
+								</td>
+								<td>企业微信</td>
+								<td colspan="2">
+									<input type="text" data-name="cusWx" class="layui-input" value="">
+								</td>
+								<td>企业电话</td>
+								<td>
+									<input type="text" data-name="cusPhone" class="layui-input" value="">
+								</td>
+							</tr>
+							<tr>
+								<td>车辆总数（辆）</td>
+								<td colspan="2">
+									<input data-name="cusVehicletotal" type="text" class="layui-input" value="" readonly>
+								</td>
+								<td>客车（辆）</td>
+								<td colspan="2">
+									<input data-name="cusPsacar" type="text" class="layui-input" value="" readonly>
+								</td>
+								<td>货车（辆）</td>
+								<td colspan="2">
+									<input data-name="cusTruck" type="text" class="layui-input date" value="" readonly>
+								</td>
+								<td>小型车（辆）</td>
+								<td>
+									<input data-name="cusXCar" type="text" class="layui-input" value="" readonly>
+								</td>
+								<td>管辖单位</td>
+								<td colspan="2">
+									<input data-name="cusServiceComs" type="text" class="layui-input gxdw" readonly value="">
+								</td>
+								<td>分管经理</td>
+								<td>
+									<input data-name="cusChargeManager" type="text" class="layui-input" value="">
+								</td>
+							</tr>
+						</tbody>
+					</table>
 
-						<div style="text-align:center;">
-							<div class="layui-btn layui-btn-sm" onclick="saveCust()">下一步</div>
-						</div>
+					<div style="text-align:center;">
+						<div class="layui-btn layui-btn-sm" onclick="saveCust()">下一步</div>
 					</div>
-					<div class="layui-tab-item">
-						<!-- 联系人 -->
-						<table class="layui-table">
-							<thead>
-								<tr>
-									<th colspan="16" class="infos">
-										提示：为了方便找回密码，请正确填写手机号，邮箱，QQ，微信号
-									</th>
-								</tr>
-								<tr>
-									<th class="num" style="width: 2.5%;">序号</th>
-									<th style="width: 5%;">姓名</th>
-									<th style="width: 5%;">性别</th>
-									<th style="width: 5%;">职务</th>
-									<th style="width: 5%;">主管范围</th>
-									<th style="width: 7.5%;">电话</th>
-									<th style="width: 7.5%;">手机</th>
-									<th style="width: 7.5%;">传真</th>
-									<th style="width: 7.5%;">邮箱</th>
-									<th style="width: 7.5%;">QQ</th>
-									<th style="width: 7.5%;">微信</th>
-									<th colspan="2" style="width: 15%">日期类型</th>
-									<th style="width:5%;">录入人</th>
-									<th style="width:7.5%;">时间</th>
-								</tr>
-							</thead>
-							<tbody class="lxrbody">
-								<tr>
-									<td></td>
-									<td>
-										<input type="text" data-name="conName" class="layui-input" value="">
-									</td>
-									<td>
-										<select class="sex" name="" id="">
-											<option value="男" checked>男</option>
-											<option value="女">女</option>
-										</select>
+				</div>
+				<div class="layui-tab-item">
+					<!-- 联系人 -->
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th colspan="16" class="infos">
+									提示：为了方便找回密码，请正确填写手机号，邮箱，QQ，微信号
+								</th>
+							</tr>
+							<tr>
+								<th class="num" style="width: 2.5%;">序号</th>
+								<th style="width: 5%;">姓名</th>
+								<th style="width: 5%;">性别</th>
+								<th style="width: 5%;">职务</th>
+								<th style="width: 5%;">主管范围</th>
+								<th style="width: 7.5%;">电话</th>
+								<th style="width: 7.5%;">手机</th>
+								<th style="width: 7.5%;">传真</th>
+								<th style="width: 7.5%;">邮箱</th>
+								<th style="width: 7.5%;">QQ</th>
+								<th style="width: 7.5%;">微信</th>
+								<th colspan="2" style="width: 15%">日期类型</th>
+								<th style="width:5%;">录入人</th>
+								<th style="width:7.5%;">时间</th>
+							</tr>
+						</thead>
+						<tbody class="lxrbody">
+							<tr>
+								<td></td>
+								<td>
+									<input type="text" data-name="conName" class="layui-input" value="">
+								</td>
+								<td>
+									<select class="sex" name="" id="">
+										<option value="男" checked>男</option>
+										<option value="女">女</option>
+									</select>
 
-									</td>
-									<td>
-										<input type="text" data-name="conRole" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conRole" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conRange" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conRange" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conPhone" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conPhone" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conMobPhone" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conMobPhone" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conFax" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conFax" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conEmail" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conEmail" class="layui-input" value="">
 
-									</td>
-									<td>
-										<input type="text" data-name="conQq" class="layui-input" value="">
-									</td>
-									<td>
-										<input type="text" data-name="conWeixin" class="layui-input" value="">
-									</td>
-									<td>
-										<input type="text" data-name="conDateType" class="layui-input" value="">
-									</td>
-									<td>
-										<input type="text" data-name="conImportantDate" id="typedate" class="layui-input" lay-verify="date" value="">
-									</td>
-									<td><input type="text" data-name="luRuPeople" value="" readonly class="layui-input lxrlrr"></td>
-									<td class="lxrDate"></td>
-								</tr>
-							</tbody>
-						</table>
-						<div style="text-align:center;">
-							<div class="layui-btn layui-btn-sm" onclick="saveLxr()">保存</div>
-							<div class="layui-btn layui-btn-sm layui-btn-danger" onclick="closes()">关闭</div>
-						</div>
+								</td>
+								<td>
+									<input type="text" data-name="conQq" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conWeixin" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conDateType" class="layui-input" value="">
+								</td>
+								<td>
+									<input type="text" data-name="conImportantDate" id="typedate" class="layui-input" lay-verify="date" value="">
+								</td>
+								<td><input type="text" data-name="luRuPeople" value="" readonly class="layui-input lxrlrr"></td>
+								<td class="lxrDate"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div style="text-align:center;">
+						<div class="layui-btn layui-btn-sm" onclick="saveLxr()">保存</div>
+						<div class="layui-btn layui-btn-sm layui-btn-danger" onclick="closes()">关闭</div>
 					</div>
-					<div class="layui-tab-item">
-						<!-- 财务信息 -->
-						<table class="layui-table">
-							<tbody class="cwxx">
-								<tr>
-									<td>法人代码号</td>
-									<td colspan="2"><input type="text" data-name="finFrNo" class="layui-input"></td>
-									<td>税务登记号</td>
-									<td colspan="2"><input type="text" data-name="finDjNo" class="layui-input"></td>
-									<td>地址电话</td>
-									<td colspan="2"><input type="text" data-name="finAddress" class="layui-input"></td>
-									<td>税务类型</td>
-									<td colspan="4"><select class="finType"></select></td>
-									<!-- <input type="text" data-name="finType" class="layui-input"> -->
-									<td>操作</td>
-								</tr>
-								<tr>
-									<td>账户1</td>
-									<td colspan="2"><input type="text" data-name="finvType" class="layui-input"></td>
-									<td>开户银行</td>
-									<td colspan="2"><input type="text" data-name="finvBank" class="layui-input"></td>
-									<td>账号</td>
-									<td colspan="2"><input type="text" data-name="finvNumber" class="layui-input"></td>
-									<td>录入人</td>
-									<td colspan="2"><input type="text" readonly data-name="finvUser" class="layui-input cwlrr"></td>
-									<td colspan="2"><input type="text" data-name="finvDate" class="layui-input cwlrsj"></td>
-									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCw()">保存</button></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="layui-tab-item">
-						<!-- 积分信息 -->
+				</div>
+				<div class="layui-tab-item">
+					<!-- 财务信息 -->
+					<table class="layui-table">
+						<tbody class="cwxx">
+							<tr>
+								<td>法人代码号</td>
+								<td colspan="2"><input type="text" data-name="finFrNo" class="layui-input"></td>
+								<td>税务登记号</td>
+								<td colspan="2"><input type="text" data-name="finDjNo" class="layui-input"></td>
+								<td>地址电话</td>
+								<td colspan="2"><input type="text" data-name="finAddress" class="layui-input"></td>
+								<td>税务类型</td>
+								<td colspan="4"><select class="finType"></select></td>
+								<!-- <input type="text" data-name="finType" class="layui-input"> -->
+								<td>操作</td>
+							</tr>
+							<tr>
+								<td>账户1</td>
+								<td colspan="2"><input type="text" data-name="finvType" class="layui-input"></td>
+								<td>开户银行</td>
+								<td colspan="2"><input type="text" data-name="finvBank" class="layui-input"></td>
+								<td>账号</td>
+								<td colspan="2"><input type="text" data-name="finvNumber" class="layui-input"></td>
+								<td>录入人</td>
+								<td colspan="2"><input type="text" readonly data-name="finvUser" class="layui-input cwlrr"></td>
+								<td colspan="2"><input type="text" data-name="finvDate" class="layui-input cwlrsj"></td>
+								<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCw()">保存</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="layui-tab-item">
+					<!-- 积分信息 -->
+					<table class="layui-table">
+						<tbody>
+							<tr class="jfxx">
+								<td>累计积分</td>
+								<td><input type="text" data-name="intLj" class="layui-input"></td>
+								<td>使用积分</td>
+								<td><input type="text" data-name="intSy" class="layui-input"></td>
+								<td>可用积分</td>
+								<td><input type="text" data-name="intKy" class="layui-input"></td>
+								<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveJf()">保存</button></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="layui-tab-item">
+					<!-- 动态信息 -->
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th>添加时间</th>
+								<th colspan="10">信息内容</th>
+								<th>添加人</th>
+								<th>操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="dtxx">
+								<td>
+									<input type="text" data-name="feedAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input dttjsj">
+								</td>
+								<td colspan="10"><input data-name="feedContent" type="text" class="layui-input"></td>
+								<td><input data-name="feedAddPerson" type="text" class="layui-input dtxxlrr" readonly value=""></td>
+								<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveDt()">保存</button></td>
+								<!-- <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button></td> -->
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="layui-tab-item">
+					<!-- 车辆信息 -->
+					<div class="winbody">
 						<table class="layui-table">
 							<tbody>
-								<tr class="jfxx">
-									<td>累计积分</td>
-									<td><input type="text" data-name="intLj" class="layui-input"></td>
-									<td>使用积分</td>
-									<td><input type="text" data-name="intSy" class="layui-input"></td>
-									<td>可用积分</td>
-									<td><input type="text" data-name="intKy" class="layui-input"></td>
-									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveJf()">保存</button></td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="layui-tab-item">
-						<!-- 动态信息 -->
-						<table class="layui-table">
-							<thead>
 								<tr>
-									<th>添加时间</th>
-									<th colspan="10">信息内容</th>
-									<th>添加人</th>
-									<th>操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="dtxx">
-									<td>
-										<input type="text" data-name="feedAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input dttjsj">
+									<td>登记日期 <input type="hidden" class="carInfos" data-name="id" value=""></td>
+									<td colspan="2">
+										<input type="text" data-name="carDjDate" name="date" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos cl_dj">
 									</td>
-									<td colspan="10"><input data-name="feedContent" type="text" class="layui-input"></td>
-									<td><input data-name="feedAddPerson" type="text" class="layui-input dtxxlrr" readonly value=""></td>
-									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveDt()">保存</button></td>
-										<!-- <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button></td> -->
+									<td>车辆品牌</td>
+									<td colspan="2">
+										<input type="text" data-name="carBrand" class="layui-input carInfos" value="">
+									</td>
+									<td>车辆型号</td>
+									<td colspan="2">
+										<input type="text" data-name="carModel" class="layui-input carInfos" value="">
+									</td>
+
+									<td>生产日期</td>
+									<td colspan="2">
+										<input type="text" name="date" data-name="carAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos carscrq">
+									</td>
 								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="layui-tab-item">
-						<!-- 车辆信息 -->
-						<div class="winbody">
-							<table class="layui-table">
-								<tbody>
-									<tr>
-										<td>登记日期 <input type="hidden" class="carInfos" data-name="id" value=""></td>
-										<td colspan="2">
-											<input type="text" data-name="carDjDate" name="date" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos cl_dj">
-										</td>
-										<td>车辆品牌</td>
-										<td colspan="2">
-											<input type="text" data-name="carBrand" class="layui-input carInfos" value="">
-										</td>
-										<td>车辆型号</td>
-										<td colspan="2">
-											<input type="text" data-name="carModel" class="layui-input carInfos" value="">
-										</td>
+								<tr>
 
-										<td>生产日期</td>
-										<td colspan="2">
-											<input type="text" name="date" data-name="carAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos carscrq">
-										</td>
-									</tr>
-									<tr>
+									<td>车辆牌号</td>
+									<td colspan="2"><input type="text" data-name="carPlate" class="layui-input carInfos" value=""></td>
 
-										<td>车辆牌号</td>
-										<td colspan="2"><input type="text" data-name="carPlate" class="layui-input carInfos" value=""></td>
+									<td>自编车号</td>
+									<td colspan="2"><input type="text" data-name="carNumber" class="layui-input carInfos" value=""></td>
+									<td>购买日期</td>
+									<td colspan="2">
+										<input type="text" name="date" data-name="carGzDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos cargmrq">
+									</td>
+									<td>注册日期</td>
+									<td colspan="2">
+										<input type="text" name="date" data-name="carOperateDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos carzcrq">
+									</td>
 
-										<td>自编车号</td>
-										<td colspan="2"><input type="text" data-name="carNumber" class="layui-input carInfos" value=""></td>
-										<td>购买日期</td>
-										<td colspan="2">
-											<input type="text" name="date" data-name="carGzDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos cargmrq">
-										</td>
-										<td>注册日期</td>
-										<td colspan="2">
-											<input type="text" name="date" data-name="carOperateDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos carzcrq">
-										</td>
-
-									</tr>
-									<tr>
-										<td>识别号</td>
-										<td colspan="2">
-											<input type="text" data-name="carShiBieNumber" class="layui-input carInfos" value="">
-										</td>
-										<td>变速箱号</td>
-										<td colspan="2">
-											<input type="text" data-name="bianSuNumber" class="layui-input carInfos" value="">
-										</td>
-										<td>发动机号</td>
-										<td colspan="2">
-											<input type="text" data-name="carEngine" class="layui-input carInfos" value="">
-										</td>
-										<td>行驶证号</td>
-										<td colspan="2">
-											<input type="text" data-name="xingShiNumber" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>驱动方式</td>
-										<td colspan="2">
-											<select name="" class="carDrive" id="">
-												<option value=""></option>
-												<!--<option value="4*2">4*2</option>
+								</tr>
+								<tr>
+									<td>识别号</td>
+									<td colspan="2">
+										<input type="text" data-name="carShiBieNumber" class="layui-input carInfos" value="">
+									</td>
+									<td>变速箱号</td>
+									<td colspan="2">
+										<input type="text" data-name="bianSuNumber" class="layui-input carInfos" value="">
+									</td>
+									<td>发动机号</td>
+									<td colspan="2">
+										<input type="text" data-name="carEngine" class="layui-input carInfos" value="">
+									</td>
+									<td>行驶证号</td>
+									<td colspan="2">
+										<input type="text" data-name="xingShiNumber" class="layui-input carInfos" value="">
+									</td>
+								</tr>
+								<tr>
+									<td>驱动方式</td>
+									<td colspan="2">
+										<select name="" class="carDrive" id="">
+											<option value=""></option>
+											<!--<option value="4*2">4*2</option>
 												<option value="4*4">4*4</option>
 												<option value="6*2">6*2</option>
 												<option value="6*4">6*4</option>
 												<option value="8*4">8*4</option>-->
-											</select>
-										</td>
-										<td>车轴/轮数</td>
-										<td colspan="2">
-											<select name="" class="carWheel" id="">
-												<option value=""></option>
-												<!--<option value="2-2">2-2</option>
+										</select>
+									</td>
+									<td>车轴/轮数</td>
+									<td colspan="2">
+										<select name="" class="carWheel" id="">
+											<option value=""></option>
+											<!--<option value="2-2">2-2</option>
 												<option value="2-2-2">2-2-2</option>
 												<option value="2-2-4">2-2-4</option>
 												<option value="2-2-4-4">2-2-4-4</option>
@@ -521,44 +521,44 @@
 												<option value="4-4-4">4-4-4</option>
 												<option value="4-4-4-2">4-4-4-2</option>-->
 
-											</select>
-										</td>
-										<td>能源类型</td>
-										<td colspan="2">
-											<select class="Ele_energy_type" name="" id="">
-												<option value=""></option>
-												<!--<option value="柴油">柴油</option>
+										</select>
+									</td>
+									<td>能源类型</td>
+									<td colspan="2">
+										<select class="Ele_energy_type" name="" id="">
+											<option value=""></option>
+											<!--<option value="柴油">柴油</option>
 												<option value="汽油">汽油</option>
 												<option value="燃气">燃气</option>
 												<option value="电动">电动</option>
 												<option value="油气混合">油气混合</option>
 												<option value="油电混合">油电混合</option>-->
-											</select>
-										</td>
-										<td>车辆功率</td>
-										<td colspan="2">
-											<input type="text" data-name="carPower" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>车辆承载</td>
-										<td colspan="2">
-											<select name="" class="carLoad" id="">
-												<option value=""></option>
-												<!--<option value="轻载">轻载</option>
+										</select>
+									</td>
+									<td>车辆功率</td>
+									<td colspan="2">
+										<input type="text" data-name="carPower" class="layui-input carInfos" value="">
+									</td>
+								</tr>
+								<tr>
+									<td>车辆承载</td>
+									<td colspan="2">
+										<select name="" class="carLoad" id="">
+											<option value=""></option>
+											<!--<option value="轻载">轻载</option>
 												<option value="标载">标载</option>
 												<option value="轻度超载">轻度超载</option>
 												<option value="超载">超载</option>
 												<option value="严重超载">严重超载</option>
 												<option value="重去轻回">重去轻回</option>-->
 
-											</select>
-										</td>
-										<td>车身颜色</td>
-										<td class="double" colspan="2">
-											<select name="" id="" class="carColor1">
-												<option value=""></option>
-												<!--<option value="橙">橙</option>
+										</select>
+									</td>
+									<td>车身颜色</td>
+									<td class="double" colspan="2">
+										<select name="" id="" class="carColor1">
+											<option value=""></option>
+											<!--<option value="橙">橙</option>
 												<option value="黄">黄</option>
 												<option value="绿">绿</option>
 												<option value="青">青</option>
@@ -571,10 +571,10 @@
 												<option value="灰">灰</option>
 												<option value="金">金</option>
 												<option value="银">银</option>-->
-											</select>
-											<select name="" id="" class="carColor2">
-												<option value=""></option>
-												<!--<option value="橙">橙</option>
+										</select>
+										<select name="" id="" class="carColor2">
+											<option value=""></option>
+											<!--<option value="橙">橙</option>
 												<option value="黄">黄</option>
 												<option value="绿">绿</option>
 												<option value="青">青</option>
@@ -587,88 +587,88 @@
 												<option value="灰">灰</option>
 												<option value="金">金</option>
 												<option value="银">银</option>-->
-											</select>
-										</td>
-										<td>车辆类型</td>
-										<td class="double" colspan="2">
-											<select name="" id="" class="carType1">
-												<option value=""></option>
-												<!--<option value="货运车辆">货运车辆</option>
+										</select>
+									</td>
+									<td>车辆类型</td>
+									<td class="double" colspan="2">
+										<select name="" id="" class="carType1">
+											<option value=""></option>
+											<!--<option value="货运车辆">货运车辆</option>
 												<option value="客运车辆">客运车辆</option>
 												<option value="乘用车辆">乘用车辆</option>
 												<option value="工程机械">工程机械</option>-->
-											</select>
-											<select name="" id="" class="carType2">
-												<option value=""></option>
-												<!--<option value="拖头">拖头</option>
+										</select>
+										<select name="" id="" class="carType2">
+											<option value=""></option>
+											<!--<option value="拖头">拖头</option>
 												<option value="单机">单机</option>
 												<option value="半挂">半挂</option>
 												<option value="挂车">挂车</option>-->
 
-											</select>
-										</td>
-										<td>车辆自重</td>
-										<td colspan="2">
-											<input type="text" data-name="carWeight" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>轮辋规格</td>
-										<td colspan="2">
-											<input type="text" data-name="carRims" class="layui-input carInfos" value="">
-										</td>
-										<td>轮辋型号</td>
-										<td colspan="2">
-											<input type="text" data-name="carRimModel" class="layui-input carInfos" value="">
-										</td>
-										<td>轮辋类型</td>
-										<td colspan="2">
-											<select name="" id="" class="carRimType">
-												<option value=""></option>
-												<!--<option value="铝制轮辋">铝制轮辋</option>
+										</select>
+									</td>
+									<td>车辆自重</td>
+									<td colspan="2">
+										<input type="text" data-name="carWeight" class="layui-input carInfos" value="">
+									</td>
+								</tr>
+								<tr>
+									<td>轮辋规格</td>
+									<td colspan="2">
+										<input type="text" data-name="carRims" class="layui-input carInfos" value="">
+									</td>
+									<td>轮辋型号</td>
+									<td colspan="2">
+										<input type="text" data-name="carRimModel" class="layui-input carInfos" value="">
+									</td>
+									<td>轮辋类型</td>
+									<td colspan="2">
+										<select name="" id="" class="carRimType">
+											<option value=""></option>
+											<!--<option value="铝制轮辋">铝制轮辋</option>
 												<option value="碳钢轮辋">碳钢轮辋</option>-->
-											</select>
-										</td>
-										<td>乘员/尺寸</td>
-										<td colspan="2">
-											<input type="text" data-name="crewSize" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>制动类型</td>
-										<td colspan="2">
-											<select name="" id="" class="carBrakingType">
-												<option value=""></option>
-												<!--<option value="盘式">盘式</option>
+										</select>
+									</td>
+									<td>乘员/尺寸</td>
+									<td colspan="2">
+										<input type="text" data-name="crewSize" class="layui-input carInfos" value="">
+									</td>
+								</tr>
+								<tr>
+									<td>制动类型</td>
+									<td colspan="2">
+										<select name="" id="" class="carBrakingType">
+											<option value=""></option>
+											<!--<option value="盘式">盘式</option>
 												<option value="毂式">毂式</option>
 												<option value="盘式+ABS">盘式+ABS</option>
 												<option value="毂式+ABS">毂式+ABS</option>-->
-											</select>
-										</td>
-										<td>悬架类型</td>
-										<td colspan="2">
-											<select name="" id="" class="carSuspensionType">
-												<option value=""></option>
-												<!--<option value="空气悬架">空气悬架</option>
+										</select>
+									</td>
+									<td>悬架类型</td>
+									<td colspan="2">
+										<select name="" id="" class="carSuspensionType">
+											<option value=""></option>
+											<!--<option value="空气悬架">空气悬架</option>
 												<option value="弹簧钢板">弹簧钢板</option>-->
-											</select>
-										</td>
-										<td>运营范围</td>
-										<td colspan="2">
-											<select name="" id="" class="carOperationType">
-												<option value=""></option>
-												<!--<option value="中短途">中短途</option>
+										</select>
+									</td>
+									<td>运营范围</td>
+									<td colspan="2">
+										<select name="" id="" class="carOperationType">
+											<option value=""></option>
+											<!--<option value="中短途">中短途</option>
 												<option value="中长途">中长途</option>
 												<option value="公共交通">公共交通</option>
 												<option value="自用">自用</option>-->
-											</select>
-										</td>
-										<td>车辆用途</td>
-										<td colspan="2">
-											<div class="layui-input-block">
-												<select name="interest" class="carUse" lay-filter="aihao">
-													<option value=""></option>
-													<!--<option value="自用办公">自用办公</option>
+										</select>
+									</td>
+									<td>车辆用途</td>
+									<td colspan="2">
+										<div class="layui-input-block">
+											<select name="interest" class="carUse" lay-filter="aihao">
+												<option value=""></option>
+												<!--<option value="自用办公">自用办公</option>
 													<option value="客运车辆">客运车辆</option>
 													<option value="公共交通">公共交通</option>
 													<option value="班车/旅游">班车/旅游</option>
@@ -681,820 +681,825 @@
 													<option value="成品油罐车">成品油罐车</option>
 													<option value="化工品罐车">化工品罐车</option>
 													<option value="散货物流车">散货物流车</option>-->
-												</select>
-											</div>
-										</td>
-									</tr>
-									<tr>
-										<td colspan="3" >
-											<input type="checkbox"  name="" class="aqqts" lay-skin="primary" value="前桥提升" >前桥提升
-											<input type="checkbox" name="" class="ahqts" lay-skin="primary" value="后桥提升" >后桥提升
-											<input type="checkbox" name="" class="asdzx" lay-skin="primary" value="随动转向" >随动转向
-										</td>
-										<td>产权所有</td>
-										<td colspan="5">
-											<input type="text" data-name="chanQuan" class="layui-input carInfos" value="">
-										</td>
-										<td>关联车辆</td>
-										<td colspan="2">
-											<input type="text" data-name="" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>运营日期</td>
-										<td colspan="2">
-											<input type="text" data-name="carOperateDate" class="layui-input caryyrq carInfos" value="">
-										</td>
-										<td>运营状态</td>
-										<td colspan="">
-											<select name="" id="" class="carOperateType">
-												<option value=""></option>
-												<!--<option value="出售">出售</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+										<input type="checkbox" name="" class="aqqts" lay-skin="primary" value="前桥提升">前桥提升
+										<input type="checkbox" name="" class="ahqts" lay-skin="primary" value="后桥提升">后桥提升
+										<input type="checkbox" name="" class="asdzx" lay-skin="primary" value="随动转向">随动转向
+									</td>
+									<td>产权所有</td>
+									<td colspan="5">
+										<input type="text" data-name="chanQuan" class="layui-input carInfos" value="">
+									</td>
+									<td>关联车辆</td>
+									<td colspan="2">
+										<input type="text" data-name="" class="layui-input carInfos" value="">
+									</td>
+								</tr>
+								<tr>
+									<td>运营日期</td>
+									<td colspan="2">
+										<input type="text" data-name="carOperateDate" class="layui-input caryyrq carInfos" value="">
+									</td>
+									<td>运营状态</td>
+									<td colspan="">
+										<select name="" id="" class="carOperateType">
+											<option value=""></option>
+											<!--<option value="出售">出售</option>
 												<option value="报废">报废</option>
 												<option value="调离">调离</option>
 												<option value="启用">启用</option>
 												<option value="更新">更新</option>-->
-											</select>
-										</td>
-										<td>
-											调离至
-										</td>
-										<td colspan="2">
-											<input type="text" data-name="monitoring" class="layui-input carInfos" value="">
-										</td>
-										<td>录入人</td>
-										<td colspan="2">
-											<input type="text" data-name="inputAttn" class="layui-input carInfos" value="">
-										</td>
-									</tr>
-									<tr>
-										<td>备注</td>
-										<td colspan="11"><input type="text" class="layui-input carInfos" data-name="bz" value=""></td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<div style="text-align:center">
-							<div class="layui-btn layui-btn-sm" onclick="saveCarInfo()">
-								保存
-							</div>
-						</div>
-
-						<table class="layui-table">
-							<thead>
-								<tr>
-									<th class="num" style="width: 2.5%;">序号</th>
-									<th style="width: 5%;">登记日期</th>
-									<th style="width: 5%;">车辆品牌</th>
-									<th style="width: 5%;">车辆型号</th>
-									<th style="width: 5%;">生产日期</th>
-									<th style="width: 5%;">车辆牌号</th>
-									<th style="width: 5%;">自编车号</th>
-									<th style="width: 5%;">购买日期</th>
-									<th style="width: 5%;">注册日期</th>
-									<th style="width: 5%;">识别号</th>
-									<th style="width: 5%;">变速箱号</th>
-									<th style="width: 5%;">发动机号</th>
-									<th style="width: 7.5%;">行驶证号</th>
-									<th style="width: 5%;">驱动方式</th>
-									<th style="width: 5%;">车轴/轮数</th>
-									<th style="width: 5%;">能源类型</th>
-									<th style="width: 7.5%;">车辆功率</th>
-									<th class="control" style="width:7.5%;">操作</th>
-								</tr>
-							</thead>
-							<tbody class="clbody">
-
-							</tbody>
-						</table>
-					</div>
-					<div class="layui-tab-item">
-						<table class="layui-table" lay-filter="table">
-							<thead>
-								<tr>
-									<th class="num">序号</th>
-									<th>品名</th>
-									<th>规格</th>
-									<th>品牌</th>
-									<th>型号</th>
-									<th>产地</th>
-									<th>寿命类型</th>
-									<th>提示预警</th>
-									<th>达限预警</th>
-									<th>立即更换</th>
-									<th>启用</th>
-									<th class="control">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="wlsm">
-									<td></td>
-									<td>
-										<input type="text" data-name="limName" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="limSf" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="limBrand" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="limModel" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="limOrigin" class="layui-input">
-									</td>
-									<td>
-										<select name="" data-name="limType" class="limType" id="">
-											<option value="剩余胎纹">剩余胎纹</option>
-											<option value="工作小时">工作小时</option>
-											<option value="使用里程">使用里程</option>
 										</select>
 									</td>
 									<td>
-										<input type="text" data-name="limPrompt" class="layui-input">
+										调离至
 									</td>
-									<td>
-										<input type="text" data-name="limLimited" class="layui-input">
+									<td colspan="2">
+										<input type="text" data-name="monitoring" class="layui-input carInfos" value="">
 									</td>
-
-									<td>
-										<input type="text" data-name="limReplacement" class="layui-input">
-									</td>
-									<td>
-										<button class="layui-btn layui-btn-xs  qiyong">启用</button>
-									</td>
-									<td>
-										<button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveWl()">保存</button>
-										<!-- <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button> -->
+									<td>录入人</td>
+									<td colspan="2">
+										<input type="text" data-name="inputAttn" class="layui-input carInfos" value="">
 									</td>
 								</tr>
-							</tbody>
-						</table>
-						<!-- 物料信息 -->
-
-					</div>
-					<div class="layui-tab-item">
-						<!-- 仓库管理 -->
-						<table class="layui-table" lay-filter="table">
-							<thead>
 								<tr>
-									<th class="num">序号</th>
-									<th colspan="2">仓库名</th>
-									<th colspan="4">地址</th>
-									<th>负责人</th>
-									<th>电话</th>
-									<th colspan="2">录入人</th>
-									<th class="control">操作</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="ckgl">
-									<td>1</td>
-									<td colspan="2">
-										<input type="text" data-name="warName" class="layui-input">
-									</td>
-									<td colspan="4">
-										<input type="text" data-name="warAddress" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="warHead" class="layui-input">
-									</td>
-									<td>
-										<input type="text" data-name="warPhone" class="layui-input">
-									</td>
-									<td colspan="2">
-										<input type="text" data-name="warInput" readonly class="layui-input cklrr">
-									</td>
-									<td>
-										<button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCk()">保存</button>
-										<button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
-									</td>
+									<td>备注</td>
+									<td colspan="11"><input type="text" class="layui-input carInfos" data-name="bz" value=""></td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
+					<div style="text-align:center">
+						<div class="layui-btn layui-btn-sm" onclick="saveCarInfo('true')">
+							保存
+						</div>
+					</div>
+
+					<table class="layui-table">
+						<thead>
+							<tr>
+								<th class="num" style="width: 2.5%;">序号</th>
+								<th style="width: 5%;">登记日期</th>
+								<th style="width: 5%;">车辆品牌</th>
+								<th style="width: 5%;">车辆型号</th>
+								<th style="width: 5%;">生产日期</th>
+								<th style="width: 5%;">车辆牌号</th>
+								<th style="width: 5%;">自编车号</th>
+								<th style="width: 5%;">购买日期</th>
+								<th style="width: 5%;">注册日期</th>
+								<th style="width: 5%;">识别号</th>
+								<th style="width: 5%;">变速箱号</th>
+								<th style="width: 5%;">发动机号</th>
+								<th style="width: 7.5%;">行驶证号</th>
+								<th style="width: 5%;">驱动方式</th>
+								<th style="width: 5%;">车轴/轮数</th>
+								<th style="width: 5%;">能源类型</th>
+								<th style="width: 7.5%;">车辆功率</th>
+								<th class="control" style="width:7.5%;">操作</th>
+							</tr>
+						</thead>
+						<tbody class="clbody">
+
+						</tbody>
+					</table>
+				</div>
+				<div class="layui-tab-item">
+					<table class="layui-table" lay-filter="table">
+						<thead>
+							<tr>
+								<th class="num">序号</th>
+								<th>品名</th>
+								<th>规格</th>
+								<th>品牌</th>
+								<th>型号</th>
+								<th>产地</th>
+								<th>寿命类型</th>
+								<th>提示预警</th>
+								<th>达限预警</th>
+								<th>立即更换</th>
+								<th>启用</th>
+								<th class="control">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="wlsm">
+								<td></td>
+								<td>
+									<input type="text" data-name="limName" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="limSf" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="limBrand" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="limModel" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="limOrigin" class="layui-input">
+								</td>
+								<td>
+									<select name="" data-name="limType" class="limType" id="">
+										<option value="剩余胎纹">剩余胎纹</option>
+										<option value="工作小时">工作小时</option>
+										<option value="使用里程">使用里程</option>
+									</select>
+								</td>
+								<td>
+									<input type="text" data-name="limPrompt" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="limLimited" class="layui-input">
+								</td>
+
+								<td>
+									<input type="text" data-name="limReplacement" class="layui-input">
+								</td>
+								<td>
+									<button class="layui-btn layui-btn-xs  qiyong">启用</button>
+								</td>
+								<td>
+									<button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveWl()">保存</button>
+									<!-- <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button> -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<!-- 物料信息 -->
+
+				</div>
+				<div class="layui-tab-item">
+					<!-- 仓库管理 -->
+					<table class="layui-table" lay-filter="table">
+						<thead>
+							<tr>
+								<th class="num">序号</th>
+								<th colspan="2">仓库名</th>
+								<th colspan="4">地址</th>
+								<th>负责人</th>
+								<th>电话</th>
+								<th colspan="2">录入人</th>
+								<th class="control">操作</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="ckgl">
+								<td>1</td>
+								<td colspan="2">
+									<input type="text" data-name="warName" class="layui-input">
+								</td>
+								<td colspan="4">
+									<input type="text" data-name="warAddress" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="warHead" class="layui-input">
+								</td>
+								<td>
+									<input type="text" data-name="warPhone" class="layui-input">
+								</td>
+								<td colspan="2">
+									<input type="text" data-name="warInput" readonly class="layui-input cklrr">
+								</td>
+								<td>
+									<button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCk()">保存</button>
+									<button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
-		<div class="operation-type-div" style="display: none;">
-			<form class="layui-form" action="" lay-filter="example">
-				<div class="layui-form-item">
-					<!--<label class="layui-form-label">选择运营类型</label>-->
-					<div class="layui-input-block">
-						<input type="checkbox" name="" title="客运公司">
-						<input type="checkbox" name="" title="货运公司">
-						<input type="checkbox" name="" title="生产厂家">
-						<input type="checkbox" name="" title="轮胎经销">
-						<input type="checkbox" name="" title="物流运输">
-						<input type="checkbox" name="" title="大车维修">
-						<input type="checkbox" name="" title="小车维修">
-						<input type="checkbox" name="" title="分支机构">
-						<input type="checkbox" name="" title="加盟网点">
-						<input type="checkbox" name="" title="配件经销">
-						<input type="checkbox" name="" title="其他">
-					</div>
+	</div>
+	<div class="operation-type-div" style="display: none;">
+		<form class="layui-form" action="" lay-filter="example">
+			<div class="layui-form-item">
+				<!--<label class="layui-form-label">选择运营类型</label>-->
+				<div class="layui-input-block">
+					<input type="checkbox" name="" title="客运公司">
+					<input type="checkbox" name="" title="货运公司">
+					<input type="checkbox" name="" title="生产厂家">
+					<input type="checkbox" name="" title="轮胎经销">
+					<input type="checkbox" name="" title="物流运输">
+					<input type="checkbox" name="" title="大车维修">
+					<input type="checkbox" name="" title="小车维修">
+					<input type="checkbox" name="" title="分支机构">
+					<input type="checkbox" name="" title="加盟网点">
+					<input type="checkbox" name="" title="配件经销">
+					<input type="checkbox" name="" title="其他">
 				</div>
-			</form>
-		</div>
-	</body>
-	<script>
-
-		$('.gxdw').val(loadUserInfo.customer.cusName)
-		$('.gxdw').attr('title', loadUserInfo.customer.cusName)
-		$('.lxrlrr').val(loadUserInfo.user.realName)
-		$('.cwlrr').val(loadUserInfo.user.realName)
-		$('.dtxxlrr').val(loadUserInfo.user.realName)
-		$('.cklrr').val(loadUserInfo.user.realName)
-		let custId = loadUserInfo.customer.id;
-		var layer = '';
-		let form = ''
-		let qqts = ''
-		let hqts = ''
-		let zdzx = ''
-		let aqqts = ''
-		let ahqts = ''
-		let azdzx = ''
-		layui.use(['layer', 'form'], function() {
-			layer = layui.layer;
-			form = layui.form;
+			</div>
+		</form>
+	</div>
+</body>
+<script>
+	$('.gxdw').val(loadUserInfo.customer.cusName)
+	$('.gxdw').attr('title', loadUserInfo.customer.cusName)
+	$('.lxrlrr').val(loadUserInfo.user.realName)
+	$('.cwlrr').val(loadUserInfo.user.realName)
+	$('.dtxxlrr').val(loadUserInfo.user.realName)
+	$('.cklrr').val(loadUserInfo.user.realName)
+	let custId = loadUserInfo.customer.id;
+	var layer = '';
+	let form = ''
+	let qqts = ''
+	let hqts = ''
+	let zdzx = ''
+	let aqqts = ''
+	let ahqts = ''
+	let azdzx = ''
+	layui.use(['layer', 'form'], function () {
+		layer = layui.layer;
+		form = layui.form;
+	})
+	layui.use('laydate', function () {
+		var laydate = layui.laydate;
+		laydate.render({
+			elem: '.khxxdjrq'
 		})
-		layui.use('laydate', function() {
-			var laydate = layui.laydate;
-			laydate.render({
-				elem: '.khxxdjrq'
-			})
-			laydate.render({
-				elem: '.khxxzcrq'
-			})
-			laydate.render({
-				elem: '#typedate'
-			})
-			laydate.render({
-				elem: '.cwlrsj'
-			})
-			laydate.render({
-				elem: '.caryyrq'
-			})
-			laydate.render({
-				elem: '.dttjsj'
-			})
-			laydate.render({
-				elem: '.cardjrq'
-			})
-			laydate.render({
-				elem: '.carscrq'
-			})
-			laydate.render({
-				elem: '.cargmrq'
-			})
-			laydate.render({
-				elem: '.carzcrq'
-			})
-			laydate.render({
-				elem: '.cl_dj'
-			})
-
-		});
-		//  关闭当前页面
-		function closes() {
-			alert('关闭失败，请手动关闭！')
-		}
-		let setData = []
-		$.ajax({
-			type: "get",
-			url: API + "/erpSystemParameters/getParameters",
-			async: true,
-			statusCode: {
-				'200': function(res) {
-					if(res.code == 0) {
-						setData = res.data;
-						setSelect()
-						$.each(setData, function(i, k) {
-							if(k.name == '公司性质') {
-								let str = ''
-								$.each(k.parametersChildList, function(j, n) {
-									str += `<option value="${n.name}">${n.name}</option>`
-								})
-								$('.cusNature').append(str)
-							}
-						})
-					}
-				}
-			}
-		});
-		
-		// 上级单位模糊查询
-		// BEGIN BY GYPeng
-			$('.higher-unit-div').css('display','block');
-			let customerList;
-			
-			$('.higher-unit-input').on('input',function(){
-				// if ( !customerList ) {
-				// 	layer.msg ( '数据请求中，请耐心等待!' );
-				// }
-				$ ( '.higher-unit-div ul' ).html ( '' );
-				$.ajax({
-				url: `${API}/erpCustomer/getLikeErpCustor`,
-				type: 'post',
-				data: {
-					userId: loadUserInfo.customer.id,
-					code: $('.higher-unit-input').val() // loadUserInfo.customer.cusCode
-				},
-				success: function(res) {
-					customerList = res.data.customerList;
-					$.each ( customerList, function ( i, item ) {
-					$ ( '.higher-unit-div ul' ).append ( '<li>' + item.cusName + '</li>' );
-				});
-				}
-			});
-				
-			});
-		// END   BY GYPeng
-
-		// $('.higher-unit-input').on('click',function(){
-		// 	console.log ( 'click' );
-		// 	$('.higher-unit-div').css('display','block');
-		// 	$.ajax({
-		// 		url: `${API}/erpCustomer/getLikeErpCustor`,
-		// 		type: 'post',
-		// 		data: {
-		// 			userId: loadUserInfo.customer.id,
-		// 			code: $('.higher-unit-input').val() // loadUserInfo.customer.cusCode
-		// 		},
-		// 		success: function(res) {
-		// 			let customerList = res.data.customerList;
-		// 			$('.higher-unit-div ul').html('');
-		// 			$.each(customerList,function(i,item){
-		// 				$('.higher-unit-div ul').append('<li>' + item.cusName + '</li>');
-		// 			});
-		// 		}
-		// 	});
-		// });
-		
-		$('.higher-unit-div').on('click','li',function(){
-			$('.higher-unit-input').val($(this).html());
-			$('.higher-unit-div').css('display','none');
-		});
-
-		function setSelect() {
-
-			// 驱动方式
-			var driving_mode;
-			// 车轴/轮数
-			var wheel_num;
-			// 能源类型
-			var energy_type;
-			// 车辆承载
-			var capacity;
-			// 车身颜色
-			var vehicle_color;
-			// 车辆类型1
-			var vehicle_type1;
-			// 车辆类型2
-			var vehicle_type2;
-			// 轮辋类型
-			var rim_type;
-			// 制动类型
-			var brake_type;
-			// 悬架类型
-			var suspension_type;
-			// 运营范围
-			var operate_scope;
-			// 车辆用途
-			var vehicle_use;
-			// 运营状态
-			var operate_states;
-			for(var i in setData) {
-				var params_name = setData[i].name;
-				switch(params_name) {
-					case '驱动方式':
-						driving_mode = setData[i].parametersChildList;
-						break;
-					case '车轴/轮数':
-						wheel_num = setData[i].parametersChildList;
-						break;
-					case '能源类型':
-						energy_type = setData[i].parametersChildList;
-						break;
-					case '车辆负载':
-						capacity = setData[i].parametersChildList;
-						break;
-					case '车身颜色':
-						vehicle_color = setData[i].parametersChildList;
-						break;
-					case '车辆类型1':
-						vehicle_type1 = setData[i].parametersChildList;
-						break;
-					case '车辆类型2':
-						vehicle_type2 = setData[i].parametersChildList;
-						break;
-					case '轮辋类型':
-						rim_type = setData[i].parametersChildList;
-						break;
-					case '制动类型':
-						brake_type = setData[i].parametersChildList;
-						break;
-					case '悬架类型':
-						suspension_type = setData[i].parametersChildList;
-						break;
-					case '运营范围':
-						operate_scope = setData[i].parametersChildList;
-						break;
-					case '车辆用途':
-						vehicle_use = setData[i].parametersChildList;
-						break;
-					case '运营状态':
-						operate_states = setData[i].parametersChildList;
-						break;
-				}
-			}
-			// 驱动方式
-			for(var i = 0; i < driving_mode.length; i++) {
-				var option_ele = $('<option value=' + driving_mode[i].name + '>' + driving_mode[i].name + '</option>');
-				$('.carDrive').append(option_ele);
-			}
-			// 车轴/轮数
-			for(var i = 0; i < wheel_num.length; i++) {
-				var option_ele = $('<option value=' + wheel_num[i].name + '>' + wheel_num[i].name + '</option>');
-				$('.carWheel').append(option_ele);
-			}
-			// 能源类型
-			for(var i = 0; i < energy_type.length; i++) {
-				var option_ele = $('<option value=' + energy_type[i].name + '>' + energy_type[i].name + '</option>');
-				$('.Ele_energy_type').append(option_ele);
-			}
-			// 车辆承载
-			for(var i = 0; i < capacity.length; i++) {
-				var option_ele = $('<option value=' + capacity[i].name + '>' + capacity[i].name + '</option>');
-				$('.carLoad').append(option_ele);
-			}
-			// 车身颜色
-			for(var i = 0; i < vehicle_color.length; i++) {
-				var option_ele = $('<option value=' + vehicle_color[i].name + '>' + vehicle_color[i].name + '</option>');
-				$('.carColor1').append(option_ele);
-			}
-			for(var i = 0; i < vehicle_color.length; i++) {
-				var option_ele = $('<option value=' + vehicle_color[i].name + '>' + vehicle_color[i].name + '</option>');
-				$('.carColor2').append(option_ele);
-			}
-			// 车辆类型1
-			for(var i = 0; i < vehicle_type1.length; i++) {
-				var option_ele = $('<option value=' + vehicle_type1[i].name + '>' + vehicle_type1[i].name + '</option>')
-				$('.carType1').append(option_ele);
-			}
-			// 车辆类型2
-			for(var i = 0; i < vehicle_type2.length; i++) {
-				var option_ele = $('<option value=' + vehicle_type2[i].name + '>' + vehicle_type2[i].name + '</option>')
-				$('.carType2').append(option_ele);
-			}
-			// 轮辋类型
-			for(var i = 0; i < rim_type.length; i++) {
-				var option_ele = $('<option value=' + rim_type[i].name + '>' + rim_type[i].name + '</option>')
-				$('.carRimType').append(option_ele);
-			}
-			// 制动类型
-			for(var i = 0; i < brake_type.length; i++) {
-				var option_ele = $('<option value=' + brake_type[i].name + '>' + brake_type[i].name + '</option>')
-				$('.carBrakingType').append(option_ele);
-			}
-			// 悬架类型
-			for(var i = 0; i < suspension_type.length; i++) {
-				var option_ele = $('<option value=' + suspension_type[i].name + '>' + suspension_type[i].name + '</option>')
-				$('.carSuspensionType').append(option_ele);
-			}
-			// 运营范围
-			for(var i = 0; i < operate_scope.length; i++) {
-				var option_ele = $('<option value=' + operate_scope[i].name + '>' + operate_scope[i].name + '</option>')
-				$('.carOperationType').append(option_ele);
-			}
-			// 车辆用途
-			for(var i = 0; i < vehicle_use.length; i++) {
-				var option_ele = $('<option value=' + vehicle_use[i].name + '>' + vehicle_use[i].name + '</option>')
-				$('.carUse').append(option_ele);
-			}
-			// // 能源类型
-			// for (var i = 0; i < energy_type.length; i++) {
-			// 	var option_ele = $('<option value=' + energy_type[i].name + '>' + energy_type[i].name + '</option>')
-			// 	$('#Ele_energy_type').append(option_ele);
-			// }
-			// 运营状态
-			for(var i = 0; i < operate_states.length; i++) {
-				var option_ele = $('<option value=' + operate_states[i].name + '>' + operate_states[i].name + '</option>')
-				$('.carOperateType').append(option_ele);
-			}
-		}
-		layui.use('table', function() {
-			var table = layui.table
-			table.on('edit(table)', function(obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
-				/*console.log(obj.value); //得到修改后的值
-				console.log(obj.field); //当前编辑的字段名
-				console.log(obj.data); //所在行的所有相关数据  */
-			});
+		laydate.render({
+			elem: '.khxxzcrq'
 		})
-		$(function() {
-			$(".top-nav li").hover(function() {
-				$(this).has("ul").children("ul").fadeIn();
-			}, function() {
-				$(this).has("ul").children("ul").hide();
-			});
+		laydate.render({
+			elem: '#typedate'
+		})
+		laydate.render({
+			elem: '.cwlrsj'
+		})
+		laydate.render({
+			elem: '.caryyrq'
+		})
+		laydate.render({
+			elem: '.dttjsj'
+		})
+		laydate.render({
+			elem: '.cardjrq'
+		})
+		laydate.render({
+			elem: '.carscrq'
+		})
+		laydate.render({
+			elem: '.cargmrq'
+		})
+		laydate.render({
+			elem: '.carzcrq'
+		})
+		laydate.render({
+			elem: '.cl_dj'
 		})
 
-		function setValue() {
-			$('.top-nav').show()
-		}
-
-		// 运营类型修改
-		let typeStr = ''
-		/*layui.use('form', function() {
-			var form = layui.form;
-			form.on('select', function(res) {
-				typeStr = res.value.toString()
-
-			})
-		})*/
-
-		// 客户信息     运营类型改为弹框
-
-		function chooseOperationType() {
-			$('.operation-type-td').html('');
-			layui.use('layer', function() {
-				let layer = layui.layer
-				layer.open({
-					type: 1,
-					title: '选择运营类型',
-					content: $('.operation-type-div'),
-					area: ['500px', '400px'],
-					btn: ['保存', '取消'],
-					yes: function(index) {
-						let chosen_type = $('.operation-type-div .layui-form-checked');
-						let chosen_type_val = [];
-						for(var i = 0; i < chosen_type.length; i++) {
-							chosen_type_val.push(chosen_type.eq(i).children('span').html());
+	});
+	let cusSupCompany = ''
+	//  关闭当前页面
+	function closes() {
+		alert('关闭失败，请手动关闭！')
+	}
+	let setData = []
+	$.ajax({
+		type: "get",
+		url: API + "/erpSystemParameters/getParameters",
+		async: true,
+		statusCode: {
+			'200': function (res) {
+				if (res.code == 0) {
+					setData = res.data;
+					setSelect()
+					$.each(setData, function (i, k) {
+						if (k.name == '公司性质') {
+							let str = ''
+							$.each(k.parametersChildList, function (j, n) {
+								str += `<option value="${n.name}">${n.name}</option>`
+							})
+							$('.cusNature').append(str)
 						}
-						typeStr = chosen_type_val.toString();
-						$.each(chosen_type_val, function(i, item) {
-							let ele = $('<span>' + item + '</span>');
-							ele.css('margin', '10px');
-							$('.operation-type-td').append(ele);
-						});
-						layui.layer.close(index);
-					}
-				});
-			});
-		}
-
-		// 保存客户信息
-		function saveCust() {
-			let data = {}
-			$('.khbody input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			let bol = true
-			$('.khbody .necessary').each(function() {
-				if($(this).val() == '') {
-					bol = false
+					})
 				}
-			})
-			if(bol) {
-				data.customerId = custId
-				data.cusOperateType = typeStr
-				data.cusServiceCom = loadUserInfo.customer.cusCode
-				data.cusServiceComs = loadUserInfo.customer.cusCode
-				data.cusSupCompany = loadUserInfo.customer.cusCode
-				data.cusNature = $('.cusNature').val();
-				$.ajax({
-					url: `${API}/erpCustomer/inertOrUpdateCustomer`,
-					type: 'post',
-					data: data,
-					success: function(res) {
-						if(res.code == 0) {
-							layui.use('element', function() {
+			}
+		}
+	});
+
+	// 上级单位模糊查询
+	// BEGIN BY GYPeng
+	$('.higher-unit-div').css('display', 'block');
+	let customerList;
+
+	$('.higher-unit-input').on('input', function () {
+		// if ( !customerList ) {
+		// 	layer.msg ( '数据请求中，请耐心等待!' );
+		// }
+		$('.higher-unit-div ul').html('');
+		$.ajax({
+			url: `${API}/erpCustomer/getLikeErpCustor`,
+			type: 'post',
+			data: {
+				userId: loadUserInfo.customer.id,
+				code: $('.higher-unit-input').val() // loadUserInfo.customer.cusCode
+			},
+			success: function (res) {
+				customerList = res.data.customerList;
+				$('.higher-unit-div').show()
+				$.each(customerList, function (i, item) {
+					$('.higher-unit-div ul').html('<li data-name="'+item.cusCode+'">' + item.cusName + '</li>');
+				});
+			}
+		});
+
+	});
+	// END   BY GYPeng
+
+	// $('.higher-unit-input').on('click',function(){
+	// 	console.log ( 'click' );
+	// 	$('.higher-unit-div').css('display','block');
+	// 	$.ajax({
+	// 		url: `${API}/erpCustomer/getLikeErpCustor`,
+	// 		type: 'post',
+	// 		data: {
+	// 			userId: loadUserInfo.customer.id,
+	// 			code: $('.higher-unit-input').val() // loadUserInfo.customer.cusCode
+	// 		},
+	// 		success: function(res) {
+	// 			let customerList = res.data.customerList;
+	// 			$('.higher-unit-div ul').html('');
+	// 			$.each(customerList,function(i,item){
+	// 				$('.higher-unit-div ul').append('<li>' + item.cusName + '</li>');
+	// 			});
+	// 		}
+	// 	});
+	// });
+
+	$('.higher-unit-div').on('click', 'li', function () {
+		$('.higher-unit-input').val($(this).html());
+		$('.higher-unit-div').css('display', 'none');
+		cusSupCompany = $(this).data('name')
+	});
+
+	function setSelect() {
+
+		// 驱动方式
+		var driving_mode;
+		// 车轴/轮数
+		var wheel_num;
+		// 能源类型
+		var energy_type;
+		// 车辆承载
+		var capacity;
+		// 车身颜色
+		var vehicle_color;
+		// 车辆类型1
+		var vehicle_type1;
+		// 车辆类型2
+		var vehicle_type2;
+		// 轮辋类型
+		var rim_type;
+		// 制动类型
+		var brake_type;
+		// 悬架类型
+		var suspension_type;
+		// 运营范围
+		var operate_scope;
+		// 车辆用途
+		var vehicle_use;
+		// 运营状态
+		var operate_states;
+		for (var i in setData) {
+			var params_name = setData[i].name;
+			switch (params_name) {
+				case '驱动方式':
+					driving_mode = setData[i].parametersChildList;
+					break;
+				case '车轴/轮数':
+					wheel_num = setData[i].parametersChildList;
+					break;
+				case '能源类型':
+					energy_type = setData[i].parametersChildList;
+					break;
+				case '车辆负载':
+					capacity = setData[i].parametersChildList;
+					break;
+				case '车身颜色':
+					vehicle_color = setData[i].parametersChildList;
+					break;
+				case '车辆类型1':
+					vehicle_type1 = setData[i].parametersChildList;
+					break;
+				case '车辆类型2':
+					vehicle_type2 = setData[i].parametersChildList;
+					break;
+				case '轮辋类型':
+					rim_type = setData[i].parametersChildList;
+					break;
+				case '制动类型':
+					brake_type = setData[i].parametersChildList;
+					break;
+				case '悬架类型':
+					suspension_type = setData[i].parametersChildList;
+					break;
+				case '运营范围':
+					operate_scope = setData[i].parametersChildList;
+					break;
+				case '车辆用途':
+					vehicle_use = setData[i].parametersChildList;
+					break;
+				case '运营状态':
+					operate_states = setData[i].parametersChildList;
+					break;
+			}
+		}
+		// 驱动方式
+		for (var i = 0; i < driving_mode.length; i++) {
+			var option_ele = $('<option value=' + driving_mode[i].name + '>' + driving_mode[i].name + '</option>');
+			$('.carDrive').append(option_ele);
+		}
+		// 车轴/轮数
+		for (var i = 0; i < wheel_num.length; i++) {
+			var option_ele = $('<option value=' + wheel_num[i].name + '>' + wheel_num[i].name + '</option>');
+			$('.carWheel').append(option_ele);
+		}
+		// 能源类型
+		for (var i = 0; i < energy_type.length; i++) {
+			var option_ele = $('<option value=' + energy_type[i].name + '>' + energy_type[i].name + '</option>');
+			$('.Ele_energy_type').append(option_ele);
+		}
+		// 车辆承载
+		for (var i = 0; i < capacity.length; i++) {
+			var option_ele = $('<option value=' + capacity[i].name + '>' + capacity[i].name + '</option>');
+			$('.carLoad').append(option_ele);
+		}
+		// 车身颜色
+		for (var i = 0; i < vehicle_color.length; i++) {
+			var option_ele = $('<option value=' + vehicle_color[i].name + '>' + vehicle_color[i].name + '</option>');
+			$('.carColor1').append(option_ele);
+		}
+		for (var i = 0; i < vehicle_color.length; i++) {
+			var option_ele = $('<option value=' + vehicle_color[i].name + '>' + vehicle_color[i].name + '</option>');
+			$('.carColor2').append(option_ele);
+		}
+		// 车辆类型1
+		for (var i = 0; i < vehicle_type1.length; i++) {
+			var option_ele = $('<option value=' + vehicle_type1[i].name + '>' + vehicle_type1[i].name + '</option>')
+			$('.carType1').append(option_ele);
+		}
+		// 车辆类型2
+		for (var i = 0; i < vehicle_type2.length; i++) {
+			var option_ele = $('<option value=' + vehicle_type2[i].name + '>' + vehicle_type2[i].name + '</option>')
+			$('.carType2').append(option_ele);
+		}
+		// 轮辋类型
+		for (var i = 0; i < rim_type.length; i++) {
+			var option_ele = $('<option value=' + rim_type[i].name + '>' + rim_type[i].name + '</option>')
+			$('.carRimType').append(option_ele);
+		}
+		// 制动类型
+		for (var i = 0; i < brake_type.length; i++) {
+			var option_ele = $('<option value=' + brake_type[i].name + '>' + brake_type[i].name + '</option>')
+			$('.carBrakingType').append(option_ele);
+		}
+		// 悬架类型
+		for (var i = 0; i < suspension_type.length; i++) {
+			var option_ele = $('<option value=' + suspension_type[i].name + '>' + suspension_type[i].name + '</option>')
+			$('.carSuspensionType').append(option_ele);
+		}
+		// 运营范围
+		for (var i = 0; i < operate_scope.length; i++) {
+			var option_ele = $('<option value=' + operate_scope[i].name + '>' + operate_scope[i].name + '</option>')
+			$('.carOperationType').append(option_ele);
+		}
+		// 车辆用途
+		for (var i = 0; i < vehicle_use.length; i++) {
+			var option_ele = $('<option value=' + vehicle_use[i].name + '>' + vehicle_use[i].name + '</option>')
+			$('.carUse').append(option_ele);
+		}
+		// // 能源类型
+		// for (var i = 0; i < energy_type.length; i++) {
+		// 	var option_ele = $('<option value=' + energy_type[i].name + '>' + energy_type[i].name + '</option>')
+		// 	$('#Ele_energy_type').append(option_ele);
+		// }
+		// 运营状态
+		for (var i = 0; i < operate_states.length; i++) {
+			var option_ele = $('<option value=' + operate_states[i].name + '>' + operate_states[i].name + '</option>')
+			$('.carOperateType').append(option_ele);
+		}
+	}
+	layui.use('table', function () {
+		var table = layui.table
+		table.on('edit(table)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+			/*console.log(obj.value); //得到修改后的值
+			console.log(obj.field); //当前编辑的字段名
+			console.log(obj.data); //所在行的所有相关数据  */
+		});
+	})
+	$(function () {
+		$(".top-nav li").hover(function () {
+			$(this).has("ul").children("ul").fadeIn();
+		}, function () {
+			$(this).has("ul").children("ul").hide();
+		});
+	})
+
+	function setValue() {
+		$('.top-nav').show()
+	}
+
+	// 运营类型修改
+	let typeStr = ''
+	/*layui.use('form', function() {
+		var form = layui.form;
+		form.on('select', function(res) {
+			typeStr = res.value.toString()
+
+		})
+	})*/
+
+	// 客户信息     运营类型改为弹框
+
+	function chooseOperationType() {
+		$('.operation-type-td').html('');
+		layui.use('layer', function () {
+			let layer = layui.layer
+			layer.open({
+				type: 1,
+				title: '选择运营类型',
+				content: $('.operation-type-div'),
+				area: ['500px', '400px'],
+				btn: ['保存', '取消'],
+				yes: function (index) {
+					let chosen_type = $('.operation-type-div .layui-form-checked');
+					let chosen_type_val = [];
+					for (var i = 0; i < chosen_type.length; i++) {
+						chosen_type_val.push(chosen_type.eq(i).children('span').html());
+					}
+					typeStr = chosen_type_val.toString();
+					$.each(chosen_type_val, function (i, item) {
+						let ele = $('<span>' + item + '</span>');
+						ele.css('margin', '10px');
+						$('.operation-type-td').append(ele);
+					});
+					layui.layer.close(index);
+				}
+			});
+		});
+	}
+
+	// 保存客户信息
+	function saveCust() {
+		let data = {}
+		$('.khbody input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		let bol = true
+		$('.khbody .necessary').each(function () {
+			if ($(this).val() == '') {
+				bol = false
+			}
+		})
+		if (bol) {
+			data.customerId = custId
+			data.cusOperateType = typeStr
+			data.cusServiceCom = loadUserInfo.customer.cusCode
+			data.cusServiceComs = loadUserInfo.customer.cusCode
+			data.cusSupCompany = cusSupCompany
+			data.cusNature = $('.cusNature').val();
+			$.ajax({
+				url: `${API}/erpCustomer/inertOrUpdateCustomer`,
+				type: 'post',
+				data: data,
+				success: function (res) {
+					if (res.code == 0) {
+						layui.use('element', function () {
 							var element = layui.element;
 							element.tabChange('docDemoTabBrief', 2)
 						})
 						custId = res.data.id
-						} else {
-							layer.msg(res.msg)
-						}
-						
+					} else {
+						layer.msg(res.msg)
 					}
-				})
-			} else {
-				alert('请填写必要信息')
-			}
-		}
-		// 保存动态信息
-		function saveDt() {
-			let data = {}
-			$('.dtxx input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.customerId = custId
-			// data.cusOperateType = typeStr
-			$.ajax({
-				url: `${API}/erpCustomerNewfeed/inertOrUpdateCustNewfeed`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-					layer.msg('保存成功', {
-						time: 1000 //2秒关闭（如果不配置，默认是3秒）
-					}, function() {
-						//do something
-					});
-					// layer.msg('保存成功');
-				}
-			})
-		}
 
-		$('.lxrDate').html(new Date().getFullYear() + '-' + Number(new Date().getMonth() + 1) + '-' + new Date().getDate())
-		//　保存联系人信息
-		function saveLxr() {
-			let data = {}
-			$('.lxrbody input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.conSex = $('.sex').val()
-			data.customerId = custId
-			data.ren = loadUserInfo.user.realName
-			$.ajax({
-				url: `${API}/erpCustomerContact/inertOrUpdateCustomerContact`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-					layer.msg('保存成功', {
-						time: 1000 //2秒关闭（如果不配置，默认是3秒）
-					}, function() {
-						//do something
-					});
-					// layer.msg('保存成功');
 				}
 			})
+		} else {
+			alert('请填写必要信息')
 		}
-		// 保存财务信息
-		function saveCw() {
-			let data = {}
-			$('.cwxx input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.finType = $('.finType').val()
-			data.customerId = custId
-			$.ajax({
-				url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-					layer.msg('保存成功', {
-						time: 1000 //2秒关闭（如果不配置，默认是3秒）
-					}, function() {
-						//do something
-					});
-					// layer.msg('保存成功');
-				}
-			})
-		}
-		// 保存积分信息
-		function saveJf() {
-			let data = {}
-			$('.jfxx input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.customerId = custId
-			$.ajax({
-				url: `${API}//erpCustomerIntegral/inertOrUpdateCustomerIntegral`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-					data.id = custId
-                	layer.msg('保存成功！');
-				}
-			})
-		}
-		// 保存车辆信息
-		function saveCarInfo(bol) {
-			let data = {}
-			$('.carInfos').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.carDrive = $('.carDrive').val() // 驱动方式
-			data.carWheel = $('.carWheel').val() // 车轴轮数
-			data.carLoad = $('.carLoad').val()
-			data.carColor1 = $('.carColor1').val()
-			data.carColor2 = $('.carColor2').val()
-			data.carType1 = $('.carType1').val()
-			data.carType2 = $('.carType2').val()
-			data.carRimType = $('.carRimType').val()
-
-			data.carBrakingType = $('.carBrakingType').val()
-			data.carSuspensionType = $('.carSuspensionType').val()
-			data.carOperationType = $('.carOperationType').val()
-
-			data.carOperateType = $('.carOperateType').val()
-			data.carUse = $('.carUse').val()
-			data.customerId = custId
-			data.userId = loadUserInfo.user.id
-			data.carServiceCentre = $('.Ele_energy_type').val()
-			if(bol) {
-				data.carFrontAxle =aqqts
-				data.carRearAxle = ahqts
-				data.carTurn = azdzx
-			} else {
-				data.carFrontAxle =qqts
-				data.carRearAxle = hqts
-				data.carTurn = zdzx
-			}
-			
-			console.log(data)
-			$.ajax({
-				url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-					selCar()
-                	layer.msg('保存成功！');
-				},
-				error: function(res) {
-                	layer.msg('请检查网络设置');
-				},
-			})
-
-		}
-		//保存物料
-		function saveWl() {
-
-			let data = {}
-			$('.wlsm input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			$('.wlsm select').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			console.log($('.qiyong').html());
-			if($('.qiyong').html()=='启用'){
-				data.limEnable=1;
-				console.log($('.qiyong').html());
-			}else{
-				data.limEnable=0;
-				console.log($('.qiyong').html());
-			}
-			
-			data.customerId = custId
-			// data.limEnable = limEnable
-			data.ren = loadUserInfo.user.realName
-			console.log(data)
-			$.ajax({
-				url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-                	layer.msg('保存成功！');
-				}
-			})
-		}
-		// 保存客户仓库信息
-		function saveCk() {
-			let data = {}
-			$('.ckgl input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.customerId = custId
-			data.warDate = `${new Date().getFullYear()}- ${new Date().getMonth() + 1} - ${new Date().getDate()}`
-			data.ren = loadUserInfo.user.realName
-			$.ajax({
-				url: `${API}/erpCustomerWarehouse/inertOrUpdateCustWarehouse`,
-				type: 'post',
-				data: data,
-				success: function(res) {
-               	 	layer.msg('保存成功！');
-				}
-			})
-		}
-		var limEnable = 0
-		$('.qiyong').on('click', function() {
-			if($(this).html() == '启用') {
-				$(this).html('停用')
-				limEnable = 1
-			} else {
-				$(this).html('启用')
-				limEnable = 0
+	}
+	// 保存动态信息
+	function saveDt() {
+		let data = {}
+		$('.dtxx input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.customerId = custId
+		// data.cusOperateType = typeStr
+		$.ajax({
+			url: `${API}/erpCustomerNewfeed/inertOrUpdateCustNewfeed`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				layer.msg('保存成功', {
+					time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				}, function () {
+					//do something
+				});
+				// layer.msg('保存成功');
 			}
 		})
-		// 获取车辆信息
-		let carList = []
+	}
 
-		function selCar() {
-			$.ajax({
-				url: `${API}/erpCustomerCar/getCustomerCarBycustId?custId=${custId}`,
-				type: 'get',
-				success: function(res) {
-					console.log(res);
-					let data = res.data.reverse()
-					carList = data
-					let str = ''
-					for(let i = 0; i < data.length; i++) {
-						let json = data[i]
-						str +=
-							`<tr>
+	$('.lxrDate').html(new Date().getFullYear() + '-' + Number(new Date().getMonth() + 1) + '-' + new Date().getDate())
+	//　保存联系人信息
+	function saveLxr() {
+		let data = {}
+		$('.lxrbody input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.conSex = $('.sex').val()
+		data.customerId = custId
+		data.ren = loadUserInfo.user.realName
+		$.ajax({
+			url: `${API}/erpCustomerContact/inertOrUpdateCustomerContact`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				layer.msg('保存成功', {
+					time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				}, function () {
+					//do something
+				});
+				// layer.msg('保存成功');
+			}
+		})
+	}
+	// 保存财务信息
+	function saveCw() {
+		let data = {}
+		$('.cwxx input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.finType = $('.finType').val()
+		data.customerId = custId
+		$.ajax({
+			url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				layer.msg('保存成功', {
+					time: 1000 //2秒关闭（如果不配置，默认是3秒）
+				}, function () {
+					//do something
+				});
+				// layer.msg('保存成功');
+			}
+		})
+	}
+	// 保存积分信息
+	function saveJf() {
+		let data = {}
+		$('.jfxx input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.customerId = custId
+		$.ajax({
+			url: `${API}//erpCustomerIntegral/inertOrUpdateCustomerIntegral`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				data.id = custId
+				layer.msg('保存成功！');
+			}
+		})
+	}
+	// 保存车辆信息
+	function saveCarInfo(bol) {
+		let data = {}
+		$('.carInfos').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.carDrive = $('.carDrive').val() // 驱动方式
+		data.carWheel = $('.carWheel').val() // 车轴轮数
+		data.carLoad = $('.carLoad').val()
+		data.carColor1 = $('.carColor1').val()
+		data.carColor2 = $('.carColor2').val()
+		data.carType1 = $('.carType1').val()
+		data.carType2 = $('.carType2').val()
+		data.carRimType = $('.carRimType').val()
+
+		data.carBrakingType = $('.carBrakingType').val()
+		data.carSuspensionType = $('.carSuspensionType').val()
+		data.carOperationType = $('.carOperationType').val()
+
+		data.carOperateType = $('.carOperateType').val()
+		data.carUse = $('.carUse').val()
+		data.customerId = custId
+		data.userId = loadUserInfo.user.id
+		data.carServiceCentre = $('.Ele_energy_type').val()
+
+		if (bol) {
+
+			data.carFrontAxle = $('.aqqts').is(':checked')
+			data.carRearAxle = $('.ahqts').is(':checked')
+			data.carTurn = $('.azdzx').is(':checked')
+		} else {
+
+			data.carFrontAxle = $('.qqts').is(':checked')
+			data.carRearAxle = $('.hqts').is(':checked')
+			data.carTurn = $('.zdzx').is(':checked')
+		}
+
+		console.log(data)
+		$.ajax({
+			url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				selCar()
+				layer.msg('保存成功！');
+			},
+			error: function (res) {
+				layer.msg('请检查网络设置');
+			},
+		})
+
+	}
+	//保存物料
+	function saveWl() {
+
+		let data = {}
+		$('.wlsm input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		$('.wlsm select').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		console.log($('.qiyong').html());
+		if ($('.qiyong').html() == '启用') {
+			data.limEnable = 1;
+			console.log($('.qiyong').html());
+		} else {
+			data.limEnable = 0;
+			console.log($('.qiyong').html());
+		}
+
+		data.customerId = custId
+		// data.limEnable = limEnable
+		data.ren = loadUserInfo.user.realName
+		console.log(data)
+		$.ajax({
+			url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				layer.msg('保存成功！');
+			}
+		})
+	}
+	// 保存客户仓库信息
+	function saveCk() {
+		let data = {}
+		$('.ckgl input').each(function () {
+			data[$(this).data('name')] = $(this).val()
+		})
+		data.customerId = custId
+		data.warDate = `${new Date().getFullYear()}- ${new Date().getMonth() + 1} - ${new Date().getDate()}`
+		data.ren = loadUserInfo.user.realName
+		$.ajax({
+			url: `${API}/erpCustomerWarehouse/inertOrUpdateCustWarehouse`,
+			type: 'post',
+			data: data,
+			success: function (res) {
+				layer.msg('保存成功！');
+			}
+		})
+	}
+	var limEnable = 0
+	$('.qiyong').on('click', function () {
+		if ($(this).html() == '启用') {
+			$(this).html('停用')
+			limEnable = 1
+		} else {
+			$(this).html('启用')
+			limEnable = 0
+		}
+	})
+	// 获取车辆信息
+	let carList = []
+
+	function selCar() {
+		$.ajax({
+			url: `${API}/erpCustomerCar/getCustomerCarBycustId?custId=${custId}`,
+			type: 'get',
+			success: function (res) {
+				console.log(res);
+				let data = res.data.reverse()
+				carList = data
+				let str = ''
+				for (let i = 0; i < data.length; i++) {
+					let json = data[i]
+					str +=
+						`<tr>
                             <td>${data.length - i} </td>
                             <td>${json.carDjDate == null ? '' : json.carDjDate}</td>
                             <td>${json.carBrand == null ? '' : json.carBrand}</td>
@@ -1517,66 +1522,67 @@
                             </td>
                         </tr>`
 
-					}
-					$('.clbody').html(str)
-					$.each(data, function(i) {
-						layui.use('laydate', function() {
-							var laydate = layui.laydate;
-							laydate.render({
-								elem: `.djrq${i}`
-							})
-							var laydate1 = layui.laydate;
-							laydate1.render({
-								elem: `.gmrq${i}`
-							})
-							var laydate2 = layui.laydate;
-							laydate2.render({
-								elem: `.scrq${i}`
-							})
-							var laydate3 = layui.laydate;
-							laydate3.render({
-								elem: `.zcrq${i}`
-							})
+				}
+				$('.clbody').html(str)
+				$.each(data, function (i) {
+					layui.use('laydate', function () {
+						var laydate = layui.laydate;
+						laydate.render({
+							elem: `.djrq${i}`
+						})
+						var laydate1 = layui.laydate;
+						laydate1.render({
+							elem: `.gmrq${i}`
+						})
+						var laydate2 = layui.laydate;
+						laydate2.render({
+							elem: `.scrq${i}`
+						})
+						var laydate3 = layui.laydate;
+						laydate3.render({
+							elem: `.zcrq${i}`
 						})
 					})
+				})
+			}
+		})
+	}
+	// selCar()
+	// 删除车辆信息
+	function delCar(index) {
+		if (confirm('是否删除？')) {
+			let id = carList[index].id
+			$.ajax({
+				url: `${API}/erpCustomerCar/removeCustomerCar?customerCarId=${id}`,
+				type: 'get',
+				success: function (res) {
+					selCar()
 				}
 			})
 		}
-		// selCar()
-		// 删除车辆信息
-		function delCar(index) {
-			if(confirm('是否删除？')) {
-				let id = carList[index].id
-				$.ajax({
-					url: `${API}/erpCustomerCar/removeCustomerCar?customerCarId=${id}`,
-					type: 'get',
-					success: function(res) {
-						selCar()
-					}
-				})
-			}
-		}
-		// 添加车辆信息
-		function addCar() {
-			layui.use('layer', function() {
-				layui.layer.open({
-					type: 1,
-					area: ['1240px'],
-					title: '修改车辆信息',
-					content: $('.winbody'),
-					btn: ['保存', '取消'],
-					yes: function(index) {
-						saveCarInfo(true)
-						layui.layer.close(index)
-					}
-				})
+	}
+	// 添加车辆信息
+	function addCar() {
+		layui.use('layer', function () {
+			layui.layer.open({
+				type: 1,
+				area: ['1240px'],
+				title: '修改车辆信息',
+				content: $('.winbody'),
+				btn: ['保存', '取消'],
+				yes: function (index) {
+					saveCarInfo('true')
+					layui.layer.close(index)
+				}
 			})
-		}
-		// 修改车辆信息
-		function seeCar(index) {
-			let json = carList[index]
-			let str = ''
-			 str +=`<table class="layui-table">
+		})
+	}
+	// 修改车辆信息
+	function seeCar(index) {
+		let json = carList[index]
+		let str = ''
+		str +=
+			`<table class="layui-table">
                 <tbody>
                     <tr>
                         <td>登记日期 <input type="hidden" class="carInfos" data-name="id" value="${json.id}"></td>
@@ -1746,23 +1752,24 @@
                         </td>
                     </tr>
                     <tr>
-						<td colspan="3" class="layui-form">`
-							if(json.carFrontAxle) {
-                                        str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" >`
-                                    } else {
-                                        str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" checked >`
-                                    }
-                                    if(json.carRearAxle) {
-                                        str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升" >`
-                                    } else {
-                                        str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升"checked >`
-                                    }
-                                    if(json.carTurn) {
-                                        str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向" >`
-                                    } else {
-                                        str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向" checked >`
-									}
-									str +=`</td><td>产权所有</td>
+						<td colspan="3" >`
+		if (json.carFrontAxle == 'true') {
+			str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" checked>前桥提升`
+		} else {
+			str += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升"  >前桥提升`
+		}
+		if (json.carRearAxle == 'true') {
+			str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升" checked >后桥提升`
+		} else {
+			str += `   <input type="checkbox"  class="hqts" name="" lay-skin="primary" title="后桥提升" > 后桥提升`
+		}
+		if (json.carTurn == 'true') {
+			str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向" checked > 随动转向`
+		} else {
+			str += ` <input type="checkbox"  class="zdzx" name="" lay-skin="primary" title="随动转向"  > 随动转向`
+		}
+		str +=
+			`</td><td>产权所有</td>
                                     <td colspan="5">
                                         <input type="text" data-name="chanQuan" class="layui-input carInfos" value="${json.chanQuan == null ? '' : json.chanQuan}">
                                     </td>
@@ -1799,92 +1806,72 @@
                                 </tr>
                             </tbody>
                         </table>`
-			$('.winbody').html(str)
-			setSelect()
-			$('.carDrive').val(json.carDrive) // 驱动方式
-			$('.carWheel').val(json.carWheel) // 车轴轮数
-			$('.carLoad').val(json.carLoad)
-			$('.carColor1').val(json.carColor1)
-			$('.carColor2').val(json.carColor2)
-			$('.carType1').val(json.carType1)
-			$('.carType2').val(json.carType2)
-			$('.carRimType').val(json.carRimType)
+		$('.winbody').html(str)
+		setSelect()
+		$('.carDrive').val(json.carDrive) // 驱动方式
+		$('.carWheel').val(json.carWheel) // 车轴轮数
+		$('.carLoad').val(json.carLoad)
+		$('.carColor1').val(json.carColor1)
+		$('.carColor2').val(json.carColor2)
+		$('.carType1').val(json.carType1)
+		$('.carType2').val(json.carType2)
+		$('.carRimType').val(json.carRimType)
 
-			$('.carBrakingType').val(json.carBrakingType)
-			$('.carSuspensionType').val(json.carSuspensionType)
-			$('.carOperationType').val(json.carOperationType)
+		$('.carBrakingType').val(json.carBrakingType)
+		$('.carSuspensionType').val(json.carSuspensionType)
+		$('.carOperationType').val(json.carOperationType)
 
-			$('.carOperateType').val(json.carOperateType)
-			$('.carUse').val(json.carUse)
-			form.on('checkbox(qqts)', function(data){
-			qqts = data.elem.checked; //开关是否开启，true或者false
-			});  
-			form.on('checkbox(hqts)', function(data){
-			hqts = data.elem.checked; //开关是否开启，true或者false
-			});  
-			form.on('checkbox(sxzd)', function(data){
-			zdzx = data.elem.checked; //开关是否开启，true或者false
-			});  
-			layui.use('laydate', function() {
-				var laydate = layui.laydate;
-				laydate.render({
-					elem: '.khxxdjrq'
-				})
-				laydate.render({
-					elem: '.khxxzcrq'
-				})
-				laydate.render({
-					elem: '#typedate'
-				})
-				laydate.render({
-					elem: '.cwlrsj'
-				})
-				laydate.render({
-					elem: '.caryyrq'
-				})
-				laydate.render({
-					elem: '.cardjrq'
-				})
+		$('.carOperateType').val(json.carOperateType)
+		$('.carUse').val(json.carUse)
+		layui.use('laydate', function () {
+			var laydate = layui.laydate;
+			laydate.render({
+				elem: '.khxxdjrq'
 			})
-			layui.form.render()
-			layui.use('layer', function() {
-				layui.layer.open({
-					type: 1,
-					area: ['1240px'],
-					title: '修改车辆信息',
-					content: $('.winbody'),
-					btn: ['保存', '取消'],
-					yes: function(index) {
-						saveCarInfo()
-						layui.layer.close(index)
-					}
-				})
+			laydate.render({
+				elem: '.khxxzcrq'
 			})
-		}
-		// layui.form.on('checkbox(aqqts)', function(data){
-		// 	aqqts = data.elem.checked; //开关是否开启，true或者false
-		// 	});  
-		// 	form.on('checkbox(ahqts)', function(data){
-		// 	ahqts = data.elem.checked; //开关是否开启，true或者false
-		// 	});  
-		// 	form.on('checkbox(asxzd)', function(data){
-		// 	azdzx = data.elem.checked; //开关是否开启，true或者false
-		// 	}); 
-
-
-			// 设置税务类型
-			$.ajax({
-				url:`${API}/erpSystemParameters/getparametersByName?name=账户类型`,
-				type:'get',
-				success:function (res) {
-					console.log(res)
-					let str = '<option></option>'
-					$.each(res.data.parametersChildList,function (i,k) {
-						str +=`<option value="${k.name}">${k.name}</option>`
-					})
-					$('.finType').html(str)
+			laydate.render({
+				elem: '#typedate'
+			})
+			laydate.render({
+				elem: '.cwlrsj'
+			})
+			laydate.render({
+				elem: '.caryyrq'
+			})
+			laydate.render({
+				elem: '.cardjrq'
+			})
+		})
+		layui.form.render()
+		layui.use('layer', function () {
+			layui.layer.open({
+				type: 1,
+				area: ['1240px'],
+				title: '修改车辆信息',
+				content: $('.winbody'),
+				btn: ['保存', '取消'],
+				yes: function (index) {
+					saveCarInfo()
+					layui.layer.close(index)
 				}
 			})
-	</script>
+		})
+	}
+	// 设置税务类型
+	$.ajax({
+		url: `${API}/erpSystemParameters/getparametersByName?name=账户类型`,
+		type: 'get',
+		success: function (res) {
+			console.log(res)
+			let str = '<option></option>'
+			$.each(res.data.parametersChildList, function (i, k) {
+				str += `<option value="${k.name}">${k.name}</option>`
+			})
+			$('.finType').html(str)
+		}
+	})
+</script>
 
 </html>

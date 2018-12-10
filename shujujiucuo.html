@@ -223,8 +223,8 @@
                                 <th>客户编号</th>
                                 <th>更换时间</th>
                                 <th>车辆牌号</th>
-                                <th>旧里程表</th>
                                 <th>新里程表</th>
+                                <th>旧里程表</th>
                                 <th>录入人</th>
                                 <th>操作</th>
                             </tr>
@@ -349,7 +349,6 @@
         url: `${API}/erpDataError/getErrorBycustId?custId=1`,
         type: 'get',
         success: function (res) {
-            console.log(res, '22')
             let arr = res.data
             let str = ''
             let dstr = ''
@@ -389,28 +388,32 @@
     })
     let lcblist = []
     
-    $.ajax({
-        url:`${API}/erpDataError/getCarLikePro?custId=${loadUserInfo.customer.id}&carPro=1`,
+    selLcb ()
+    //　查询里程表
+    function selLcb () {
+        $.ajax({
+        url:`${API}/erpDataError/selectDataErr?custId=${loadUserInfo.customer.id}&keyWord=${$('#lcb').val()}`,
         type:'get',
         success:function  (res) {
             let str =''
             let cpstr = ''
             let arr = res.data
-            //lcblist = res.data
+            lcblist = res.data
             $.each(arr,function (i,n) {
                 str +=`<tr class="lcb_${i}">
-                                <td><input type="text" class="layui-input" value=""></td>
-                                <td><input type="text" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="carAddDate" class="layui-input" value="${n.carAddDate == null ? '' : n.carAddDate}"></td>
-                                <td><input type="text" data-name="carPlate" class="layui-input" value="${n.carPlate == null ? '' : n.carPlate}"></td>
-                                <td><input type="text" data-name="carMileage" class="layui-input" value="${n.carMileage == null ? '' : n.carMileage}"></td>
+                                <td><input type="hidden" data-name="id" value="${n.carId}" >
+                                    <input type="text" data-name="cusName" class="layui-input" value="${n.cusName || ''}"></td>
+                                <td><input type="text" data-name="cusCode" class="layui-input" value="${n.cusCode || ''}"></td>
+                                <td><input type="text" data-name="ghTime" class="layui-input ks_${i}" value="${n.ghTime || ''}"></td>
+                                <td><input type="text" data-name="carPlate" class="layui-input " value="${n.carPlate || ''}"></td>
                                 <td><input type="text" data-name="carMileage" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="inputAttn" class="layui-input" value="${n.inputAttn == null ? '' : n.inputAttn }"></td>
+                                <td>${n.carMileage || ''}</td>
+                                <td><input type="text" data-name="inputAttn" class="layui-input" value="${n.inputAttn || ''}"></td>
                                 <td><div class='layui-btn layui-btn-xs' onclick="saveLcb(${i})">保存</div></td>
                             </tr>`
                             cpstr +=`<tr class="cp_${i}">
-                                <td></td>
-                                <td>${n.carPlate}</td>
+                                <td>${n.cusCode}<input type="hidden" data-name="id" value="${n.carId}" ></td>
+                                <td>${n.carPlate || ''}</td>
                                 <td><input type="text" data-name="carPlate" class="layui-input" value="">
                                 <td>
                                     <div class="layui-btn layui-btn-xs " onclick="saveCp(${i})">保存</div>
@@ -419,31 +422,48 @@
             })
             $('.hlcb').html(str)
             $('.gcph').html(cpstr)
+            $.each(arr,function (j,k) {
+                layui.use('laydate',function () {
+                    layui.laydate.render({
+                        elem:`.ks_${j}`
+                    })
+                })
+                layui.use('laydate',function () {
+                    layui.laydate.render({
+                        elem:`.js_${j}`
+                    })
+                })
+            })
         }
     })
-    //　查询里程表
-    function selLcb () {
-        
     }
     // 保存里程表
     function saveLcb(index) {
         let json = lcblist[index]
-        $(`.lcb_${i} input`).each (function () {
-            json[$(this).data('name')] = $(this).val() 
+        
+        $(`.lcb_${index} input`).each (function () {
+            if($(this).data('name') == "car_mileage" &&  $(this).val() == '') {
+
+            } else {
+                json[$(this).data('name')] = $(this).val() 
+            }
+            
         })
         $.ajax({
             url:`${API}/erpDataError/updateCat`,
             type:'post',
             data:json,
             success:function (res) {
-                console.log(res)
+                if(res.code == 0) {
+                    selLcb ()
+                    layer.msg('保存成功!')
+                }
             }
         })
     }
     // 保存改车牌号
     function saveCp(index) {
         let json = lcblist[index]
-        console.log(lcblist[index])
         $(`.cp_${index} input`).each (function () {
             json[$(this).data('name')] = $(this).val() 
         })
@@ -453,34 +473,41 @@
             type:'post',
             data:json,
             success:function (res) {
-                console.log(res)
+                if(res.code == 0) {
+                    selLcb ()
+                    layer.msg('保存成功!')
+                }
             }
         })
     }
     // 保存改胎信息
     function saveGt(index) {
         let json = gtXx[index]
-        let data = []
         $(`.gtxx_${index} input`).each (function () {
             json[$(this).data('name')] = $(this).val() 
         })
-        console.log(json,'666')
+        json.custId = loadUserInfo.customer.id
         $.ajax({
             url:`${API}/erpDataError/updateMaterielByPro`,
             type:'post',
             data:json,
             success:function (res) {
-                console.log(res)
+                if(res.code == 0) {
+                    layer.msg('保存成功!')
+                    selGt
+                }
             }
         })
     }
     let gtXx = []
     selGt ()
+    // 改胎信息查询
     function selGt () {
         let data = {
             startTime: $('.ksdate').val(),
             endTime: $('.jsdate').val()
         }
+        console.log(data)
         $.ajax({
         url:`${API}/erpDataError/selectEditTire?custId=${loadUserInfo.customer.id}`,
         type:'post',
@@ -489,12 +516,11 @@
             let str =''
             let arr = res.data
             let gtstr = ''
-            gtXx = res.data
+            gtXx = res.data.reverse()
             $.each(arr,function (i,n) {
-                str +=
                             gtstr +=`<tr class='gtxx_${i}'>
                                 <td><input type="text" data-name="cusName" class="layui-input" value="${n.cusName || ''}"></td>
-                                <td><input type="text" data-name="gouTime" class="layui-input" value="${n.gouTime || ''}"></td>
+                                <td><input type="text" data-name="gouTime" class="layui-input gt_${i}" value="${n.gouTime || ''}"></td>
                                 <td><input type="text" data-name="name" class="layui-input" value="${n.name || ''}"></td>
                                 <td><input type="text" data-name="brand" class="layui-input" value="${n.brand || ''}"></td>
                                 <td><input type="text" data-name="spec" class="layui-input" value="${n.spec || ''}"></td>
@@ -509,7 +535,15 @@
                                 </td>
                             </tr>`
             })
-            $('.gtxx').html(str)
+            $('.gtxx').html(gtstr)
+            $.each(arr,function (i,n) {
+                layui.use('laydate',function () {
+                    layui.laydate.render({
+                        elem:`.gt_${i}`,
+                    })
+                })
+            })
+            
         }
     })
     }
