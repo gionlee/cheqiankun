@@ -99,7 +99,7 @@
 
 <body>
     <div class="wrap">
-        <div>显示时长： <input type="number" style="width:60px;display: inline-block;" class="layui-input" value="1" /> <a
+        <div>显示时长： <input type="number" style="width:60px;display: inline-block;" id="showMin" class="layui-input" value="1" /> <a
                 class="layui-btn layui-btn-sm" onclick="bao()">保存</a></div>
         <table class="layui-table">
             <thead>
@@ -133,45 +133,57 @@
                     <tbody class="xg">
                         <tr>
                             <td>发布单位</td>
-                            <td colspan="3"><input type="text" class="layui-input" id="company"></td>
+                            <td colspan="3"><input type="text" class="layui-input" id="company" readonly="readonly"></td>
                         </tr>
                         <tr>
                             <td>内容</td>
-                            <td colspan="3"><input type="text" class="layui-input" id="content"></td>
+                            <td colspan="3"><input type="text" class="layui-input" id="content" readonly="readonly"></td>
                         </tr>
                         <tr>
                             <td>内容字体</td>
-                            <td><input type="text" class="layui-input" id="contentFamily"></td>
+                            <td><input type="text" class="layui-input" id="contentFamily" readonly="readonly"></td>
                             <td>内容字号</td>
-                            <td><input type="text" class="layui-input" id="contentSize"></td>
+                            <td><input type="text" class="layui-input" id="contentSize" readonly="readonly"></td>
                         </tr>
                         <tr>
                             <td>内容颜色</td>
-                            <td><input type="text" class="layui-input" id="contentColor"></td>
+                            <td><input type="text" class="layui-input" id="contentColor" readonly="readonly"></td>
                             <td>播放频率</td>
-                            <td><input type="text" class="layui-input" id="playRate"></td>
+                            <td><input type="text" class="layui-input" id="playRate" readonly="readonly"></td>
                         </tr>
                         <tr>
                             <td>联系人</td>
-                            <td><input type="text" class="layui-input" id="contract"></td>
+                            <td><input type="text" class="layui-input" id="contract" readonly="readonly"></td>
                             <td>电话</td>
-                            <td><input type="text" class="layui-input" id="telphone"></td>
+                            <td><input type="text" class="layui-input" id="telphone" readonly="readonly"></td>
                         </tr>
                         <tr>
                             <td>提交日期</td>
-                            <td><input type="text" class="layui-input" id="submitTime"></td>
+                            <td><input type="text" class="layui-input" id="submitTime" readonly="readonly"></td>
                             <td>截止日期</td>
-                            <td><input type="text" class="layui-input" id="endTime"></td>
+                            <td><input type="text" class="layui-input" id="endTime" readonly="readonly"></td>
                         </tr>
                         <tr>
                                 <td>编号</td>
-                                <td><input type="text" class="layui-input" id="checkNumber"><input type="hidden" id="id" value="0"></td>
+                                <td><input type="text" class="layui-input" id="checkNumber" readonly="readonly"><input type="hidden" id="id" value="0"></td>
                             <td>申请项目</td>
-                            <td class="layui-form "><select  lay-verify="" id="programs">
+                            <td class="layui-form "><select  lay-verify="" id="programs" disabled="disabled">
                                     <option value="播放">播放</option>
                                     <option value="删除">删除</option>
                                     <option value="修改">修改</option>
                                 </select></td>
+                            
+                        </tr>
+                        <tr>
+                                <td>审核状态</td>
+                                <td>
+                                	<select  lay-verify="" id="checkState">
+                                    <option value="1">核准</option>
+                                    <option value="2">驳回</option>
+                                </select>
+                                </td>
+                            <td>核准日期</td>
+                            <td class="layui-form "><input type="text" class="layui-input" name="checkTime" id="checkTime"</td>
                             
                         </tr>
                     </tbody>
@@ -188,12 +200,28 @@ var layer = ''
 layui.use('layer',function () {
     layer = layui.layer
 })
+layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+       //执行一个laydate实例
+        laydate.render({
+            elem: '#checkTime' //指定元素
+            ,type: 'datetime'
+        });
+       /*  laydate.render({
+            elem: '#endTime' //指定元素
+            ,type: 'datetime'
+        });*/
+       
+    });
 sel()
 function sel () {
+	
     $.ajax({
         url: `${API}/controller/erpAdvertisement/getcheckPage`,
         type: 'get',
         success: function (res) {
+        	console.log(res.data.records);
             var str ="";
         	$.each(res.data.records, function (i,n) {
                 
@@ -266,52 +294,15 @@ function sel () {
 let json = {}
     function ti(index){
     	var id=$("#id").val();
-    	if(id==0){
+    	
     		$.ajax({
-		        url: `${API}/erpAdvertisementCheck/inertOrUpdatecheck`,
-		        type: 'get',
-		        data:{
-		        	company:$("#company").val(),
-		        	content:$("#content").val(),
-		        	contentFamily:$("#contentFamily").val(),
-		        	contentSize:$("#contentSize").val(),
-		        	contentColor:$("#contentColor").val(),
-		        	playRate:$("#playRate").val(),
-		        	contract:$("#contract").val(),
-		        	telphone:$("#telphone").val(),
-		        	submitTime:$("#submitTime").val(),
-		        	endTime:$("#endTime").val(),
-		        	checkNumber:$("#checkNumber").val(),
-		        	programs:$("#programs").val()
-		        },
-		        success: function (res) {
-                    layer.msg('保存成功！')
-                    setTimeout(function () {
-                        layer.close(index)
-                        sel();
-                        $("#id").val("0");
-                    },1500)
-                    
-		        }
-		    })
-    	}else{
-    		$.ajax({
-		        url: `${API}/erpAdvertisementCheck/inertOrUpdatecheck`,
+		        url: `${API}/controller/erpAdvertisement/examine`,
 		        type: 'get',
 		        data:{
 		        	id:$("#id").val(),
-		        	company:$("#company").val(),
-		        	content:$("#content").val(),
-		        	contentFamily:$("#contentFamily").val(),
-		        	contentSize:$("#contentSize").val(),
-		        	contentColor:$("#contentColor").val(),
-		        	playRate:$("#playRate").val(),
-		        	contract:$("#contract").val(),
-		        	telphone:$("#telphone").val(),
-		        	submitTime:$("#submitTime").val(),
-		        	endTime:$("#endTime").val(),
-		        	checkNumber:$("#checkNumber").val(),
-		        	programs:$("#programs").val()
+		        	time:$("#checkTime").val(),
+		        	states:$("#checkState").val(),
+		        	name:loadUserInfo.user.realName
 		        },
 		        success: function (res) {
                     
@@ -322,7 +313,6 @@ let json = {}
                     },1500)
 		        }
 		    })
-    	}
     
     }
     function update(id) {
@@ -362,6 +352,13 @@ let json = {}
     }
     
     function bao(){
-    	layer.msg('保存成功！')
+    	var min=$("#showMin").val();
+    	$.ajax({
+            url: `${API}/controller/erpAdvertisement/editShow?min=`+min,
+            type: 'get',
+            success: function (res) {
+                layer.msg('保存成功！');
+            }
+        })
     }
 </script>

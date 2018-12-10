@@ -208,7 +208,7 @@
             let str = ''
             $.each(arr, function (i) {
                 let json = arr[i]
-                let txt = json.conText
+                let txt = json.conName
                 if(txt) {
                     if(txt.length > 30){
                         txt = txt.substring(0,25) + '...'
@@ -217,7 +217,7 @@
                     txt = ''
                 }
                 str += `<tr>
-                    <td title="${json.conText}">${txt}</td>
+                    <td title="${json.conName}">${txt}</td>
                     <td>${json.conCode == null ? '' : json.conCode}</td>
                     <td>${json.conInput == null ? '' : json.conInput}</td>
                     <td>${json.conDate == null ? '' : json.conDate}</td>
@@ -266,7 +266,7 @@
                 url: ` ${API}/erpContract/removeContractById?contractId=${id}`,
                 type: 'get',
                 success: function (res) {
-                    window.reload()
+                    window.location.reload()
                 }
             })
         }

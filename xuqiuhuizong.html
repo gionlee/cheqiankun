@@ -229,7 +229,9 @@
         type:'get',
         success: function (res) {
             let str = ''
+            console.log(res.data)
             let arr = res.data.records.reverse()
+            // let arr = res.data.reverse()
             $.each(arr,function (i,json) {
                 if(json) {
                     str += `<tr>

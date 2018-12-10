@@ -161,10 +161,9 @@
         type: 'post',
         success: function (res) {
             let str = ''
-
             // let str1 = ''
             $.each(res.data, function (i, n) {
-
+				console.log(n);
                 let json = n;
 
                 //              str += `
@@ -177,26 +176,26 @@
                     //          alert(res.data[0].flowSummaryList[1].id);
                     str += `
             <tr><td>${i + 1}</td>
-                <td>${json.id == null ? '' : json.id}</td>
-                <td>${json.customerName == null ? '' : json.customerName}</td>
-                <td>${json.materielFlowSheetId == null ? '' : json.materielFlowSheetId}</td>
+                <td>${m.materielFlowDate == null ? '' : m.materielFlowDate}</td>
+                <td>${n.customerName == null ? '' : n.customerName}</td>
+                <td>${m.workSheetId == null ? '' : m.workSheetId}</td>
                 <td>${json1.carServiceCentre == null ? '' : json1.carServiceCentre}</td>
                 <td>${json1.materielSource == null ? '' : json1.materielSource}</td>
 
 
 
         //缺少四个字段
-             <td>${json.car_operation_type == null ? '' : json.car_operation_type}</td>
-                    <td>${json.car_service_centre == null ? '' : json.car_service_centre}</td>   //未找到字段
-       <td>${json.car_load == null ? '' : json.car_load}</td>
-              <td>${json.car_braking_type == null ? '' : json.car_braking_type}</td>
+             <td>${m.flowMateriel.materielName == null ? '' : m.flowMateriel.materielName}</td>
+                    <td>${m.flowMateriel.materielBrand == null ? '' : m.flowMateriel.materielBrand}</td>   //未找到字段
+       <td>${m.flowMateriel.materielSpecifications == null ? '' : m.flowMateriel.materielSpecifications}</td>
+              <td>${m.flowMateriel.materielModel == null ? '' : m.flowMateriel.materielModel}</td>
 
 
 
-                     <td>${json1.flowMateriel == null ? '' : json.flowMateriel}</td>
+                     <td>${m.flowMateriel.materielProductionId == null ? '' : m.flowMateriel.materielProductionId}</td>
                             <td>${json1.materielWhereabouts == null ? '' : json1.materielWhereabouts}</td>
-                                   <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
-                                             <td>${json1.warehouseName == null ? '' : json1.warehouseName}</td>
+                                   <td>${json1.flowMateriel.materielState == null ? '' : json1.flowMateriel.materielState}</td>
+                                             <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
                 </tr>`
                 })
             })

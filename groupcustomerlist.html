@@ -86,7 +86,9 @@
             let str = ''
             let num = 0
             $.each(arr,function (i,n) {
+            	
                 if(n.cusCusType == '集团客户') {
+                	
                     num++
                     str+=`<tr style="cursor:pointer;" onclick="update(${n.id})">
                         <td>${num}</td>
@@ -105,7 +107,7 @@
                         </tr>`
                 }
             })
-            $('list').html(str)
+            $('.list').html(str)
 
         }
     })

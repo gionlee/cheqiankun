@@ -141,13 +141,21 @@
         });
     })
     let data = {
-        startDate : getUrlParam('startDate'),
-        endDate : getUrlParam('endDate'),
-        // matId : getUrlParam('materielId'),
-        matId:9,
-        // wareId : getUrlParam('warehouseId')
-        wareId:1
+        matId : getUrlParam('materielId'),
+        // matId : 46,
+        wareId : getUrlParam('wareId'),
+        startDate : getUrlParam('startTime'),
+        endDate : getUrlParam('endTime')
     }
+    console.log(data);
+    // let data = {
+    //     startDate : getUrlParam('startDate'),
+    //     endDate : getUrlParam('endDate'),
+    //     // matId : getUrlParam('materielId'),
+    //     matId:9,
+    //     // wareId : getUrlParam('warehouseId')
+    //     wareId:1
+    // }
     $.ajax({
         url:`${API}/erpWarehouse/getGoMaterielToDate`,
         type:'post',

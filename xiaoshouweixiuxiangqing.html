@@ -151,6 +151,8 @@
             padding: 10px;
             width:1200px;
             display: none;
+            overflow: scroll;
+            height: 600px;
         }
         .carWindow {
             width: 1200px;
@@ -675,7 +677,7 @@
                     <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
                     <td><input type="text" class="layui-input" data-name="money" value=""></td>
                     <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
                     <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
                     <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
                     <td><div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div></td>
@@ -827,7 +829,7 @@
     // 获取所有的仓库
     let ckList = []
     $.ajax({
-        url: `${API}/erpCustomerWarehouse/getWarehouses`,
+        url: `${API}/erpCustomerWarehouse/getWarehouses?custId=${loadUserInfo.customer.id}`,
         type: 'get',
         success: function (res) {
             let arrs = res.data
@@ -979,13 +981,47 @@
     // 物料维修查询
     function wlList() {
         $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXiu?carPai=${carNum}`,
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXius?carPai=${carNum}`,
             type: 'get',
             success: function (res) {
+                console.log(res,'222')
                 wwcList = res.data.weiwancheng
                 ywcList = res.data.yiwancheng
                 let arr = wwcList.concat(ywcList)
                 let str = ''
+                let wcstr = ''
+                let dclstr = ''
+                $.each(wwcList,function (i,n) {
+                    dclstr += `<tr><td>${n.repairRepair || ""}</td>
+                        <td>${n.materielSource}</td>
+                        <td>${n.materielName}</td>
+                        <td>${n.materielBrand}</td>
+                        <td>${n.materielSpecifications}</td>
+                        <td>${n.materielModel}</td>
+                        <td>${n.materielPlace}</td>
+                        <td>${n.materielState}</td>
+                        <td>${n.materielUnit}</td>
+                        <td>${n.materielNumber}</td>
+                        <td>${n.materielProductionId}</td>
+                        <td>${n.materielSensorId}</td>
+                        <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
+                })
+                $.each(ywcList,function (i,n) {
+                    wcstr += `<tr><td>${n.repairRepair || ""}</td>
+                        <td>${n.materielSource}</td>
+                        <td>${n.materielName}</td>
+                        <td>${n.materielBrand}</td>
+                        <td>${n.materielSpecifications}</td>
+                        <td>${n.materielModel}</td>
+                        <td>${n.materielPlace}</td>
+                        <td>${n.materielState}</td>
+                        <td>${n.materielUnit}</td>
+                        <td>${n.materielNumber}</td>
+                        <td>${n.materielProductionId}</td>
+                        <td>${n.materielSensorId}</td>
+                        <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
+                })
+
                 $.each(arr, function (i, n) {
                     str +=
                         `<tr>
@@ -1002,9 +1038,12 @@
                         <td>${n.materielNumber}</td>
                         <td>${n.materielPrice}</td>
                         <td>${n.materielTotal}</td>
-                        `
+                        </tr>
+                      `
                 })
                 $('.wlwx').html(str)
+                $('.dcllist').html(dclstr)
+                $('.ywclist').html(wcstr)
 
             }
         })
@@ -1022,10 +1061,26 @@
             }
         })
     }
+    //  删除物料
+    function delWl (id) {
+        if(confirm('是否删除')) {
+            $.ajax({
+            url:`${API}/erpXiaoShouWeiXiu/deleteXiaoshouweixiuLunTaiWeiXius?id=${id}`,
+            type:'get',
+            success: function (res) {
+                console.log(res)
+                if(res.code == 0) {
+                    layer.msg('删除成功！')
+                    wlList()
+                }
+            }
+        })
+        }
+    } 
     // 车辆维修查询
     function selCar() {
         $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuCheLiangWeiXiu?carPai=${carNum}`,
+            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuCheLiangWeiXius?carPai=${carNum}`,
             type: 'get',
             success: function (res) {
                 let arr = res.data
@@ -1037,7 +1092,7 @@
                     <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
                     <td><input type="text" class="layui-input" data-name="money" value=""></td>
                     <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                    <td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
                     <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
                     <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
                     <td><div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div></td>
@@ -1179,7 +1234,8 @@
         $('#clwx input').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
-        data.carPai = data.carNum
+        data.carPai = carNum
+        console.log(data)
         $.ajax({
             url:`${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
             type:'post',
@@ -1200,6 +1256,14 @@
             data[$(this).data('name')] = $(this).val()
         })
         data.pid = $('.lzhcmx select').val()
+        $.ajax({
+            url:`${API}/erpXiaoShouWeiXiu/addHc`,
+            type:'post',
+            data:data,
+            success: function (res) {
+                console.log(res,'22')
+            }
+        })
     }
     function saveOne(bol) {
         let data = {}
@@ -1216,66 +1280,69 @@
         data.custId = loadUserInfo.customer.id
         data.userId = loadUserInfo.user.id
         data.customerId = loadUserInfo.customer.id
+        data.carPlate = carNum
         $.ajax({
-            url: `${API}/erpSaleRepairOrder/inertOrUpdateSaleRepair`,
-            type: 'get',
+            url: `${API}/erpXiaoShouWeiXiu/addRepairOrder`,
+            type: 'post',
             data: data,
             success: function (res) {
-                let spxsdata = {
-                    saleRepairId: res.data.repairOrder.id,
-                    custId: 1,
-                    flowSheet: res.data.materielFlow.materielFlowSheetId,
-                    flowId: res.data.materielFlow.id
-                }
-                let ltwxdata = {
-                    saleRepairId: res.data.repairOrder.id,
-                    custId: 1,
-                    flowSheet: res.data.materielFlow.materielFlowSheetId,
-                    flowId: res.data.materielFlow.id
-                }
-                let clwxdata = {
-                    saleRepairId: res.data.repairOrder.id,
-                    custId: 1,
-                    flowSheet: res.data.materielFlow.materielFlowSheetId,
-                    flowId: res.data.materielFlow.id
-                }
-                $('.spxs input').each(function (i, n) {
-                    spxsdata[$(this).data('name')] = $(this).val()
-                })
-                $.ajax({
-                    url: `${API}/erpSaleRepairOrder/inertSaleRepairSale`,
-                    type: 'get',
-                    data: spxsdata,
-                    async: false,
-                    success: function (res) {}
-                })
-                $('.ltwx input').each(function (i, n) {
-                    ltwxdata[$(this).data('name')] = $(this).val()
-                })
-                $.ajax({
-                    url: `${API}/erpSaleRepairOrder/inertSaleRepairRepair`,
-                    type: 'get',
-                    data: ltwxdata,
-                    async: false,
-                    success: function (res) {}
-                })
+                console.log(res,'222')
+                // let spxsdata = {
+                //     saleRepairId: res.data.repairOrder.id,
+                //     custId: 1,
+                //     flowSheet: res.data.materielFlow.materielFlowSheetId,
+                //     flowId: res.data.materielFlow.id
+                // }
+                // let ltwxdata = {
+                //     saleRepairId: res.data.repairOrder.id,
+                //     custId: 1,
+                //     flowSheet: res.data.materielFlow.materielFlowSheetId,
+                //     flowId: res.data.materielFlow.id
+                // }
+                // let clwxdata = {
+                //     saleRepairId: res.data.repairOrder.id,
+                //     custId: 1,
+                //     flowSheet: res.data.materielFlow.materielFlowSheetId,
+                //     flowId: res.data.materielFlow.id
+                // }
+                // $('.spxs input').each(function (i, n) {
+                //     spxsdata[$(this).data('name')] = $(this).val()
+                // })
+                // $.ajax({
+                //     url: `${API}/erpSaleRepairOrder/inertSaleRepairSale`,
+                //     type: 'get',
+                //     data: spxsdata,
+                //     async: false,
+                //     success: function (res) {}
+                // })
+                // $('.ltwx input').each(function (i, n) {
+                //     ltwxdata[$(this).data('name')] = $(this).val()
+                // })
+                // $.ajax({
+                //     url: `${API}/erpSaleRepairOrder/inertSaleRepairRepair`,
+                //     type: 'get',
+                //     data: ltwxdata,
+                //     async: false,
+                //     success: function (res) {}
+                // })
 
-                $('.spxs input').each(function (i, n) {
-                    clwxdata[$(this).data('name')] = $(this).val()
-                })
-                $.ajax({
-                    url: `${API}/erpSaleRepairOrder/inertErpSaleRepairGarage`,
-                    type: 'get',
-                    data: clwxdata,
-                    async: false,
-                    success: function (res) {
-                        if (bol) {
-                            $('.numid').val('')
-                            $('.to').val('')
-                        }
-                        layer.msg('保存成功！')
-                    }
-                })
+                // $('.spxs input').each(function (i, n) {
+                //     clwxdata[$(this).data('name')] = $(this).val()
+                // })
+                // $.ajax({
+                //     url: `${API}/erpSaleRepairOrder/inertErpSaleRepairGarage`,
+                //     type: 'get',
+                //     data: clwxdata,
+                //     async: false,
+                //     success: function (res) {
+                //         if (bol) {
+                //             $('.numid').val('')
+                //             $('.to').val('')
+                //         }
+                //         layer.msg('保存成功！')
+                //         wlList()
+                //     }
+                // })
 
 
             }

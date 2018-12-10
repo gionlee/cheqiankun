@@ -95,7 +95,7 @@
                     <th>产地</th>
                     <th>物料新旧</th>
                     <th>单位</th>
-                    <th>状态</th>
+                    <!-- <th>状态</th> -->
                     <th>期初数量</th>
                     <th>本期入库</th>
                     <th>本期出库</th>
@@ -124,46 +124,74 @@
         });
     })
     let data = {
-        startDate : getUrlParam('startDate'),
-        endDate : getUrlParam('endDate'),
-        custId : getUrlParam('custId'),
-        matId : getUrlParam('matId')
+        warehouseIds : getUrlParam('warehouseIds'),
+        wareId : getUrlParam('wareId'),
+        startTime : getUrlParam('startTime'),
+        endTime : getUrlParam('endTime')
     }
-    console.log(data)
+    // console.log(data)
     $.ajax({
-        url:`${API}//erpWarehouse/getWarehouseMaterielBycustId?${loadUserInfo.customer.id}`,
+        // url:`${API}//erpWarehouse/getWarehouseMaterielBycustId?${loadUserInfo.customer.id}`,
+        url:`${API}/erpWarehouse/findByLibraryName`,
         type:'post',
         data:data,
         success: function (res) {
             console.log(res)
-            let arr = res.data.reverse()
-            let str = ''
-            $.each(arr,function (i,json) {
-                str += `<tr>
-                    <td>${arr.length - i}</td>
-                    <td>${json.materielName == null ? '' : json.materielName}</td>
-                    <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
-                    <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
-                    <td>${json.materielModel == null ? '' : json.materielModel}</td>
-                    <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
-                    <td>${json.materielState == null ? '' : json.materielState}</td>
-                    <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
-                    <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
-                    <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
-                    <td style="cursor:pointer;" onclick="seeInfo('${json.warehouseId}','${json.materielId}')">${json.materielWarnAmount == null ? '' : json.materielWarnAmount}</td>
-                    <td>${json.materielOccupyNumber == null ? '' : json.materielOccupyNumber}</td>
-                    <td>${json.matNum == null ? '' : json.matNum}</td>
-                    <td>${json.materielTax == null ? '' : json.materielTax}</td>
-                    <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
-                    <td>${json.custName == null ? '' : json.custName}</td>
-                    <td>${json.wareName == null ? '' : json.wareName}</td>
-                </tr>`
-            })
+            // let arr = res.data.reverse()
+            // let str = ''
+            // $.each(arr,function (i,json) {
+            //     str += `<tr>
+            //         <td>${arr.length - i}</td>
+            //         <td>${json.materielName == null ? '' : json.materielName}</td>
+            //         <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
+            //         <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
+            //         <td>${json.materielModel == null ? '' : json.materielModel}</td>
+            //         <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
+            //         <td>${json.materielState == null ? '' : json.materielState}</td>
+            //         <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+            //         <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
+            //         <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
+            //         <td style="cursor:pointer;" onclick="seeInfo('${json.warehouseId}','${json.materielId}')">${json.materielWarnAmount == null ? '' : json.materielWarnAmount}</td>
+            //         <td>${json.materielOccupyNumber == null ? '' : json.materielOccupyNumber}</td>
+            //         <td>${json.matNum == null ? '' : json.matNum}</td>
+            //         <td>${json.materielTax == null ? '' : json.materielTax}</td>
+            //         <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
+            //         <td>${json.custName == null ? '' : json.custName}</td>
+            //         <td>${json.wareName == null ? '' : json.wareName}</td>
+            //     </tr>`
+            // })
+            var data1=res.data;
+            var data2=res.data.data[0];
+            let str='';
+            str +=`<tr>
+                <td>1</td>
+                <td>${data1.materielName == null ? '' : data1.materielName}</td>
+                <td>${data1.materielBrand == null ? '' : data1.materielBrand}</td>
+                <td>${data1.materielSpecifications == null ? '' : data1.materielSpecifications}</td>
+                <td>${data1.materielModel == null ? '' : data1.materielModel}</td>
+                <td>${data1.materielPlace == null ? '' : data1.materielPlace}</td>
+                <td>${data1.materielState == null ? '' : data1.materielState}</td>
+                <td>${data1.materielUnit == null ? '' : data1.materielUnit}</td>
+                <td>${data2[1] == null ? '' : data2[1]}</td>
+                <td style="cursor:pointer;" onclick="seeInfo('${data1.materielId}','${data1.wareId}')">${data2[2] == null ? '' : data2[2]}</td>
+                <td style="cursor:pointer;" onclick="seeInfo('${data1.materielId}','${data1.wareId}')">${data2[3] == null ? '' : data2[3]}</td>
+                <td>${data2[4] == null ? '' : data2[4]}</td>
+                <td>${data2[8] == null ? '' : data2[8]}</td>
+                <td>${data2[7] == null ? '' : data2[7]}</td>
+                <td>${data2[5] == null ? '' : data2[5]}</td>
+                <td>${data2[6] == null ? '' : data2[6]}</td>
+            </tr>`
             $('.list').html(str)
         }
     })
-    function seeInfo (warehouseId,id) {
-        window.location.href = `./kucunmingxi.html?warehouseId=${warehouseId}&materielId=${id}`
+    function seeInfo (materielId,wareId) {
+        var startTime=data.startTime;
+        var endTime=data.endTime;
+        // console.log(startTime);
+        // console.log(endTime);
+        // console.log(materielId);
+        // console.log(wareId);
+        window.location.href = `./kucunmingxi.html?materielId=${materielId}&wareId=${wareId}&startTime=${startTime}&endTime=${endTime}`
     }
 </script>
 

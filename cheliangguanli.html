@@ -131,14 +131,6 @@
 	
      
     let json = {}
-    $.ajax({
-        url: `${API}/erpCustomerCar/getCatInsurance?page=1&limit=20&custId=1`,
-        type: 'get',
-        success: function (res) {
-            console.log(res)
-        }
-    })
-    
     
     $(function() {
 
@@ -149,10 +141,10 @@
 				success: function(ret) {
 					var obj = ret.data.reverse()
 					var html = '';
-
-					for(var key in obj) {
+					console.log(obj);
+					$.each(obj,function (key) {
 						html += ' <tr>'+
- '                    <td>' + (obj[key].id == null ?　'' : obj[key].id) + '</td>'+
+ '                    <td>' + (obj.length - key)+ '</td>'+
  '                    <td>' + (obj[key].car_number == null ?　'' : obj[key].car_number)  + '</td>'+
  '                    <td>' + (obj[key].insProperty == null ?　'' : obj[key].insProperty) + '</td>'+
  '                    <td>' + (obj[key].car_operate_type == null ?　'' : obj[key].car_operate_type) + '</td>'+
@@ -169,7 +161,7 @@
  '                </tr>';
 						
 						
-					}
+					})
 					$("#list").html(html);
 				},
 				error: function(err) {

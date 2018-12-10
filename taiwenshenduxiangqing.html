@@ -239,53 +239,48 @@
     $(function() {
 		var userid =GetRequest().userid;
 		var id =GetRequest().id;
-			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&custId='+ loadUserInfo.customer.id,
-				type: 'get',
-				dataType: 'json',
-				success:function(ret) {
-					var objkacha = ret.data;
-					var html = '';
+		$.ajax({
+			url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&custId='+ loadUserInfo.customer.id,
+			type: 'get',
+			dataType: 'json',
+			success:function(ret) {
+				var objkacha = ret.data;
+				var html = '';
 
-					for(var key in objkacha) {
-						
-							html +=' <tr onclick="seeInfo()">'+
- '                    <td>'+objkacha[key].chelunzhoushju+'</td>'+
- '                    <td>'+objkacha[key].qudong+'</td>'+
- '                    <td>'+objkacha[key].luntaiguige+'</td>'+
- '                    <td>'+objkacha[key].pinpai+'</td>'+
- '                    <td>'+objkacha[key].xinghao+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].jiancedate+'</td>'+
- '                </tr>';
-							
-						
-						
-						
-					}
-					$("#list").html(html);
-								           		         		
-				},
-				error:function(err) {
-					alert("系统错误");
-
+				for(var key in objkacha) {
+					
+						html +=' <tr onclick="seeInfo()">'+
+									 '<td>'+objkacha[key].chelunzhoushju+'</td>'+
+									 '<td>'+objkacha[key].qudong+'</td>'+
+									 '<td>'+objkacha[key].luntaiguige+'</td>'+
+									 '<td>'+objkacha[key].pinpai+'</td>'+
+									 '<td>'+objkacha[key].xinghao+'</td>'+
+									 '<td>'+objkacha[key].catPlate+'</td>'+
+									 '<td>'+objkacha[key].catPlate+'</td>'+
+									 '<td>'+objkacha[key].catPlate+'</td>'+
+									 '<td>'+objkacha[key].catPlate+'</td>'+
+									 '<td>'+objkacha[key].catPlate+'</td>'+
+									 '<td>'+objkacha[key].jiancedate+'</td>'+
+								 '</tr>';
 				}
-			});
+				$("#list").html(html);
+							           		         		
+			},
+			error:function(err) {
+				alert("系统错误");
 
-		})
-    
-     $("#cx").click(function(){
-    	var userid =GetRequest().userid;
-		var id =GetRequest().id;
-		var startDate = $("#startDate").val();
-		var endDate = $("#endDate").val();
-		//'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
+			}
+		});
+		
+		$("#cx").click(function(){
+			console.log(GetRequest())
+	    	var userid = loadUserInfo.customer.id;
+			var id = GetRequest().id;
+			var startDate = $("#startDate").val();
+			var endDate = $("#endDate").val();
+			//'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
 			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+id+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
+				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
 				type: 'get',
 				dataType: 'json',
 				success:function(ret) {
@@ -296,22 +291,18 @@
 					for(var key in objkacha) {
 						
 							html +=' <tr onclick="seeInfo()">'+
- '                    <td>'+objkacha[key].chelunzhoushju+'</td>'+
- '                    <td>'+objkacha[key].qudong+'</td>'+
- '                    <td>'+objkacha[key].luntaiguige+'</td>'+
- '                    <td>'+objkacha[key].pinpai+'</td>'+
- '                    <td>'+objkacha[key].xinghao+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].catPlate+'</td>'+
- '                    <td>'+objkacha[key].jiancedate+'</td>'+
- '                </tr>';
-							
-						
-						
-						
+										 '<td>'+objkacha[key].chelunzhoushju+'</td>'+
+										 '<td>'+objkacha[key].qudong+'</td>'+
+										 '<td>'+objkacha[key].luntaiguige+'</td>'+
+										 '<td>'+objkacha[key].pinpai+'</td>'+
+										 '<td>'+objkacha[key].xinghao+'</td>'+
+										 '<td>'+objkacha[key].catPlate+'</td>'+
+										 '<td>'+objkacha[key].catPlate+'</td>'+
+										 '<td>'+objkacha[key].catPlate+'</td>'+
+										 '<td>'+objkacha[key].catPlate+'</td>'+
+										 '<td>'+objkacha[key].catPlate+'</td>'+
+										 '<td>'+objkacha[key].jiancedate+'</td>'+
+                 					'</tr>';
 					}
 					$("#list").html(html);
 								           		         		
@@ -321,7 +312,11 @@
 
 				}
 			});
-    })
+	    })
+
+	})
+    
+     
      
       layui.use('laydate', function () {
         var laydate = layui.laydate;

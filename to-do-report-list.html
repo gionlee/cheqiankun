@@ -39,7 +39,7 @@
 							<li>月报</li>
 							<li>季报</li>
 							<li>年报</li>
-							<li>自定</li>
+							<li class="report-hidden">自定</li>
 						</ul>
 						<div class="layui-tab-content">
 							<div class="layui-tab-item layui-show">
@@ -71,8 +71,8 @@
 								</table>
 							</div>
 							<div class="layui-tab-item">
-								<table class="layui-table">
-									<tr>
+								<table class="layui-table quarterly-report">
+									<!--<tr>
 										<td>
 											<a href="to-do-report.html">季报</a>
 										</td>
@@ -81,12 +81,12 @@
 										<td>
 											<a href="to-do-report.html">季报</a>
 										</td>
-									</tr>
+									</tr>-->
 								</table>
 							</div>
 							<div class="layui-tab-item">
-								<table class="layui-table">
-									<tr>
+								<table class="layui-table year-report">
+									<!--<tr>
 										<td>
 											<a href="to-do-report.html">年报</a>
 										</td>
@@ -95,13 +95,13 @@
 										<td>
 											<a href="to-do-report.html">年报</a>
 										</td>
-									</tr>
+									</tr>-->
 								</table>
 							</div>
-							<div class="layui-tab-item">
+							<div class="layui-tab-item self-div">
 								<input type="text" class="layui-input start-time" name="" id="" value="" /> -
 								<input type="text" class="layui-input end-time" name="" id="" value="" />
-								<button class="layui-btn layui-btn-sm">提交</button>
+								<button class="layui-btn layui-btn-sm" id="self-btn">提交</button>
 							</div>
 						</div>
 					</div>
@@ -128,9 +128,14 @@
 				elem: '.end-time'
 			})
 		});
+		
+		if (getUrlParam('report')) {
+			$('.report-hidden').css('display','none');
+		}
+		
 		var now_date = new Date();
-		getList('2015/2/2 00:00:00');
-		function getList(params){
+		getList_week('2015/2/2 00:00:00');
+		function getList_week(params){
 			var current_date = new Date(params);
 			var current_year = current_date.getFullYear();
 			var i;
@@ -196,21 +201,16 @@
 						
 					} else {
 						ele = $('<tr><td dt_S="' + msToDate(week_start_dt,1) + '" dt_E="' + current_year + '/12/31 23:59:59">' + current_year + '年第' + i + '周</td></tr>');
-						// $('.week-report').insertBefore(ele,$('.week-report tbody').children(":first"));
 						ele.insertBefore($('.week-report tbody').children(":first"));
 					}
-						
-					// break;
 					current_year += 1;
-					// getList(current_year + '/01/01 00:00:00');
 					if (current_year == now_date.getFullYear() + 1) {
 						return;
 					} else {
-						getList(current_year + '/01/01 00:00:00');
+						getList_week(current_year + '/01/01 00:00:00');
 						break;
 					}
 				}
-				// $('.week-report').insertBefore(ele,$('.week-report tbody').children(":first"));
 				ele.insertBefore($('.week-report tbody').children(":first"));
 			}
 		}
@@ -227,37 +227,61 @@
 			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
 		});
 		
-		
 		// 月报列表
-		/*for (var i = 1; i <= 12; i++) {
-			switch (i){
-				case 1:
-				case 3:
-				case 5:
-				case 7:
-				case 8:
-				case 10:
-				case 12:
-					ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/31 23:59:59">' + current_year + '年' + i + '月</td></tr>');
-					break;
-				case 4:
-				case 6:
-				case 9:
-				case 11:
-					ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/30 23:59:59">' + current_year + '年' + i + '月</td></tr>');
-					break;
-				case 2:
-					if (current_year % 4 == 0 && current_year % 100 != 0) {
-						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/29 23:59:59">' + current_year + '年' + i + '月</td></tr>');
-					} else {
-						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/28 23:59:59">' + current_year + '年' + i + '月</td></tr>');
-					}
-					break;
-				default:
-					break;
+		getList_month('2015/2/2 00:00:00')
+		function getList_month(params){
+			var current_date = new Date(params);
+			var current_year = current_date.getFullYear();
+			var i;
+			if (current_year != '2015') {
+				i = 1;
+			} else {
+				i = 2;
 			}
-			// ele = $('<tr><td dt_S="" dt_E="">' + current_year + '年' + i + '月</td></tr>');
-			$('.month-report').append(ele);
+			for (; i <= 12; i++) {
+				switch (i){
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/31 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+						break;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/30 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+						break;
+					case 2:
+						if (current_year % 4 == 0 && current_year % 100 != 0) {
+							ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/29 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+						} else {
+							ele = $('<tr><td dt_S="' + current_year + '/' + i + '/1 00:00:00" dt_E="' + current_year + '/' + i + '/28 23:59:59">' + current_year + '年' + i + '月</td></tr>');
+						}
+						break;
+					default:
+						break;
+				}
+				if (i == 12) {
+					current_year += 1;
+					if (current_year == now_date.getFullYear() + 1) {
+						ele.insertBefore($('.month-report tbody').children(":first"));
+						return;
+					} else {
+						ele.insertBefore($('.month-report tbody').children(":first"));
+						getList_month(current_year + '/01/01 00:00:00');
+					}
+				} else {
+					if (current_year == '2015' && i == 2) {
+						$('.month-report').append(ele);
+					} else{
+						ele.insertBefore($('.month-report tbody').children(":first"));
+					}
+				}				
+			}
 		}
 		
 		$('.month-report').on('mouseover','td',function(){
@@ -265,13 +289,127 @@
 		});
 		
 		$('.month-report').on('click','td',function(){
-			location.href="to-do-report-month.html";
+			if (getUrlParam('report')) {
+				location.href="to-do-report-month.html?report=1";
+			} else{
+				location.href="to-do-report-month.html";
+			}
 			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
 			obj.workDtS = $(this).attr('dt_S');
 			obj.workDtE = $(this).attr('dt_E');
 			obj.repType = 1;
 			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
-		});*/
+		});
+		
+		// 季报列表
+		getList_quarterly('2015/1/1 00:00:00')
+		function getList_quarterly(params){
+			var current_date = new Date(params);
+			var current_year = current_date.getFullYear();
+			for (var i = 1; i <= 12; i++) {
+				switch (i){
+					case 3:
+						ele = $('<tr><td dt_S="' + current_year + '/1/1 00:00:00" dt_E="' + current_year + '/' + i + '/31 23:59:59">' + current_year + '年' + 1 + '季度</td></tr>');
+						break;
+					case 6:
+						ele = $('<tr><td dt_S="' + current_year + '/4/1 00:00:00" dt_E="' + current_year + '/' + i + '/30 23:59:59">' + current_year + '年' + 2 + '季度</td></tr>');
+						break;
+					case 9:
+						ele = $('<tr><td dt_S="' + current_year + '/7/1 00:00:00" dt_E="' + current_year + '/' + i + '/30 23:59:59">' + current_year + '年' + 3 + '季度</td></tr>');
+						break;
+					case 12:
+						ele = $('<tr><td dt_S="' + current_year + '/10/1 00:00:00" dt_E="' + current_year + '/' + i + '/31 23:59:59">' + current_year + '年' + 4 + '季度</td></tr>');
+						break;
+					default:
+						break;
+				}
+				if (i == 12) {
+					current_year += 1;
+					if (current_year == now_date.getFullYear() + 1) {
+						ele.insertBefore($('.quarterly-report tbody').children(":first"));
+						return;
+					} else {
+						ele.insertBefore($('.quarterly-report tbody').children(":first"));
+						getList_quarterly(current_year + '/01/01 00:00:00');
+					}
+				} else{
+					if (current_year == '2015' && i == 3) {
+						$('.quarterly-report').append(ele);
+					} else{
+						ele.insertBefore($('.quarterly-report tbody').children(":first"));
+					}
+				}
+			}
+		}
+		
+		$('.quarterly-report').on('mouseover','td',function(){
+			$(this).css('cursor','pointer');
+		});
+		
+		$('.quarterly-report').on('click','td',function(){
+			if (getUrlParam('report')) {
+				location.href="to-do-report-month.html?report=1";
+			} else{
+				location.href="to-do-report-month.html";
+			}
+			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+			obj.workDtS = $(this).attr('dt_S');
+			obj.workDtE = $(this).attr('dt_E');
+			obj.repType = 2;
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		});
+		
+		// 年报列表
+		getList_year('2015/1/1 00:00:00')
+		function getList_year(params){
+			var current_date = new Date(params);
+			var current_year = current_date.getFullYear();
+			for (var i = current_year, j = 0; i <= now_date.getFullYear(); i++,j++) {
+				ele = $('<tr><td dt_S="' + i + '/1/1 00:00:00" dt_E="' + i + '/12/31 23:59:59">' + i + '年</td></tr>');
+				if (j == 0) {
+					$('.year-report').append(ele);
+				} else{
+					ele.insertBefore($('.year-report tbody').children(":first"));
+				}
+			}
+		}
+		
+		$('.year-report').on('mouseover','td',function(){
+			$(this).css('cursor','pointer');
+		});
+		
+		$('.year-report').on('click','td',function(){
+			if (getUrlParam('report')) {
+				location.href="to-do-report-month.html?report=1";
+			} else{
+				location.href="to-do-report-month.html";
+			}
+			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+			obj.workDtS = $(this).attr('dt_S');
+			obj.workDtE = $(this).attr('dt_E');
+			obj.repType = 3;
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		});
+		
+		// 自定义
+		$('#self-btn').click(function(){
+			var start_time = $('.start-time').val().replace(/-/ig,'/');
+			var end_time = $('.end-time').val().replace(/-/ig,'/');
+			ele = $('<div dt_S="' + start_time + ' 00:00:00" dt_E="' + start_time + ' 23:59:59">' + start_time + '&nbsp;,&nbsp;' + end_time + '</div>');
+			ele.css({'border': '1px solid #e6e6e6','text-align': 'center','height': '36px','line-height': '36px','font-size': '16px','letter-spacing': '1px','cursor': 'pointer'});
+			$('.self-div').html('').append(ele);
+			ele.attr('onclick','go_page()').addClass('add_div');
+		});
+		
+		function go_page(){
+			location.href="to-do-report-month.html";
+			var obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
+			obj.workDtS = $('.add_div').attr('dt_S');
+			obj.workDtE = $('.add_div').attr('dt_E');
+			obj.repType = 4;
+			sessionStorage.setItem('sjyndy_cusid_name',JSON.stringify(obj));
+		}
+		
 	</script>
 
 </html>

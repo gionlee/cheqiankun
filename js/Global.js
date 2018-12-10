@@ -1,6 +1,7 @@
 // const API = 'http://120.79.205.40:3340'
-const API = 'http://192.168.1.9:3340' 
-// const API = 'http://39.105.191.207:3340' 
+// const API = 'http://vmxrr9.natappfree.cc'
+// const API = 'http://192.168.1.2:3340' 
+const API = 'http://192.168.1.4' 
 
 
 // 客户信息
@@ -39,7 +40,7 @@ function msToDate(msNum, type) { // type == 1 转换为年/月/日 时:分:秒
     // type == 2 转换为年/月/日
     var date = new Date(msNum);
     var year = date.getFullYear();
-    var month = date.getMonth();
+    var month = date.getMonth() + 1;
     if (month < 10) {
         month = '0' + month;
     }

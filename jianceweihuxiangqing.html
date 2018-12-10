@@ -123,7 +123,6 @@
                 <th style="width:15%;">检测地点</th>
                 <th style="width:30%;" colspan="2">驾驶区间</th>
                 <th style="width:5%;">车辆里程</th>
-                
                 <th style="width:15%;">运营路况</th>
                 <th style="width:5%;">客户经办</th>
                 <th style="width:5%;">服务经办</th>
@@ -137,9 +136,8 @@
                 <td class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-input-inline" style="width:45%;">
-                            <select name="interest" lay-filter="aihao">
+                            <select class="qsheng" name="interest" lay-filter="aihao">
                                 <option value=""></option>
-                                <option value="1" selected>北京</option>
                             </select>
                             <!-- <input class="layui-input" data-name="drivingRange1" type="text"> -->
                         </div>
@@ -259,7 +257,6 @@
                         <div class="layui-input-inline" style="width:30px;">
                             <input type="checkbox" lay-skin="primary" title="" checked="">
                         </div>
-                        
                     </div>
                     <div style="width:150px;display: inline-block;line-height: 38px;">
                         <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
@@ -289,7 +286,6 @@
                 <th>轮胎状态</th>
             </tr>
         </thead>
-
         <tbody id="gclist">
         </tbody>
     </table>
@@ -335,7 +331,8 @@
         }
         return theRequest;
     }
-    let layform = layui.use('form', function () {
+    let layform =  ''
+    layui.use('form', function () {
         layform = layui.form
     })
     let jcwhlist = []
@@ -390,6 +387,28 @@
         }
     })
     // 获取地区
+    $.ajax({
+        url:`${API}/cities/getAllProvinces`,
+        type:'get',
+        success: function (res) {
+            let str = ''
+            $.each(res.data,function (i,n) {
+                str +=`<option value="${n.provinceid}">${n.province}</option>`
+            })
+            $('.qsheng').append(str)
+
+            layform.on('select',function (data) {
+                console.log(data.value)
+                $.ajax({
+                    url:`${API}/cities/selectByProId?proId=${data.value}`,
+                    type:'get',
+                    success: function (res) {
+                        console.log(res,'777')
+                    }
+                })
+            })
+        }
+    })
     $(function () {
         $('.carnum').html(sessionStorage.jcpcar)
         $.ajax({
@@ -475,7 +494,6 @@
                 <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
                 <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
                 <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-                
             </tr>`
                     })
 

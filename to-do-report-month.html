@@ -417,6 +417,9 @@
 			})
 		});
 		
+		if (getUrlParam('report')) {
+			$('.layui-btn.layui-btn-sm').css('display','none');
+		}
 		
 		var data_obj = JSON.parse(sessionStorage.getItem('sjyndy_cusid_name'));
 		data_obj.workDtS = data_obj.workDtS.replace(/\//ig, '-');
@@ -426,12 +429,47 @@
 		
 		var flag = 1; // 1:没有提交过   2：提交过
 		
-		$('.title .time').html(date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月');
+		if (data_obj.repType == 1) { // 月报
+			$('.title .time').html(date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月');
+		} else if (data_obj.repType == 2) { // 季报
+			switch (date_c.getMonth() + 1){
+				case 1:
+				case 2:
+				case 3:
+					jdNum = 1;
+					break;
+				case 4:
+				case 5:
+				case 6:
+					jdNum = 2;
+					break;
+				case 7:
+				case 8:
+				case 9:
+					jdNum = 3;
+					break;
+				case 10:
+				case 11:
+				case 12:
+					jdNum = 14;
+					break;
+				default:
+					break;
+			}
+			$('.title .time').html(date_c.getFullYear() + '年第' + jdNum + '季度');
+		} else if (data_obj.repType == 3) { // 年报
+			$('.title .time').html(date_c.getFullYear() + '年');
+		} else if (data_obj.repType == 4) { // 自定义
+			$('.title .time').html(data_obj.workDtS.substr(0,10) + '至' + data_obj.workDtE.substr(0,10));
+		}
+		
+		
 		
 		// 获取列表信息
 		$.ajax({
 			type: "post",
-			url: `${API}/erpSaleRepairOrder/findMon`,
+			// url: `${API}/erpSaleRepairOrder/findMon`,
+			url: 'http://8h7dgu.natappfree.cc/erpSaleRepairOrder/findMon',
 			async: true,
 			data: {
 				custId: data_obj.custId,
@@ -626,15 +664,15 @@
 		
 		$.ajax({
 			type: "post",
-			// url: `${API}/erpSaleRepairOrder/selectByReportTime`,
-			url: "http://sjy.natapp1.cc/erpSaleRepairOrder/selectByReportTime",
+			url: `${API}/erpSaleRepairOrder/selectByReportTime`,
+			// url: "http://sjy.natapp1.cc/erpSaleRepairOrder/selectByReportTime",
 			async: false,
 			data:{
 				time: date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月'
 			},
 			success: function(res){
 				if (res.code == 0) {
-					if (data) {
+					if (res.data) {
 						flag = 2;
 					}
 				}
@@ -660,8 +698,8 @@
 			if(flag == 1){ // 1:没有提交过
 				$.ajax({
 					type:"post",
-					// url:`${API}/erpSaleRepairOrder/addReport`,
-					url: "http://sjy.natapp1.cc/erpSaleRepairOrder/addReport",
+					url:`${API}/erpSaleRepairOrder/addReport`,
+					// url: "http://sjy.natapp1.cc/erpSaleRepairOrder/addReport",
 					async:false,
 					data:{
 						branchId: 1, // 分支id

@@ -89,33 +89,41 @@
 
 <body>
     <div class="wrap">
-
-            <div class="search">
-                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel2" name="kucun" class="kucun_sel">
+                        <option value="all">全部库存</option>
+                    </select>
                 </div>
-                <div class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select lay-filter="datesel" name="quiz2">
-                                <option value="">请选时段</option>
-                                <option value="0">一季度</option>
-                                <option value="1">二季度</option>
-                                <option value="2">三季度</option>
-                                <option value="3">四季度</option>
-                                <option value="4">上半年</option>
-                                <option value="5">下半年</option>
-                                <option value="6">本年度</option>
-                                <option value="7">上年度</option>
-                            </select>
-                        </div>
-                    </div>
+            </div>
+        </form>
+        <div class="search">
+            <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel" name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
                 </div>
-                <div class="search">
-                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
-                </div>
-                <div class="btn">
-                    <button class="layui-btn layui-btn-normal" onclick="select()" >查询</button>
-                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        </div>
+        <div class="btn">
+            <button class="layui-btn layui-btn-normal" onclick="select()" >查询</button>
+        </div>
         
         <table id="table" lay-filter="table" class="layui-table">
             <thead>
@@ -200,61 +208,165 @@
             }
         });
     })
-    function goUrl(matId) {
-        window.location.href = `./wuliaokucunxiangqing.html?custId=${loadUserInfo.customer.id}&startDate=${startDate}&endDate=${endDate}&matId=${matId}`
+    function goUrl(wareId) {
+        console.log(warehouseIds);
+        console.log(wareId);
+        console.log(startTime);
+        console.log(endTime);
+        // window.location.href = `./wuliaokucunxiangqing.html?custId=1&startTime=${startTime}&endTime=${endTime}&matId=${matId}`
+        window.location.href = `./wuliaokucunxiangqing.html?warehouseIds=${warehouseIds}&startTime=${startTime}&endTime=${endTime}&wareId=${wareId}`
     }
+
+    function renderForm(){
+      layui.use('form', function(){
+       var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
+       form.render();
+      });
+     }
     
     // 查询
     var startDate = ''
     var endDate = ''
-    var custId=loadUserInfo.customer.id;
-    function select () {
-        // 开始
-    startDate = $('.ksdate').val()
-    endDate = $('.jsdate').val()
+
+
+    var warehouseIds=''
+    var startTime=''
+    var endTime=''
+    
+    var date_c = new Date();
+    var year_c = date_c.getFullYear();
+    var month_c = date_c.getMonth() + 1;
+    switch (month_c){
+    	case 1:
+    	case 3:
+    	case 5:
+    	case 7:
+    	case 8:
+    	case 10:
+    	case 12:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c + '-' + month_c + '-31');
+    		break;
+    	case 4:
+    	case 6:
+    	case 9:
+    	case 11:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c + '-' + month_c + '-30');
+    		break;
+    	case 2:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c % 4 ==0 && year_c % 100 != 0 ? year_c + '-' + month_c + '-29' : year_c + '-' + month_c + '-28');
+    		break;
+    	default:
+    		break;
+    }
+
+    //获取库存
+    var kucun_arr=[];
     $.ajax({
-        url:`${API}/erpWarehouse/getWarehouseMaterielBycustId`,
+        url:`${API}/erpCustomerWarehouse/getWarehouses`,
         data:{
-            custId:custId,
-            startDate:startDate,
-            endDate:endDate
+            custId:loadUserInfo.customer.id,
         },
         type:'get',
         success: function (res) {
-        	console.log(res);
-            let str = ''
-            let arr =res.data.reverse()
-            $.each(arr,function (i) {
-                let json = arr[i]
-                str +=`<tr>
-                    <td>${arr.length - i}</td>
-                    <td>${json.materielName == null ? '' : json.materielName}</td>
-                    <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
-                    <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
-                    <td>${json.materielModel == null ? '' : json.materielModel}</td>
-                    <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
-                    <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
-                    <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
-                    <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
-                    <td>${json.inMatNum == null ? '' : json.inMatNum}</td>
-                    <td>${json.outMatNum == null ? '' : json.outMatNum}</td>
-                    <td>${json.matNum == null ? '' : json.matNum}</td>
-                    <td>${json.materielTax == null ? '' : json.materielTax}</td>
-                    <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs" onclick="goUrl(${json.id})">查看</div>
-                    </td>
-                </tr>`
-            })
-            $('.lists').html(str)
-
+         console.log(res);
+            let str = $('.kucun_sel').html();
+            for(var i=0;i<res.data.length;i++){
+                str+='<option value="'+res.data[i].id+'">'+res.data[i].warName+'</option>';
+                kucun_arr.push(res.data[i].id);
+                warehouseIds=warehouseIds+','+res.data[i].id;
+            }
+            // console.log(str);
+            $('.kucun_sel').html(str);
+            renderForm();//表单重新渲染，要不然添加完显示不出来新的option
+            select()
         },
         error: function () {
             alert('系统错误，请稍后重试！')
         }
     })
+    
+    function select () {
+        // 开始
+	    startTime = $('.ksdate').val();
+        endTime = $('.jsdate').val();
+        if($('.kucun_sel').val()=='all'){
+            warehouseIds=kucun_arr[0];
+            for(var i=1;i<kucun_arr.length;i++){
+                warehouseIds=warehouseIds+','+kucun_arr[i];
+            }
+        }else{
+            warehouseIds=$('.kucun_sel').val();
+        }
+        console.log(warehouseIds);
+        console.log(startTime);
+        console.log(endTime);
+        // console.log(kucun_arr);
+	    $.ajax({
+	        url:`${API}/erpWarehouse/selectByBranch`,
+	        data:{
+	            // custId:loadUserInfo.customer.id,
+                warehouseIds:warehouseIds,
+	            startTime:startTime,
+	            endTime:endTime
+	        },
+	        type:'get',
+	        success: function (res) {
+	        	console.log(res);
+	            let str = ''
+	            let arr =res.data.reverse()
+	            $.each(arr,function (i) {
+	                let json = arr[i]
+	                // str +=`<tr>
+	                //     <td>${arr.length - i}</td>
+	                //     <td>${json.materielName == null ? '' : json.materielName}</td>
+	                //     <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
+	                //     <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
+	                //     <td>${json.materielModel == null ? '' : json.materielModel}</td>
+	                //     <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
+	                //     <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+	                //     <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
+	                //     <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
+	                //     <td>${json.materielWarnAmount == null ? '' : json.materielWarnAmount}</td>
+	                //     <td>${json.materielOccupyNumber == null ? '' : json.materielOccupyNumber}</td>
+	                //     <td>${json.matNum == null ? '' : json.matNum}</td>
+	                //     <td>${json.materielTax == null ? '' : json.materielTax}</td>
+	                //     <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
+	                //     <td>
+	                //         <div class="layui-btn layui-btn-xs" onclick="goUrl(${json.id})">查看</div>
+	                //     </td>
+	                // </tr>`
+                    str +=`<tr>
+                        <td>${arr.length - i}</td>
+                        <td>${json[1] == null ? '' : json[1]}</td>
+                        <td>${json[2] == null ? '' : json[2]}</td>
+                        <td>${json[3] == null ? '' : json[3]}</td>
+                        <td>${json[4] == null ? '' : json[4]}</td>
+                        <td>${json[5] == null ? '' : json[5]}</td>
+                        <td>${json[11] == null ? '' : json[11]}</td>
+                        <td>${json[6] == null ? '' : json[6]}</td>
+                        <td>${json[7] == null ? '' : json[7]}</td>
+                        <td>${json[8] == null ? '' : json[8]}</td>
+                        <td>${json[9] == null ? '' : json[9]}</td>
+                        <td>${json[10] == null ? '' : json[10]}</td>
+                        <td>${json[13] == null ? '' : json[13]}</td>
+                        <td>${json[12] == null ? '' : json[12]}</td>
+                        <td>
+                            <div class="layui-btn layui-btn-xs" onclick="goUrl(${json[0]})">查看</div>
+                        </td>
+                    </tr>`
+	            })
+	            $('.lists').html(str)
+	
+	        },
+	        error: function () {
+	            alert('系统错误，请稍后重试！')
+	        }
+	    })
     }
-    select()
+    
 </script>
 
 </html>

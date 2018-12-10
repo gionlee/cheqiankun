@@ -78,7 +78,13 @@
 			$(this).css('cursor','pointer');
 		});
 		$('.customerList').on('click','td',function(){
-			location.href = "to-do-report-list.html";
+			// console.log(getUrlParam('report'))
+			if (getUrlParam('report')) {
+				location.href = "to-do-report-list.html?report=1";
+			} else{
+				location.href = "to-do-report-list.html";
+			}
+			
 			var obj = {
 				custId: $(this).attr('cusid'),
 				name: $(this).attr('cusName')

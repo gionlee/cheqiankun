@@ -41,6 +41,10 @@
             display: inline-block;
 
         }
+        .layui-form{
+        	display: inline-block;
+        	vertical-align: middle;
+        }
         .layui-form-item {
             margin: 0;
         }
@@ -69,13 +73,39 @@
 <body>
     <div class="wrap">
 
-        <div class="select">
+        <!--<div class="select">
             <div class="search">
                 <input class="layui-input" type="text" placeholder="客户名称       编码">
             </div>
             <div class="btn">
                 <button class="layui-btn layui-btn-normal">查询</button>
             </div>
+        </div>-->
+        <div class="search">
+            <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        </div>
+        <div class="layui-form">
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <select lay-filter="datesel" name="quiz2">
+                        <option value="">请选时段</option>
+                        <option value="0">一季度</option>
+                        <option value="1">二季度</option>
+                        <option value="2">三季度</option>
+                        <option value="3">四季度</option>
+                        <option value="4">上半年</option>
+                        <option value="5">下半年</option>
+                        <option value="6">本年度</option>
+                        <option value="7">上年度</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="search">
+            <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        </div>
+        <div class="btn">
+            <button class="layui-btn layui-btn-normal" id="cx">查询</button>
         </div>
         <table class="layui-table">
             <thead>
@@ -132,15 +162,75 @@
     layui.use('layer',function () {
         layer = layui.layer
     })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '7':
+                    $('.ksdate').val(`${years - 1}-01-01`)
+                    $('.jsdate').val(`${years - 1}-12-31`)
+                    break;
+            }
+        });
+    })
+    
     let name = decodeURI(decodeURI(getUrlParam('name')))
 
     let obj_response = {};
-    function selWork () {
+    var sdt = "";
+    var edt = "";
+    $("#cx").click(function(){
+    	sdt = $('.ksdate').val();
+    	edt = $('.jsdate').val();
+    	selWork(sdt,edt);
+    })
+    function selWork (sdt,edt) {
         $.ajax({
             url:`${API}/erpManagement/getManagementsBycustId`,
             data:{
-                startDate:'',
-                endDate:'',
+                startDate:sdt,
+                endDate:edt,
                 custName:name
             },
             type:'post',
@@ -187,7 +277,7 @@
             }
         })
     }
-    selWork ()
+    selWork(sdt,edt);
 
     // 过滤工作单位
     function fn_filterOrg( filter ) {

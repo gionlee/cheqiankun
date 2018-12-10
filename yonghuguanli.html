@@ -113,7 +113,7 @@
 <script>
     let arr = []
     $.ajax({
-        url: `${API}/erpUser/getcustUserByCustId?custId=${loadUserInfo.customer.id}`,
+        url: `${API}/erpUser/getcustUserByCustId?custId=1`,
         type: 'get',
         success: function (res) {
             let str = ''
@@ -205,34 +205,8 @@
     // 修改
     function usup(index) {
         let json = arr[index]
-        let slist = new Array();
-        console.log(json);
-        if(json.groupName!=null){
-        	slist = json.groupName.split(',')
-        }
-        $('.list').html("");
-        let str = `<tr>
-                <td>姓名:</td>
-                <td><input type="text" class="layui-input username" data-name="name"></td>
-                <td>职务:</td>
-                <td class="">
-
-                    <select name="" id="">
-                        <option value="总经理">总经理</option>
-                        <option value="维修经理">维修经理</option>
-                        <option value="业务经理">业务经理</option>
-                        <option value="技术经理">技术经理</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <input type="checkbox" name="" id=""> 全部分支
-                </td>
-                <td colspan="2">
-                    <input class="kallchange" type="checkbox" name="" id=""> 全部客户
-                </td>
-            </tr>`
+        let slist = json.groupName.split(',')
+        let str = ''
         $.each(slist,function (i,n) { 
             str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n}' >${n}</td></tr>`
 
@@ -286,7 +260,7 @@
                     })
                     json.realName =$('.username').val()
                     $.ajax({
-                        url:`${API}/erpUser/inertOrUpdateCustUser`,
+                        url:`${API}/erpCustomer/inertOrUpdateCustomer`,
                         type:'post',
                         data:json,
                         success:function (res) {
@@ -356,13 +330,17 @@
                     json.realName =$('.username').val()
                     $.ajax({
                         url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+                        // url: 'http://8h7dgu.natappfree.cc/erpCustomer/inertOrUpdateCustomer',
                         type:'post',
                         data:json,
                         success:function (res) {
-                            window.location.reload()
+                        	if(res.code == 0){
+                        		window.location.reload()
+                        	} else {
+                        		alert(res.msg)
+                        	}
                         }
                     })
-                    // layer.close(index)
                 }
             });
         })
@@ -375,14 +353,10 @@
         } else {
             json.status = 1
         }
-        
         $.ajax({
-            url: `${API}/erpUser/updateStutes`,
+            url: `${API}/erpUser/inertOrUpdateCustUser`,
             type: 'post',
-            data: {
-            	id:json.id,
-            	states:json.status
-            },
+            data: json,
             success: function (res) {
                 window.location.reload()
             }

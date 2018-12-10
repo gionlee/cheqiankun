@@ -144,11 +144,53 @@
         .layui-form-radio>i {
             font-size: 16px;
         }
+        .hover-body {
+            position: fixed;
+            top: 300px;
+            left: 50px;
+        }
+        .hover-show {
+            position:absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 10;
+            display: none;
+        }
+        .hover-show li {
+            width: 150px;
+            height: 30px;
+            background: #fff;
+            border-bottom:1px solid #ccc;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+        }
+        .hover-show li:hover {
+            background: #ccc;
+            /* color: #fff; */
+        }
+        .hover-show div {
+            top: 0;
+            position: absolute;
+            width: 150px;
+        }
+        .hover-show div ul {
+            position: absolute;
+            top: 0;
+            left: 150px;
+        }
     </style>
 </head>
 
 <body>
     <div class="wrap">
+            <div class="hover-body">
+                    <ul class="hover-show">
+        
+                    </ul>
+                </div>
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
                 <li class="layui-this">协议信息</li>
@@ -167,7 +209,8 @@
                                 <td>协议名称</td>
                                 <td colspan="4"><input type="text" class="layui-input" data-name="conName" value=""></td>
                                 <td>协议编码</td>
-                                <td colspan="4"><input type="text" class="layui-input" readonly data-name="conCode" value=""></td>
+                                <td colspan="4"><input type="text" class="layui-input" readonly data-name="conCode"
+                                        value=""></td>
                             </tr>
                             <td>协议文本</td>
                             <td colspan="9"><textarea name="desc" placeholder="请输入内容" data-name="conText" class="layui-textarea"></textarea></td>
@@ -224,7 +267,6 @@
                 </div>
                 <div class="layui-tab-item">
                     <!-- 积分消费 -->
-                    <div class="layui-btn layui-btn-xs" onclick="addjf()">新增</div>
                     <table class="layui-table">
                         <thead>
                             <tr>
@@ -242,12 +284,12 @@
                             <tr>
                                 <td></td>
                                 <td><input type="text" data-name="intName" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="dateStart" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="dateEnd" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="intDot" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="dateStart" class="layui-input jfks startDate" value=""></td>
+                                <td><input type="text" data-name="dateEnd" class="layui-input endDate jfjs" value=""></td>
+                                <td><input type="text" data-name="intDot" class="layui-input " value=""></td>
                                 <td><input type="text" data-name="intBid" class="layui-input" value=""></td>
                                 <td><input type="text" data-name="intPercentage" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="intKy" class="layui-input"></td>
+                                <td><input type="text" data-name="intPlay" class="layui-input"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -262,15 +304,19 @@
                         <tbody>
                             <tr>
                                 <td>财务结算</td>
-                                <td style="width:50%;">每月日<input type="text" name="finReportStart" class="layui-input ksjs"
-                                        style="width:30px;display: inline-block;" />点 -- 下月日<input type="text" name="finReportEnd"
-                                        class="layui-input jsjs" style="width:30px;display: inline-block;" />点</td>
-                                <td> <input type="checkbox" class="workReport" lay-filter="alls" lay-skin="primary" name="workReport"
-                                        title="工作报告"></td>
-                                <td> <input type="checkbox" class="weekly" lay-skin="primary" name="weekly" title="周报"></td>
-                                <td> <input type="checkbox" class="monthly" lay-skin="primary" name="monthly" title="月报"></td>
-                                <td> <input type="checkbox" class="quarterly" lay-skin="primary" name="quarterly" title="季报"></td>
-                                <td> <input type="checkbox" class="year" lay-skin="primary" name="year" title="年报"></td>
+                                <td style="width:50%;">每月<input type="text" name="finReportStart" class="layui-input ksjs"
+                                        style="width:30px;display: inline-block;" />日0点 -- 下月<input type="text" name="finReportEnd"
+                                        class="layui-input jsjs" style="width:30px;display: inline-block;" />日0点</td>
+                                <td> <input type="checkbox" class="workReport" lay-filter="alls" lay-skin="primary"
+                                        name="workReport" title="工作报告"></td>
+                                <td> <input type="checkbox" class="weekly" lay-skin="primary" lay-filter="week" name="weekly"
+                                        title="周报"></td>
+                                <td> <input type="checkbox" class="monthly" lay-skin="primary" lay-filter="month" name="monthly"
+                                        title="月报"></td>
+                                <td> <input type="checkbox" class="quarterly" lay-skin="primary" lay-filter="que" name="quarterly"
+                                        title="季报"></td>
+                                <td> <input type="checkbox" class="year" lay-skin="primary" name="year" lay-filter="year"
+                                        title="年报"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -279,12 +325,15 @@
                         <tbody>
                             <tr class="">
 
-                                <td><input type="text" name="days" class="layui-input nums" style="width:30px;display: inline-block;"
-                                    />天</td>
-                                <td> <input type="radio" class="afprq" name="setType" value="按发票日期" title="按发票日期"></td>
-                                <td> <input type="radio" class="addrq" name="setType" value="按订单日期" title="按订单日期"></td>
-                                <td> <input type="radio" class="azcrq" name="setType" value="按装车日期" title="按装车日期"></td>
-                                <td> <input type="radio" class="ajsrq" name="setType" value="按结算日期" title="按结算日期"></td>
+                                <td><input type="text" name="days" class="layui-input nums" style="width:30px;display: inline-block;" />天</td>
+                                <td> <input type="radio" class="afprq" lay-filter="fp" name="setType" value="按发票日期"
+                                        title="按发票日期"></td>
+                                <td> <input type="radio" class="addrq" lay-filter="fp" name="setType" value="按订单日期"
+                                        title="按订单日期"></td>
+                                <td> <input type="radio" class="azcrq" lay-filter="fp" name="setType" value="按装车日期"
+                                        title="按装车日期"></td>
+                                <td> <input type="radio" class="ajsrq" lay-filter="fp" name="setType" value="按结算日期"
+                                        title="按结算日期"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -292,12 +341,12 @@
                     <table class="layui-table layui-form-item">
                         <tbody>
                             <tr class="">
-                                <td> <input type="radio" name="priType" class="bx" name="quarterly" value="不选" title="不选"></td>
-                                <td> <input type="radio" name="priType" class="hs" value="含税" title="含税"></td>
-                                <td> <input type="radio" name="priType" class="bhs" value="不含税" title="不含税"></td>
-                                <td> <input type="radio" name="priType" class="zzsp" value="增值税票" title="增值税票"></td>
-                                <td> <input type="radio" name="priType" class="ptfp" value="普通发票" title="普通发票"></td>
-                                <td> <input type="radio" name="priType" class="wfp" value="无发票" title="无发票"></td>
+                                <td> <input type="radio" name="priType" class="bx" lay-filter="jg" value="不选" title="不选"></td>
+                                <td> <input type="radio" name="priType" class="hs" lay-filter="jg" value="含税" title="含税"></td>
+                                <td> <input type="radio" name="priType" class="bhs" lay-filter="jg" value="不含税" title="不含税"></td>
+                                <td> <input type="radio" name="priType" class="zzsp" lay-filter="jg" value="增值税票" title="增值税票"></td>
+                                <td> <input type="radio" name="priType" class="ptfp" lay-filter="jg" value="普通发票" title="普通发票"></td>
+                                <td> <input type="radio" name="priType" class="wfp" lay-filter="jg" value="无发票" title="无发票"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -355,26 +404,32 @@
     let pid = loadUserInfo.customer.id
     let xyxxId = loadUserInfo.user.id
     let id = 0
-    // // 商品价格 查询
-    function selSpjg () {
-        $.ajax({
-        url: `${API}/erpContract/getContractById?contractId=${contractId}`,
-        type: 'get',
-        success: function (res) {
-            console.log(res)
-            let json = res.data
-            xyxxId = json.customerId
-            let str = `<tr class="">
-                <td>协议名称</td>
-                <td colspan="4"><input type="text" class="layui-input" data-name="conName" value="${json.conName == null ? '' : json.conName}"></td>
-                <td>协议编码</td>
-                <td colspan="4"><input type="text" class="layui-input" data-name="conCode" value="${json.conCode == null ? '' : json.conCode}"></td>
-            </tr>
-            <td>协议文本</td>
-            <td colspan="9"><textarea name="desc" placeholder="请输入内容" data-name="conText" class="layui-textarea">${json.conText == null ? '' : json.conText}</textarea></td></tr>`
-            $('.xyxx').append(str)
-        }
+    layui.use('laydate',function () {
+        layui.laydate.render({
+            elem:'.jfks'
+        })
+        layui.laydate.render({
+            elem:'.jfjs'
+        })
     })
+    // 查询维修维护价格项目
+    function selWxwhjg(tag) {
+        console.log(tag)
+        $.ajax({
+            url: `${API}/erpSystemParameters/getparametersByName?name=维护项目`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arrs = res.data.parametersChildList
+                whlist = res.data.parametersChildList
+                let str = '<option></option>'
+                $.each(arrs, function (i, k) {
+                    str += `<option value="${k.name}" >${k.name}</option>`
+                })
+                $(tag).html(str)
+
+            }
+        })
     }
     let spjg = 0
 
@@ -395,7 +450,7 @@
                 $.each(arr, function (i) {
                     let json = arr[i]
                     wxwhid++
-                    str += `<tr class="wxwh_${i}"><td><input class="layui-input" data-name="repName" value="${json.repName}"></td>
+                    str += `<tr class="wxwh_${i}"><td><select class="wxwxxm_${i}"></select></td>
                 <td><input class="layui-input" data-name="repPrice" value="${json.repPrice}"></td>
                 <td><select class="layui-form select_${i}" repUnit="type" lay-verify="">
                     <option value=""></option>
@@ -413,14 +468,15 @@
                 </td>
                 <td><div class="layui-btn layui-btn-xs"  onclick="saveWxwh(${json.id},${i})">保存</div><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deleteJg(${json.id})">删除</div></td></tr>`
                     // $(`.select_${i}`).val(json.repUnit)    
-
-
                 })
-
+                
                 $('.wxwhjg').append(str)
                 $.each(arr, function (i) {
+                    selWxwhjg(`.wxwxxm_${i}`)
                     let json = arr[i]
                     $(`.select_${i}`).val(json.repUnit)
+                    $(`.wxwxxm_${i}`).val(json.repName)
+                    
                 })
             }
         })
@@ -428,7 +484,7 @@
     // selWhwx()
     //　维护维修新增
     function addWhwx() {
-        $('.wxwhjg').append(`<tr class="wxwh_${wxwhid}"><td><input class="layui-input" data-name="repName" value=""></td>
+        $('.wxwhjg').append(`<tr class="wxwh_${wxwhid}"><td><select class="selwhwx_${wxwhid}" class="layui-input" data-name="repName" value=""><select></td>
                 <td><input class="layui-input" data-name="repPrice" value=""></td>
                 <td><select class="layui-form select_${wxwhid}" repUnit="type" lay-verify="">
                     <option value=""></option>
@@ -444,25 +500,28 @@
                     <option value="次">次</option>
                     </select></td>
                 <td><div class="layui-btn layui-btn-xs"  onclick="saveWhwx(${wxwhid})">保存</div><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deleteJg()">删除</div></td></tr>`)
+                    selWxwhjg(`.selwhwx_${wxwhid}`)
+                    layui.form.render()
     }
     //　维护维修新增保存
     function saveWhwx(index) {
-        let url = ''
         let datas = {}
         $(`.wxwh_${index} input`).each(function (i) {
             datas[$(this).data('name')] = $(this).val()
         })
         datas.repUnit = $(`.select_${index}`).val()
+        datas.repName = $(`.selwhwx_${index}`).val()
+        console.log(datas,'888') 
         $.ajax({
             url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}&contractId=${contractId}`,
             type: 'get',
             data: datas,
             success: function (res) {
-                if(res.code == 0) {
+                if (res.code == 0) {
                     layer.msg('保存成功!')
                     selWhwx()
                 }
-                
+
             }
         })
     }
@@ -473,6 +532,7 @@
             datas[$(this).data('name')] = $(this).val()
         })
         datas.repUnit = $(`.select_${index}`).val()
+        datas.repName = $(`.select_${index}`).val()
         $.ajax({
             url: `${API}/ErpContractRepair/inertOrUpdateRepair?pid=${pid}&id=${id}&contractId=${contractId}`,
             type: 'get',
@@ -482,61 +542,68 @@
             }
         })
     }
-    // $.ajax({
-    //     url: `${API}/erpContractCommodity/getCommodityById?contractId=${pid}`,
-    //     type: 'get',
-    //     success: function (res) {
-    //         let str = ''
-    //         let arr = res.data
-    //         $.each(arr, function (i) {
-    //             id++
-    //             let json = arr[i]
-    //             str += `<tr class="upspjg_${i}">
-    //             <td>${i + 1}<input type="hidden"  data-name="id" value="${json.id}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comName" value="${json.comName}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comSpec" value="${json.comSpec}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comBrand" value="${json.comBrand}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comMdel" value="${json.comMdel}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comAddress" value="${json.comAddress}"></td>
-    //             <td><input type="text" class="layui-input"  data-name="comState" value="${json.comState}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comUnit" value="${json.comUnit}"></td>
-    //             <td><input type="text" class="layui-input" data-name="comPrice" value="${json.comPrice}"></td>
-    //             <td>
-    //                     <select class="layui-form selspjg_${i}" repUnit="type" lay-verify="">
-    //                 <option value="人民币">人民币</option>
-    //                 <option value="美元">美元</option>
-    //                 <option value="欧元">欧元</option>
-    //                 </select>
-    //             </td>
-    //             <td>
-    //                 <div class="layui-btn layui-btn-xs" onclick="saveJg(${i})">保存</div>
-    //                 <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delSpjg(${i},${json.id})">删除</div>
-    //             </td>
 
-    //         </tr>`
-    //         })
+    // 商品价格查询
+    function selSpjg() {
+        
+        $.ajax({
+        url: `${API}/erpContractCommodity/getCommoditytByConId?contractId=${contractId}`,
+        type: 'get',
+        success: function (res) {
+            let str = ''
+            let arr = res.data
+            $.each(arr, function (i) {
+                id++
+                let json = arr[i]
+                str += `<tr class="upspjg_${i}">
+                <td>${i + 1}<input type="hidden"  data-name="id" value="${json.id}"></td>
+                <td onclick="showLv1('.upspjg_${i}')"><input type="text" class="layui-input" data-name="comName" value="${json.comName}"></td>
+                <td><input type="text" class="layui-input" data-name="comSpec" value="${json.comSpec}"></td>
+                <td><input type="text" class="layui-input" data-name="comBrand" value="${json.comBrand}"></td>
+                <td><input type="text" class="layui-input" data-name="comMdel" value="${json.comMdel}"></td>
+                <td><input type="text" class="layui-input" data-name="comAddress" value="${json.comAddress}"></td>
+                <td><input type="text" class="layui-input"  data-name="comState" value="${json.comState}"></td>
+                <td><input type="text" class="layui-input" data-name="comUnit" value="${json.comUnit}"></td>
+                <td><input type="text" class="layui-input" data-name="comPrice" value="${json.comPrice}"></td>
+                <td>
+                        <select class="layui-form selspjg_${i}" repUnit="type" lay-verify="">
+                    <option value="人民币">人民币</option>
+                    <option value="美元">美元</option>
+                    <option value="欧元">欧元</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="layui-btn layui-btn-xs" onclick="saveJg('${i}','${json.id}')">保存</div>
+                    <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delSpjg(${i},${json.id})">删除</div>
+                </td>
+
+            </tr>`
+            })
 
 
-    //         $('.spjg').append(str)
-    //         $.each(arr, function (i) {
-    //             let json = arr[i]
-    //             console.log(json.comCurrency, '22')
-    //             $(`.selspjg_${i}`).val(json.comCurrency)
-    //         })
-    //     }
-    // })
+            $('.spjg').html(str)
+            $.each(arr, function (i) {
+                let json = arr[i]
+                console.log(json.comCurrency, '22')
+                $(`.selspjg_${i}`).val(json.comCurrency)
+            })
+        }, error: function () {
+            alert('系统错误，请稍后重试！')
+        }
+    })
+    }
     // 商品价格增加
     function add() {
 
         $('.spjg').append(`<tr class="spjg_${id}">
                 <td></td>
-                <td><input type="text" class="layui-input" data-name="comName" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comSpec" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comBrand" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comMdel" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comAddress" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comState" value=""></td>
-                <td><input type="text" class="layui-input" data-name="comUnit" value=""></td>
+                <td onclick="showLv1('.spjg_${id}')"><input type="text" class="layui-input materielName" data-name="comName" value=""></td>
+                <td><input type="text" class="layui-input materielSpecifications" data-name="comSpec" value=""></td>
+                <td><input type="text" class="layui-input materielBrand" data-name="comBrand" value=""></td>
+                <td><input type="text" class="layui-input materielModel" data-name="comMdel" value=""></td>
+                <td><input type="text" class="layui-input materielPlace" data-name="comAddress" value=""></td>
+                <td><input type="text" class="layui-input materielState" data-name="comState" value=""></td>
+                <td><input type="text" class="layui-input materielUnit" data-name="comUnit" value=""></td>
                 <td>
                     <input class="layui-input" data-name="comPrice" value="">
                 </td>
@@ -547,55 +614,60 @@
                     <div class="layui-btn layui-btn-xs" onclick="save(${id})">保存</div>
                     <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delthis(${id})">删除</div>
                 </td></tr>`)
-                $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=结算币种`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k.name}" >${k.name}</option>`
-            })
-            $('.shanpin').html(str)
-            layui.form.render()
-        }
-    })
+        $.ajax({
+            url: `${API}/erpSystemParameters/getparametersByName?name=结算币种`,
+            type: 'get',
+            success: function (res) {
+                let arr = res.data.parametersChildList
+                let str = '<option></option>'
+                $.each(arr, function (i, k) {
+                    str += `<option value="${k.name}" >${k.name}</option>`
+                })
+                $('.shanpin').html(str)
+                layui.form.render()
+            }
+        })
         id++
     }
     // 商品价格 新增 保存
     function save(id) {
         let str = `.spjg_${id} input`
         let tags = `.select_${id}`
-        let url = ``
+        let data = {}
         $(str).each(function () {
-            url += `&${$(this).data('name')}=${$(this).val()}`
+            data[$(this).data('name')]=$(this).val()
         })
-        url += `&comCurrency=${$(tags).val()}`
+        data.comCurrency=$(tags).val()
         $.ajax({
-            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=${pid}${url}&contractId=${contractId}`,
-            type: 'get',
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?pid=${pid}&materielId=&contractId=${contractId}`,
+            type: 'post',
+            data:data,
             success: function (res) {
-                if(res.code == 0) {
+                if (res.code == 0) {
                     layer.msg('保存成功!')
-                    selSpjg()
+                    selSpjg() 
                 }
             }
         })
     }
     // 商品价格 修改 保存
-    function saveJg(index) {
+    function saveJg(index,id) {
         let str = `.upspjg_${index} input`
         let tags = `.selspjg_${index}`
         let url = ``
         $(str).each(function () {
-            url += `&${$(this).data('name')}=${$(this).val()}`
+            data[$(this).data('name')]=$(this).val()
         })
-        url += `&comCurrency=${$(tags).val()}`
+       data.comCurrency=$(tags).val()
         $.ajax({
-            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?contractId=${contractId}&pid=${pid}&materielId=${pid}${url}`,
-            type: 'get',
+            url: `${API}/erpContractCommodity/inertOrUpdateCommodity?contractId=${contractId}&pid=${pid}&materielId=${id}`,
+            type: 'post',
+            data:data,
             success: function (res) {
-                console.log(res)
+                if (res.code == 0) {
+                    layer.msg('修改成功！')
+                    selSpjg() 
+                }
             }
         })
     }
@@ -610,30 +682,34 @@
                 url: `${API}/erpContractCommodity/removetCommodityById?contractId=${id}`,
                 type: 'get',
                 success: function (res) {
-                    let str = `.upspjg_${index}`
-                    $(str).remove()
+                    if(res.code == 0) {
+                        layer.msg('删除成功！')
+                    selSpjg() 
+                    } else {
+                        layer.msg('删除失败！')
+                    }
                 }
             })
         }
 
     }
-    let  contractId = ''
+    let contractId = ''
     // 保存协议信息
     function saveXyxx() {
-        let url = ''
+        let data = {}
         $('.xyxx input').each(function () {
-            url += `&${$(this).data('name')}=${$(this).val()}`
+           data[$(this).data('name')]=$(this).val()
         })
-        url += `&conText=${$('.xyxx textarea').val()}`
-        console.log(url)
+        data.conText=$('.xyxx textarea').val()
         $.ajax({
-            url: `${API}/erpContract/inertOrUpdateContract?customerId=${xyxxId}&id=${url}&conInput=${loadUserInfo.user.realName}`,
-            type: 'get',
+            url: `${API}/erpContract/inertOrUpdateContract?customerId=${xyxxId}&conInput=${loadUserInfo.user.realName}`,
+            type: 'post',
+            data:data,
             success: function (res) {
-                if(res.code == 0) {
+                if (res.code == 0) {
                     contractId = res.data
-                        layer.msg('保存成功!')
-                    }
+                    layer.msg('保存成功!')
+                }
             }
         })
     }
@@ -641,15 +717,13 @@
     function deleteJg(id) {
         if (confirm('是否删除？')) {
             $.ajax({
-                url: `${API}/ErpContractRepair/removetRepairById?contractId=${id}`,
+                url: `${API}/ErpContractRepair/removetRepairById?contractId=${contractId}&id=${id}`,
                 type: 'get',
                 success: function (res) {
-                    if(res.code == 0) {
+                    if (res.code == 0) {
                         layer.msg('删除成功!')
-                        // selWhwx()
-
+                        selWhwx()
                     }
-                    
                 }
             })
         }
@@ -657,22 +731,17 @@
     }
 
 
-    // 积分消费
+    // 积分消费查询
+    let jfxfList = []
     function selectJfxf() {
         $.ajax({
             url: `${API}/erpContractIntegral/getIntegraltByConId?contractId=${contractId}`,
             type: 'get',
             success: function (res) {
                 let arr = []
-                if (typeof (res.data) == 'object') {
-                    arr = [res.data]
-                } else {
-                    arr = res.data
-                }
                 let str = ``
-                console.log(arr)
-                $.each(arr, function (i) {
-                    let json = arr[i]
+                arr = res.data
+                $.each(arr, function (i,json) {
                     str += `<tr>
                                 <td>${i + 1}</td>
                                 <td><input type="text" data-name="intName" class="layui-input" value="${json.intName == null ? '' : json.intName}"></td>
@@ -681,160 +750,129 @@
                                 <td><input type="text" data-name="intDot" class="layui-input" value="${json.intDot == null ? '' : json.intDot}"></td>
                                 <td><input type="text" data-name="intBid" class="layui-input" value="${json.intBid == null ? '' : json.intBid}"></td>
                                 <td><input type="text" data-name="intPercentage" class="layui-input" value="${json.intPercentage == null ? '' : json.intPercentage}"></td>
-                                <td><input type="text" name="intKy" class="layui-input"></td>
+                                <td><input type="text" name="intPlay" class="layui-input" value="${json.intPlay || ''}"></td>
                             </tr>`
                 })
-                $('.jflist').append(str)
+                $('.jflist').html(str)
             }
         })
     }
-    // // 其他查询
-    // let otherId = ''
-    // let otherPid = ''
-    // $.ajax({
-    //     url: `${API}/erpContractComprehensive/getComprehensivetByConId?conId=1`,
-    //     type: 'get',
-    //     success: function (res) {
-    //         let json = res.data
-    //         otherId = json.id
-    //         otherPid = json.id
-    //         $('.ksjs').val(json.finReportStart)
-    //         $('.jsjs').val(json.finReportEnd)
-    //         if (json.workReport == '1') {
-    //             $('.workReport').attr("checked", true)
-    //             $('.weekly').attr("checked", true)
-    //             $('.monthly').attr("checked", true)
-    //             $('.quarterly').attr("checked", true)
-    //             $('.year').attr("checked", true)
 
-    //         }
-    //         if (json.setType == '1') {
-    //             $('.afprq').attr("checked", true)
-    //         }
-    //         if (json.setType == '2') {
-    //             $('.addrq').attr("checked", true)
-    //         }
-    //         if (json.setType == '3') {
-    //             $('.azcrq').attr("checked", true)
-    //         }
-    //         if (json.setType == '4') {
-    //             $('.ajsrq').attr("checked", true)
-    //         }
-    //         if (json.priType == '1') {
-    //             $('.bx').attr("checked", true)
-    //         }
-    //         if (json.priType == '2') {
-    //             $('.hs').attr("checked", true)
-    //         }
-    //         if (json.priType == '3') {
-    //             $('.bhs').attr("checked", true)
-    //         }
-    //         if (json.priType == '4') {
-    //             $('.zzsp').attr("checked", true)
-    //         }
-    //         if (json.priType == '5') {
-    //             $('.ptfp').attr("checked", true)
-    //         }
-    //         if (json.priType == '6') {
-    //             $('.wfp').attr("checked", true)
-    //         }
-    //         $('.nums').val(json.days)
-    //         layui.form.render();
-    //         layui.form.on('checkbox(alls)', function (data) {
-    //             console.log(data.elem.checked); //得到checkbox原始DOM对象
-    //             if (data.elem.checked) {
-    //                 $('.weekly').prop("checked", true)
-    //                 $('.monthly').prop("checked", true)
-    //                 $('.quarterly').prop("checked", true)
-    //                 $('.year').prop("checked", true)
-    //             } else {
-    //                 $('.weekly').prop("checked", false)
-    //                 $('.monthly').prop("checked", false)
-    //                 $('.quarterly').prop("checked", false)
-    //                 $('.year').prop("checked", false)
-    //             }
-    //             layui.form.render();
-    //             console.log(data.value); //复选框value值，也可以通过data.elem.value得到
-    //             console.log(data.othis); //得到美化后的DOM对象
-    //         });
-    //     }
-    // })
+    let otherData = {}
+    otherData = {
+                    workReport: 0,
+                    weekly: 0,
+                    monthly: 0,
+                    quarterly: 0,
+                    year: 0,
+                    setType: 0,
+                    priType: 0
+
+                }
+                layui.use('form',function () {
+                    layui.form.on('checkbox(alls)', function (data) {
+                    console.log(data.elem.checked); //得到checkbox原始DOM对象
+                    if (data.elem.checked) {
+                        $('.weekly').prop("checked", true)
+                        $('.monthly').prop("checked", true)
+                        $('.quarterly').prop("checked", true)
+                        $('.year').prop("checked", true)
+                        otherData.workReport = 1
+                        otherData.weekly = 1
+                        otherData.monthly = 1
+                        otherData.quarterly = 1
+                        otherData.year = 1
+                    } else {
+                        $('.weekly').prop("checked", false)
+                        $('.monthly').prop("checked", false)
+                        $('.quarterly').prop("checked", false)
+                        $('.year').prop("checked", false)
+                        otherData.workReport = 0
+                        otherData.weekly = 0
+                        otherData.monthly = 0
+                        otherData.quarterly = 0
+                        otherData.year = 0
+                    }
+                });
+
+                layui.form.on('checkbox(week)', function (data) {
+                    if (data.elem.checked) {
+                        otherData.weekly = 1
+                    } else {
+                        otherData.weekly = 0
+                    }
+                })
+                layui.form.on('checkbox(month)', function (data) {
+                    if (data.elem.checked) {
+                        otherData.monthly = 1
+                    } else {
+                        otherData.monthly = 0
+                    }
+                })
+                layui.form.on('checkbox(que)', function (data) {
+                    if (data.elem.checked) {
+                        otherData.quarterly = 1
+                    } else {
+                        otherData.quarterly = 0
+                    }
+                })
+                layui.form.on('checkbox(year)', function (data) {
+                    if (data.elem.checked) {
+                        otherData.year = 1
+                    } else {
+                        otherData.year = 0
+                    }
+                })
+                layui.form.on('radio(fp)', function (data) {
+                    if (data.value == '按发票日期') {
+                        otherData.setType = 1
+                    } else if (data.value == '按订单日期') {
+                        otherData.setType = 2
+                    } else if (data.value == '按装车日期') {
+                        otherData.setType = 3
+                    } else if (data.value == '按结算日期') {
+                        otherData.setType = 4
+                    }
+                })
+                layui.form.on('radio(jg)', function (data) {
+                    if (data.value == '不选') {
+                        otherData.priType = 1
+                    } else if (data.value == '含税') {
+                        otherData.priType = 2
+                    } else if (data.value == '不含税') {
+                        otherData.priType = 3
+                    } else if (data.value == '增值税票') {
+                        otherData.priType = 4
+                    }
+                    else if (data.value == '普通发票') {
+                        otherData.priType = 5
+                    }
+                    else if (data.value == '无发票') {
+                        otherData.priType = 6
+                    }
+                })
+    })
+                
     // 其他 保存
     function otherSave() {
         let data = {}
-        data.finReportStart = $('.ksjs').val()
-        data.finReportEnd = $('.jsjs').val()
-        if ($('.workReport').attr('checked')) {
-            data.workReport = 1
-        } else {
-            data.workReport = 0
-        }
-        if ($('.weekly').attr('checked')) {
-            data.weekly = 1
-        } else {
-            data.weekly = 0
-        }
-        if ($('.monthly').attr('checked')) {
-            data.monthly = 1
-        } else {
-            data.monthly = 0
-        }
-        if ($('.quarterly').attr('checked')) {
-            data.quarterly = 1
-        } else {
-            data.quarterly = 0
-        }
-        if ($('.year').attr('checked')) {
-            data.year = 1
-        } else {
-            data.year = 0
-        }
-
-        // 结算账期设置
-        if ($('.afprq').attr('checked')) {
-            data.setType = 1
-        }
-        if ($('.addrq').attr('checked')) {
-            data.setType = 2
-        }
-        if ($('.azcrq').attr('checked')) {
-            data.setType = 3
-        }
-        if ($('.ajsrq').attr('checked')) {
-            data.setType = 4
-        }
-
-        // 价格条件
-        if ($('.bx').attr('checked')) {
-            data.priType = 1
-        }
-        if ($('.hs').attr('checked')) {
-            data.priType = 2
-        }
-        if ($('.bhs').attr('checked')) {
-            data.priType = 3
-        }
-        if ($('.zzsp').attr('checked')) {
-            data.priType = 4
-        }
-        if ($('.ptfp').attr('checked')) {
-            data.priType = 5
-        }
-        if ($('.wfp').attr('checked')) {
-            data.priType = 6
-        }
-        data.days = $('.nums').val()
+        otherData.finReportStart = $('.ksjs').val()
+        otherData.finReportEnd = $('.jsjs').val()
+        otherData.days = $('.nums').val()
+        console.log(otherData)
         $.ajax({
             url: `${API}/erpContractComprehensive/inertOrUpdateComprehensive?contractId=${contractId}`,
             type: 'post',
-            data: data,
+            data: otherData,
             success: function (res) {
-                console.log('2')
+                layer.msg('保存成功！')
+            }, error: function () {
+                alert('系统错误，请稍后重试！')
             }
         })
     }
     //  积分新增
-    function addJf () {
+    function addJf() {
         $('.jflist').append(`<tr class="jf">
                                 <td></td>
                                 <td><input type="text" data-name="intName" class="layui-input" value=""></td>
@@ -846,37 +884,221 @@
                                 <td><input type="text" name="intKy" class="layui-input" value=""></td>
                                 <td><div class="layui-btn layui-btn-xs" onclick="saveJf()">保存</div></td>
                             </tr>`)
-                            layui.use('laydate',function () {
-                                layui.laydate.render({
-                                    elem:'.dateStart'
-                                })
-                                layui.laydate.render({
-                                    elem:'.dateEnd'
-                                })
-                            })
+        layui.use('laydate', function () {
+            layui.laydate.render({
+                elem: '.dateStart'
+            })
+            layui.laydate.render({
+                elem: '.dateEnd'
+            })
+        })
     }
-    function saveJf (index) {
-        let str = '.jf input'
+    // 保存积分
+    function saveJf(index) {
         let data = {}
         let id = ''
-        if(index) {
-            str = '.jf_'+index + 'input'
-
-        }
-        $(str).each (function () {
+        $('.jflist input').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
         $.ajax({
-            url:`${API}/erpContractIntegral/inertOrUpdateIntegral?pid=${loadUserInfo.customer.id}&id=${id}&contractId=${contractId}`,
-            type:'post',
-            data:data,
+            url: `${API}/erpContractIntegral/inertOrUpdateIntegral?pid=${loadUserInfo.customer.id}&id=${id}&contractId=${contractId}`,
+            type: 'post',
+            data: data,
             success: function (res) {
-                layer.msg('保存成功！')
-            },error: function () {
+                if(res.code == 0) {
+                    layer.msg('保存成功！')
+                selectJfxf()
+                }
+            }, error: function () {
                 alert('系统错误，请稍后重试！')
             }
         })
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//  要设置值的标签
+let setTag = ''
+
+
+    //  查找大类
+    function showLv1(tag) {
+        setTag = tag
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTop`,
+    type: 'get',
+    success: function (res) {
+        let str = ''
+        let arrs = res.data
+        $.each(arrs, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+        })
+        $('.hover-show').show()
+        $('.hover-show').html(str)
+    }
+})
+}
+// 查找品名
+function showLv2(zid, _this) {
+$(`.hover-show .list-2`).html('')
+aiZid = zid
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找规格
+function showLv3(zid, _this) {
+$(`.hover-show .list-3`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+        })
+        str += '</ul>'
+        console.log(str)
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找品牌
+function showLv4(zid, _this) {
+$(`.hover-show .list-4`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找型号
+function showLv5(zid, _this) {
+$(`.hover-show .list-5`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+
+function showLv6(zid, _this) {
+$(`.hover-show .list-6`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        console.log(res)
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+        })
+        str += '</ul>'
+        console.log(str)
+        $(_this).children('div').html(str)
+    }
+})
+}
+// 查找
+function showLv7(zid, _this) {
+$(`.hover-show .list-7`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str +=
+                `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+
+function showLv8(zid, _this) {
+$(`.hover-show .list-8`).html('')
+$.ajax({
+    url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+    type: 'get',
+    async: false,
+    success: function (res) {
+        let arr = res.data
+        let str = '<ul>'
+        $.each(arr, function (k, v) {
+            str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+        })
+        str += '</ul>'
+        $(_this).children('div').html(str)
+    }
+})
+}
+
+
+function setWlVal(_this) {
+        $(`${setTag} .materielUnit`).val($(_this).text())
+        $(`${setTag} .materielPlace`).val($(_this).parents('.list-8').prev().text())
+        $(`${setTag} .materielState`).val($(_this).parents('.list-7').prev().text())
+        $(`${setTag} .materielModel`).val($(_this).parents('.list-6').prev().text())
+        $(`${setTag} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+        $(`${setTag} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+        $(`${setTag} .materielName`).val($(_this).parents('.list-3').prev().text())
+    }
+    $(document).on('click', function () {
+        $('.hover-show').hide()
+    })
 </script>
 
 </html>

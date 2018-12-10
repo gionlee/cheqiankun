@@ -146,10 +146,14 @@
             border: 1px solid #ccc;
         }
 
-        .winbody {
+        .winbody,.addwin {
             width: 1200px;
             padding: 10px;
             display: none;
+            min-height: 400px;
+        }
+        .ddh {
+            width: 180px;
         }
     </style>
 </head>
@@ -180,9 +184,9 @@
             <input class="layui-input jsdate" type="text" placeholder="结束日期">
         </div>
         <div class="btn">
-            <button class="layui-btn layui-btn-normal">查询</button>
+            <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
         </div>
-        <div style="margin:10px 0;"><button class="layui-btn layui-btn-normal">新增</button> </div>
+        <div style="margin:10px 0;"><button class="layui-btn layui-btn-normal" onclick="addPlan()">新增</button> </div>
         <table class="layui-table" lay-filter="table">
             <thead>
                 <tr>
@@ -204,37 +208,44 @@
 
             </tbody>
         </table>
-        <ul class="top-nav">
-            <li><a href="#">电器-GPS主机</a>
-                <ul>
-                    <li><a href="#">下一级</a>
-                        <ul>
-                            <li><a href="#">下一级</a>
-                                <ul>
-                                    <li><a href="#">下一级</a>
-                                        <ul>
-                                            <li><a href="#">下一级</a></li>
-
-                                        </ul>
-                                    </li>
-
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </li>
-        </ul>
-
-
     </div>
     <div class="winbody">
+        <div class="layui-btn layui-btn-xs" onclick="addList()">新增</div>
         <table class="layui-table">
             <tbody class="dbody">
 
             </tbody>
         </table>
+    </div>
+    <div class="addwin">
+            <div class="layui-btn layui-btn-xs" onclick="adwinaddList()">新增</div>
+            <table class="layui-table" id="add" lay-filter="table">
+        <tr class="addinfos">
+                    <td>日期</td>
+                    <td><input type="text" class="layui-input adddate" data-name="dt" value="">
+                        <input type="hidden" data-name="id" value=""> 
+                        <input type="hidden" data-name="wordState" value="">
+                        </td>
+                    <td>业务经理</td>
+                    <td><input type="text" class="layui-input" data-name="bManager" value=""></td>
+                    <td>上报部门</td>
+                    <td colspan="2"><input type="text" class="layui-input" data-name="grounp" value=""></td>
+                    <td>订单号</td>
+                    <td class="ddh"><input type="text" class="layui-input" id="sheetId" readonly data-name="sheetId" value=""></td>
+                </tr>
+                <tr>
+                    <td>品名</td>
+                    <td>品牌</td>
+                    <td>规格</td>
+                    <td>型号</td>
+                    <td>产地</td>
+                    <td>物料新旧</td>
+                    <td>单位</td>
+                    <td>需求数量</td>
+                    <td>备注</td>
+                </tr>
+
+                </table>
     </div>
 </body>
 <script>
@@ -251,7 +262,53 @@
         laydate.render({
             elem: '.jsdate' //指定元素
         });
+        laydate.render({
+            elem:'.adddate',
+            done: function (val) {
+                $.ajax({
+                url:`${API}/erpOrderd/selectSheetId`,
+                type:'post',
+                data:{
+                    time: val
+                },
+                success: function (res) {
+                    console.log(res,'666')
+                    $('#sheetId').val(res.data)
+                }
+            })
+            }
+        })
     });
+    // 设置当前月
+    var date_c = new Date();
+    var year_c = date_c.getFullYear();
+    var month_c = date_c.getMonth() + 1;
+    let addCount = 0
+    switch (month_c){
+    	case 1:
+    	case 3:
+    	case 5:
+    	case 7:
+    	case 8:
+    	case 10:
+    	case 12:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c + '-' + month_c + '-31');
+    		break;
+    	case 4:
+    	case 6:
+    	case 9:
+    	case 11:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c + '-' + month_c + '-30');
+    		break;
+    	case 2:
+    		$('.ksdate').val(year_c + '-' + month_c + '-1');
+    		$('.jsdate').val(year_c % 4 ==0 && year_c % 100 != 0 ? year_c + '-' + month_c + '-29' : year_c + '-' + month_c + '-28');
+    		break;
+    	default:
+    		break;
+    }
     layui.use('form', function () {
         var form = layui.form
         form.on('select(datesel)', function (data) {
@@ -293,78 +350,58 @@
             }
         });
     })
-    let demand = {
-        page: 1,
-        limit: 10,
-        custId: 1
-    }
     let arr = []
+    sel()
+    function sel () {
+        let demand = {
+        custId: loadUserInfo.customer.id,
+        startTime: $('.ksdate').val(),
+        endTime: $('.jsdate').val()
+    }
+    
     $.ajax({
-        url: `${API}/erpOrderd/getOrderdPage`,
+        url: `${API}/erpOrderd/selectOrderByTime`,
         type: 'post',
         data: demand,
         success: function (res) {
-            arr = res.data.records
+            arr = res.data.reverse()
             let str = ''
             $.each(arr, function (i, json) {
                 str += `<tr>
-                    <td>${i + 1}</td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="dt" value="${json.sheetId}">
+                    <td>${arr.length - i}<input type="hidden" data-name="id" value="${json.id}">
+                        <input type="hidden" data-name="wordState" value="${json.wordState}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="grounp" value="${json.grounp}">
+                       ${json.dt || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="bManager" value="${json.bManager}">
-                    </td>`
-                if (json.orderdMateriels != null) {
-                    str += `<td onclick="setValue()">
-                        <input type="text" class="layui-input" data-name="materielName" value="${json.orderdMateriels.materielName}">
+                       ${json.cus_name || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielBrand" value="${json.orderdMateriels.materielBrand}">
+                       ${json.b_manager || ''}
+                    </td><td>
+                       ${json.materiel_name || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${json.orderdMateriels.materielSpecifications}">
+                       ${json.materiel_brand || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielModel" value="${json.orderdMateriels.materielModel}">
+                        ${json.materiel_Specifications || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielPlace" value="${json.orderdMateriels.materielPlace}">
+                        ${json.materiel_model || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielState" value="${json.orderdMateriels.materielState}">
+                       ${json.materiel_place || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="${json.orderdMateriels.materielUnit}">
-                    </td>`
-                } else {
-                    str += `<td onclick="setValue()">
-                        <input type="text" class="layui-input" data-name="materielName" value="">
+                        ${json.materiel_unit || ''}
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielBrand" value="">
+                       ${json.materiel_amount || ''}
                     </td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="materielSpecifications" value="">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="materielModel" value="">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="materielPlace" value="">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="materielState" value="">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="">
-                    </td>`
-                }
-                str += ` <td>
-                        <button class="layui-btn  layui-btn-sm" onclick="update(${i})">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="del(${json.id})">删除</button>
+              <td>
+                        <button class="layui-btn  layui-btn-sm" onclick="update('${json.order_id}','${i}')">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick="del(${json.id})">删除</button>
                     </td>
                 </tr>`
             })
@@ -372,19 +409,28 @@
 
         }
     })
+    }
+
     // 修改
-    function update(index) {
-        let json = arr[index]
-        let str = ''
-        str += `<tr>
-                    <td>日期 <input type="hidden" data-name="id" value="${json.id}"> <input type="hidden" data-name="materield" value="${json.materield}"></td>
-                    <td><input type="text" class="layui-input" data-name="dt" value="${json.sheetId}"></td>
+    function update(id,i) {
+        $.ajax({
+            url:`${API}/erpOrderd/selectByOrderId?orderId=${id}`,
+            type:'get',
+            success: function (res) {
+                let json = res.data
+                let str = ''
+        str += `<tr class="infos">
+                    <td>日期</td>
+                    <td><input type="text" class="layui-input xgdate" data-name="dt" value="${json.order.dt}">
+                        <input type="hidden" data-name="id" value="${json.order.id}"> 
+                        <input type="hidden" data-name="wordState" value="${json.order.wordState}">
+                        </td>
                     <td>业务经理</td>
-                    <td><input type="text" class="layui-input" data-name="bManager" value="${json.bManager}"></td>
+                    <td><input type="text" class="layui-input" data-name="bManager" value="${json.order.bManager}"></td>
                     <td>上报部门</td>
-                    <td colspan="2"><input type="text" class="layui-input" data-name="grounp" value="${json.grounp}"></td>
+                    <td colspan="2"><input type="text" class="layui-input" data-name="grounp" value="${json.order.grounp}"></td>
                     <td>订单号</td>
-                    <td><input type="text" class="layui-input" data-name="sheetId" value="${json.sheetId}"></td>
+                    <td class="ddh"><input type="text" class="layui-input" readonly data-name="sheetId" value="${json.order.sheetId}"></td>
                 </tr>
                 <tr>
                     <td>品名</td>
@@ -397,36 +443,94 @@
                     <td>需求数量</td>
                     <td>备注</td>
                 </tr>`
-        if (json.orderdMateriels != null) {
-            str += `<tr class="mlist"><td onclick="setValue()">
-                        <input type="text" class="layui-input" data-name="materielName" value="${json.orderdMateriels.materielName}">
+            
+        let list = res.data.materielList.reverse()
+        $.each(list,function (j,n) {
+            str += `<tr class="mlist sss_${i}"><td >
+                    <input type="hidden" data-name="id" value="${n.id}">
+                    <input type="hidden" data-name="workState" value="${n.workState}">
+                        <input type="text" class="layui-input" data-name="materielName" value="${n.materielName}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielBrand" value="${json.orderdMateriels.materielBrand}">
+                        <input type="text" class="layui-input" data-name="materielBrand" value="${n.materielBrand}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${json.orderdMateriels.materielSpecifications}">
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${n.materielSpecifications}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielModel" value="${json.orderdMateriels.materielModel}">
+                        <input type="text" class="layui-input" data-name="materielModel" value="${n.materielModel}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielPlace" value="${json.orderdMateriels.materielPlace}">
+                        <input type="text" class="layui-input" data-name="materielPlace" value="${n.materielPlace}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielState" value="${json.orderdMateriels.materielState}">
+                        <input type="text" class="layui-input" data-name="materielState" value="${n.materielState}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="${json.orderdMateriels.materielUnit}">
+                        <input type="text" class="layui-input" data-name="materielUnit" value="${n.materielUnit}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielAmount" value="${json.orderdMateriels.materielAmount}">
+                        <input type="text" class="layui-input" data-name="materielAmount" value="${n.materielAmount}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="bz" value="">
+                        <input type="text" class="layui-input" data-name="remark" value="${n.remark}">
                     </td></tr>`
-        } else {
-            str += `<tr class="mlist"><td onclick="setValue()">
+        })
+        $('.dbody').html(str)
+        layui.use('laydate',function () {
+            layui.laydate.render({
+                elem:'.xgdate'
+            })
+        })
+        layui.use('layer', function () {
+            let layer = layui.layer
+            layer.open({
+                type: 1,
+                title: '修改',
+                content: $('.winbody'),
+                area: ['1220px'],
+                btn: ['保存', '取消'],
+                yes: function (index) {
+                    layer.close(index)
+                    let saveData = {}
+                    let list = []
+                    $(`.sss_${i}`).each(function () {
+                        let data = {}
+                        $(this).find('input').each(function () {
+                            data[$(this).data('name')] = $(this).val()
+                        })
+                        list.push(data)
+                    })
+                    $('.infos input').each(function () {
+                        saveData[$(this).data('name')] = $(this).val()
+                    })
+                    saveData.customerId = loadUserInfo.customer.id
+                    saveData.json = JSON.stringify(list)
+                    $.ajax({
+                        url:`${API}/erpOrderd/addOrderd`,
+                        data:saveData,
+                        type:'post',
+                        success: function (res) {
+                            if(res.code == 0) {
+                                sel()
+                                layer.msg('保存成功!')
+                            }
+                        }
+                    })
+                    
+                }
+            })
+        })
+    }
+    })
+}
+    let adaddcount = 0
+    function adwinaddList () {
+        adaddcount++
+        $('#add').append(`
+        <tr class="mlist list_${adaddcount}"><td>
+                        <input type="hidden" data-name="id"  value="0">
+                        <input type="hidden" data-name="workState"  value="0">
                         <input type="text" class="layui-input" data-name="materielName" value="">
                     </td>
                     <td>
@@ -448,29 +552,96 @@
                         <input type="text" class="layui-input" data-name="materielUnit" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                        <input type="text" class="layui-input" data-name="materielAmount" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="remark" value="">
+                    </td></tr>
+        `) 
+        
+    }
+    adwinaddList()
+    // 增加需求计划
+    function addPlan () {
+        let layer = ''
+        let form = ''
+        layui.use('layer',function () {
+            layer = layui.layer
+            form = layui.form
+        })
+        $('.adddate').on('blur',function () {
+            
+        })
+        layer.open({
+            type:1,
+            title:'新增',
+            content:$('.addwin'),
+            area: ['1220px'],
+            btn: ['保存', '取消'],
+            yes:function (index) {
+                let saveData = {}
+                    let list = []
+                    $(`.list_${adaddcount}`).each(function () {
+                        let data = {}
+                        $(this).find('input').each(function () {
+                            data[$(this).data('name')] = $(this).val()
+                        })
+                        list.push(data)
+                    })
+                    $('.addinfos input').each(function () {
+                        saveData[$(this).data('name')] = $(this).val()
+                    })
+                    saveData.customerId = loadUserInfo.customer.id
+                    saveData.json = JSON.stringify(list)
+                    $.ajax({
+                        url:`${API}/erpOrderd/addOrderd`,
+                        data:saveData,
+                        type:'post',
+                        success: function (res) {
+                            if(res.code == 0) {
+                                sel()
+                                layer.msg('保存成功!')
+                            }
+                        }
+                    }) 
+            }
+        })
+    }
+    
+    // 增加需求物料
+    function addList () {
+        $('.dbody').append(`
+        <tr class="mlist list_${addCount}"><td>
+                        <input type="hidden" data-name="id"  value="0">
+                        <input type="hidden" data-name="workState"  value="0">
+                        <input type="text" class="layui-input" data-name="materielName" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielBrand" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielSpecifications" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielModel" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielPlace" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielState" value="">
                     </td>
                     <td>
                         <input type="text" class="layui-input" data-name="materielUnit" value="">
-                    </td></tr>`
-        }
-        $('.dbody').html(str)
-        layui.use('layer', function () {
-            let layer = layui.layer
-            layer.open({
-                type: 1,
-                title: '修改',
-                content: $('.winbody'),
-                area: ['1220px'],
-                btn: ['保存', '取消'],
-                yes: function (index) {
-                    layer.close(index)
-                    $('.mlist input').each(function () {
-
-                    })
-                }
-            })
-        })
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="materielAmount" value="">
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="remark" value="">
+                    </td></tr>
+        `) 
+        addCount++
     }
     // 删除
     function del(id) {

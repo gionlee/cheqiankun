@@ -85,18 +85,18 @@
                         success: function (res) {
                             
                             if(res.code == 1) {
-                                layer.msg(res.msg, function () {
-                            }); 
-                        }else if(res.code == 0)  {
-                            sessionStorage.loadUserInfo = JSON.stringify(res.data)
-                            // loadUserCustId = res.data.customer.id
-                            // loadUserInfo.customer.cusCode = res.data.customer.cusCode
-                            // loadUserUserId = res.data.user.id
-                            // loadUserInfo.customer.cusName = res.data.user.branchName
-                            layer.msg(`登陆成功,请稍等`, function () {
-                                 location.href = 'main.html' 
-                            });
-                        }
+                                layer.msg(res.msg, function () {}); 
+                            
+	                        }else if(res.code == 0)  {
+	                            sessionStorage.loadUserInfo = JSON.stringify(res.data)
+	                            // loadUserCustId = res.data.customer.id
+	                            // loadUserInfo.customer.cusCode = res.data.customer.cusCode
+	                            // loadUserUserId = res.data.user.id
+	                            // loadUserInfo.customer.cusName = res.data.user.branchName
+	                            layer.msg(`登陆成功,请稍等`, function () {
+	                                 location.href = 'main.html' 
+	                            });
+	                        }
 
 
                             return false;
@@ -150,14 +150,6 @@
 
             var time1 = time.Format("yyyy/MM/dd");
             console.log(time1);
-            //百度统计可去掉
-            var _hmt = _hmt || [];
-            (function () {
-                var hm = document.createElement("script");
-                hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
-                var s = document.getElementsByTagName("script")[0];
-                s.parentNode.insertBefore(hm, s);
-            })();
     </script>
 </body>
 

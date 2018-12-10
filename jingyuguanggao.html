@@ -94,6 +94,10 @@
         .layui-input-inline {
             width: 100% !important;
         }
+        .layui-layer-btn1 {
+        	background-color: #009688 !important;
+        	color: #fff !important;
+        }
     </style>
 </head>
 
@@ -238,7 +242,7 @@
                     
 		        }
 		    })
-        $("#id").val('');
+        $("#id").val('0');
 		        	$("#company").val(loadUserInfo.customer.cusName);
 		        	$("#content").val('')
 		        	$("#contentFamily").val('楷体')
@@ -255,11 +259,13 @@
                         type:1,
                         title:'新增',
                         content: $('.winbody'),
-                        btn:['确认'],
+                        btn:['保存','提交','取消'],
                         area:['740px'],
                         yes: function (index) {
-                            ti(index)
-                        }
+                        	ti(index)
+                        },btn2: function(index, layero){
+						    tijiao();
+						}
                     })
     }
     // 广告查询
@@ -386,7 +392,8 @@ $.ajax({
 		        	submitTime:$("#submitTime").val(),
 		        	endTime:$("#endTime").val(),
 		        	checkNumber:$("#checkNumber").val(),
-		        	programs:$("#programs").val()
+		        	programs:$("#programs").val(),
+		        	checkPeople:loadUserInfo.customer.cusLegalPerson
 		        },
 		        success: function (res) {
                     
@@ -430,5 +437,37 @@ $.ajax({
                     })
             }
         })
+    }
+    
+    function tijiao(){
+    	var id=$("#id").val();
+    	$.ajax({
+		        url: `${API}/erpAdvertisementCheck/tiCheck`,
+		        type: 'get',
+		        data:{
+		        	id:$("#id").val(),
+		        	company:$("#company").val(),
+		        	content:$("#content").val(),
+		        	contentFamily:$("#contentFamily").val(),
+		        	contentSize:$("#contentSize").val(),
+		        	contentColor:$("#contentColor").val(),
+		        	playRate:$("#playRate").val(),
+		        	contract:$("#contract").val(),
+		        	telphone:$("#telphone").val(),
+		        	submitTime:$("#submitTime").val(),
+		        	endTime:$("#endTime").val(),
+		        	checkNumber:$("#checkNumber").val(),
+		        	programs:$("#programs").val(),
+		        	checkPeople:loadUserInfo.customer.cusLegalPerson
+		        },
+		        success: function (res) {
+                    jing();
+                    layer.msg('保存成功！')
+                    setTimeout(function () {
+                        layer.close(index)
+                        
+                    },1500)
+		        }
+		    })
     }
 </script>

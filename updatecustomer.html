@@ -562,9 +562,9 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3" class="layui-form">
-                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" >
-                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" >
-                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" >
+                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" checked="">
+                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" checked="">
+                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" checked="">
                                     </td>
                                     <td>产权所有</td>
                                     <td colspan="5">
@@ -572,7 +572,7 @@
                                     </td>
                                     <td>关联车辆</td>
                                     <td colspan="2">
-                                        <input type="text" data-name="glCarId" class="layui-input carInfos">
+                                        <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
                                     </td>
                                 </tr>
                                 <tr>
@@ -744,7 +744,7 @@
                     <tr>
 						<td>识别号</td>
                         <td colspan="2">
-                            <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
+                            <input type="text" data-name="carEngine" class="layui-input carInfos">
                         </td>
 						<td>变速箱号</td>
 						<td colspan="2">
@@ -881,7 +881,7 @@
                         </td>
                         <td>关联车辆</td>
                         <td colspan="2">
-                            <input type="text" data-name="glCarId" class="layui-input carInfos">
+                            <input type="text" data-name="carShiBieNumber" class="layui-input carInfos">
                         </td>
                     </tr>
                     <tr>
@@ -922,7 +922,7 @@
         if (r != null) return unescape(r[2]);
         return null; //返回参数值
     }
-    let custId = 1
+    let custId = loadUserInfo.customer.id;
     custId = getUrlParam('custId')
     $('.carLuru').val(loadUserInfo.user.realName)
     layui.use('laydate', function () {
@@ -984,7 +984,18 @@
     function setValue() {
         $('.top-nav').show()
     }
-
+    // 设置 税务类型下拉
+    let swlxList = []
+    $.ajax({
+				url:`${API}/erpSystemParameters/getparametersByName?name=税务类型`,
+                type:'get',
+                async:false,
+				success:function (res) {
+					swlxList = res.data.parametersChildList
+					
+                }
+                
+            })
     // 运营类型修改
     let typeStr = ''
 	/*layui.use('form', function() {
@@ -1063,12 +1074,14 @@
                 let str = ''
                 $.each(cwList, function (i, json) {
                     str +=
-                        `<tr>
-                    <td><input type="hidden" data-name="id" value="${json.id}"><input d type="text" data-name="finFrNo" class="layui-input" value="${json.finFrNo == null ? '' : json.finFrNo}"></td>
+                        `<tr class="cwxx_${i}">
+                    <td><input type="hidden" data-name="viceId" value="${json.viceId}" ><input type="hidden" data-name="id" value="${json.id}" ><input type="text" data-name="finFrNo" class="layui-input" value="${json.finFrNo == null ? '' : json.finFrNo}"></td>
                     <td><input type="text" data-name="finDjNo" class="layui-input" value="${json.finDjNo == null ? '' : json.finDjNo}"></td>
                     <td><input type="text" data-name="finAddress" class="layui-input" value="${json.finAddress == null ? '' : json.finAddress}"></td>
-                    <td><input type="text" data-name="finType" class="layui-input" value="${json.finType == null ? '' : json.finType}"></td>
-                    <td><input type="text" data-name="finvType" class="layui-input" value="${json.finvType == null ? '' : json.finvType}"></td>
+                    <td> <select class="finvType_${i}">
+                            </select></td>
+                    <td>
+                        <input type="text" data-name="finvType" class="layui-input" value="${json.finvType == null ? '' : json.finvType}"></td>
                     <td><input type="text" data-name="finvBank" class="layui-input" value="${json.finvBank == null ? '' : json.finvBank}"></td>
                     <td><input type="text" data-name="finvNumber" class="layui-input" value="${json.finvNumber == null ? '' : json.finvNumber}"></td>
                     <td><input type="text" data-name="finvUser" readonly class="layui-input" value="${json.finvUser == null ? '' : json.finvUser}"></td>
@@ -1079,6 +1092,14 @@
                     </tr>`
                 })
                 $('.cwlist').html(str)
+                $.each(cwList,function (i,json) {
+                    let str = '<option></option>'
+					$.each(swlxList,function (j,k) {
+						str +=`<option value="${k.name}">${k.name}</option>`
+					})
+                    $(`.finvType_${i}`).html(str)
+                    $(`.finvType_${i}`).val(json.finType)
+                })
                 // if (json) {
                 //     $('.cwxx').html(`<tr>
                 //                     <td>法人代码号<input type="hidden" data-name="id" value=""></td>
@@ -1159,18 +1180,21 @@
                 url: `${API}/erpCustomerFinance/removeCustomerFinance?customerCarId=${cwList[i].id}`,
                 type: 'get',
                 success: function (res) {
+
                     layer.msg('删除成功!')
                 }
             })
         }
     }
     // 保存财务信息
-    function saveCw() {
+    function saveCw(index) {
         let data = {}
-        $('.cwxx input').each(function () {
+        $(`.cwxx_${index} input`).each(function () {
             data[$(this).data('name')] = $(this).val()
         })
+        data.finType = $(`.finvType_${index}`).val()
         data.customerId = custId
+        console.log(data,'2222')
         $.ajax({
             url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
             type: 'post',
@@ -1205,14 +1229,15 @@
             url: `${API}/erpCustomerIntegral/getcustIntegralByCustId?custId=${custId}`,
             type: 'get',
             success: function (res) {
+                console.log(res);
                 let json = res.data
                 $('.jfxx').html(
                     `<td width="16%">累计积分<input type="hidden" data-name="id" class="layui-input" value="${json.id}"></td>
                                 <td width="16%"><!--<input type="text" data-name="intLj" class="layui-input" value="${json.intLj}">-->${json.intLj}</td>
                                 <td width="16%">使用积分</td>
-                                <td width="16%"><!--<input type="text" data-name="intSy" class="layui-input" value="${json.intLj}">-->${json.intLj}</td>
+                                <td width="16%"><!--<input type="text" data-name="intSy" class="layui-input" value="${json.intSy}">-->${json.intSy}</td>
                                 <td width="16%">可用积分</td>
-                                <td width="16%"><!--<input type="text" data-name="intKy" class="layui-input" value="${json.intLj}">-->${json.intLj}</td>
+                                <td width="16%"><!--<input type="text" data-name="intKy" class="layui-input" value="${json.intKy}">-->${json.intKy}</td>
                                 <!--<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveJf()">保存</button></td>-->`
                 )
             }
@@ -1237,36 +1262,36 @@
         })
     }
     // 保存车辆信息
-    function saveCarInfo(i,cls) {
+    function saveCarInfo(i) {
         let data = {}
 
-        $(`${cls} .carInfos`).each(function () {
+        $('.carInfos').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
-        data.carDrive = $(`${cls} .carDrive`).val() // 驱动方式
-        data.carWheel = $(`${cls} .carWheel`).val() // 车轴轮数
-        data.carLoad = $(`${cls} .carLoad`).val()
-        data.carColor1 = $(`${cls} .carColor1`).val()
-        data.carColor2 = $(`${cls} .carColor2`).val()
-        data.carType1 = $(`${cls} .carType1`).val()
-        data.carType2 = $(`${cls} .carType2`).val()
-        data.carRimType = $(`${cls} .carRimType`).val()
-        data.carBrakingType = $(`${cls} .carBrakingType`).val()
-        data.carSuspensionType = $(`${cls} .carSuspensionType`).val()
-        data.carOperationType = $(`${cls} .carOperationType`).val()
-        data.carOperateType = $(`${cls} .carOperateType`).val()
-        data.carUse = $(`${cls} .carUse`).val()
+        data.carDrive = $('.carDrive').val() // 驱动方式
+        data.carWheel = $('.carWheel').val() // 车轴轮数
+        data.carLoad = $('.carLoad').val()
+        data.carColor1 = $('.carColor1').val()
+        data.carColor2 = $('.carColor2').val()
+        data.carType1 = $('.carType1').val()
+        data.carType2 = $('.carType2').val()
+        data.carRimType = $('.carRimType').val()
+        data.carBrakingType = $('.carBrakingType').val()
+        data.carSuspensionType = $('.carSuspensionType').val()
+        data.carOperationType = $('.carOperationType').val()
+        data.carOperateType = $('.carOperateType').val()
+        data.carUse = $('.carUse').val()
         data.customerId = custId
-        data.carServiceCentre = $(`${cls} .carServiceCentre`).val()
+        data.carServiceCentre = $('.carServiceCentre').val()
         data.userId = loadUserInfo.user.id
-        console.log($(`.qqts_${i}`).val())
-        debugger
-        if (i < 0) {
-            delete data.id
+        console.log(data)
+        if (i == true) {
+            data.id = ''
         } else {
         	data.id = i;
         }
-
+        console.log(data)
+        if (flag_car) { // 新增
         	$.ajax({
 	            url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
 	            type: 'post',
@@ -1282,6 +1307,25 @@
 	                
 	            }
 	        })
+        } else{ // 修改
+        	$.ajax({
+	            url: `${API}/erpCustomerCar/updateCustomerCar`,
+	            type: 'post',
+	            data: data,
+	            success: function (res) {
+	                if(res.code == 2) {
+	                    alert('车辆已存在！')
+	                }
+	                if(res.code == 0) {
+	                    layer.msg('保存成功！')
+	                    selCar()
+	                    flag_car = true;
+	                }
+	                
+	            }
+	        })
+        }
+	        
 
     }
     // 新增物料
@@ -1304,7 +1348,7 @@
                                             <input type="text" data-name="limOrigin" value="" class="layui-input">
                                         </td>
                                 <td style="width:200px;">
-                                    <select name=""  class="limType newLim" id="">
+                                    <select name="" data-name="limType"  class="limType newLim" id="">
                                         <option value="剩余胎纹">剩余胎纹</option>
                                         <option value="工作小时">工作小时</option>
                                         <option value="使用里程">使用里程</option>
@@ -1336,17 +1380,45 @@
                                 </td></tr>
                             `
         )
+        $('.qiyong').on('click', function () {
+            $(this).html() == '启用' ? $(this).html('停用') : $(this).html('启用')
+        })
+        layui.use('form', function () {
+            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+            form.render();
+        })
     }
     //保存物料
     function saveWl(i) {
-
         let data = wlsmList[i]
+        var owlsmList=document.querySelectorAll('.wlsmList')[0];
+        var aowlsmList_tr=owlsmList.querySelectorAll('tr');
+        var oqiyong=aowlsmList_tr[i].querySelectorAll('.qiyong')[0];
+
+        // console.log(wlsmList[i]);
+        // console.log(owlsmList);
+        // console.log(aowlsmList_tr);
+        // console.log(aowlsmList_tr[i]);
+        // console.log(oqiyong);
+        if($(oqiyong).html().replace(/(^\s*)|(\s*$)/g, "")=='启用'){
+            data.limEnable=1;
+            // console.log($(oqiyong).html());
+        }else if($(oqiyong).html().replace(/(^\s*)|(\s*$)/g, "")=='停用'){
+            data.limEnable=0;
+            // console.log($(oqiyong).html());
+        }
+        
+        
         $(`.wlsm_${i} input`).each(function () {
+            data[$(this).data('name')] = $(this).val()
+        })
+        $(`.wlsm_${i} select`).each(function () {
             data[$(this).data('name')] = $(this).val()
         })
         data.limType = $('.limType').eq(i).val()
         data.customerId = custId
-        data.limEnable = limEnable
+        // console.log(data.limEnable);
+        // data.limEnable = limEnable
         /*data.limName = // 品名
         data.limSF = // 规格
        	data.limModel = // 型号
@@ -1374,7 +1446,7 @@
 
          */
         $.ajax({
-            url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit`,
+            url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit?ren=${loadUserInfo.user.realName}`,
             type: 'post',
             data: data,
             success: function (res) {
@@ -1385,16 +1457,27 @@
     }
 
     function addSaveWl() {
-
         let data = {}
+
+        // console.log($('.wlsm .qiyong').eq(0).html().replace(/(^\s*)|(\s*$)/g, ""));
+        if($('.wlsm .qiyong').eq(0).html().replace(/(^\s*)|(\s*$)/g, "")=='启用'){
+            data.limEnable=1;
+        }else if($('.wlsm .qiyong').eq(0).html().replace(/(^\s*)|(\s*$)/g, "")=='启用'){
+            data.limEnable=0;
+        }
+        
+
+        
         $(`.wlsm input`).each(function () {
             data[$(this).data('name')] = $(this).val()
         })
         data.customerId = custId
-        data.limEnable = limEnable
+        // data.limEnable = limEnable
+        // console.log(data);
+
         data.limType = $('.newLim').val()
         $.ajax({
-            url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit`,
+            url: `${API}/erpCustomerLimit/inertOrUpdateCustomerLimit?ren=${loadUserInfo.user.realName}`,
             type: 'post',
             data: data,
             success: function (res) {
@@ -1689,6 +1772,7 @@
             url: `${API}/erpCustomerLimit/getcustLimitByCustId?custId=${custId}`,
             type: 'get',
             success: function (res) {
+                console.log(res);
                 let arr = res.data.reverse()
                 let str = ''
                 wlsmList = res.data.reverse()
@@ -1711,7 +1795,7 @@
                                     <input type="text" data-name="limOrigin" value="${json.limOrigin}" class="layui-input">
                                 </td>
                                 <td style="width:200px;">
-                                    <select name="" class="limType" id="">
+                                    <select name="" value="${json.limOrigin}" class="limType" id="">
                                         <option value="剩余胎纹">剩余胎纹</option>
                                         <option value="工作小时">工作小时</option>
                                         <option value="使用里程">使用里程</option>
@@ -1728,7 +1812,7 @@
                                     <input type="text" data-name="limReplacement" value="${json.limReplacement}" class="layui-input">
                                 </td>
                                 <td>
-                                    <button class="layui-btn layui-btn-xs  qiyong">启用</button>
+                                    <button class="layui-btn layui-btn-xs  qiyong">${json.limEnable==1 ? '启用' : '停用'}  </button>
                                 </td>
                                 <td> ${json.luRuPeople}</td>
                                 <td> ${json.luRuTime}</td>
@@ -1855,7 +1939,7 @@
                 content: $('.addbody'),
                 btn: ['保存', '取消'],
                 yes: function (index) {
-                    saveCarInfo(-10,'.addbody')
+                    saveCarInfo(true)
                     layui.layer.close(index)
                 }
             })
@@ -1865,7 +1949,9 @@
     function seeCar(index) {
         let json = carList[index]
         flag_car = false;
-        let str = `<table class="layui-table">
+        console.log(json);
+        $('.winbody').html(
+            `<table class="layui-table">
                             <tbody>
                                 <tr>
                                     <td>登记日期 <input type="hidden" class="carInfos" data-name="id" value="${json.id}"></td>
@@ -2030,29 +2116,19 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr><td colspan="3" class="layui-form tabs" >`
-                                    if(json.carFrontAxle == 'false') {
-                                        str += `<input type="checkbox"  class="qqts_${index}" name="" lay-skin="primary" title="前桥提升" >`
-                                    } else {
-                                        str += `<input type="checkbox"  class="qqts_${index}" name="" lay-skin="primary" title="前桥提升" checked >`
-                                    }
-                                    if(json.carRearAxle == 'false') {
-                                        str += `   <input type="checkbox"  class="hqts_${index}" name="" lay-skin="primary" title="后桥提升" >`
-                                    } else {
-                                        str += `   <input type="checkbox"  class="hqts_${index}" name="" lay-skin="primary" title="后桥提升"checked >`
-                                    }
-                                    if(json.carTurn == 'false') {
-                                        str += ` <input type="checkbox"  class="zdzx_${index}" name="" lay-skin="primary" title="随动转向" >`
-                                    } else {
-                                        str += ` <input type="checkbox"  class="zdzx_${index}" name="" lay-skin="primary" title="随动转向" checked >`
-                                    }
-                                    str += ` </td><td>产权所有</td>
+                                <tr>
+                                    <td colspan="3" class="layui-form">
+                                        <input type="checkbox" name="" lay-skin="primary" title="前桥提升" checked="">
+                                        <input type="checkbox" name="" lay-skin="primary" title="后桥提升" checked="">
+                                        <input type="checkbox" name="" lay-skin="primary" title="随动转向" checked="">
+                                    </td>
+                                    <td>产权所有</td>
                                     <td colspan="5">
                                         <input type="text" data-name="chanQuan" class="layui-input carInfos" value="${json.chanQuan == null ? '' : json.chanQuan}">
                                     </td>
                                     <td>关联车辆</td>
                                     <td colspan="2">
-                                        <input type="text" data-name="glCarId" class="layui-input carInfos" value="${json.carShiBieNumber == null ? '' : json.carShiBieNumber}">
+                                        <input type="text" data-name="carShiBieNumber" class="layui-input carInfos" value="${json.carShiBieNumber == null ? '' : json.carShiBieNumber}">
                                     </td>
                                 </tr>
                                 <tr>
@@ -2083,7 +2159,7 @@
                                 </tr>
                             </tbody>
                         </table>`
-        $('.winbody').html(str)
+        )
         setSelect()
         $('.carDrive').val(json.carDrive) // 驱动方式
         $('.carWheel').val(json.carWheel) // 车轴轮数
@@ -2104,7 +2180,7 @@
         layui.use('laydate', function () {
             var laydate = layui.laydate;
             laydate.render({
-                elem: `.dj_${index}`
+                elem: `.cardjrq_${index}`
             })
             laydate.render({
                 elem: `.sc_${index}`
@@ -2129,11 +2205,11 @@
                 content: $('.winbody'),
                 btn: ['保存', '另存', '取消'],
                 yes: function (index) {
-                    saveCarInfo(json.id,'.winbody')
+                    saveCarInfo(json.id)
                     layui.layer.close(index)
                 },
                 btn2: function (index) {
-                    saveCarInfo(-10,'.winbody')
+                    saveCarInfo(true)
                     layer.close(index)
                 }
             })

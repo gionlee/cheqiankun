@@ -171,7 +171,7 @@
             success: function (ret) {
                 var obj = ret.data
                 var html = '';
-
+				console.log(obj)
                 for (var key = 0 ; key < obj.length; key ++) {
                     html += '<li onclick="seeInfo(' + obj[key].id + ')">' +
                         `<div>${obj[key].cusName}</div>` 

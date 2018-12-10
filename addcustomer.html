@@ -376,7 +376,8 @@
 									<td>地址电话</td>
 									<td colspan="2"><input type="text" data-name="finAddress" class="layui-input"></td>
 									<td>税务类型</td>
-									<td colspan="4"><input type="text" data-name="finType" class="layui-input"></td>
+									<td colspan="4"><select class="finType"></select></td>
+									<!-- <input type="text" data-name="finType" class="layui-input"> -->
 									<td>操作</td>
 								</tr>
 								<tr>
@@ -388,7 +389,7 @@
 									<td colspan="2"><input type="text" data-name="finvNumber" class="layui-input"></td>
 									<td>录入人</td>
 									<td colspan="2"><input type="text" readonly data-name="finvUser" class="layui-input cwlrr"></td>
-									<td colspan="2"><input type="text" readonly data-name="finvDate" class="layui-input cwlrsj"></td>
+									<td colspan="2"><input type="text" data-name="finvDate" class="layui-input cwlrsj"></td>
 									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCw()">保存</button></td>
 								</tr>
 							</tbody>
@@ -400,11 +401,11 @@
 							<tbody>
 								<tr class="jfxx">
 									<td>累计积分</td>
-									<td><input type="number" min="0" data-name="intLj"  oninput="setUse(this)"class="layui-input intLj"></td>
+									<td><input type="text" data-name="intLj" class="layui-input"></td>
 									<td>使用积分</td>
-									<td><input type="number" min="0" data-name="intSy" oninput="setUse(this)" class="layui-input intSy"></td>
+									<td><input type="text" data-name="intSy" class="layui-input"></td>
 									<td>可用积分</td>
-									<td><input type="text" data-name="intKy" readonly class="layui-input canuse"></td>
+									<td><input type="text" data-name="intKy" class="layui-input"></td>
 									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveJf()">保存</button></td>
 								</tr>
 							</tbody>
@@ -428,7 +429,7 @@
 									</td>
 									<td colspan="10"><input data-name="feedContent" type="text" class="layui-input"></td>
 									<td><input data-name="feedAddPerson" type="text" class="layui-input dtxxlrr" readonly value=""></td>
-									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveDt()">保存</button>
+									<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveDt()">保存</button></td>
 										<!-- <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button></td> -->
 								</tr>
 							</tbody>
@@ -685,10 +686,10 @@
 										</td>
 									</tr>
 									<tr>
-										<td colspan="3" class="layui-form">
-											<input type="checkbox" name="" lay-filter="aqqts" lay-skin="primary" title="前桥提升" >
-											<input type="checkbox" name="" lay-filter="ahqts" lay-skin="primary" title="后桥提升" >
-											<input type="checkbox" name="" lay-filter="asdzx" lay-skin="primary" title="随动转向" >
+										<td colspan="3" >
+											<input type="checkbox"  name="" class="aqqts" lay-skin="primary" value="前桥提升" >前桥提升
+											<input type="checkbox" name="" class="ahqts" lay-skin="primary" value="后桥提升" >后桥提升
+											<input type="checkbox" name="" class="asdzx" lay-skin="primary" value="随动转向" >随动转向
 										</td>
 										<td>产权所有</td>
 										<td colspan="5">
@@ -804,7 +805,7 @@
 										<input type="text" data-name="limOrigin" class="layui-input">
 									</td>
 									<td>
-										<select name="" class="limType" id="">
+										<select name="" data-name="limType" class="limType" id="">
 											<option value="剩余胎纹">剩余胎纹</option>
 											<option value="工作小时">工作小时</option>
 											<option value="使用里程">使用里程</option>
@@ -905,7 +906,7 @@
 		$('.cwlrr').val(loadUserInfo.user.realName)
 		$('.dtxxlrr').val(loadUserInfo.user.realName)
 		$('.cklrr').val(loadUserInfo.user.realName)
-		let custId = '';
+		let custId = loadUserInfo.customer.id;
 		var layer = '';
 		let form = ''
 		let qqts = ''
@@ -955,20 +956,6 @@
 			})
 
 		});
-		$('.cwlrsj').val(getDays())
-		let canuseJf = 0
-		function setUse (_this) {
-			if($(_this).val() < 0) {
-				$(_this).val(0)
-			}
-			console.log($('.intLj').val() - $('.intSy').val())
-			if($('.intLj').val() >= 0 && $('.intSy').val() >= 0) {
-				canuseJf = $('.intLj').val() - $('.intSy').val()
-				$('.canuse').val($('.intLj').val() - $('.intSy').val())
-			}
-			
-		}
-
 		//  关闭当前页面
 		function closes() {
 			alert('关闭失败，请手动关闭！')
@@ -1350,8 +1337,8 @@
 			$('.cwxx input').each(function() {
 				data[$(this).data('name')] = $(this).val()
 			})
+			data.finType = $('.finType').val()
 			data.customerId = custId
-			console.log(data, '333')
 			$.ajax({
 				url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
 				type: 'post',
@@ -1368,10 +1355,7 @@
 		}
 		// 保存积分信息
 		function saveJf() {
-			if (canuseJf < 0) {
-				alert('积分输入错误,请重新输入!')
-			} else {
-				let data = {}
+			let data = {}
 			$('.jfxx input').each(function() {
 				data[$(this).data('name')] = $(this).val()
 			})
@@ -1385,8 +1369,6 @@
                 	layer.msg('保存成功！');
 				}
 			})
-			}
-			
 		}
 		// 保存车辆信息
 		function saveCarInfo(bol) {
@@ -1444,8 +1426,20 @@
 			$('.wlsm input').each(function() {
 				data[$(this).data('name')] = $(this).val()
 			})
+			$('.wlsm select').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			console.log($('.qiyong').html());
+			if($('.qiyong').html()=='启用'){
+				data.limEnable=1;
+				console.log($('.qiyong').html());
+			}else{
+				data.limEnable=0;
+				console.log($('.qiyong').html());
+			}
+			
 			data.customerId = custId
-			data.limEnable = limEnable
+			// data.limEnable = limEnable
 			data.ren = loadUserInfo.user.realName
 			console.log(data)
 			$.ajax({
@@ -1493,7 +1487,7 @@
 				url: `${API}/erpCustomerCar/getCustomerCarBycustId?custId=${custId}`,
 				type: 'get',
 				success: function(res) {
-
+					console.log(res);
 					let data = res.data.reverse()
 					carList = data
 					let str = ''
@@ -1548,7 +1542,7 @@
 				}
 			})
 		}
-		selCar()
+		// selCar()
 		// 删除车辆信息
 		function delCar(index) {
 			if(confirm('是否删除？')) {
@@ -1867,15 +1861,30 @@
 				})
 			})
 		}
-		form.on('checkbox(aqqts)', function(data){
-			aqqts = data.elem.checked; //开关是否开启，true或者false
-			});  
-			form.on('checkbox(ahqts)', function(data){
-			ahqts = data.elem.checked; //开关是否开启，true或者false
-			});  
-			form.on('checkbox(asxzd)', function(data){
-			azdzx = data.elem.checked; //开关是否开启，true或者false
-			}); 
+		// layui.form.on('checkbox(aqqts)', function(data){
+		// 	aqqts = data.elem.checked; //开关是否开启，true或者false
+		// 	});  
+		// 	form.on('checkbox(ahqts)', function(data){
+		// 	ahqts = data.elem.checked; //开关是否开启，true或者false
+		// 	});  
+		// 	form.on('checkbox(asxzd)', function(data){
+		// 	azdzx = data.elem.checked; //开关是否开启，true或者false
+		// 	}); 
+
+
+			// 设置税务类型
+			$.ajax({
+				url:`${API}/erpSystemParameters/getparametersByName?name=账户类型`,
+				type:'get',
+				success:function (res) {
+					console.log(res)
+					let str = '<option></option>'
+					$.each(res.data.parametersChildList,function (i,k) {
+						str +=`<option value="${k.name}">${k.name}</option>`
+					})
+					$('.finType').html(str)
+				}
+			})
 	</script>
 
 </html>

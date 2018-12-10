@@ -164,17 +164,17 @@
 <script src="./js/Global.js"></script>
 <script>
     $.ajax({
-        url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=20`,
+        url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=100`,
         type: 'post',
         success: function (res) {
             let str = ''
             $.each(res.data, function (i) {
                 let json = res.data[i]
                 str += `<tr><td>${i + 1}</td>
-                <td>${json.customer_name == null ? '' : json.customer_name}</td>
+                <td>${json.custName == null ? '' : json.custName}</td>
                 <td>${json.car_brand == null ? '' : json.car_brand}</td>
                 <td>${json.car_model == null ? '' : json.car_model}</td>
-                <td>${json.car_type == null ? '' : json.car_type}</td>
+                <td>${json.car_type1 == null ? '' : json.car_type1}${json.car_type2 == null ? '' : json.car_type2}</td>
                 <td>${json.car_drive == null ? '' : json.car_drive}</td>
                 <td>${json.car_wheel == null ? '' : json.car_wheel}</td>
                 <td>${json.car_use == null ? '' : json.car_use}</td>

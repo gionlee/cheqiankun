@@ -190,16 +190,6 @@
                 </div>
                 <!-- 完成列表 -->
                 <div class="layui-tab-item">
-                    <div class="search">
-                        <input class="layui-input ksdate" type="text" placeholder="开始日期">
-                    </div>
-                    <div class="search">
-                        <input class="layui-input jsdate" type="text" placeholder="结束日期">
-                    </div>
-                    <div class="btn">
-                        <button class="layui-btn layui-btn-normal">查询</button>
-                    </div>
-
                     <table id="table" lay-filter="table" class="layui-table">
                         <thead>
                             <tr>
@@ -252,7 +242,7 @@
                     <table id="table" lay-filter="table" class="layui-table">
                         <thead>
                             <tr>
-                                <th>客户名称</th>
+                                <th style="width:15%;">客户名称</th>
                                 <th>日期</th>
                                 <th>品名</th>
                                 <th>品牌</th>
@@ -363,8 +353,8 @@
             let arr = res.data
             let str = ''
             let dstr = ''
-            let wnum = 0
-            let dnum = 0
+            let wnum = 1
+            let dnum = 1
             $.each(arr, function (i, n) {
                 if (n.treat == 2) {
                     str += `<tr>
@@ -384,7 +374,7 @@
                     dstr += `<tr>
                                 <td>${dnum++}</td>
                                 <td>${n.dt}</td>
-                                <td></td>
+                                <td>${n.problem}</td>
                                 <td>${n.oldData}</td>
                                 <td>${n.newData}</td>
                                 <td>${n.attn}</td>
@@ -406,7 +396,7 @@
             let str =''
             let cpstr = ''
             let arr = res.data
-            lcblist = res.data
+            //lcblist = res.data
             $.each(arr,function (i,n) {
                 str +=`<tr class="lcb_${i}">
                                 <td><input type="text" class="layui-input" value=""></td>
@@ -485,9 +475,16 @@
         })
     }
     let gtXx = []
-    $.ajax({
-        url:`${API}/erpDataError/getMaterielLikePro?custId=${loadUserInfo.customer.id}&matPro=1`,
-        type:'get',
+    selGt ()
+    function selGt () {
+        let data = {
+            startTime: $('.ksdate').val(),
+            endTime: $('.jsdate').val()
+        }
+        $.ajax({
+        url:`${API}/erpDataError/selectEditTire?custId=${loadUserInfo.customer.id}`,
+        type:'post',
+        data:data,
         success:function  (res) {
             let str =''
             let arr = res.data
@@ -496,17 +493,17 @@
             $.each(arr,function (i,n) {
                 str +=
                             gtstr +=`<tr class='gtxx_${i}'>
-                                <td><input type="text" data-name="materielNam" class="layui-input" value="${n.materielName}"></td>
-                                <td><input type="text" data-name="materielStorageDate" class="layui-input" value="${n.materielStorageDate}"></td>
-                                <td><input type="text" data-name="materielName" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielBrand" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielSpecifications" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielModel" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielProductionId" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielDot" class="layui-input" value=""></td>
-                                <td><input type="text" data-name="materielId" class="layui-input" value=""></td>
+                                <td><input type="text" data-name="cusName" class="layui-input" value="${n.cusName || ''}"></td>
+                                <td><input type="text" data-name="gouTime" class="layui-input" value="${n.gouTime || ''}"></td>
+                                <td><input type="text" data-name="name" class="layui-input" value="${n.name || ''}"></td>
+                                <td><input type="text" data-name="brand" class="layui-input" value="${n.brand || ''}"></td>
+                                <td><input type="text" data-name="spec" class="layui-input" value="${n.spec || ''}"></td>
+                                <td><input type="text" data-name="model" class="layui-input" value="${n.model || ''}"></td>
+                                <td><input type="text" data-name="problem" class="layui-input" value="${n.problem || ''}"></td>
+                                <td><input type="text" data-name="materielId" class="layui-input" value="${n.materielId || ''}"></td>
+                                <td><input type="text" data-name="price" class="layui-input" value="${n.price || ''}"></td>
+                                <td><input type="text" data-name="dot" class="layui-input" value="${n.dot || ''}"></td>
+                                <td><input type="text" data-name="productionId" class="layui-input" value="${n.productionId || ''}"></td>
                                 <td>
                                     <div class="layui-btn layui-btn-xs" onclick="saveGt(${i})">保存</div>
                                 </td>
@@ -515,6 +512,7 @@
             $('.gtxx').html(str)
         }
     })
+    }
 </script>
 
 </html>
