@@ -245,61 +245,24 @@
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th rowspan="2">
-                        序号
-                    </th>
-                    <th rowspan="2">
-                        客户名称
-                    </th>
-                    <th rowspan="2">
-                        品牌
-                    </th>
-                    <th rowspan="2">
-                        规格
-                    </th>
-                    <th rowspan="2">
-                        型号
-                    </th>
-                    <th rowspan="2">
-                        产地
-                    </th>
-                    <th rowspan="2">
-                        车型
-                    </th>
-                    <th rowspan="2">
-                        胎位
-                    </th>
-                    <th rowspan="2">
-                        生产编号
-                    </th>
-                    <th rowspan="2">
-                        DOT号
-                    </th>
-                    <th>
-                        总里程
-                    </th>
-                    <th>
-                        预计里程
-                    </th>
-                    <th>
-                        费用总计
-                    </th>
-
-                    <th>
-                        元/千公里
-                    </th>
-                    <th colspan="4">
-                        新胎
-                    </th>
-                    <th colspan="4">
-                        翻新1
-                    </th>
-                    <th colspan="4">
-                        翻新2
-                    </th>
-                    <th colspan="4">
-                        翻新3
-                    </th>
+                    <th rowspan="2">序号</th>
+                    <th rowspan="2">客户名称</th>
+                    <th rowspan="2">品牌</th>
+                    <th rowspan="2">规格</th>
+                    <th rowspan="2">型号</th>
+                    <th rowspan="2">产地</th>
+                    <th rowspan="2">车型</th>
+                    <th rowspan="2">胎位</th>
+                    <th rowspan="2">生产编号</th>
+                    <th rowspan="2">DOT号</th>
+                    <th>总里程</th>
+                    <th>预计里程</th>
+                    <th>费用总计</th>
+                    <th>元/千公里</th>
+                    <th colspan="4">新胎</th>
+                    <th colspan="4">翻新1</th>
+                    <th colspan="4">翻新2</th>
+                    <th colspan="4">翻新3</th>
                 </tr>
                 <tr>
                     <th>0</th>
@@ -322,7 +285,6 @@
                     <th>预计里程</th>
                     <th>费用合计</th>
                     <th>元/千公里</th>
-
                 </tr>
             </thead>
             <tbody class="list">
@@ -344,97 +306,36 @@
             $.each(arr, function (i, n) {
                 str +=
                     `<tr>
-                    <td>
-                        ${i+1}
-                    </td>
-                    <td>
-                        
-                    </td>
-                    <td>
-                        ${n.parameters.arand}
-                    </td>
-                    <td>
-                            ${n.parameters.norms}
-                    </td>
-                    <td>
-                            ${n.parameters.model}   
-                    </td>
-                    <td>
-                            ${n.parameters.address}   
-                    </td>
-                    <td>
-                           0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0 
-                    </td>
-                    <td>
-                            0 
-                    </td>
-                    <td>
-                        ${n.price}
-                    </td>
-
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            ${n.priceNew}
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0 
-                    </td>
-                    <td>
-                            ${n.price1}
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            ${n.price2}
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                            0
-                    </td>
-                    <td>
-                        ${n.price3}
-                    </td>
-                    <td>
-                            0
-                    </td>
+                    <td>${i+1}</td>
+                    <td></td>
+                    <td>${n.materiel.materielBrand}</td>
+                    <td>${n.materiel.materielSpecifications}</td>
+                    <td>${n.materiel.materielModel}</td>
+                    <td>${n.materiel.materielPlace}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.materiel.materielProductionId}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.price}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.priceNew}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.price1}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.price2}</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>0</td>
+                    <td>${n.price3}</td>
+                    <td>0</td>
                 </tr>`
             })
             console.log(str)

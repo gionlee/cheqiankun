@@ -122,18 +122,20 @@
 <body>
     <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
     <div class="wrap">
-
+        <div class="down-xlsx" style="float: right;line-height: 30px;">
+            <a href="./lib/muban.xlsx" download="download">下载模板</a>
+        </div>
         <table class="layui-table">
             <thead>
                 <tr>
                     <th style="min-width:60px;">入库时间</th>
                     <th>仓库</th>
-                    <th style="width:120px;">品名</th>
+                    <th>品名</th>
                     <th>品牌</th>
                     <th>规格</th>
                     <th>型号</th>
-                    <th>产地</th>
                     <th>物料新旧</th>
+                    <th>产地</th>
                     <th>单位</th>
                     <th>数量</th>
                     <th style="width:15%;">生产编号</th>
@@ -145,9 +147,9 @@
                 </tr>
             </thead>
             <tbody class="saves">
-                <tr>
+                <tr class="luntai">
                     <td class="ai">
-                        <input type="text" class="layui-input rkdate">
+                        <input type="text" data-name="materielStorageDate" class="layui-input rkdate">
                     </td>
                     <td class="layui-form ai">
                         <div class="layui-input-block">
@@ -180,22 +182,25 @@
                         <input type="text" data-name="materielUnit" class="layui-input save-data materielUnit" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielNumber" class="layui-input save-data" value="">
+                        <input type="text" data-name="materielNumber" class="layui-input save-data materielNumber"
+                            value="">
                     </td>
                     <td>
-                        <input class="scbh layui-input" style="display:inline-block;width:calc(100% - 60px);">                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
+                        <span class="scbh"></span>
+                        <input type="text" data-name="shengIds" class="scbh layui-input materielSheng" style="width: 50%;display: inline-block;"
+                            value="">
+                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
                     </td>
-                    <td class="ercode">
-
+                    <td class="">
+                        <input type="text" data-name="qrcodes" class="layui-input ercode materielEqcode" value="">
                     </td>
-                    <td class="rfid">
-
+                    <td class="">
+                        <input type="text" data-name="rfIds" class="layui-input rfid materielRfid" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielStoragePrice" class="layui-input" value="">
+                        <input type="text" data-name="materielStoragePrice" class="layui-input materielPrice" value="">
                     </td>
-                    <td class="prices ai" style="width:100px;">
-
+                    <td class="prices ai materielTotal" style="width:100px;">
                     </td>
                     <td class="layui-form ai">
                         <div class="layui-input-block">
@@ -206,6 +211,9 @@
                     </td>
                 </tr>
             </tbody>
+
+            
+
         </table>
         <div class="hover-body">
             <ul class="hover-show">
@@ -248,7 +256,7 @@
     layui.use('layer', function () {
         layer = layui.layer
     })
-    layui.use('laydate',function () {
+    layui.use('laydate', function () {
         layui.laydate.render({
             elem: '.rkdate' //指定元素
         });
@@ -262,10 +270,12 @@
     let materielEqcodeai = [] // ai二维码
     let isAiClick = false
     $('#seeInfo').on('click', function () {
+        isAiClick = false
         $('#excel-file').click()
     })
-    
+
     $('#excel-file').change(function (e) {
+        console.log(isAiClick, '333')
         var files = e.target.files;
 
         var fileReader = new FileReader();
@@ -297,7 +307,7 @@
             let ercode = ''
             let scbh = ''
             let rfid = ''
-
+            console.log(isAiClick)
 
             if (isAiClick) {
                 $.each(bhlist, function (i, n) {
@@ -309,20 +319,12 @@
                     materielEqcodeai.push(bhlist[i]['二维码'])
                 })
                 $('#seeAiInfo').html('更改')
-                 $('.scbhai').val(scbh.slice(0, scbh.length - 1))
-
-                if (ercode.length > 26) {
-                    $('.ercodeai').html(ercode.slice(0, 20) + '...')
-                    $('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
-                } else {
-                    $('.ercodeai').html(ercode.slice(0, ercode.length - 1))
-                }
-                if (rfid.length > 26) {
-                    $('.rfidai').html(rfid.slice(0, 20) + '...')
-                    $('.rfidai').attr('title', rfid.slice(0, rfid.length - 1))
-                } else {
-                    $('.rfidai').html(rfid.slice(0, rfid.length - 1))
-                }
+                $('.scbhai').val(scbh)
+                $('.scbhai').attr('title', scbh.slice(0, scbh.length - 1))
+                $('.ercodeai').val(ercode)
+                $('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
+                $('.rfidai').val(rfid)
+                $('.rfidai').attr('title', rfid.slice(0, rfid.length - 1))
             } else {
                 $.each(bhlist, function (i, n) {
                     ercode += bhlist[i]['二维码'] + ','
@@ -333,34 +335,22 @@
                     materielEqcode.push(bhlist[i]['二维码'])
                 })
                 $('#seeInfo').html('更改')
-                 $('.scbh').val(scbh.slice(0, scbh.length - 1))
-                
-                if (ercode.length > 26) {
-                    $('.ercode').html(ercode.slice(0, 20) + '...')
-                    $('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
-                } else {
-                    $('.ercode').html(ercode.slice(0, ercode.length - 1))
-                }
-                if (rfid.length > 26) {
-                    $('.rfid').html(rfid.slice(0, 20) + '...')
-                    $('.rfid').attr('title', rfid.slice(0, rfid.length - 1))
-                } else {
-                    $('.rfid').html(rfid.slice(0, rfid.length - 1))
-                }
+                $('.scbh').val(scbh)
+                $('.scbh').attr('title', scbh.slice(0, scbh.length - 1))
+                $('.ercode').val(ercode)
+                $('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
+                $('.rfid').val(rfid)
+                $('.rfid').attr('title', rfid.slice(0, rfid.length - 1))
             }
-
-
-
         };
-
         // 以二进制方式打开文件
         fileReader.readAsBinaryString(files[0]);
     });
     let fplx = []
-
     $.ajax({
         url: `${API}/erpSystemParameters/getparametersByName?name=发票类型`,
         type: 'get',
+        // async: false
         success: function (res) {
             let arr = res.data.parametersChildList
             let str = '<option></option>'
@@ -384,7 +374,22 @@
                 let arr = res.data
                 let str = ''
                 $.each(arr, function (i, n) {
-                    let fp = fplx[n.materiel_invoice_type].name
+                    // let fp = fplx[n.materiel_invoice_type].name
+                    let fp_type = n.materiel_invoice_type;
+                    let fp_text;
+                    if (fp_type == 0) {
+                        fp_text = '无发票';
+                    } else if (fp_type == 1) {
+                        fp_text = '商品普票';
+                    } else if (fp_type == 2) {
+                        fp_text = '商品增值';
+                    } else if (fp_type == 3) {
+                        fp_text = '服务普票';
+                    } else if (fp_type == 4) {
+                        fp_text = '服务增值';
+                    } else if (fp_type == 5) {
+                        fp_text = '运输发票';
+                    }
                     str +=
                         `<tr>
                     <td>${n.materiel_storage_date == null ? '' : n.materiel_storage_date}</td>
@@ -402,7 +407,7 @@
                     <td>${n.materiel_rfid == null ? '' : n.materiel_rfid}</td>
                     <td>${n.materiel_storage_price == null ? '' : n.materiel_storage_price}</td>
                     <td>${n.totalPrice == null ? '' : n.totalPrice}</td>
-                    <td>${fp == null ? '' : fp}</td>
+                    <td>${fp_text}</td>
                     <tr>`
                 })
 
@@ -410,11 +415,11 @@
             }
         })
     }
-
+    // 保存
     function save() {
         let dataai = {}
         let data = {}
-        $('.saves input').each(function (i, n) {
+        $('.luntai input').each(function (i, n) {
             data[$(this).data('name')] = $(this).val()
         })
         $.each(ckList, function (i, n) {
@@ -422,9 +427,9 @@
                 data.warehouseId = n.id
             }
         })
-        data.qrcodes = materielEqcode.toString()
-        data.rfIds = materielRfid.toString()
-        data.shengIds = materielProductionId.toString()
+        data.allPrice = $('.materielTotal').text();
+        data.materielNumber = $('.materielNumber').val();
+        data.materielStoragePrice = $('.materielPrice').val();
         data.jingban = loadUserInfo.user.realName
         data.custName = loadUserInfo.user.realName
         data.faPiao = $('.fplx').val()
@@ -437,11 +442,12 @@
                 dataai.warehouseId = n.id
             }
         })
+        data.chuanIds = $('.chuanIds').val()
+        data.qrChuanCodes = $('.qrChuanCodes').val()
+        data.rfChuanIds = $('.rfChuanIds').val()
+        data.materielStorageDate = $('.rkdate').val()
         if (isAI) {
             data.tai = true
-            data.qrcodes = materielEqcodeai.toString()
-            data.rfIds = materielRfidai.toString()
-            data.shengIds = materielProductionIdai.toString()
             data.jingban = loadUserInfo.user.realName
             data.custName = loadUserInfo.user.realName
             data.faPiao = $('.fplx').val()
@@ -449,27 +455,39 @@
             data.zhiNeng = true
             if (data.wuLiaoName == '') {
                 alert('请选择仓库！')
+                return false
             } else if (data.faPiao == '') {
                 alert('请选择发票类型')
+                return false
             }
+            let aiData = {}
+            $('.AIlist input').each(function (i,k) {
+                aiData[$(this).data('name')] = $(this).val()
+            })
+            data.chuanIds = aiData.chuanIds
+        data.qrChuanCodes = aiData.qrChuanCodes
+        data.rfChuanIds = aiData.rfChuanIds
+            data.taiJson = JSON.stringify(aiData)
+            
         } else {
             data.zhiNeng = false
             data.tai = false
         }
-                    $.ajax({
-                        url: `${API}/erpWarehouse/saveMateriels`,
-                        type: 'post',
-                        data: data,
-                        success: function (res) {
-                            if (res.code == 0) {
-                                layer.msg('保存成功！')
+        $.ajax({
+            url: `${API}/erpWarehouse/saveMateriels`,
+            type: 'post',
+            data: data,
+            success: function (res) {
+                if (res.code == 0) {
+                    layer.msg('保存成功！')
+                    selWl()
 
-                            } else {
-                                layer.msg(res.msg)
+                } else {
+                    layer.msg(res.msg)
 
-                            }
-                        }
-                    })
+                }
+            }
+        })
 
     }
     // 查询仓库
@@ -491,161 +509,158 @@
     //  查找大类
     function showLv1(show, bol) {
 
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectTop`,
-    type: 'get',
-    success: function (res) {
-        let str = ''
-        let arrs = res.data
-        $.each(arrs, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
-        })
-        $('.hover-show').html(str)
-        if (show) {
-            $('.hover-show').show()
-        }
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTop`,
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arrs = res.data
+                $.each(arrs, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+                })
+                $('.hover-show').html(str)
+                if (show) {
+                    $('.hover-show').show()
+                }
 
-        isAI = bol
-    }
-})
-}
-// 查找品名
-function showLv2(zid, _this) {
-$(`.hover-show .list-2`).html('')
-aiZid = zid
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                isAI = bol
+            }
         })
-        str += '</ul>'
-        $(_this).children('div').html(str)
     }
-})
-}
-// 查找规格
-function showLv3(zid, _this) {
-$(`.hover-show .list-3`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+    // 查找品名
+    function showLv2(zid, _this) {
+        $(`.hover-show .list-2`).html('')
+        aiZid = zid
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        console.log(str)
-        $(_this).children('div').html(str)
     }
-})
-}
-// 查找品牌
-function showLv4(zid, _this) {
-$(`.hover-show .list-4`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+    // 查找规格
+    function showLv3(zid, _this) {
+        $(`.hover-show .list-3`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        $(_this).children('div').html(str)
     }
-})
-}
-// 查找型号
-function showLv5(zid, _this) {
-$(`.hover-show .list-5`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+    // 查找品牌
+    function showLv4(zid, _this) {
+        $(`.hover-show .list-4`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        $(_this).children('div').html(str)
     }
-})
-}
+    // 查找型号
+    function showLv5(zid, _this) {
+        $(`.hover-show .list-5`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
 
-function showLv6(zid, _this) {
-$(`.hover-show .list-6`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        console.log(res)
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+    function showLv6(zid, _this) {
+        $(`.hover-show .list-6`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        console.log(str)
-        $(_this).children('div').html(str)
     }
-})
-}
-// 查找
-function showLv7(zid, _this) {
-$(`.hover-show .list-7`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str +=
-                `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+    // 查找
+    function showLv7(zid, _this) {
+        $(`.hover-show .list-7`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        $(_this).children('div').html(str)
     }
-})
-}
 
-function showLv8(zid, _this) {
-$(`.hover-show .list-8`).html('')
-$.ajax({
-    url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
-    type: 'get',
-    async: false,
-    success: function (res) {
-        let arr = res.data
-        let str = '<ul>'
-        $.each(arr, function (k, v) {
-            str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+    function showLv8(zid, _this) {
+        $(`.hover-show .list-8`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
         })
-        str += '</ul>'
-        $(_this).children('div').html(str)
     }
-})
-}
     let isAI = false
     let isFcAi = true // 是否第一次选中智能轮胎
     function setWlVal(_this) {
@@ -665,14 +680,15 @@ $.ajax({
             $('.materielModelAI').val($(_this).parents('.list-6').prev().text())
             $('.materielSpecificationsAI').val($(_this).parents('.list-5').prev().text())
             $('.materielBrandAI').val($(_this).parents('.list-4').prev().text())
+            $('.materielNameAI').val($(_this).parents('.list-3').prev().text())
+            
         }
-        let vals = $('.materielName').val()
-        if (vals.indexOf('轮胎(智能)')  != -1 && isFcAi) {
-            console.log(111)
+        if ($('.materielName').val() == '轮胎(智能)' && isFcAi) {
             isFcAi = false
             $('.ai').prop('rowspan', '2')
             $('.saves').append(
                 `<tr class="AIlist"><td>
+                    <input type="hidden" data-name="materielName"  class="materielNameAI" />
                         <input type="text" onclick="showLv1(true,true)" data-name="materielBrand" class="layui-input ai-data materielBrandAI" value="">
                     </td>
                     <td>
@@ -683,34 +699,66 @@ $.ajax({
                         <input type="text" data-name="materielModel" class="layui-input ai-data materielModelAI" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielPlace" class="layui-input ai-data materielPlaceAI" value="">
+                        <input type="text" data-name="materielState" class="layui-input ai-data materielPlaceAI" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielState" class="layui-input ai-data materielStateAI" value="">
+                        <input type="text" data-name="materielPlace" class="layui-input ai-data materielStateAI" value="">
                     </td>
                     <td>
                         <input type="text" data-name="materielUnit" class="layui-input ai-data materielUnitAI" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielNumber" class="layui-input ai-data" value="">
+                        <input type="text" data-name="materielNumber" class="layui-input ai-data materielNumber" value="">
                     </td>
                     <td>
-                        <input class="scbhai  layui-input" style="width: calc(100% - 60px);display:inline-block;"> <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeAiInfo">上传</button>
+                        <input class=" layui-input scbhai" data-name="chuanIds" value="" />
+                        <button class="layui-btn layui-btn-xs"  style="padding:0 10px;" id="seeAiInfo">上传</button>
                     </td>
-                    <td class="ercodeai">
-
+                    <td >
+                        <input data-name="qrChuanCodes" class="ercodeai layui-input" value="" />
                     </td>
-                    <td class="rfidai">
-
+                    <td >
+                        <input class="rfidai layui-input" data-name="rfChuanIds" value="" />
                     </td>
                     <td>
-                        <input type="text" data-name="materielStoragePrice" class="layui-input" value="">
+                        <input type="text" data-name="materielStoragePrice" class="layui-input materielPrice" value="">
                     </td></tr>`
             )
+            $('.materielNumber').on('input', function () {
+        let numb = $('.luntai .materielNumber').val();
+        let price = $('.luntai .materielPrice').val();
+        let numbai = $('.AIlist .materielNumber').val();
+        let priceai = $('.AIlist .materielPrice').val();
+        console.log(numb,numbai,price,priceai)
+        if (!isNaN(numb) && !isNaN(price)) {
+            if (!isNaN(numbai) && !isNaN(priceai) ) {
+            $('.materielTotal').html(Number(numb) * Number(price) + Number(numbai) * Number(priceai) );
+        } else {
+            $('.materielTotal').html(Number(numb) * Number(price));
+        }
+           
+        }
+        
+    });
+    $('.materielPrice').on('input', function () {
+        let numb = $('.luntai .materielNumber').val();
+        let price = $('.luntai .materielPrice').val();
+        let numbai = $('.AIlist .materielNumber').val();
+        let priceai = $('.AIlist .materielPrice').val();
+        if (!isNaN(numb) && !isNaN(price)) {
+            if (!isNaN(numbai) && !isNaN(priceai) ) {
+            $('.materielTotal').html(Number(numb) * Number(price) +Number(numbai) * Number(priceai) );
+        } else {
+            $('.materielTotal').html(Number(numb) * Number(price));
+        }
+           
+        }
+    });
             $('#seeAiInfo').on('click', function () {
-        $('#excel-file').click()
-        isAiClick = true
-    })
+                isAiClick = true
+                $('#excel-file').click()
+            })
+
         } else {
             if (!isAI) {
                 $('.ai').prop('rowspan', '1')
@@ -724,5 +772,37 @@ $.ajax({
     })
     showLv1()
 </script>
-
+<!-- 根据输入计算总金额 -->
+<script type="text/javascript">
+    $('.materielNumber').on('input', function () {
+        let numb = $('.luntai .materielNumber').val();
+        let price = $('.luntai .materielPrice').val();
+        let numbai = $('.AIlist .materielNumber').val();
+        let priceai = $('.AIlist .materielPrice').val();
+        console.log(numb,numbai,price,priceai)
+        if (!isNaN(numb) && !isNaN(price)) {
+            if (!isNaN(numbai) && !isNaN(priceai) ) {
+            $('.materielTotal').html(Number(numb) * Number(price) + Number(numbai) * Number(priceai) );
+        } else {
+            $('.materielTotal').html(Number(numb) * Number(price));
+        }
+           
+        }
+        
+    });
+    $('.materielPrice').on('input', function () {
+        let numb = $('.luntai .materielNumber').val();
+        let price = $('.luntai .materielPrice').val();
+        let numbai = $('.AIlist .materielNumber').val();
+        let priceai = $('.AIlist .materielPrice').val();
+        if (!isNaN(numb) && !isNaN(price)) {
+            if (!isNaN(numbai) && !isNaN(priceai) ) {
+            $('.materielTotal').html(Number(numb) * Number(price) +Number(numbai) * Number(priceai) );
+        } else {
+            $('.materielTotal').html(Number(numb) * Number(price));
+        }
+           
+        }
+    });
+</script>
 </html>

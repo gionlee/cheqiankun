@@ -78,7 +78,7 @@
                     <td>产权归属</td>
                     <td><input type="text" data-name="insProperty" class="layui-input"></td>
                     <td>保险公司</td>
-                    <td colspan="3"><input data-name="insuranceCompany" type="text" class="layui-input"></td>
+                    <td><input data-name="insuranceCompany" type="text" class="layui-input"></td>
                     <td>服务电话</td>
                     <td><input type="text" data-name="telephoneService" class="layui-input"></td>
                 </tr>
@@ -153,37 +153,37 @@
     let datas = []
     // const API = 'http://7int69.natappfree.cc'
     $.ajax({
-        url: `${API}/erpInsurance/getInsuranceBycustIdPage?custId=1&page=1&limit=20`,
+        url: `${API}/erpInsurance/getInsuranceByCustId?custId=1`,
         type: 'get',
         success: function (res) {
-            let arr = res.data.records
+            let arr = res.data
             arr = arr.reverse()
-            datas = res.data.records.reverse()
-            datas = datas.reverse()
+            datas = res.data.reverse()
             let str = ''
             $.each(arr, function (i) {
                 let json = arr[i]
                 str += `<tr class='title'>
                     <td>${arr.length - i}</td>
-                    <td>${json.carNumber == null ? '' : json.carNumber}</td>
-                    <td>${json.insProperty == null ? '' : json.insProperty}</td>
-                    <td colspan="2">${json.insuranceCompany == null ? '' : json.insuranceCompany}</td>
-                    <td></td>
-                    <td></td>
-                    <td>${json.contactTelephone == null ? '' : json.contactTelephone}</td>
-                    <td></td>
-                    <td>${json.insureDt == null ? '' : json.insureDt}</td>
-                    <td>${json.failureDt == null ? '' : json.failureDt}</td>
-                    <td>${json.insPremium == null ? '' : json.insPremium}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${json.carPlate == null ? '' : json.carPlate}</td>
+                    <td>${json.insProperty == null ? '无' : json.insProperty}</td>
+                    <td>${json.insuranceCompany == null ? '无' : json.insuranceCompany}</td>
+                    <td>${json.telephoneService == null ? '无' : json.telephoneService}</td>
+                    <td>${json.insSalesman == null ? '无' : json.insSalesman}</td>
+                    <td>${json.contactTelephone == null ? '无' : json.contactTelephone}</td>
+                    <td>${json.insurancepolicyno == null ? '无' : json.insurancepolicyno}</td>
+                    <td>${json.insureDt == null ? '无' : json.insureDt}</td>
+                    <td>${json.failureDt == null ? '无' : json.failureDt}</td>
+                    <td>${json.insPremium == null ? '无' : json.insPremium}</td>
+                    <td>${json.jiaoqiangxian == null ? '无' : json.jiaoqiangxian}</td>
+                    <td>${json.vehiclesLoss == null ? '无' : json.vehiclesLoss}</td>
+                    <td>${json.insLiability == null ? '无' : json.insLiability}</td>
+                    <td>${json.insGlass == null ? '无' : json.insGlass}</td>
+                    <td>${json.driversInsurance == null ? '无' : json.driversInsurance}</td>
+                    <td>${json.passengerInsurance == null ? '无' : json.passengerInsurance}</td>
+                    <td>${json.insRobbery == null ? '无' : json.insRobbery}</td>
+                    <td>${json.insDeductible == null ? '无' : json.insDeductible}</td>
+                    <td>${json.insBurning == null ? '无' : json.insBurning}</td>
+                    <td>${json.insScratch == null ? '无' : json.insScratch}</td>
                     <td><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="update(${i})">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm" onclick=deletes(${json.id})>删除</button></td>
                 </tr>`
             })

@@ -528,191 +528,198 @@
 
 
     function seeInfo(id) {
-        $.ajax({
-            url:`${API}/erpManagement/getManDetailsBycustId?sheetId=${id}`,
-            success: function (res) {
-                let json = res.data
-                $('.winbody').html(`<table class="layui-table">
-            <thead>
-                <tr>
-                    <th>工作日期</th>
-                    <th>里程表数</th>
-                    <th>工作单号</th>
-                    <th colspan="2">客户名称</th>
-                    <th>车辆牌号</th>
-                    <th>挂车牌号</th>
-
-                </tr>
-            </thead>
-            <tbody class="saveOne">
-                
-            </tbody>
-
-        </table>
-        <div class="title">
-            商品销售
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th style="width:10%;">来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th colspan="2">规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>生产编号</th>
-                    <th>物料新旧</th>
-                    <th>去向</th>
-                    <th style="width:5%;">数量</th>
-                    <th style="width:5%;">单价</th>
-                    <th style="width:5%;">金额</th>
-                </tr>
-            </thead>
-            <tbody class="spxs">
-
-
-            </tbody>
-        </table>
-        <div class="title">
-            轮胎维修
-        </div>
-        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
-        <table class="layui-table">
-            <thead>
-                    <tr>
-                    <th style="width:10%;">来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th colspan="2">规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>生产编号</th>
-                    <th>物料新旧</th>
-                    <th>去向</th>
-                    <th style="width:5%;">数量</th>
-                    <th style="width:5%;">单价</th>
-                    <th style="width:5%;">金额</th>
-                </tr>
-            </thead>
-
-            <tbody class="ltwx">
-            </tbody>
-        </table>
-        <div class="title">
-            车辆维修
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>汽修项目</th>
-                    <th>维修科目</th>
-                    <th>维修方式</th>
-                    <th>工时费用</th>
-                    <th>备注</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody class="clwx">
-            
-            </tbody>
-        </table>
-
-        <table class="layui-table">
-            <tbody class="fyjf">
-            </tbody>
-        </table>
-        <ul class="qianming">
-            
-        </ul>
-
-    </div>`)
-    if(json.saleRepairOrder.length > 0) {
-        let str = ''
-        $.each(json.saleRepairOrder,function (i,n) {
-            str += `<tr>
-                    <td>${n.saleRepairDate}</td>
-                    <td>${n.saleRepairMileage}</td>
-                    <td>${n.saleRepairSheetId}</td>
-                    <td colspan="2">${n.customerName}</td>
-                    <td>${n.carPlate}</td>
-                    <td>${n.trailerPlate}</td>
-                </tr>`
-        })
-        $('.saveOne').html(str)
-    }
-    if(json.saleRepairSales.length > 0) {
-        let str = ''
-        $.each(json.saleRepairSales,function (i,n) {
-            str +=`<tr><td>${n.warehouseId}
-                </td>
-                <td>${n.materielName}</td>
-                <td>${n.materielBrand}</td>
-                <td>${n.materielpecifications}</td>
-                <td>${n.materielModel}</td>
-                <td>${n.materielPlace}</td>
-                <td>${n.materielUnit}</td>
-                <td>${n.materielProduction_id}</td>
-                <td>${n.materielState}</td>
-                <td>${n.materielOutTo}</td>
-                <td>${n.materielNumber}</td>
-                <td>${n.materielPrice}</td>
-                <td>${n.materielTotal}</td>
-                </tr>`
-        })
-        $('.spxs').html(str)
-    }
-    if(json.saleRepairRepairs.length > 0) {
-        let str = ''
-        $.each(json.saleRepairRepairs,function (i,n) {
-            str +=`<tr><td>${n.warehouseId}
-                </td>
-                <td>${n.materielName}</td>
-                <td>${n.materielBrand}</td>
-                <td>${n.materielpecifications}</td>
-                <td>${n.materielModel}</td>
-                <td>${n.materielPlace}</td>
-                <td>${n.materielUnit}</td>
-                <td>${n.materielProduction_id}</td>
-                <td>${n.materielState}</td>
-                <td>${n.materielOutTo}</td>
-                <td>${n.materielNumber}</td>
-                <td>${n.materielPrice}</td>
-                <td>${n.materielTotal}</td>
-                </tr>`
-        })
-        $('.spxs').html(str)
-    }
-    if(json.saleRepairGarages.length > 0) {
-        let str = ''
-        $.each(json.saleRepairGarages,function (i,n) {
-            str +=`<tr><td>${n.garageProject}
-                </td>
-                <td>${n.repairProject}</td>
-                <td>${n.materielBrand}</td>
-                <td>${n.repairMode}</td>
-                <td>${n.repairCost}</td>
-                <td>${n.repairRemarks}</td>
-                </tr>`
-        })
-        $('.spxs').html(str)
-    }
-    layer.open({
-        type:1,
-        content:$('.winbody'),
-        maxmin: true,
-        title:'详情',
-        area:['1200px'],
-        btn:['打印'],
-        yes: function (index) {
-            console.log(index)
-            $('.winbody').jqprint()
-        }
-    })
-            }
-        })
+    	var pan=id.substr(0,4);
+    	if(pan=="XSWX"){
+    		$.ajax({
+	            url:`${API}/erpManagement/getManDetailsBycustId?sheetId=${id}`,
+	            success: function (res) {
+	                let json = res.data
+	                $('.winbody').html(`<table class="layui-table">
+	            <thead>
+	                <tr>
+	                    <th>工作日期</th>
+	                    <th>里程表数</th>
+	                    <th>工作单号</th>
+	                    <th colspan="2">客户名称</th>
+	                    <th>车辆牌号</th>
+	                    <th>挂车牌号</th>
+	
+	                </tr>
+	            </thead>
+	            <tbody class="saveOne">
+	                
+	            </tbody>
+	
+	        </table>
+	        <div class="title">
+	            商品销售
+	        </div>
+	        <table class="layui-table">
+	            <thead>
+	                <tr>
+	                    <th style="width:10%;">来源</th>
+	                    <th>品名</th>
+	                    <th>品牌</th>
+	                    <th colspan="2">规格</th>
+	                    <th>型号</th>
+	                    <th>产地</th>
+	                    <th>单位</th>
+	                    <th>生产编号</th>
+	                    <th>物料新旧</th>
+	                    <th>去向</th>
+	                    <th style="width:5%;">数量</th>
+	                    <th style="width:5%;">单价</th>
+	                    <th style="width:5%;">金额</th>
+	                </tr>
+	            </thead>
+	            <tbody class="spxs">
+	
+	
+	            </tbody>
+	        </table>
+	        <div class="title">
+	            轮胎维修
+	        </div>
+	        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+	        <table class="layui-table">
+	            <thead>
+	                    <tr>
+	                    <th style="width:10%;">来源</th>
+	                    <th>品名</th>
+	                    <th>品牌</th>
+	                    <th colspan="2">规格</th>
+	                    <th>型号</th>
+	                    <th>产地</th>
+	                    <th>单位</th>
+	                    <th>生产编号</th>
+	                    <th>物料新旧</th>
+	                    <th>去向</th>
+	                    <th style="width:5%;">数量</th>
+	                    <th style="width:5%;">单价</th>
+	                    <th style="width:5%;">金额</th>
+	                </tr>
+	            </thead>
+	
+	            <tbody class="ltwx">
+	            </tbody>
+	        </table>
+	        <div class="title">
+	            车辆维修
+	        </div>
+	        <table class="layui-table">
+	            <thead>
+	                <tr>
+	                    <th>汽修项目</th>
+	                    <th>维修科目</th>
+	                    <th>维修方式</th>
+	                    <th>工时费用</th>
+	                    <th>备注</th>
+	                    <th>操作</th>
+	                </tr>
+	            </thead>
+	            <tbody class="clwx">
+	            
+	            </tbody>
+	        </table>
+	
+	        <table class="layui-table">
+	            <tbody class="fyjf">
+	            </tbody>
+	        </table>
+	        <ul class="qianming">
+	            
+	        </ul>
+	
+	    </div>`)
+	    if(json.saleRepairOrder.length > 0) {
+	        let str = ''
+	        $.each(json.saleRepairOrder,function (i,n) {
+	            str += `<tr>
+	                    <td>${n.saleRepairDate}</td>
+	                    <td>${n.saleRepairMileage}</td>
+	                    <td>${n.saleRepairSheetId}</td>
+	                    <td colspan="2">${n.customerName}</td>
+	                    <td>${n.carPlate}</td>
+	                    <td>${n.trailerPlate}</td>
+	                </tr>`
+	        })
+	        $('.saveOne').html(str)
+	    }
+	    if(json.saleRepairSales.length > 0) {
+	        let str = ''
+	        $.each(json.saleRepairSales,function (i,n) {
+	            str +=`<tr><td>${n.warehouseId}
+	                </td>
+	                <td>${n.materielName}</td>
+	                <td>${n.materielBrand}</td>
+	                <td>${n.materielpecifications}</td>
+	                <td>${n.materielModel}</td>
+	                <td>${n.materielPlace}</td>
+	                <td>${n.materielUnit}</td>
+	                <td>${n.materielProduction_id}</td>
+	                <td>${n.materielState}</td>
+	                <td>${n.materielOutTo}</td>
+	                <td>${n.materielNumber}</td>
+	                <td>${n.materielPrice}</td>
+	                <td>${n.materielTotal}</td>
+	                </tr>`
+	        })
+	        $('.spxs').html(str)
+	    }
+	    if(json.saleRepairRepairs.length > 0) {
+	        let str = ''
+	        $.each(json.saleRepairRepairs,function (i,n) {
+	            str +=`<tr><td>${n.warehouseId}
+	                </td>
+	                <td>${n.materielName}</td>
+	                <td>${n.materielBrand}</td>
+	                <td>${n.materielpecifications}</td>
+	                <td>${n.materielModel}</td>
+	                <td>${n.materielPlace}</td>
+	                <td>${n.materielUnit}</td>
+	                <td>${n.materielProduction_id}</td>
+	                <td>${n.materielState}</td>
+	                <td>${n.materielOutTo}</td>
+	                <td>${n.materielNumber}</td>
+	                <td>${n.materielPrice}</td>
+	                <td>${n.materielTotal}</td>
+	                </tr>`
+	        })
+	        $('.spxs').html(str)
+	    }
+	    if(json.saleRepairGarages.length > 0) {
+	        let str = ''
+	        $.each(json.saleRepairGarages,function (i,n) {
+	            str +=`<tr><td>${n.garageProject}
+	                </td>
+	                <td>${n.repairProject}</td>
+	                <td>${n.materielBrand}</td>
+	                <td>${n.repairMode}</td>
+	                <td>${n.repairCost}</td>
+	                <td>${n.repairRemarks}</td>
+	                </tr>`
+	        })
+	        $('.spxs').html(str)
+	    }
+	    layer.open({
+	        type:1,
+	        content:$('.winbody'),
+	        maxmin: true,
+	        title:'详情',
+	        area:['1200px'],
+	        btn:['打印'],
+	        yes: function (index) {
+	            console.log(index)
+	            $('.winbody').jqprint()
+	        }
+	    })
+	            }
+	        })
+    	}else if(pan=="JCWH"){
+    		sessionStorage.setItem('sheelId', id);
+    		window.location.href = `./gongzuohuizongjianceweihu.html`
+    	}
+        
     }
 </script>
 </html>

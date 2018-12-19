@@ -165,10 +165,10 @@
         type: 'get',
         success: function (res) {
             let str = ''
-            $.each(res.data.reverse(), function (i,json) {
+            $.each(res.data, function (i,json) {
                 str += `<tr>
                     <td>${res.data.length -  i}</td>
-                    <td><input class="layui-input" data-name="carNumber" value="${json.carNumber == null ? '' : json.carNumber}"></td>
+                    <td><input class="layui-input" data-name="carNumber" value="${json.carPlate == null ? '' : json.carPlate}"></td>
                     <td><input class="layui-input" data-name="trailerNumber" value="${json.trailerNumber == null ? '' : json.trailerNumber}"></td>
                     <td><input class="layui-input" data-name="driverA" value="${json.driverA == null ? '' : json.driverA}"></td>
                     <td><input class="layui-input" data-name="driverAPhone" value="${json.driverAPhone == null ? '' : json.driverAPhone}"></td>

@@ -468,8 +468,8 @@
 		// 获取列表信息
 		$.ajax({
 			type: "post",
-			// url: `${API}/erpSaleRepairOrder/findMon`,
-			url: 'http://8h7dgu.natappfree.cc/erpSaleRepairOrder/findMon',
+			url: `${API}/erpSaleRepairOrder/findMon`,
+			// url: 'http://8h7dgu.natappfree.cc/erpSaleRepairOrder/findMon',
 			async: true,
 			data: {
 				custId: data_obj.custId,
@@ -672,8 +672,10 @@
 			},
 			success: function(res){
 				if (res.code == 0) {
+					console.log(res.data)
 					if (res.data) {
 						flag = 2;
+						console.log(flag)
 					}
 				}
 			}
@@ -704,7 +706,7 @@
 					data:{
 						branchId: 1, // 分支id
 						customerId: loadUserInfo.customer.id, // 客户ID
-						repDate: getDays().replace(/-/ig, '/'), // 报告日期
+						repDate: date_c.getFullYear() + '年' + (date_c.getMonth() + 1) + '月', // 报告日期
 						repType: data_obj.repType, // 报告类型
 						repProgress: $('.business_progress textarea').val(), // 工作进展
 						repAnalysis: $('.analysis textarea').val(), // 运营情况分析

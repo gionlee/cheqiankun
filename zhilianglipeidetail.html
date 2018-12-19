@@ -110,6 +110,7 @@
     	url:`${API}/erpClaims/selectByClaimsId?claimsId=${getUrlParam("claimsId")}`,
     	async:true,
     	success: function(res) {
+            console.log(res);
     		let data = res.data;
     		
     		htmlStr = `<tr>
@@ -144,7 +145,7 @@
 			        		<td>销售日期</td>
 			        		<td>${typeof (data.saleDt) == 'undefined' ? '' : msToDate(data.saleDt,2)}</td>
 			        		<td>销售价格</td>
-			        		<td></td>
+			        		<td>${typeof (data.sellingPrice) == 'undefined' ? '' : data.sellingPrice}</td>
 			        		<td>使用里程</td>
 			        		<td>${typeof (data.useMileage) == 'undefined' ? '' : data.useMileage}</td>
 			        		<td>DOT号</td>

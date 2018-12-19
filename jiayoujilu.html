@@ -145,31 +145,14 @@
             <thead>
                 <tr>
 
-                    <th rowspan="2">
-                        序号
-                    </th>
-                    <th rowspan="2">
-                        时间
-                    </th>
-                    <th rowspan="2">
-                        车辆牌号
-                    </th>
-                    <th rowspan="2">
-                        司机姓名
-                    </th>
-                    <th>
-                        汽油
-                    </th>
-                    <th>
-                        柴油
-                    </th>
-                    <th>
-                        单价
-                    </th>
-                    <th>
-                        金额
-                    </th>
-
+                    <th rowspan="2">序号</th>
+                    <th rowspan="2">时间</th>
+                    <th rowspan="2">车辆牌号</th>
+                    <th rowspan="2">司机姓名</th>
+                    <th>汽油</th>
+                    <th>柴油</th>
+                    <th>单价</th>
+                    <th>金额</th>
                 </tr>
                 <tr>
                     <th class="qprice">0</th>
@@ -187,20 +170,22 @@
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th>
-                        时间
-                    </th>
-                    <th>车辆牌号</th>
-                    <th>司机</th>
-                    <th>汽油(元)</th>
-                    <th>柴油(元)</th>
-                    <th>单价</th>
+                    <th width="1/6">时间</th>
+                    <th width="1/6">车辆牌号</th>
+                    <th width="1/6">司机</th>
+                    <th width="1/6">汽油(元)</th>
+                    <th width="1/6">柴油(元)</th>
+                    <th width="1/6">单价</th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="add">
                     <td><input type="text" data-name="refDt" class="layui-input sj" value=""></td>
-                    <td><input type="text" data-name="refCarNumber" class="layui-input" value=""></td>
+                    <!--<td><input type="text" data-name="refCarNumber" class="layui-input" value=""></td>-->
+                    <td>
+                    	<select class="layui-input refCarNumber" data-name="refCarNumber">
+                    	</select>
+                    </td>
                     <td><input type="text" data-name="refDriver" class="layui-input" value=""></td>
                     <td><input type="text" data-name="refGasoline" class="layui-input" value=""></td>
                     <td><input type="text" data-name="refDiesel" class="layui-input" value=""></td>
@@ -265,6 +250,24 @@ layui.use('laydate', function () {
     })
 </script>
 <script>
+	
+	$.ajax({
+		type:"post",
+		url:`${API}/erpManagement/getNoGuaCar`,
+		async:true,
+		data:{
+			custId:loadUserInfo.customer.id,
+		},
+		success:function(res){
+			console.log(res)
+			let data = res.data.car;
+			var str = "";
+			$.each(data, function(i,json) {
+				str += `<option value=${json.carPlate?json.carPlate:""}>${json.carPlate?json.carPlate:""}</option>`
+			});
+			$('.refCarNumber').html(str);
+		}
+	});
 
     function sel () {
         let data = {
@@ -365,3 +368,4 @@ layui.use('laydate', function () {
     }
 
 </script>
+</html>

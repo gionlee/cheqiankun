@@ -83,7 +83,9 @@
             width: 200px;
             border: 1px solid #ccc;
         }
-
+        .isAll {
+            display: none;
+        }
     </style>
 </head>
 
@@ -122,7 +124,7 @@
             <input class="layui-input jsdate" type="text" placeholder="结束日期">
         </div>
         <div class="btn">
-            <button class="layui-btn layui-btn-normal" onclick="select()" >查询</button>
+            <button class="layui-btn layui-btn-normal" onclick="select()">查询</button>
         </div>
         
         <table id="table" lay-filter="table" class="layui-table">
@@ -142,17 +144,17 @@
                     <th>期末数量</th>
                     <th>未税单价</th>
                     <th>含税单价</th>
-                    <th>操作</th>
+                    <th class="isAll">预警设置</th>
+                    <th class="ctrl">操作</th>
                 </tr>
             </thead>
             <tbody class="lists">
-                
+
             </tbody>
         </table>
     </div>
 </body>
 <script>
-	
     layui.use('table', function () {
         var table = layui.table;
     })
@@ -201,172 +203,219 @@
                     $('.ksdate').val(`${years}-01-01`)
                     $('.jsdate').val(`${years}-12-31`)
                     break;
-                    case '7':
+                case '7':
                     $('.ksdate').val(`${years-1}-01-01`)
                     $('.jsdate').val(`${years-1}-12-31`)
                     break;
             }
         });
     })
+
     function goUrl(wareId) {
         console.log(warehouseIds);
         console.log(wareId);
         console.log(startTime);
         console.log(endTime);
         // window.location.href = `./wuliaokucunxiangqing.html?custId=1&startTime=${startTime}&endTime=${endTime}&matId=${matId}`
-        window.location.href = `./wuliaokucunxiangqing.html?warehouseIds=${warehouseIds}&startTime=${startTime}&endTime=${endTime}&wareId=${wareId}`
+        window.location.href =
+            `./wuliaokucunxiangqing.html?warehouseIds=${warehouseIds}&startTime=${startTime}&endTime=${endTime}&wareId=${wareId}`
     }
 
-    function renderForm(){
-      layui.use('form', function(){
-       var form = layui.form;//高版本建议把括号去掉，有的低版本，需要加()
-       form.render();
-      });
-     }
-    
+    function renderForm() {
+        layui.use('form', function () {
+            var form = layui.form; //高版本建议把括号去掉，有的低版本，需要加()
+            form.render();
+        });
+    }
+
     // 查询
     var startDate = ''
     var endDate = ''
 
 
-    var warehouseIds=''
-    var startTime=''
-    var endTime=''
-    
+    var warehouseIds = ''
+    var startTime = ''
+    var endTime = ''
+    var cangku = 0
     var date_c = new Date();
     var year_c = date_c.getFullYear();
     var month_c = date_c.getMonth() + 1;
-    switch (month_c){
-    	case 1:
-    	case 3:
-    	case 5:
-    	case 7:
-    	case 8:
-    	case 10:
-    	case 12:
-    		$('.ksdate').val(year_c + '-' + month_c + '-1');
-    		$('.jsdate').val(year_c + '-' + month_c + '-31');
-    		break;
-    	case 4:
-    	case 6:
-    	case 9:
-    	case 11:
-    		$('.ksdate').val(year_c + '-' + month_c + '-1');
-    		$('.jsdate').val(year_c + '-' + month_c + '-30');
-    		break;
-    	case 2:
-    		$('.ksdate').val(year_c + '-' + month_c + '-1');
-    		$('.jsdate').val(year_c % 4 ==0 && year_c % 100 != 0 ? year_c + '-' + month_c + '-29' : year_c + '-' + month_c + '-28');
-    		break;
-    	default:
-    		break;
+    switch (month_c) {
+        case 1:
+        case 3:
+        case 5:
+        case 7:
+        case 8:
+        case 10:
+        case 12:
+            $('.ksdate').val(year_c + '-' + month_c + '-1');
+            $('.jsdate').val(year_c + '-' + month_c + '-31');
+            break;
+        case 4:
+        case 6:
+        case 9:
+        case 11:
+            $('.ksdate').val(year_c + '-' + month_c + '-1');
+            $('.jsdate').val(year_c + '-' + month_c + '-30');
+            break;
+        case 2:
+            $('.ksdate').val(year_c + '-' + month_c + '-1');
+            $('.jsdate').val(year_c % 4 == 0 && year_c % 100 != 0 ? year_c + '-' + month_c + '-29' : year_c + '-' +
+                month_c + '-28');
+            break;
+        default:
+            break;
     }
 
     //获取库存
-    var kucun_arr=[];
-    $.ajax({
-        url:`${API}/erpCustomerWarehouse/getWarehouses`,
-        data:{
-            custId:loadUserInfo.customer.id,
-        },
-        type:'get',
-        success: function (res) {
-         console.log(res);
-            let str = $('.kucun_sel').html();
-            for(var i=0;i<res.data.length;i++){
-                str+='<option value="'+res.data[i].id+'">'+res.data[i].warName+'</option>';
-                kucun_arr.push(res.data[i].id);
-                warehouseIds=warehouseIds+','+res.data[i].id;
+    var kucun_arr = [];
+    selKc()
+
+    function selKc(str) {
+        $.ajax({
+            url: `${API}/erpCustomerWarehouse/getWarehouses`,
+            data: {
+                custId: loadUserInfo.customer.id,
+            },
+            type: 'get',
+            success: function (res) {
+                console.log(res);
+                let str = $('.kucun_sel').html();
+                for (var i = 0; i < res.data.length; i++) {
+                    str += '<option value="' + res.data[i].id + '">' + res.data[i].warName + '</option>';
+                    kucun_arr.push(res.data[i].id);
+                    warehouseIds = warehouseIds + ',' + res.data[i].id;
+                }
+                // console.log(str);
+                $('.kucun_sel').html(str);
+                renderForm(); //表单重新渲染，要不然添加完显示不出来新的option
+                select()
+            },
+            error: function () {
+                alert('系统错误，请稍后重试！')
             }
-            // console.log(str);
-            $('.kucun_sel').html(str);
-            renderForm();//表单重新渲染，要不然添加完显示不出来新的option
-            select()
-        },
-        error: function () {
-            alert('系统错误，请稍后重试！')
-        }
-    })
-    
-    function select () {
-        // 开始
-	    startTime = $('.ksdate').val();
-        endTime = $('.jsdate').val();
-        if($('.kucun_sel').val()=='all'){
-            warehouseIds=kucun_arr[0];
-            for(var i=1;i<kucun_arr.length;i++){
-                warehouseIds=warehouseIds+','+kucun_arr[i];
+        })
+    }
+    let sxList = []
+
+    function sx(key, val) {
+        let str = ''
+        let arr = []
+        $.each(sxList, function (i, k) {
+            if (k[key] == val) {
+                arr.push(k)
             }
-        }else{
-            warehouseIds=$('.kucun_sel').val();
-        }
-        console.log(warehouseIds);
-        console.log(startTime);
-        console.log(endTime);
-        // console.log(kucun_arr);
-	    $.ajax({
-	        url:`${API}/erpWarehouse/selectByBranch`,
-	        data:{
-	            // custId:loadUserInfo.customer.id,
-                warehouseIds:warehouseIds,
-	            startTime:startTime,
-	            endTime:endTime
-	        },
-	        type:'get',
-	        success: function (res) {
-	        	console.log(res);
-	            let str = ''
-	            let arr =res.data.reverse()
-	            $.each(arr,function (i) {
-	                let json = arr[i]
-	                // str +=`<tr>
-	                //     <td>${arr.length - i}</td>
-	                //     <td>${json.materielName == null ? '' : json.materielName}</td>
-	                //     <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
-	                //     <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
-	                //     <td>${json.materielModel == null ? '' : json.materielModel}</td>
-	                //     <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
-	                //     <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
-	                //     <td>${json.materielBmaterielStaterand == null ? '' : json.materielBmaterielStaterand}</td>
-	                //     <td>${json.materielNumber == null ? '' : json.materielNumber}</td>
-	                //     <td>${json.materielWarnAmount == null ? '' : json.materielWarnAmount}</td>
-	                //     <td>${json.materielOccupyNumber == null ? '' : json.materielOccupyNumber}</td>
-	                //     <td>${json.matNum == null ? '' : json.matNum}</td>
-	                //     <td>${json.materielTax == null ? '' : json.materielTax}</td>
-	                //     <td>${json.materielNotax == null ? '' : json.materielNotax}</td>
-	                //     <td>
-	                //         <div class="layui-btn layui-btn-xs" onclick="goUrl(${json.id})">查看</div>
-	                //     </td>
-	                // </tr>`
-                    str +=`<tr>
+        })
+        sxList = arr
+        console.log(arr,'arr')
+        $.each(arr, function (i) {
+            let json = arr[i]
+            str +=
+                        `<tr>
                         <td>${arr.length - i}</td>
-                        <td>${json[1] == null ? '' : json[1]}</td>
-                        <td>${json[2] == null ? '' : json[2]}</td>
-                        <td>${json[3] == null ? '' : json[3]}</td>
-                        <td>${json[4] == null ? '' : json[4]}</td>
-                        <td>${json[5] == null ? '' : json[5]}</td>
-                        <td>${json[11] == null ? '' : json[11]}</td>
-                        <td>${json[6] == null ? '' : json[6]}</td>
+                        <td style="cursor:pointer;" onclick="sx('1','${json[1]}')">${json[1] == null ? '' : json[1]}</td>
+                        <td style="cursor:pointer;" onclick="sx('2','${json[2]}')">${json[2] == null ? '' : json[2]}</td>
+                        <td style="cursor:pointer;" onclick="sx('3','${json[3]}')">${json[3] == null ? '' : json[3]}</td>
+                        <td style="cursor:pointer;" onclick="sx('4','${json[4]}')">${json[4] == null ? '' : json[4]}</td>
+                        <td style="cursor:pointer;" onclick="sx('5','${json[5]}')">${json[5] == null ? '' : json[5]}</td>
+                        <td style="cursor:pointer;" onclick="sx('11','${json[11]}')">${json[11] == null ? '' : json[11]}</td>
+                        <td style="cursor:pointer;" onclick="sx('6','${json[6]}')">${json[6] == null ? '' : json[6]}</td>
                         <td>${json[7] == null ? '' : json[7]}</td>
-                        <td>${json[8] == null ? '' : json[8]}</td>
-                        <td>${json[9] == null ? '' : json[9]}</td>
+                        <td style="cursor:pointer;" onclick="seeInfo('${json[0]}','${json[15]}')">${json[8] == null ? '' : json[8]}</td>
+                        <td style="cursor:pointer;" onclick="seeInfo('${json[0]}','${json[15]}')">${json[9] == null ? '' : json[9]}</td>
                         <td>${json[10] == null ? '' : json[10]}</td>
                         <td>${json[13] == null ? '' : json[13]}</td>
                         <td>${json[12] == null ? '' : json[12]}</td>
-                        <td>
-                            <div class="layui-btn layui-btn-xs" onclick="goUrl(${json[0]})">查看</div>
+                        <td class="isAll">
+                                <input type="text" class="layui-input" value="${json[16]}">
+                        </td>
+                        <td class="isAll">
+                           <input type="checkbox">
+                        </td>
+                        <td class="ctrl">
+                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
                         </td>
                     </tr>`
-	            })
-	            $('.lists').html(str)
-	
-	        },
-	        error: function () {
-	            alert('系统错误，请稍后重试！')
-	        }
-	    })
+        })
+        $('.lists').html(str)
     }
-    
+
+    function select() {
+        // 开始
+        
+        startTime = $('.ksdate').val();
+        endTime = $('.jsdate').val();
+        if ($('.kucun_sel').val() == 'all') {
+            warehouseIds = kucun_arr[0];
+            for (var i = 1; i < kucun_arr.length; i++) {
+                warehouseIds = warehouseIds + ',' + kucun_arr[i];
+            }
+        } else {
+            warehouseIds = $('.kucun_sel').val();
+        }
+        $.ajax({
+            url: `${API}/erpWarehouse/selectByBranch`,
+            data: {
+                // custId:loadUserInfo.customer.id,
+                warehouseIds: warehouseIds,
+                startTime: startTime,
+                endTime: endTime
+            },
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arr = res.data.reverse()
+                sxList = res.data.reverse()
+                $.each(arr, function (i) {
+                    let json = arr[i]
+                    str +=
+                        `<tr>
+                        <td>${arr.length - i}</td>
+                        <td style="cursor:pointer;" onclick="sx('1','${json[1]}')">${json[1] == null ? '' : json[1]}</td>
+                        <td style="cursor:pointer;" onclick="sx('2','${json[2]}')">${json[2] == null ? '' : json[2]}</td>
+                        <td style="cursor:pointer;" onclick="sx('3','${json[3]}')">${json[3] == null ? '' : json[3]}</td>
+                        <td style="cursor:pointer;" onclick="sx('4','${json[4]}')">${json[4] == null ? '' : json[4]}</td>
+                        <td style="cursor:pointer;" onclick="sx('5','${json[5]}')">${json[5] == null ? '' : json[5]}</td>
+                        <td style="cursor:pointer;" onclick="sx('11','${json[11]}')">${json[11] == null ? '' : json[11]}</td>
+                        <td style="cursor:pointer;" onclick="sx('6','${json[6]}')">${json[6] == null ? '' : json[6]}</td>
+                        <td>${json[7] == null ? '' : json[7]}</td>
+                        <td style="cursor:pointer;" onclick="seeInfo('${json[0]}','${json[15]}')">${json[8] == null ? '' : json[8]}</td>
+                        <td style="cursor:pointer;" onclick="seeInfo('${json[0]}','${json[15]}')">${json[9] == null ? '' : json[9]}</td>
+                        <td>${json[10] == null ? '' : json[10]}</td>
+                        <td>${json[13] == null ? '' : json[13]}</td>
+                        <td>${json[12] == null ? '' : json[12]}</td>
+                        <td class="isAll">
+                                <input style="width:50px;" type="text" class="layui-input" value="${json[16]}">
+                        </td>
+                        <td class="isAll">
+                                <input type="checkbox">
+                        </td>
+                        <td class="ctrl">
+                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
+                        </td>
+                    </tr>`
+                })
+                $('.lists').html(str)
+                if($('.kucun_sel').val() != 'all') {
+            $('.isAll').show()
+            $('.ctrl').hide()
+        } else {
+            $('.isAll').hide()
+            $('.ctrl').show()
+        }
+
+            },
+            error: function () {
+                alert('系统错误，请稍后重试！')
+            }
+        })
+    }
+    function  seeInfo (a,b) {
+        if(b == 'all') {
+            b = kucun_arr
+        }
+        window.location.href = `./kuncunruku.html?marId=${a}&wareId=${b}&startDate=${$('.ksdate').val()}&endDate=${$('.jsdate').val()}`
+    }
 </script>
 
 </html>

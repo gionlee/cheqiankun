@@ -136,10 +136,11 @@
                     <th>库存数量</th>
                     <th>预警数量</th>
                     <th>订购数量</th>
+                    <th>操作</th>
                 </tr>
             </thead>
             <tbody class="xqlist">
-                <tr>
+                <!--<tr>
                     <td>电位器-定位器</td>
                     <td>胎客</td>
                     <td>固定式</td>
@@ -151,7 +152,7 @@
                     <td>0</td>
                     <td>0</td>
                     <td>0</td>
-                </tr>
+                </tr>-->
             </tbody>
         </table>
     </div>
@@ -176,6 +177,7 @@
         $ ( '.cgdd' ).empty ();
         $.ajax({
             url: `${API}/erpClients/getClientsById?clientsId=${id}`,
+            // url: 'http://sjy.natapp1.cc/erpClients/getClientsById?clientsId='+id,
             type: 'get',
             success: function (res) {
                 console.log(res)
@@ -247,7 +249,7 @@
         })
     }
     // 查询需求汇总、
-    function selXuQiu() {
+    /*function selXuQiu() {
         $.ajax({
             url:`${API}/erpOrderd/getListOrderd?custId=${id}`,
             type:'get',
@@ -255,57 +257,119 @@
                 let str = ''
                 let arr = res.data
                 $.each(arr,function (i,n){
-                    
                     str += `<tr>
-                        <td>${n.materielName == null ? '' : n.materielName}</td>
-                        <td>${n.materielBrand == null ? '' : n.materielBrand}</td>
-                        <td>${n.materielSpecifications == null ? '' : n.materielSpecifications}</td>
-                        <td>${n.materielModel == null ? '' : n.materielModel}</td>
-                        <td>${n.materielPlace == null ? '' : n.materielPlace}</td>
-                        <td>${n.materielState == null ? '' : n.materielState}</td>
-                        <td>${n.materielUnit == null ? '' : n.materielUnit}</td>
-                        <td>${n.materielAmount == null ? '' : n.materielAmount}</td>
-                        <td>${n.materielName == null ? '' : n.materielName}</td>
-                        <td>${n.materielName == null ? '' : n.materielName}</td>
-
-                    </tr>`
+		                        <td class="pinming_${i}">${n.materielName == null ? '' : n.materielName}</td>
+		                        <td class="pinpai_${i}">${n.materielBrand == null ? '' : n.materielBrand}</td>
+		                        <td class="guige_${i}">${n.materielSpecifications == null ? '' : n.materielSpecifications}</td>
+		                        <td class="xinghao_${i}">${n.materielModel == null ? '' : n.materielModel}</td>
+		                        <td class="chandi_${i}">${n.materielPlace == null ? '' : n.materielPlace}</td>
+		                        <td class="wuliaoxinjiu_${i}">${n.materielState == null ? '' : n.materielState}</td>
+		                        <td class="danwei_${i}">${n.materielName == null ? '' : n.materielName}</td>
+		                        <td class="xqNum_${i}">${n.materielUnit == null ? '' : n.materielUnit}</td>
+		                        <td class="kcNum_${i}">${n.materielAmount == null ? '' : n.materielAmount}</td>
+		                        <td class="yjNum_${i}">${n.materielName == null ? '' : n.materielName}</td>
+		                        <td class="dgNum_${i}">${n.materielName == null ? '' : n.materielName}</td>
+		                        <td><button class="layui-btn layui-btn-xs" onclick="C_choose(${i})">选择</button></td>
+		                    </tr>`
                 })
+                $('.xqlist').html(str);
             }
         })
+    }*/
+   	$.ajax({
+        url:`${API}/erpOrderd/getListOrderds?custId=${loadUserInfo.customer.id}`,
+        type:'get',
+        success: function (res) {
+            let str = ''
+           	let arr = res.data.reverse()
+            $.each(arr,function (i,json) {
+                if(json) {
+                    str += `<tr>
+	                            <td class="pinming_${i}">${json.materielName == null ? '' : json.materielName}</td>
+	                            <td class="pinpai_${i}">${json.materielBrand == null ? '' : json.materielBrand}</td>
+	                            <td class="guige_${i}">${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
+	                            <td class="xinghao_${i}">${json.materielModel == null ? '' : json.materielModel}</td>
+	                            <td class="chandi_${i}">${json.materielPlace == null ? '' : json.materielPlace}</td>
+	                            <td class="wuliaoxinjiu_${i}">${json.materielState == null ? '' : json.materielState}</td>
+	                            <td class="danwei_${i}">${json.materielUnit == null ? '' : json.materielUnit}</td>
+	                            <td class="xqNum_${i}">${json.xuNum == null ? '' : json.xuNum}</td>
+	                            <td class="kcNum_${i}">${json.outAmount == null ? '' : json.outAmount}</td>
+	                            <td class="yjNum_${i}">${json.jingNum == null ? '' : json.jingNum}</td>
+	                            <td class="dgNum_${i}">${json.materielAmount == null ? '' : json.materielAmount}</td>
+		                        <td><button class="layui-btn layui-btn-xs" onclick="C_choose(${i})">选择</button></td>
+	                        </tr>`
+                }
+            })
+            $('.xqlist').html(str)
+        }
+    })
+    function C_choose(params){
+    	$('.ddlist').append(
+            `<tr>
+                <td><input type="hidden" data-name="id" value="" >
+                    <input type="text" data-name="materielName" class="layui-input" value=${$('.pinming_'+params).html()}>
+                </td>
+                <td><input type="text" data-name="materielBrand" class="layui-input" value=${$('.pinpai_'+params).html()}></td>
+                <td><input type="text" data-name="materielSpecifications" class="layui-input" value=${$('.guige_'+params).html()}></td>
+                <td><input type="text" data-name="materielModel" class="layui-input" value=${$('.xinghao_'+params).html()}></td>
+                <td><input type="text" data-name="materielPlace" class="layui-input" value=${$('.chandi_'+params).html()}></td>
+                <td><input type="text" data-name="materielState" class="layui-input" value=${$('.wuliaoxinjiu_'+params).html()}></td>
+                <td><input type="text" data-name="materielUnit" class="layui-input" value=${$('.danwei_'+params).html()}></td>
+                <td><input type="number" data-name="materielAmount" class="layui-input" value=${$('.xqNum_'+params).html()}></td>
+                <td><input type="number" data-name="materielPrice" class="layui-input" value=""></td>
+                <td><input type="number" data-name="materielTotal" class="layui-input" value=""></td>
+                <td>
+                    <select class="layui-form selects_" data-name="invoiceType" style="height:30px;"  lay-verify="">
+	                    <option value="无发票">无发票</option>
+	                    <option value="商品普票">商品普票</option>
+	                    <option value="商品增值">商品增值</option>
+	                    <option value="服务普票">服务普票</option>
+	                    <option value="服务增值">服务增值</option>
+	                    <option value="运输发票">运输发票</option>
+                    </select>
+                </td>
+                <td><input type="number" data-name="materielDiscount" class="layui-input" value=""></td>
+                <td>
+                    <div class="layui-btn layui-btn-xs" onclick="upSave()">保存</div>
+                    <div class="layui-btn layui-btn-danger layui-btn-xs">删除</div>
+                    <div></div>
+                </td>
+            </tr>`
+        )
     }
     // 新增
     function add() {
         $('.ddlist').append(
             `<tr>
-                    <td><input type="hidden" data-name="id" value="" >
-                        <input type="text" data-name="materielName" class="layui-input" value="">
-                    </td>
-                    <td><input type="text" data-name="materielBrand" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="materielSpecifications" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="materielModel" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="materielPlace" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="materielState" class="layui-input" value=""></td>
-                    <td><input type="number" data-name="materielUnit" class="layui-input" value=""></td>
-                    <td><input type="number" data-name="materielAmount" class="layui-input" value=""></td>
-                    <td><input type="number" data-name="materielPrice" class="layui-input" value=""></td>
-                    <td><input type="number" data-name="materielTotal" class="layui-input" value=""></td>
-                    <td>
-                            <select class="layui-form selects_" data-name="invoiceType" style="height:30px;"  lay-verify="">
-                    <option value="无发票">无发票</option>
-                    <option value="商品普票">商品普票</option>
-                    <option value="商品增值">商品增值</option>
-                    <option value="服务普票">服务普票</option>
-                    <option value="服务增值">服务增值</option>
-                    <option value="运输发票">运输发票</option>
-                                </select>
-                    </td>
-                    <td><input type="number" data-name="materielDiscount" class="layui-input" value=""></td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs" onclick="upSave()">保存</div>
-                        <div class="layui-btn layui-btn-danger layui-btn-xs">删除</div>
-                        <div></div>
-                    </td>
-                </tr>`
+                <td><input type="hidden" data-name="id" value="" >
+                    <input type="text" data-name="materielName" class="layui-input" value="">
+                </td>
+                <td><input type="text" data-name="materielBrand" class="layui-input" value=""></td>
+                <td><input type="text" data-name="materielSpecifications" class="layui-input" value=""></td>
+                <td><input type="text" data-name="materielModel" class="layui-input" value=""></td>
+                <td><input type="text" data-name="materielPlace" class="layui-input" value=""></td>
+                <td><input type="text" data-name="materielState" class="layui-input" value=""></td>
+                <td><input type="number" data-name="materielUnit" class="layui-input" value=""></td>
+                <td><input type="number" data-name="materielAmount" class="layui-input" value=""></td>
+                <td><input type="number" data-name="materielPrice" class="layui-input" value=""></td>
+                <td><input type="number" data-name="materielTotal" class="layui-input" value=""></td>
+                <td>
+                    <select class="layui-form selects_" data-name="invoiceType" style="height:30px;"  lay-verify="">
+	                    <option value="无发票">无发票</option>
+	                    <option value="商品普票">商品普票</option>
+	                    <option value="商品增值">商品增值</option>
+	                    <option value="服务普票">服务普票</option>
+	                    <option value="服务增值">服务增值</option>
+	                    <option value="运输发票">运输发票</option>
+                    </select>
+                </td>
+                <td><input type="number" data-name="materielDiscount" class="layui-input" value=""></td>
+                <td>
+                    <div class="layui-btn layui-btn-xs" onclick="upSave()">保存</div>
+                    <div class="layui-btn layui-btn-danger layui-btn-xs">删除</div>
+                    <div></div>
+                </td>
+            </tr>`
         )
     }
     // 修改后保存
@@ -318,23 +382,23 @@
                 data[$(this).attr('data-name')] = $(this).val()
             })
             $(`.lz${index} select`).each(function (i, n) {
-                json[$(this).attr('data-name')] = $(this).val()
+                data[$(this).attr('data-name')] = $(this).val()
             })
             json.materiels[index] = data
-            console.log(json)
         } else {
+        	console.log($('.ddlist input'))
             $(`.ddlist input`).each(function (i, n) {
                 data[$(this).attr('data-name')] = $(this).val()
             })
             
             $(`.ddlist select`).each(function (i, n) {
-                json[$(this).attr('data-name')] = $(this).val()
+                data[$(this).attr('data-name')] = $(this).val()
             })
-            console.log(json)
+            json.materiels.push(data);
         }
-        console.log(json)
         $.ajax({
             url: `${API}/erpClients/inertOrUpdateClients`,
+            // url: 'http://sjy.natapp1.cc/erpClients/inertOrUpdateClients',
             type: 'post',
             // contentType: "application/json; charset=utf-8",
             data: {
@@ -342,7 +406,6 @@
             },
             // dataType: 'json',
             success: function (res) {
-                console.log(res, '222')
                 fn_getDate();
                 if ( res.code == 0 ) {
                     layer.msg ( '保存成功' );

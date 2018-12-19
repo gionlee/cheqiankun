@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+        }
+
+
+        .layui-input {
+            border: 0px;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .layui-table td {
+            padding: 0px;
+            height: 30px;
+            line-height: 0px;
+            text-align: center;
+        }
+
+        .layui-table td {
+            margin: 0px;
+        }
+
+        .layui-form-item {
+            /* margin: 0px; */
+            width: 100%;
+            height: 100%;
+        }
+
+        .layui-form-item .layui-input-inline {
+            width: 100%;
+            /* margin: 0px !important; */
+            height: 100%;
+        }
+
+        .layui-unselect {
+            height: 40px;
+        }
+
+        .layui-select-title {
+            height: 100%;
+        }
+
+        h3 {
+            text-align: center;
+        }
+        .layui-form {
+            display: inline-block;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table id="table" lay-filter="table" class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>入库时间</th>
+                    <th>来源</th>
+                    <th>品牌</th>
+                    <th>规格</th>
+                    <th>型号</th>
+                    <th>生产编号</th>
+                    <th>使用日期</th>
+                   <th>购置翻新</th>
+                   <th>维修维护</th>
+
+                   <th>运营里程</th>
+                   <th>预计里程</th>
+                   <th>元/千公里</th>
+                   <th>轮胎状态</th>
+                   <th colspan="4">胎纹深度</th>
+                </tr>
+            </thead>
+            <tbody class="lists">
+
+            </tbody>
+        </table>
+    </div>
+</body>
+<script>
+     sel ()
+    function sel () {
+        $.ajax({
+            url:`${API}/erpWarehouse/getOutMaterielToDate?marId=${getUrlParam('marId')}&wareId=${getUrlParam('wareId')}&startDate=${getUrlParam('startDate')}&endDate=${getUrlParam('endDate')}`,
+            type:'get',
+            success: function (res) {
+                let str = ''
+                let arr = res.data .reverse()
+                $.each(arr,function (i,k) {
+                    str +=`<tr>
+                        <td>${arr.length - i}</td>
+                        <td>${k.materielFlowDate || ''}</td>
+                        <td>${k.materielSource || ''}</td>
+                        <td>${k.materielFlowDate || ''}</td>
+                        <td>${k.materielFlowDate || ''}</td>
+                        <td>${arr.length - i}</td>
+                        <td>${arr.length - i}</td>
+                        <td>${arr.length - i}</td>
+                        <td>${arr.length - i}</td>
+                        <td>${arr.length - i}</td>
+
+                        </tr>`
+                })
+            }
+        })
+    }
+</script>
+
+</html>

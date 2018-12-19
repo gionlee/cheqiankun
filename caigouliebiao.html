@@ -215,34 +215,6 @@
         <div class="pay-list" style="display:none;padding:20px;">
             
         </div>
-        <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>日期</th>
-                        <th>工作单号</th>
-                        <th>车辆牌号</th>
-                        <th colspan="2">服务项目</th>
-                        <th>金额</th>
-                        <th>已付金额</th>
-                        <th>本次金额</th>
-                        <th>发票号</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>2018-08-08</td>
-                        <td>CGDD18080801</td>
-                        <td></td>
-                        <td colspan="2">电器-定位器胎客固定式TM-CFQ-A国产456套</td>
-                        <td>207936.00</td>
-                        <td>0</td>
-                        <td>207936.00</td>
-                        <td>0</td>
-                    </tr>
-                </tbody>
-            </table>
     </div>
 </body>
 <script>
@@ -400,8 +372,8 @@
         type:'get',
         success: function (res) {
             console.log(res)
-            let arr = res.data.records.reverse()
-            cgList = res.data.records.reverse()
+            let arr = res.data.reverse()
+            cgList = res.data.reverse()
             let str = ''
             $.each(arr,function (i,n) {
                 str +=`<tr>
@@ -419,7 +391,7 @@
                         ${n.customerName}
                     </td>
                     <td>
-                        
+                        ${n.message}
                     </td>
                     <td>
                        ${n.comeLib == 0  ? '已审批' : '未审批'}

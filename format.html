@@ -94,13 +94,13 @@
         console.log(treeNode)
     }
     function beforeRemove(treeId, treeNode) {
-        console.log(treeId, treeNode)
+        
+        if (confirm("确认删除'" + treeNode.name + "' ?")) {
+		console.log(treeId, treeNode)
         className = (className === "dark" ? "" : "dark");
         showLog("[ " + getTime() + " beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
         var zTree = $.fn.zTree.getZTreeObj("treeDemo");
         zTree.selectNode(treeNode);
-        if (confirm("确认删除'" + treeNode.name + "' ?")) {
-
             $.ajax({
                 url: `${API}/erpSpecifications/removeSpecCustomerById?SpecId=${treeNode.id}`,
                 type: 'get',
@@ -108,9 +108,12 @@
                     
                 }
             })
+        }else{
+        	return false;
         }
     }
     function onRemove(e, treeId, treeNode) {
+    	zTree.removeNode(treeNode,true);
         showLog("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name);
     }
     function beforeRename(treeId, treeNode, newName, isCancel) {

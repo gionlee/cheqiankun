@@ -132,7 +132,7 @@
                     <td style="width:5%;">受理日期</td>
                     <td><input type="text" class="layui-input slrq claimsDt" value=""></td>
                     <td style="width:5%;">理赔单号</td>
-                    <td><input type="text" class="layui-input claimsId" value=""></td>
+                    <td><input type="text" class="layui-input claimsId" readonly value=""></td>
                     <td style="width:5%;">受理单位</td>
                     <td colspan="3"><input type="text" class="layui-input claimsUnit" value=""></td>
                     <td style="width:5%;">填表人</td>
@@ -203,7 +203,7 @@
                 </tr>
                 <tr>
                     <td>理赔状态</td>
-                    <td><select name="" class="claimsStatus " id=""></select></td>
+                    <td><select name="" class="claimsStatus " id="" style="height: 38px;"></select></td>
                     <td>客户确认</td>
                     <td><input type="text" class="layui-input clientsQ"></td>
                     <td>交接日期</td>
@@ -416,22 +416,29 @@
     	let srId = $(this).attr('srId');
     	$.ajax({
     		type: "post",
-    		url: `${API}/erpClaims/selectDateilBySrsId`,
+    		// url: `${API}/erpClaims/selectDateilBySrsId`,
+    		url: 'http://sjy.natapp1.cc/erpClaims/selectDateilBySrsId',
     		async:true,
     		data: {
     			srId: srId
     		},
     		success: function(res){
-    			let json = res.data;
+    			let json = res.data; // 品名   受理单位  使用里程   车辆型号   DOT号  客户名称
                 $('.saleId').val(typeof (json.sale_repair_sheet_id) == 'undefined' ? '' : json.sale_repair_sheet_id);					// 销售单号
+                $('.carSize').val(typeof (json.car_type) == 'undefined' ? '' : json.car_type);											// 车辆型号
+                $('.customerName').val(typeof (json.customer_name) == 'undefined' ? '' : json.customer_name);							// 客户名称
+                // $('.claimsUnit').val(typeof (json.customer_name) == 'undefined' ? '' : json.customer_name);							// 受理单位
                 $('.produceId').val(typeof (json.materiel_production_id) == 'undefined' ? '' : json.materiel_production_id);			// 生产编号
+			    $('.MName').val(typeof (json.materiel_name) == 'undefined' ? '' : json.materiel_name);									// 品名
     			$('.brand').val(typeof (json.materiel_brand) == 'undefined' ? '' : json.materiel_brand);								// 品牌
     			$('.specification').val(typeof (json.materiel_Specifications) == 'undefined' ? '' : json.materiel_Specifications); 		// 规格
     			$('.size').val(typeof (json.materiel_model) == 'undefined' ? '' : json.materiel_model); 								// 型号
+    			$('.dotId').val(typeof (json.materiel_dot) == 'undefined' ? '' : json.materiel_dot); 									// DOT号
     			$('.saleDt').val(typeof (json.sale_repair_date) == 'undefined' ? '' : json.sale_repair_date); 							// 销售日期
     			$('.sellingPrice').val(typeof (json.materiel_price) == 'undefined' ? '' : json.materiel_price);							// 销售价格   			    			
     			$('.tirePlace').val(typeof (json.materiel_out_to) == 'undefined' ? '' : json.materiel_out_to.split('-')[1]); 			// 胎位
     			$('.carPalte').val(typeof (json.materiel_out_to) == 'undefined' ? '' : json.materiel_out_to.split('-')[0]); 			// 车牌号
+    			$('.useMileage').val(typeof (json.sale_repair_mileage) == 'undefined' ? '' : json.sale_repair_mileage); 				// 使用里程
                 
     			layer.close(layer.index);
     		}

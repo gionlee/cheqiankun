@@ -107,84 +107,87 @@
     })
     $.ajax({
     	type:"post",
-    	url:`${API}/erpClaims/selectByClaimsId?claimsId=${getUrlParam("claimsId")}`,
+    	url:`${API}/erpClaims/selectByClaimsId?claimsId=`+sessionStorage.sheelId,
     	async:true,
     	success: function(res) {
+            console.log(res);
     		let data = res.data;
-    		
+    		if(data==null){
+    			alert("该单号已被清除");
+    		}
     		htmlStr = `<tr>
-			        		<td>处理日期</td>
-			        		<td>${typeof (data.claimsDt) == 'undefined' ? '' : msToDate(data.claimsDt,2)}</td>
-			        		<td>索赔单号</td>
-			        		<td>${typeof (data.claimsId) == 'undefined' ? '' : data.claimsId}</td>
-			        		<td>索理单位</td>
-			        		<td>${typeof (data.claimsUnit) == 'undefined' ? '' : data.claimsUnit}</td>
+			        		<td>受理日期</td>
+			        		<td>${typeof (data.claimsDt) == 'undefined' ||data.claimsDt==null ? '' : msToDate(data.claimsDt,2)}</td>
+			        		<td>理赔单号</td>
+			        		<td>${typeof (data.claimsId) == 'undefined' ||data.claimsId==null ? '' : data.claimsId}</td>
+			        		<td>受理单位</td>
+			        		<td>${typeof (data.claimsUnit) == 'undefined' ||data.claimsUnit==null ? '' : data.claimsUnit}</td>
 			        		<td>品牌</td>
-			        		<td>${typeof (data.brand) == 'undefined' ? '' : data.brand}</td>
+			        		<td>${typeof (data.brand) == 'undefined'||data.brand==null ? '' : data.brand}</td>
 			        		<td colspan="2" rowspan="2">
-			        			<img src=${typeof (data.masterId) == 'undefined' ? '' : data.masterId} />
+			        			<img src=${typeof (data.masterId) == 'undefined'||data.masterId==null ? '' : data.masterId} />
 			        		</td>
 			        		<!--<td></td>-->
 			        	</tr>
 			        	<tr>
 			        		<td>生产编号</td>
-			        		<td>${typeof (data.produceId) == 'undefined' ? '' : data.produceId}</td>
+			        		<td>${typeof (data.produceId) == 'undefined'||data.produceId==null ? '' : data.produceId}</td>
 			        		<td>品名</td>
-			        		<td>${typeof (data.mname) == 'undefined' ? '' : data.mname}</td>
+			        		<td>${typeof (data.mname) == 'undefined'||data.mname==null ? '' : data.mname}</td>
 			        		<td>规格</td>
-			        		<td>${typeof (data.specification) == 'undefined' ? '' : data.specification}</td>
+			        		<td>${typeof (data.specification) == 'undefined'||data.specification==null ? '' : data.specification}</td>
 			        		<td>型号</td>
-			        		<td>${typeof (data.size) == 'undefined' ? '' : data.size}</td>
+			        		<td>${typeof (data.size) == 'undefined'||data.size==null ? '' : data.size}</td>
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        	</tr>
 			        	<tr>
 			        		<td>销售单号</td>
-			        		<td>${typeof (data.saleId) == 'undefined' ? '' : data.saleId}</td>
+			        		<td>${typeof (data.saleId) == 'undefined'||data.saleId==null ? '' : data.saleId}</td>
 			        		<td>销售日期</td>
-			        		<td>${typeof (data.saleDt) == 'undefined' ? '' : msToDate(data.saleDt,2)}</td>
+			        		<td>${typeof (data.saleDt) == 'undefined'||data.saleDt==null||data.saleDt=="" ? '' : msToDate(data.saleDt,2)}</td>
 			        		<td>销售价格</td>
-			        		<td>${typeof (data.sellingPrice) == 'undefined' ? '' : data.sellingPrice}</td>
+			        		<td>${typeof (data.sellingPrice) == 'undefined'||data.sellingPrice==null ? '' : data.sellingPrice}</td>
 			        		<td>使用里程</td>
-			        		<td>${typeof (data.useMileage) == 'undefined' ? '' : data.useMileage}</td>
+			        		<td>${typeof (data.useMileage) == 'undefined'||data.useMileage==null ? '' : data.useMileage}</td>
 			        		<td>DOT号</td>
-			        		<td>${typeof (data.dotId) == 'undefined' ? '' : data.dotId}</td>
+			        		<td>${typeof (data.dotId) == 'undefined'||data.dotId==null ? '' : data.dotId}</td>
 			        	</tr>
 			        	<tr>
 			        		<td>客户名称</td>
-			        		<td colspan="3">${typeof (data.customerName) == 'undefined' ? '' : data.customerName}</td>
+			        		<td colspan="3">${typeof (data.customerName) == 'undefined'||data.customerName==null ? '' : data.customerName}</td>
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<td>车辆牌号</td>
-			        		<td>${typeof (data.carPalte) == 'undefined' ? '' : data.carPalte}</td>
+			        		<td>${typeof (data.carPalte) == 'undefined'||data.carPalte==null ? '' : data.carPalte}</td>
 			        		<td>车辆型号</td>
-			        		<td>${typeof (data.carSize) == 'undefined' ? '' : data.carSize}</td>
+			        		<td>${typeof (data.carSize) == 'undefined'||data.carSize==null ? '' : data.carSize}</td>
 			        		<td>胎位</td>
-			        		<td>${typeof (data.tirePlace) == 'undefined' ? '' : data.tirePlace}</td>
+			        		<td>${typeof (data.tirePlace) == 'undefined'||data.tirePlace==null ? '' : data.tirePlace}</td>
 			        	</tr>
 			        	<tr>
 			        		<td>物料初检</td>
-			        		<td colspan="5">${typeof (data.oneContent) == 'undefined' ? '' : data.oneContent}</td>
+			        		<td colspan="5">${typeof (data.oneContent) == 'undefined'||data.oneContent==null ? '' : data.oneContent}</td>
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<td>初检日期</td>
-			        		<td>${typeof (data.oneDt) == 'undefined' ? '' : msToDate(data.oneDt,2)}</td>
+			        		<td>${typeof (data.oneDt) == 'undefined'||data.claimsUnit==null||data.claimsUnit=="" ? '' : msToDate(data.oneDt,2)}</td>
 			        		<td>初检经办</td>
-			        		<td>${typeof (data.oneAttn) == 'undefined' ? '' : data.oneAttn}</td>
+			        		<td>${typeof (data.oneAttn) == 'undefined'||data.oneAttn==null ? '' : data.oneAttn}</td>
 			        	</tr>
 			        	<tr>
 			        		<td rowspan="2">厂家鉴定</td>
-			        		<td rowspan="2" colspan="5">${typeof (data.appraisalContent) == 'undefined' ? '' : data.appraisalContent}</td>
+			        		<td rowspan="2" colspan="5">${typeof (data.appraisalContent) == 'undefined'||data.appraisalContent==null ? '' : data.appraisalContent}</td>
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<td>鉴定日期</td>
-			        		<td>${typeof (data.appraisalDt) == 'undefined' ? '' : data.appraisalDt}</td>
+			        		<td>${typeof (data.appraisalDt) == 'undefined'||data.appraisalDt==null||data.appraisalDt=="" ? '' : data.appraisalDt}</td>
 			        		<td>鉴定结论</td>
-			        		<td>${typeof (data.appraisalResult) == 'undefined' ? '' : data.appraisalResult}</td>
+			        		<td>${typeof (data.appraisalResult) == 'undefined'||data.appraisalResult==null ? '' : data.appraisalResult}</td>
 			        	</tr>
 			        	<tr>
 			        		<!--<td></td>-->
@@ -194,21 +197,21 @@
 			        		<!--<td></td>-->
 			        		<!--<td></td>-->
 			        		<td>理赔金额</td>
-			        		<td>${typeof (data.claimsPrice) == 'undefined' ? '' : data.claimsPrice}</td>
+			        		<td>${typeof (data.claimsPrice) == 'undefined'||data.claimsPrice==null ? '' : data.claimsPrice}</td>
 			        		<td>业务经理</td>
-			        		<td>${typeof (data.businessManagger) == 'undefined' ? '' : data.businessManagger}</td>
+			        		<td>${typeof (data.businessManagger) == 'undefined'||data.businessManagger==null ? '' : data.businessManagger}</td>
 			        	</tr>
 			        	<tr>
 			        		<td>理赔状态</td>
-			        		<td>${typeof (data.claimsStatus) == 'undefined' ? '' : data.claimsStatus}</td>
+			        		<td>${typeof (data.claimsStatus) == 'undefined'||data.claimsStatus==null ? '' : data.claimsStatus}</td>
 			        		<td>客户确认</td>
-			        		<td>${typeof (data.clientsQ) == 'undefined' ? '' : data.clientsQ}</td>
+			        		<td>${typeof (data.clientsQ) == 'undefined'||data.clientsQ==null ? '' : data.clientsQ}</td>
 			        		<td>交接日期</td>
-			        		<td>${typeof (data.handoverDt) == 'undefined' ? '' : msToDate(data.handoverDt,2)}</td>
+			        		<td>${typeof (data.handoverDt) == 'undefined'||data.handoverDt==null ||data.handoverDt=="" ? '' : msToDate(data.handoverDt,2)}</td>
 			        		<td>财务经办</td>
-			        		<td>${typeof (data.financialAttn) == 'undefined' ? '' : data.financialAttn}</td>
+			        		<td>${typeof (data.financialAttn) == 'undefined'||data.financialAttn==null ? '' : data.financialAttn}</td>
 			        		<td>物料去向</td>
-			        		<td>${typeof (data.matarialsTo) == 'undefined' ? '' : data.matarialsTo}</td>
+			        		<td>${typeof (data.matarialsTo) == 'undefined'||data.matarialsTo==null ? '' : data.matarialsTo}</td>
 			        	</tr>`;
 			 $('.lp-detail').html(htmlStr);
     	}

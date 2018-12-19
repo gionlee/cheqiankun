@@ -113,7 +113,8 @@
 <script>
     let arr = []
     $.ajax({
-        url: `${API}/erpUser/getcustUserByCustId?custId=1`,
+        url: `${API}/erpUser/getcustUserByCustId?custId=${loadUserInfo.customer.id}`,
+        // url:'http://6njkfk.natappfree.cc//erpUser/getcustUserByCustId?custId=' + loadUserInfo.customer.id,
         type: 'get',
         success: function (res) {
             let str = ''
@@ -261,6 +262,7 @@
                     json.realName =$('.username').val()
                     $.ajax({
                         url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+        				// url:'http://6njkfk.natappfree.cc/erpCustomer/updateCustomer',
                         type:'post',
                         data:json,
                         success:function (res) {
@@ -330,7 +332,7 @@
                     json.realName =$('.username').val()
                     $.ajax({
                         url:`${API}/erpCustomer/inertOrUpdateCustomer`,
-                        // url: 'http://8h7dgu.natappfree.cc/erpCustomer/inertOrUpdateCustomer',
+                        // url: 'http://6njkfk.natappfree.cc/erpCustomer/inertOrUpdateCustomer',
                         type:'post',
                         data:json,
                         success:function (res) {

@@ -68,6 +68,10 @@
             height: 100%;
         }
 
+        .layui-unselect {
+            height: 100%;
+        }
+
         .layui-select-title {
             height: 100%;
         }
@@ -101,28 +105,11 @@
             padding: 0px;
         }
 
+        .layui-form-checkbox {
+            margin: 0 !important;
+        }
         .gc,#gclist {
             display: none;
-        }
-        .winbody {
-            width: 1200px;
-            padding: 10px;
-        }
-        .winbody > div {
-            width: 200px;
-            height: 40px;
-            float:left;
-            width: 150px;
-            text-align: center;
-            line-height: 40px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-        .winbody .active {
-            color: #fff;
-            background: #01AAED;
-            
         }
     </style>
 </head>
@@ -143,61 +130,45 @@
         </thead>
         <tbody class="jcinfo">
             <tr>
-                <td><input type="text" data-name="inspectionDt" class="layui-input dates"></td>
-                <td><input type="text" data-name="formId" class="layui-input" readonly></td>
-                <td><input type="text" data-name="place" class="layui-input" value=""></td>
+                <td><input type="text" data-name="inspectionDt" id="inspectionDt" class="layui-input dates" readonly></td>
+                <td><input type="text" data-name="formId" id="formId" class="layui-input" readonly></td>
+                <td><input type="text" data-name="place" id="place" class="layui-input" readonly></td>
                 <td class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange1" name="interest" lay-filter="drivingRange1">
-                                <option value=""></option>
-                            </select>
+                            <input type="text" id="drivingRange1" class="layui-input" readonly/>
                             <!-- <input class="layui-input" data-name="drivingRange1" type="text"> -->
                         </div>
-                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+                        <div class="layui-input-inline" style="width:10%;line-height: 30px; background-color: #EEEEEE;">--</div>
                         <div class="layui-input-inline" style="width:45%;">
-                            <select class="qshi drivingRange2" name="interest" lay-filter="drivingRange2">
-                                <option value=""></option>
-                            </select>
+
+                            <input type="text" id="drivingRange2" class="layui-input" readonly/>
                         </div>
                     </div>
                 </td>
                 <td class="layui-form">
                     <div class="layui-form-item">
                         <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange3" name="interest" lay-filter="drivingRange3">
-                                <option value=""></option>
-                            </select>
+                             <input type="text" id="drivingRange3" class="layui-input" readonly/>
                         </div>
-                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+                        <div class="layui-input-inline" style="width:10%;line-height: 30px; background-color: #EEEEEE;">--</div>
                         <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange4" name="interest" lay-filter="drivingRange4">
-                                <option value=""></option>
-                            </select>
+                             <input type="text" id="drivingRange4" class="layui-input" readonly/>       
                         </div>
                     </div>
                 </td>
-                <td><input type="text" data-name="mileage" class="layui-input" value=""></td>
+                <td><input type="text" data-name="mileage" id="mileage" class="layui-input" readonly></td>
 
                 <td class="layui-form yylk">
                     <div class="layui-form-item">
                         <div class="layui-input-inline">
-                            <select name="interest" class="jcwhlist" data-name="roadStatus" lay-filter="aihao">
-                                <option value=""></option>
-                                <option value="0">国道省道</option>
-                                <option value="1" selected="">高速/国道</option>
-                                <option value="2" selected="">丘陵/盘山</option>
-                                <option value="3" selected="">水泥路面</option>
-                                <option value="4" selected="">泥土道路</option>
-                                <option value="5" selected="">混合道路</option>
-                                <option value="6" selected="">非道路</option>
-                                <option value="7" selected="">城镇道路</option>
-                            </select>
+              
+                            <input type="text" id="roadStatus" class="layui-input" readonly>
                         </div>
                     </div>
                 </td>
-                <td><input type="text" data-name="customerName" class="layui-input" value=""></td>
-                <td><input type="text" data-name="attn" class="layui-input" value=""></td>
+                <td><input type="text" data-name="customerName" id="customerName" class="layui-input" readonly></td>
+                <td><input type="text" data-name="attn" id="attn" class="layui-input" readonly></td>
             </tr>
         </tbody>
 
@@ -241,7 +212,7 @@
                 <th>小修</th>
                 <th colspan="4">内外平均纹深度</th>
                 <th>轮胎状态</th>
-                <th width="120px">使用建议</th>
+                <th>使用建议</th>
                 <th>胎压</th>
                 <th colspan="4">内外评论纹深度</th>
                 <th>轮胎状态</th>
@@ -300,34 +271,27 @@
         <tbody>
             <tr>
                 <td style="width:10%;">费用合计</td>
-                <td style="width:10%;"><input type="text" data-name="allFee" class="layui-input" value=""></td>
+                <td style="width:10%;"><input type="text" data-name="allFee" id="allFee" class="layui-input" value="" readonly></td>
                 <td style="width:10%;">消费积分</td>
-                <td style="width:10%;"><input type="text" data-name="integralFee" class="layui-input" value=""></td>
+                <td style="width:10%;"><input type="text" data-name="integralFee" id="integralFee" class="layui-input" value="" readonly></td>
                 <td style="width:10%;">实收金额</td>
-                <td style="width:10%;"><input type="text" data-name="actualFee" class="layui-input" value=""></td>
+                <td style="width:10%;"><input type="text" data-name="actualFee" id="actualFee" class="layui-input" value="" readonly></td>
                 <td style="width:10%;">付款方式</td>
-                <td style="width:10%;" class="layui-form fkfs">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select name="interest" class="fkfslist" lay-filter="aihao">
-                            </select>
-                        </div>
-                    </div>
+                <td style="width:10%;">
+                	<input type="text" data-name="integral" class="layui-input" id="paidMethod" value="" readonly>
                 </td>
                 <td style="width:10%;">本次积分</td>
-                <td style="width:10%;"><input type="text" data-name="integral" class="layui-input" value=""></td>
+                <td style="width:10%;"><input type="text" data-name="integral" id="integral" class="layui-input" value="" readonly></td>
             </tr>
         </tbody>
     </table>
     <div class="title">
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveAll()">保存</button>
-    </div>
-    <div class="layui-form winbody" style="display: none;">
-
+        <!--<button class="layui-btn  layui-btn-sm layui-btn-normal" >确认</button>-->
     </div>
 </body>
 <script src="./js/Global.js"></script>
 <script>
+
     function GetRequest() {
         var url = location.search; //获取url中"?"符后的字串  
         var theRequest = new Object();
@@ -352,59 +316,6 @@
     let jcwhlist = []
     let fkfs = []
     let syjy = []
-    let ltztList = []
-    // 轮胎状态
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=轮胎状态`,
-        type: 'get',
-        success: function (res) {
-            ltztList = res.data.parametersChildList
-            let str = ''
-            $.each(ltztList, function (i, k) {
-                str += `<div>${k.name}</div>`
-            })
-            $('.winbody').html(str)
-            layform.render()
-        }
-    })
-
-    function setLt(_this) {
-        let val = $(_this).val()
-        $(val.split(','), function (i, k) {
-            $('.winbody div').each(function () {
-                if ($(this).text() == k) {
-                    $(this).addClass('active')
-                }
-            })
-        })
-        $('.winbody div').on('click', function () {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active')
-            } else {
-                $(this).addClass('active')
-            }
-        })
-        layui.use(['layer', 'form'], function () {
-            layui.layer.open({
-                type: 1,
-                title: '轮胎状态',
-                area: ['1240px'],
-                content: $('.winbody'),
-                btn: ['保存', '取消'],
-                yes: function (index) {
-                    layui.layer.close(index)
-                    let str = []
-                    $('.winbody div').each(function (i, k) {
-                        if ($(this).hasClass('active')) {
-                            str.push($(this).text())
-                        }
-                    })
-                    $(_this).val(str.toString())
-                }
-            })
-        })
-    }
-
     $.ajax({
         url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
         type: 'get',
@@ -421,29 +332,19 @@
             layform.render()
         }
     })
-    let syjyList = []
     $.ajax({
         url: `${API}/erpSystemParameters/getparametersByName?name=使用建议`,
         type: 'get',
         success: function (res) {
             let arr = res.data.parametersChildList
-            syjyList = res.data.parametersChildList
-
-        }
-    })
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
             let str = '<option></option>'
             $.each(arr, function (i, k) {
                 str += `<option value="${k.name}" >${k.name}</option>`
-                fkfs.push({
+                syjy.push({
                     name: k.name
                 })
             })
-            $('.fkfslist').html(str)
+            $('.syjy').html(str)
             layform.render()
         }
     })
@@ -475,6 +376,7 @@
             $('.drivingRange1').append(str)
             $('.drivingRange3').append(str)
             layform.on('select(drivingRange1)', function (data) {
+                console.log(data)
                 $.ajax({
                     url: `${API}/cities/selectByProId?proId=${data.value}`,
                     type: 'get',
@@ -482,8 +384,7 @@
                         let shi = ''
                         $.each(res.data, function (i, n) {
 
-                            shi +=
-                                `<option value="${n.city}">${n.city}</option>`
+                            shi += `<option value="${n.city}">${n.city}</option>`
                         })
                         $('.drivingRange2').append(shi)
                         layform.render()
@@ -491,6 +392,7 @@
                 })
             })
             layform.on('select(drivingRange3)', function (data) {
+                console.log(data)
                 $.ajax({
                     url: `${API}/cities/selectByProId?proId=${data.value}`,
                     type: 'get',
@@ -498,8 +400,7 @@
                         let shi = ''
                         $.each(res.data, function (i, n) {
 
-                            shi +=
-                                `<option value="${n.city}">${n.city}</option>`
+                            shi += `<option value="${n.city}">${n.city}</option>`
                         })
                         $('.drivingRange4').append(shi)
                         layform.render()
@@ -509,36 +410,67 @@
         }
     })
     $(function () {
-        $('.carnum').html(sessionStorage.jcpcar)
+    	
         $.ajax({
-            url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcpcar,
+            url: API + '/erpManagement/gojianceweihuByOrder?order=' + sessionStorage.sheelId,
             type: 'get',
             dataType: 'json',
             success: function (res) {
+                console.log(res)
                 var arr = res.data.contents;
                 var str = '';
+                var shang=res.data.inspectionOrder[0];
+                $("#inspectionDt").val(shang.inspectionDt);
+				$("#formId").val(shang.formId);
+				$("#place").val(shang.place);
+				$("#drivingRange1").val(shang.drivingRange1);
+				$("#drivingRange2").val(shang.drivingRange2);
+				$("#drivingRange3").val(shang.drivingRange3);
+				$("#drivingRange4").val(shang.drivingRange4);
+				$("#mileage").val(shang.mileage);
+				if(shang.roadStatus==0){
+					$("#roadStatus").val("国道省道");
+				}else if(shang.roadStatus==1){
+					$("#roadStatus").val("高速/国道");
+				}else if(shang.roadStatus==2){
+					$("#roadStatus").val("丘陵/盘山");
+				}else if(shang.roadStatus==3){
+					$("#roadStatus").val("水泥路面");
+				}else if(shang.roadStatus==4){
+					$("#roadStatus").val("泥土道路");
+				}else if(shang.roadStatus==5){
+					$("#roadStatus").val("混合道路");
+				}else if(shang.roadStatus==6){
+					$("#roadStatus").val("非道路");
+				}else if(shang.roadStatus==7){
+					$("#roadStatus").val("城镇道路");
+				}
+				 $("#actualFee").val(shang.actualFee);
+				$("#allFee").val(shang.allFee);
+				$("#integral").val(shang.integral);
+				$("#integralFee").val(shang.integralFee);
+				$("#paidMethod").val(shang.paidMethod);
+				$("#customerName").val(shang.customerName);
+				$("#attn").val(shang.attn);
                 $.each(arr, function (i, n) {
-                    str +=
-                        `<tr  class="carList">
+                    str += `<tr  class="carList">
                 <td>${i + 1}</td>
-                <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}"></td>
-                <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}"></td>
-                <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}"></td>
+                <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}" readonly></td>
+                <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}" readonly></td>
+                <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}" readonly></td>
                 
-                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-                <td><input type="text" data-name='tirePlace' class="layui-input" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>
-                <td><input type="text" data-name='errorOrTure' class="layui-input" value=""></td>
-                <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td ><input type="text" data-name='tireStatus' class="layui-input" value="" onclick="setLt(this)"></td>
-                <td>
-                <select class="userAd syjy_${i}"></select>
-                </td>
+                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}" readonly></td>
+                <td><input type="text" data-name='tirePlace' class="layui-input" value="${n.tirePlace == null ? '' : n.tirePlace}" readonly></td>
+                <td><input type="text" data-name='errorOrTure' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='pressureModi' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='coreCap' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='minorRepairs' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='deepLines1' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='deepLines2' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='deepLines3' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='deepLines4' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='tireStatus' class="layui-input" value="" readonly></td>
+                <td><input type="text" data-name='useDevice' class="layui-input" value="" readonly></td>
                 <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
                 <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
                 <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
@@ -550,16 +482,6 @@
                 })
 
                 $("#list").html(str);
-                $.each(arr, function (i, n) {
-                    let str = '<option></option>'
-                    $.each(syjyList, function (i, k) {
-                        str += `<option value="${k.name}" >${k.name}</option>`
-                        syjy.push({
-                            name: k.name
-                        })
-                    })
-                    $('[class *= syjy_]').html(str)
-                })
 
             },
             error: function (err) {
@@ -567,57 +489,6 @@
 
             }
         });
-        if (sessionStorage.jcgcar) {
-            $('.gcarnum').html(sessionStorage.jcgcar)
-            $('.gc').show()
-            $('#gclist').show()
-
-            $.ajax({
-                url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcgcar,
-                type: 'get',
-                dataType: 'json',
-                success: function (res) {
-                    var arr = res.data.contents;
-                    var str = '';
-                    $.each(arr, function (i, n) {
-                        str +=
-                            `<tr  class="carList">
-                <td>${i + 1}</td>
-                <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}"></td>
-                <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}"></td>
-                <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}"></td>
-                
-                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-                <td><input type="text" data-name='tirePlace' class="layui-input" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>
-                <td><input type="text" data-name='errorOrTure' class="layui-input" value=""></td>
-                <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td><input type="text" data-name='tireStatus' class="layui-input" value=""></td>
-                <td><input type="text" data-name='useDevice' class="layui-input" value="">
-                    <select class="userAd syjy_${i}"></select>
-                </td>
-                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
-                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
-                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
-                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
-                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
-                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-            </tr>`
-                    })
-
-                    $("#gclist").html(str);
-                },
-                error: function (err) {
-                    alert("系统错误");
-
-                }
-            });
-        }
 
     })
     // 保存
@@ -632,6 +503,7 @@
         $('.jcinfo input').each(function (i, n) {
             data[$(this).data('name')] = $(this).val()
         })
+        console.log($('.yylk').val(), '22')
         data.roadStatus = $('.layui-unselect').eq(0).val()
         data.paidMethod = $('.layui-unselect').eq(1).val()
         data.carPlate = decodeURI(decodeURI(GetRequest().id))
@@ -659,6 +531,7 @@
                         type: 'post',
                         data: datas,
                         success: function (res) {
+                            console.log(res)
                         }
                     })
                 })
@@ -667,6 +540,7 @@
         })
 
     }
+
 </script>
 
 </html>

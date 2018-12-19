@@ -19,87 +19,64 @@
             overflow: auto;
             box-sizing: border-box;
         }
-
-        ul {
-            width: 100%;
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
         }
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
-
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
-
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
 
         }
 
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
+        .search .layui-input {
+            width: 200px;
         }
-
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            width: 720px;
-            padding: 10px;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
+        .btn {
             display: inline-block;
         }
 
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .select {
-            text-align: center;
-            margin: 10px;
-        }
-
-        .layui-input {
-            width: 140px;
-            display: inline-block;
-        }
     </style>
 </head>
 
 <body>
     <div class="wrap">
+            <div class="search">
+                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select lay-filter="datesel" name="quiz2">
+                                <option value="">请选时段</option>
+                                <option value="0">一季度</option>
+                                <option value="1">二季度</option>
+                                <option value="2">三季度</option>
+                                <option value="3">四季度</option>
+                                <option value="4">上半年</option>
+                                <option value="5">下半年</option>
+                                <option value="6">本年度</option>
+                                <option value="7">上年度</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal" onclick="getOut()">导出excel</button>
+                </div>
+        
         <table class="layui-table">
             <thead>
                 <tr>
@@ -155,9 +132,12 @@
     </div>
 </body>
 <script src="./js/Global.js"></script>
+<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script>
-    $.ajax({
-        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=${loadUserInfo.customer.id}&startDate=1&endDate=1`,
+    sel ()
+    function sel () {
+        $.ajax({
+        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=${loadUserInfo.customer.id}&startDate=${$('.ksdate').val()}&endDate=${$('.jsdate').val()}`,
         type: 'post',
         success: function (res) {
             let str = ''
@@ -170,23 +150,19 @@
                 //              <td>${json.car_model == null ? '' : json.car_model}</td>
                 //              <td>${json.car_type == null ? '' : json.car_type}</td>
                 // </tr>`
-                $.each(n.flowSummaryList, function (i, m) {
+                $.each(n.flowSummaryList, function (j, m) {
                     let json1 = m;
                     // console.log(res.data[0].flowSummaryList[1].id,'222');
                     //          alert(res.data[0].flowSummaryList[1].id);
                     str += `
-            <tr><td>${i + 1}</td>
+            <tr><td>${ j + 1 }</td>
                 <td>${m.materielFlowDate == null ? '' : m.materielFlowDate}</td>
                 <td>${n.customerName == null ? '' : n.customerName}</td>
                 <td>${m.workSheetId == null ? '' : m.workSheetId}</td>
                 <td>${json1.carServiceCentre == null ? '' : json1.carServiceCentre}</td>
                 <td>${json1.materielSource == null ? '' : json1.materielSource}</td>
-
-
-
-        //缺少四个字段
              <td>${m.flowMateriel.materielName == null ? '' : m.flowMateriel.materielName}</td>
-                    <td>${m.flowMateriel.materielBrand == null ? '' : m.flowMateriel.materielBrand}</td>   //未找到字段
+                    <td>${m.flowMateriel.materielBrand == null ? '' : m.flowMateriel.materielBrand}</td> 
        <td>${m.flowMateriel.materielSpecifications == null ? '' : m.flowMateriel.materielSpecifications}</td>
               <td>${m.flowMateriel.materielModel == null ? '' : m.flowMateriel.materielModel}</td>
 
@@ -202,9 +178,68 @@
             $('.gengxin').append(str)
         }
     })
+    }
 
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
 
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
     function goInfo() {
         window.location.href = './wuliaogengxinxiangqing.html'
+    }
+    
+    function getOut(){
+    	$('.layui-table').tableExport({
+			filename: '物料更新',
+			format: 'xls'
+		});
     }
 </script>

@@ -99,7 +99,7 @@
 
 <body>
     <div class="wrap">
-        <div>显示时长： <input type="number" style="width:60px;display: inline-block;" id="showMin" class="layui-input" value="1" /> <a
+        <div>显示时长： <input type="number" style="width:60px;display: inline-block;" id="showMin" class="layui-input" value="1" />分钟 <a
                 class="layui-btn layui-btn-sm" onclick="bao()">保存</a></div>
         <table class="layui-table">
             <thead>
@@ -316,12 +316,11 @@ let json = {}
     
     }
     function update(id) {
-
         $.ajax({
-            url: `${API}/erpAdvertisementCheck/getcheckById?webId=${id}`,
+            url: `${API}/controller/erpAdvertisement/getcheckById?webId=${id}`,
             type: 'get',
             success: function (res) {
-                	$("#id").val(res.data.id);
+                	$("#id").val(id);
 		        	$("#company").val(res.data.company);
 		        	$("#content").val(res.data.content);
 		        	$("#contentFamily").val(res.data.contentFamily);

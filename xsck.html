@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div style="text-align:center;"></div>
+        
+        <table class="layui-table">
+            <caption>调拨出库</caption>
+            <thead>
+                <tr>
+                    <th>
+                        日期
+                    </th>
+                    <th>
+                        出库单号
+                    </th>
+                    <th colspan="2">
+                        来源
+                    </th> 
+                    <th colspan="2">
+                        去向
+                    </th>
+                    <th>
+                        收款方式
+                    </th>
+                    <th colspan="2">
+                        承运企业
+                    </th>
+                    <th>
+                        车辆牌号
+                    </th>
+                    <th>
+                        运杂费
+                    </th>
+                    <th>
+                        发票类型
+                    </th>
+                    <th>
+                        经办人
+                    </th>
+            </thead>
+            <tbody class="jiayou">
+                <tr>
+                    <td>2018-09-27</td>
+                    <td>XSCK180927001</td>
+                    <td colspan="2">天津港保税区金方舟国际贸易有限公司</td>
+                    <td colspan="2"></td>
+                    <td>现金收款</td>
+                    <td colspan="2">天津港保税区金方舟国际贸易有限公司</td>
+                    <td>789</td>
+                    <td>0.00</td>
+                    <td>运输发票</td>
+                    <td>65564</td>
+                </tr>
+                <thead>
+                <tr>
+                    <th>
+                        序号
+                    </th>
+                    <th>
+                        品名
+                    </th>
+                    <th>
+                        品牌
+                    </th>
+                    <th>
+                        规格
+                    </th>
+                    <th>
+                        型号
+                    </th>
+                    <th>
+                        产地
+                    </th>
+                    <th>
+                        物料新旧
+                    </th>
+                    <th>
+                        单位
+                    </th>
+                    <th>
+                        数量
+                    </th>
+                    <th>
+                        生产编号
+                    </th>
+                    <th>
+                        单价
+                    </th>
+                    <th>
+                        总金额
+                    </th>
+                    <th>
+                        发票类型
+                    </th>
+                    
+                    </thead>
+                <tr>
+                    <td>1</td>
+                    <td>电器-定位器</td>
+                    <td>胎客</td>
+                    <td>CAN GPRS 蓝牙</td>
+                    <td>TM-CZD-A</td>
+                    <td>国产</td>
+                    <td>新物品</td>
+                    <td>只</td>
+                    <td>1</td>
+                    <td>1000150</td>
+                    <td>100.00</td>
+                    <td>100.00</td>
+                    <td>服务普票</td>
+                </tr>
+            </tbody>
+        </table>
+       
+        <div class="btn" style="text-align:center;">
+            <button class="layui-btn layui-btn-normal" id="qr">确认</button>
+        </div>
+    </div>
+    <div class="winbody">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>
+                        时间
+                    </th>
+                    <th>车辆牌号</th>
+                    <th>司机</th>
+                    <th>汽油(元)</th>
+                    <th>柴油(元)</th>
+                    <th>单价</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="add">
+                    <td><input type="text" data-name="refDt" class="layui-input sj" value=""></td>
+                    <td><input type="text" data-name="refCarNumber" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refDriver" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refGasoline" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refDiesel" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="refPrice" class="layui-input" value=""></td>
+                </tr>
+            </tbody>
+        </table>
+        
+    </div>
+</body>
+<script>
+layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '.ksdate' //指定元素
+        });
+        laydate.render({
+            elem: '.jsdate' //指定元素
+        });
+    });
+    layui.use('form', function () {
+        var form = layui.form
+        form.on('select(datesel)', function (data) {
+            let val = data.value
+            let years = new Date().getFullYear()
+            switch (val) {
+                case '0':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-03-31`)
+                    break;
+                case '1':
+                    $('.ksdate').val(`${years}-04-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '2':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-09-30`)
+                    break;
+                case '3':
+                    $('.ksdate').val(`${years}-10-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '4':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-06-30`)
+                    break;
+                case '5':
+                    $('.ksdate').val(`${years}-07-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                case '6':
+                    $('.ksdate').val(`${years}-01-01`)
+                    $('.jsdate').val(`${years}-12-31`)
+                    break;
+                    case '7':
+                    $('.ksdate').val(`${years-1}-01-01`)
+                    $('.jsdate').val(`${years-1}-12-31`)
+                    break;
+            }
+        });
+    })
+</script>
+<script>
+
+   
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '.sj'
+        });
+    })
+  
+
+</script>
+</html>

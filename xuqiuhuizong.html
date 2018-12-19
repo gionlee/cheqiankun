@@ -192,10 +192,7 @@
                             <th>订购数量</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr class="pzhzlist">
-                           
-                        </tr>
+                    <tbody class="pzhzlist">
                     </tbody>
         </table>
     </div>
@@ -225,13 +222,13 @@
             $('.pzhz').hide()
     }
     $.ajax({
-        url:`${API}/erpOrderd/getOrderdMaterielPage?custId=${loadUserInfo.customer.id}`,
+        // url:`${API}/erpOrderd/getOrderdMaterielPage?custId=${loadUserInfo.customer.id}`,
+        url:`${API}/erpOrderd/getListOrderds?custId=${loadUserInfo.customer.id}`,
         type:'get',
         success: function (res) {
             let str = ''
             console.log(res.data)
-            let arr = res.data.records.reverse()
-            // let arr = res.data.reverse()
+            /*let arr = res.data.records.reverse()
             $.each(arr,function (i,json) {
                 if(json) {
                     str += `<tr>
@@ -247,6 +244,25 @@
                             <td>${json.orderdMateriels.workState == null ? '' : json.orderdMateriels.workState}</td>
                             <td>${json.wordState == null ? '' : json.wordState}</td>
                             <td>${json.wordState == null ? '' : json.wordState}</td>
+                        </tr>`
+                }
+            })*/
+           	let arr = res.data.reverse()
+            $.each(arr,function (i,json) {
+                if(json) {
+                    str += `<tr>
+                        	<td>${arr.length - i}</td>
+                            <td>${json.materielName == null ? '' : json.materielName}</td>
+                            <td>${json.materielBrand == null ? '' : json.materielBrand}</td>
+                            <td>${json.materielSpecifications == null ? '' : json.materielSpecifications}</td>
+                            <td>${json.materielModel == null ? '' : json.materielModel}</td>
+                            <td>${json.materielPlace == null ? '' : json.materielPlace}</td>
+                            <td>${json.materielState == null ? '' : json.materielState}</td>
+                            <td>${json.materielUnit == null ? '' : json.materielUnit}</td>
+                            <td>${json.xuNum == null ? '' : json.xuNum}</td>
+                            <td>${json.outAmount == null ? '' : json.outAmount}</td>
+                            <td>${json.jingNum == null ? '' : json.jingNum}</td>
+                            <td>${json.materielAmount == null ? '' : json.materielAmount}</td>
                         </tr>`
                 }
             })

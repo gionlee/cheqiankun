@@ -131,6 +131,7 @@
         </table>
     </div>
     <div class="winbody">
+    	<div style="text-align: center; color: red;">提示:20号字体,字数限制每行44字,共2行; 30号字体,字数限制每行29字,共1行</div>
         <table class="layui-table">
 
             <tbody class="xg">
@@ -193,7 +194,7 @@
                 </tr>
                 <tr>
                         <td>编号</td>
-                        <td><input type="text" class="layui-input" readonly="readonly" id="checkNumber"><input type="hidden" id="id" value="0"></td>
+                        <td><input type="text" class="layui-input" readonly="readonly" id="checkNumber"><input type="hidden" id="id" value="0"><input type="hidden" id="upTimeId"></td>
                     <td>申请项目</td>
                     <td class="layui-form "><select  lay-verify="" id="programs">
                             <option value="播放">播放</option>
@@ -253,7 +254,7 @@
 		        	$("#telphone").val('')
 		        	$("#submitTime").val('')
 		        	$("#endTime").val('')
-		        	
+		        	$("#upTimeId").val('')
                     $("#programs").val('')
                     layer.open({
                         type:1,
@@ -282,8 +283,8 @@ $.ajax({
         	   str+=`<tr><td>
                         ${arr.length - i}
                     </td>
-                    <td>
-                        ${n.content}
+                    <td title="${n.content}">
+                        ${n.content.length > 30 ? n.content.substring(0,25) + '...' : n.content}
                     </td>
                     <td>
                         ${n.contentFamily}
@@ -333,10 +334,13 @@ $.ajax({
                     </td>
                     <td>
                         ${n.checkPeople}
-                    </td>
+                    </td>`
+                        str += `
                     <td>
-                        <button  class="layui-btn layui-btn-sm" type="button" onclick="update(${n.id})">修改</button>
-                    </td></tr>`
+                        <button  class="layui-btn layui-btn-xs" type="button" onclick="update(${n.id})">修改</button>
+                    </td></tr>
+                    `
+                    
                     $('.fybj').append(str);
                     })
                 
@@ -363,7 +367,8 @@ $.ajax({
 		        	endTime:$("#endTime").val(),
 		        	checkNumber:$("#checkNumber").val(),
 		        	programs:$("#programs").val(),
-		        	checkPeople:loadUserInfo.customer.cusLegalPerson
+		        	checkPeople:loadUserInfo.customer.cusLegalPerson,
+		        	upTimeId:$("#upTimeId").val()
 		        },
 		        success: function (res) {
                     layer.msg('保存成功！')
@@ -393,7 +398,8 @@ $.ajax({
 		        	endTime:$("#endTime").val(),
 		        	checkNumber:$("#checkNumber").val(),
 		        	programs:$("#programs").val(),
-		        	checkPeople:loadUserInfo.customer.cusLegalPerson
+		        	checkPeople:loadUserInfo.customer.cusLegalPerson,
+		        	upTimeId:$("#upTimeId").val()
 		        },
 		        success: function (res) {
                     
@@ -426,10 +432,11 @@ $.ajax({
 		        	$("#endTime").val(res.data.endTime);
 		        	$("#checkNumber").val(res.data.checkNumber);
                     $("#programs").val(res.data.programs);
+                    $("#upTimeId").val(res.data.upTimeId)
                     layer.open({
                         type:1,
                         content: $('.winbody'),
-                        btn:['确认'],
+                        btn:['提交'],
                         area:['740px'],
                         yes: function (index) {
                             ti(index)

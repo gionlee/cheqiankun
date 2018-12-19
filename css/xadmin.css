@@ -492,7 +492,7 @@ table th, table td {
 }
 
 @media screen and (max-width: 768px){
-    #main-html {
+    html {
         overflow: scroll;
     }
     .fast-add{
@@ -520,9 +520,6 @@ table th, table td {
     .x-so input.layui-input{
         width: 100%;
         margin: 10px;
-    }
-    .x-body {
-        display:inline-block;
     }
 }
 

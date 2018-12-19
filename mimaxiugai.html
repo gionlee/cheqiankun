@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td>新密码</td>
-                <td><input type="text" class="layui-input nicheng"></td>
+                <td><input type="text" style="text-align: center;" class="layui-input nicheng"></td>
             </tr>
         </table>
         <div>
@@ -47,12 +47,14 @@
 	layui.use('layer', function() {
 		layer = layui.layer;
 	})
+    let userId = 1
+    let custId = 1
     $.ajax({
-        url: `${API}/erpUser/getcustUserById?custId=${loadUserInfo.customer.id}`,
+        url: `${API}/erpUser/getcustUserById?custId=1`,
         type: 'get',
         success: function (res) {
             $('.user').text(res.data.cusCode)
-            $('.nicheng').val(res.data.cusNickname)
+            // $('.nicheng').val(res.data.cusNickname)
         }
     })
     function save() {
@@ -61,13 +63,14 @@
         data.userId = loadUserInfo.user.id
         data.custId = loadUserInfo.customer.id
         $.ajax({
-            url: `${API}/erpUser/UpdateUserPassword`,
+            url: `${API}/erpUser/UpdateUserRealName`,
+            // url: "http://sjy.natapp1.cc/erpUser/UpdateUserPassword",
             data: data,
             type: 'post',
             success: function (res) {
+                alert('修改成功！');
                 window.location.reload()
                 // $('.nicheng').val(res.data.cusNickname)
-                layer.msg('修改成功！');
             }
         })
     }

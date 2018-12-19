@@ -1,7 +1,7 @@
 // const API = 'http://120.79.205.40:3340'
 // const API = 'http://vmxrr9.natappfree.cc'
 // const API = 'http://192.168.1.2:3340' 
-const API = 'http://192.168.1.4' 
+const API = 'http://192.168.1.9:3340' 
 
 
 // 客户信息
@@ -66,3 +66,5 @@ function msToDate(msNum, type) { // type == 1 转换为年/月/日 时:分:秒
         return year + '/' + month + '/' + day;
     }
 }
+// 去除空格
+function trimStr(str){return str.replace(/(^\s*)|(\s*$)/g,"");}

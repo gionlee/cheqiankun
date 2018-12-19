@@ -100,7 +100,7 @@
 
 <body>
     <div class="wrap">
-        <div class="layui-btn layui-btn-sm">添加</div>
+        <div class="layui-btn layui-btn-sm" onclick="add()">添加</div>
         <table class="layui-table">
             <thead>
                 <tr>
@@ -165,9 +165,10 @@
 
             let str = ''
             $.each(json, function (j, n) {
+            	console.log(n);
                 let bz = ''
-                $.each(n.projectLists, function (i) {
-                    bz += ` ${n.projectLists[i].projectName}  ${n.projectLists[i].projectCount} `
+                $.each(n.projectLists, function (i,m) {
+                    bz += ` ${m.projectName}  ${m.projectCount} `
                 })
                 str += `<tr>
                     <td>${n.projectName}</td>
@@ -185,6 +186,71 @@
             $('.fybj').append(str)
         }
     })
+    
+    function add(){
+    	let str = `<tr class="saves"><td>
+                        <input type="hidden" data-name = "projectAttn"  />
+                        <input type="text" class="layui-input" data-name="projectName" >
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectNum" >
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectMoney" >
+                    </td>
+                    <td>
+                        <input type="text" class="layui-input" data-name="projectUnit" >
+                    </td></tr>`
+                $('.xg').html(str)
+                var sle1 =``;
+                sle1 += `<tr class="arrdata">
+                    <td colspan="2"><input class="lzname layui-input" data-name="projectName" ></td>
+                    <td colspan="2" ><input class="layui-input lzp" data-name="projectCount" ></td></tr>`
+    				 $('.change').html(sle1)
+    	layui.use('layer', function () {
+                    let layer = layui.layer;
+                    layer.open({
+                        type: 1,
+                        area: ['740px'],
+                        title: '新增',
+                        maxmin: true,
+                        content: $('.winbody'),
+                        btn: ['保存', '取消'],
+                        yes: function (index) {
+                            let data = {}
+
+                            $('.saves input ').each(function (i, n) {
+                                data[$(this).data('name')] = $(this).val()
+                            })
+                            let arr = []
+                            $('.arrdata ').each(function (i, n) {
+                                let datai = {}
+                                datai.id = $(this).find('.lzid').val()
+                                datai.projectCount = $(this).find('.lzp').val()
+                                datai.projectName = $(this).find('.lzname').val()
+                                arr.push(datai)
+                            })
+                            data.projectLists = arr
+                            data.projectDate = new Date().getTime()
+                            data.projectAttn=loadUserInfo.user.realName
+                            $.ajax({
+                                url: `${API}/erpProject/inertOrUpdateProject`,
+                                type: 'post',
+                                dataType: 'json',
+                                traditional: true,
+                                data: { json: JSON.stringify(data) },
+                                success: function (res) {
+                                    window.location.reload()
+                                },
+                                error: function () {
+                                    alert('系统错误,请稍后重试!')
+                                }
+                            })
+                            // layer.close(index)
+                        }
+                    });
+                })
+    }
     // 修改费用
     let ids
     function update(id) {
@@ -195,7 +261,8 @@
             success: function (res) {
                 let json = res.data
                 let str = `<tr class="saves"><td>
-                        <input type="hidden" data-name = "projectAttn" value="${json.projectAttn}"
+                		<input type="hidden" data-name = "id" value="${id}">
+                        <input type="hidden" data-name = "projectAttn" value="${json.projectAttn}">
                         <input type="text" class="layui-input" data-name="projectName" value="${json.projectName}">
                     </td>
                     <td>
@@ -235,6 +302,7 @@
                                 let datai = {}
                                 datai.id = $(this).find('.lzid').val()
                                 datai.projectCount = $(this).find('.lzp').val()
+                                datai.projectName = $(this).find('.lzname').val()
                                 arr.push(datai)
                             })
                             data.projectLists = arr

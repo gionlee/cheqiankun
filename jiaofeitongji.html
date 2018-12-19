@@ -202,7 +202,7 @@
             <input class="layui-input jsdate" type="text" placeholder="结束日期">
         </div>
         <div class="btn">
-            <button class="layui-btn layui-btn-normal" id="cx">查询</button>
+            <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
         </div>
 
         <table class="layui-table">
@@ -302,17 +302,16 @@
     var bydatestart=year+'-'+month+'-01';//本月开始日
     var d = new Date(year, month, 0);
     var bydateend=year+'-'+month+'-'+d.getDate();
-    console.log(bydatestart);
-    console.log(bydateend);
     $('.ksdate').val(bydatestart);
     $('.jsdate').val(bydateend);
-
-    $.ajax({
-        url:`${API}/erpServiceOrderProject/selectOrders`,
+    sel()
+    function sel () {
+        $.ajax({
+        url:`${API}/erpServiceOrderProject/selectYearss`,
         type:'get',
         data:{
-            startDate:bydatestart,
-            endDate:bydateend,
+            startDate:$('.ksdate').val(),
+            endDate:$('.jsdate').val(),
             custId:loadUserInfo.customer.id,
         },
         success: function (res) {
@@ -324,14 +323,14 @@
                 str+=`<tr>
                     <td>${i+1}</td>
                     <td>${n.date == null ? '' : n.date}</td>
-                    <td>${n.orderId == null ? '' : n.orderId}</td>
+                    <td>${n.orderNumber == null ? '' : n.orderNumber}</td>
                     <td>${n.payWay == null ? '' : n.payWay}</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>${n.custName == null ? '' : n.custName}</td>
+                    <td>${n.projectName == null ? '' : n.projectName}</td>
+                    <td>${n.startDate == null ? '' : n.startDate}-${n.endDate == null ? '' : n.endDate}</td>
                     <td>${n.moneySum == null ? '' : n.moneySum}</td>
+                    <td>${n.discount == null ? '' : n.discount}</td>
+                    <td>${n.moneyReal == null ? '' : n.moneyReal}</td>
                     <td>${n.checkPeople == null ? '' : n.checkPeople}</td>
                     <td>${n.bz == null ? '' : n.bz}</td>
                     </tr>`
@@ -342,46 +341,5 @@
 
         }
     })
-    $('#cx').click(function(){
-        var ksdate=$('.ksdate').val();
-        var jsdate=$('.jsdate').val();
-        console.log(ksdate);
-        console.log(jsdate);
-        console.log(loadUserInfo.customer.id);
-        $.ajax({
-            url:`${API}/erpServiceOrderProject/selectOrders`,
-            data:{
-                startDate:ksdate,
-                endDate:jsdate,
-                custId:loadUserInfo.customer.id,
-            },
-            type:'get',
-            success: function (res) {
-                console.log(res);
-                let arr= res.data
-                let str = ''
-                let nums = 0
-                $.each(arr,function (i,n) {
-                    str+=`<tr>
-                        <td>${i+1}</td>
-                        <td>${n.date == null ? '' : n.date}</td>
-                        <td>${n.orderId == null ? '' : n.orderId}</td>
-                        <td>${n.payWay == null ? '' : n.payWay}</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>${n.moneySum == null ? '' : n.moneySum}</td>
-                        <td>${n.checkPeople == null ? '' : n.checkPeople}</td>
-                        <td>${n.bz == null ? '' : n.bz}</td>
-                        </tr>`
-                        nums += n.moneySum
-                })
-                $('.list').html(str)
-                $('.nums').html(nums)
-
-            }
-        })
-    })
+    }
 </script>

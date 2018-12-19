@@ -175,7 +175,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="list">
                 
             </tbody>
         </table>
@@ -213,15 +213,8 @@
 </body>
 <script>
     function seeInfo() {
-        layui.use('layer', function () {
-            let layer = layui.layer;
-            layer.open({
-                type: 1,
-                area: ['1200px'],
-                title: '车辆牌号',
-                content: $('.winbody')
-            });
-        })
+    	sessionStorage.jcpcar=decodeURI(decodeURI(getUrlParam('carnum')));
+        window.location.href="jianceweihuxiangqing.html";
     }
     
      function GetRequest() {
@@ -236,33 +229,89 @@
 			}
 			return theRequest;
 		}
+      // 把日期格式转换成时间撮       
+
+    function getCurrentMonthFirst(){
+        var date = new Date();
+        date.setDate(1);
+        var month = parseInt(date.getMonth()+1);
+        var day = date.getDate();
+        if (month < 10) {
+            month = '0' + month
+        }
+        if (day < 10) {
+            day = '0' + day
+        }
+        return date.getFullYear() + '-' + month + '-' + day;
+    }
+
+        // 获取当前月的最后一天
+        function getCurrentMonthLast(){
+	        var date=new Date();
+	        var currentMonth=date.getMonth();
+	        var nextMonth=++currentMonth;
+	        var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+	        var oneDay=1000*60*60*24;
+	        var lastTime = new Date(nextMonthFirstDay-oneDay);
+	        var month = parseInt(lastTime.getMonth()+1);
+	        var day = lastTime.getDate();
+	        if (month < 10) {
+	            month = '0' + month
+	        }
+	        if (day < 10) {
+	            day = '0' + day
+	        }
+	        return new Date(date.getFullYear() + '-' + month + '-' + day );
+	    }
+        
+        function dateFtt(fmt,date)   
+		{ //author: meizz   
+		  var o = {   
+		    "M+" : date.getMonth()+1,                 //月份   
+		    "d+" : date.getDate(),                    //日   
+		    "h+" : date.getHours(),                   //小时   
+		    "m+" : date.getMinutes(),                 //分   
+		    "s+" : date.getSeconds(),                 //秒   
+		    "q+" : Math.floor((date.getMonth()+3)/3), //季度   
+		    "S"  : date.getMilliseconds()             //毫秒   
+		  };   
+		  if(/(y+)/.test(fmt))   
+		    fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));   
+		  for(var k in o)   
+		    if(new RegExp("("+ k +")").test(fmt))   
+		  fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));   
+		  return fmt;   
+		} 
+
+        
     $(function() {
 		var userid =GetRequest().userid;
 		var id =GetRequest().id;
 		$.ajax({
-			url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&custId='+ loadUserInfo.customer.id,
+			url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&startDate='+getCurrentMonthFirst()+'&endDate='+dateFtt("yyyy-MM-dd",getCurrentMonthLast())+'&custId='+ loadUserInfo.customer.id,
 			type: 'get',
 			dataType: 'json',
 			success:function(ret) {
 				var objkacha = ret.data;
 				var html = '';
-
-				for(var key in objkacha) {
-					
-						html +=' <tr onclick="seeInfo()">'+
-									 '<td>'+objkacha[key].chelunzhoushju+'</td>'+
-									 '<td>'+objkacha[key].qudong+'</td>'+
-									 '<td>'+objkacha[key].luntaiguige+'</td>'+
-									 '<td>'+objkacha[key].pinpai+'</td>'+
-									 '<td>'+objkacha[key].xinghao+'</td>'+
-									 '<td>'+objkacha[key].catPlate+'</td>'+
-									 '<td>'+objkacha[key].catPlate+'</td>'+
-									 '<td>'+objkacha[key].catPlate+'</td>'+
-									 '<td>'+objkacha[key].catPlate+'</td>'+
-									 '<td>'+objkacha[key].catPlate+'</td>'+
-									 '<td>'+objkacha[key].jiancedate+'</td>'+
+				console.log(ret);
+				$.each(objkacha,function (i,n) {
+                       html +=' <tr onclick="seeInfo()">'+
+									 '<td>'+n.catPlate+'</td>'+
+									 '<td>'+n.chelunzhoushju+'</td>'+
+									 '<td>'+n.qudong+'</td>'+
+									 '<td>'+n.luntaiguige+'</td>'+
+									 '<td>'+n.pinpai+'</td>'+
+									 '<td>'+n.xinghao+'</td>'+
+									 '<td>'+n.mmone+'</td>'+
+									 '<td>'+n.mmtwo+'</td>'+
+									 '<td>'+n.mmthree+'</td>'+
+									 '<td>'+n.mmfour+'</td>'+
+									 '<td>'+n.jiancedate+'</td>'+
 								 '</tr>';
-				}
+                        
+                    })
+				
 				$("#list").html(html);
 							           		         		
 			},
@@ -280,38 +329,38 @@
 			var endDate = $("#endDate").val();
 			//'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
 			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
-				type: 'get',
-				dataType: 'json',
-				success:function(ret) {
-					var objkacha = ret.data;
-					var html = '';
+			url:  API+'/erpTireArchivesWork/tongjiguanliTWSD?catPlate='+decodeURI(decodeURI(getUrlParam('carnum')))+'&startDate='+startDate+'&endDate='+endDate+'&custId='+userid,
+			type: 'get',
+			dataType: 'json',
+			success:function(ret) {
+				var objkacha = ret.data;
+				var html = '';
+				console.log(ret);
+				$.each(objkacha,function (i,n) {
+                       html +=' <tr onclick="seeInfo()">'+
+									 '<td>'+n.catPlate+'</td>'+
+									 '<td>'+n.chelunzhoushju+'</td>'+
+									 '<td>'+n.qudong+'</td>'+
+									 '<td>'+n.luntaiguige+'</td>'+
+									 '<td>'+n.pinpai+'</td>'+
+									 '<td>'+n.xinghao+'</td>'+
+									 '<td>'+n.mmone+'</td>'+
+									 '<td>'+n.mmtwo+'</td>'+
+									 '<td>'+n.mmthree+'</td>'+
+									 '<td>'+n.mmfour+'</td>'+
+									 '<td>'+n.jiancedate+'</td>'+
+								 '</tr>';
+                        
+                    })
+				
+				$("#list").html(html);
+							           		         		
+			},
+			error:function(err) {
+				alert("系统错误");
 
-					
-					for(var key in objkacha) {
-						
-							html +=' <tr onclick="seeInfo()">'+
-										 '<td>'+objkacha[key].chelunzhoushju+'</td>'+
-										 '<td>'+objkacha[key].qudong+'</td>'+
-										 '<td>'+objkacha[key].luntaiguige+'</td>'+
-										 '<td>'+objkacha[key].pinpai+'</td>'+
-										 '<td>'+objkacha[key].xinghao+'</td>'+
-										 '<td>'+objkacha[key].catPlate+'</td>'+
-										 '<td>'+objkacha[key].catPlate+'</td>'+
-										 '<td>'+objkacha[key].catPlate+'</td>'+
-										 '<td>'+objkacha[key].catPlate+'</td>'+
-										 '<td>'+objkacha[key].catPlate+'</td>'+
-										 '<td>'+objkacha[key].jiancedate+'</td>'+
-                 					'</tr>';
-					}
-					$("#list").html(html);
-								           		         		
-				},
-				error:function(err) {
-					alert("系统错误");
-
-				}
-			});
+			}
+		});
 	    })
 
 	})
