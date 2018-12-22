@@ -100,7 +100,7 @@
 
 <body>
     <div class="wrap">
-        <div class="layui-btn layui-btn-sm" onclick="add()">添加</div>
+        <div class="layui-btn" onclick="add()">添加</div>
         <table class="layui-table">
             <thead>
                 <tr>
@@ -122,18 +122,10 @@
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th>
-                        服务项目
-                    </th>
-                    <th>
-                        数量
-                    </th>
-                    <th>
-                        金额
-                    </th>
-                    <th>
-                        单位
-                    </th>
+                    <th>服务项目</th>
+                    <th>数量</th>
+                    <th>金额</th>
+                    <th>单位</th>
                 </tr>
             </thead>
             <tbody class="xg">
@@ -168,14 +160,14 @@
             	console.log(n);
                 let bz = ''
                 $.each(n.projectLists, function (i,m) {
-                    bz += ` ${m.projectName}  ${m.projectCount} `
+                    bz += ` ${m.projectName || ''}*${m.projectCount || ''} `
                 })
                 str += `<tr>
-                    <td>${n.projectName}</td>
-                    <td>${n.projectNum}</td>
-                    <td>${n.projectMoney} </td>
-                    <td>${n.projectUnit}</td>
-                    <td>${bz}</td>
+                    <td>${n.projectName || ''}</td>
+                    <td>${n.projectNum || ''}</td>
+                    <td>${n.projectMoney || ''} </td>
+                    <td>${n.projectUnit || ''}</td>
+                    <td>${bz || ''}</td>
                     <td>
                        <div class="layui-btn layui-btn-xs" onclick="update(${n.id})">修改</div>
                        <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="deletes(${n.id})">删除</div>
@@ -205,7 +197,7 @@
                 var sle1 =``;
                 sle1 += `<tr class="arrdata">
                     <td colspan="2"><input class="lzname layui-input" data-name="projectName" ></td>
-                    <td colspan="2" ><input class="layui-input lzp" data-name="projectCount" ></td></tr>`
+                    <td colspan="2" ><input class="layui-input lzp" type="number" data-name="projectCount" ></td></tr>`
     				 $('.change').html(sle1)
     	layui.use('layer', function () {
                     let layer = layui.layer;
@@ -276,10 +268,10 @@
                     </td></tr>`
                 $('.xg').html(str)
                 let sle = ``
-                $.each(json.projectLists, function (i) {
+                $.each(json.projectLists, function (i,k) {
                     sle += `<tr class="arrdata">
-                    <td colspan="2"><input type="hidden" class="lzid" data-name="projectId" value="${id}"><input class="lzname layui-input" data-name="projectName" value="${json.projectLists[i].projectName}"></td>
-                    <td colspan="2" data-id="${json.projectLists[i].id}"><input type="hidden" class="lzid" data-name="id" value="${json.projectLists[i].id}"><input class="layui-input lzp" data-name="projectCount" value="${json.projectLists[i].projectCount}"></td></tr>`
+                    <td colspan="2"><input type="hidden" class="lzid" data-name="projectId" value="${k.id}"><input class="lzname layui-input" data-name="projectName" value="${json.projectLists[i].projectName}"></td>
+                    <td colspan="2" data-id="${json.projectLists[i].id}"><input type="hidden" class="lzid" data-name="id" value="${json.projectLists[i].id}"><input class="layui-input lzp" type="number" data-name="projectCount" value="${json.projectLists[i].projectCount}"></td></tr>`
                 })
                 $('.change').html(sle)
                 layui.use('layer', function () {

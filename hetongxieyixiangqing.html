@@ -194,7 +194,7 @@
         <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
             <ul class="layui-tab-title">
                 <li class="layui-this">协议信息</li>
-                <li>商品价格</li>
+                <li>销售/租赁价格</li>
                 <li>维修/维护价格</li>
                 <li>积分消费</li>
                 <li>其它</li>
@@ -228,7 +228,8 @@
                                 <th>产地</th>
                                 <th>物料新旧</th>
                                 <th>单位</th>
-                                <th>单价</th>
+                                <th>销售单价</th>
+                                <th>租赁单价</th>
                                 <th>币种</th>
                                 <th style="width:10%;">操作</th>
                             </tr>
@@ -459,7 +460,7 @@
                 })
                 $('.wxwhjg').html(str)
                 $.ajax({
-                    url: `${API}/erpSystemParameters/getparametersByName?name=维护项目`,
+                    url: `${API}/erpSystemParameters/getparametersByName?name=物料维修`,
                     type: 'get',
                     async: false,
                     success: function (res) {
@@ -573,6 +574,7 @@
                 <td><input type="text" class="layui-input materielState"  data-name="comState" value="${json.comState}"></td>
                 <td><input type="text" class="layui-input materielUnit" data-name="comUnit" value="${json.comUnit}"></td>
                 <td><input type="text" class="layui-input" data-name="comPrice" value="${json.comPrice}"></td>
+                <td><input type="text" class="layui-input" data-name="comPrice" value="${json.comPrice * 0.1}"></td>
                 <td>
                         <select class="layui-form selspjg_${i}" repUnit="type" lay-verify="">
                     <option value="人民币">人民币</option>

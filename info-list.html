@@ -116,13 +116,18 @@
 		}
 
 		.inputs {
-			width: 140px;
+			/*width: 140px;
 			height: 22px;
 			display: inline-block;
 			font-size: 12px;
 			margin-left: 20px;
-			margin-right: 5px;
+			margin-right: 5px;*/
 		}
+
+        .layui-input {
+            width: 180px;
+            display: inline-block;
+        }
 
 		.pointer {
 			cursor: pointer;
@@ -135,12 +140,15 @@
 
 <body>
 	<div class="x-body">
-		<xblock>
+		<!--<xblock>-->
 			<!-- <button id="btn_list_danger" class="layui-btn layui-btn-xs layui-btn-danger">报警列表</button>
 			<button id="btn_list_all" class="layui-btn layui-btn-xs layui-btn-normal">全部列表</button> -->
-			<input class="layui-input inputs" type="text" placeholder="车辆牌号       自编车号">
-			<button class="layui-btn layui-btn-xs layui-btn-normal search" type="button">查询</button>
-		</xblock>
+			<div style="text-align: center;">
+				<input class="layui-input inputs" type="text" placeholder="车辆牌号       自编车号">
+				<button class="layui-btn layui-btn-normal search" type="button">查询</button>
+			</div>
+			
+		<!--</xblock>-->
 		<div class="list">
 			<!-- 全部列表  -->
 			<table id="list_all" class="layui-table">

@@ -27,7 +27,7 @@
         }
 
         .search {
-            width: 200px;
+            width: 150px;
             height: 38px;
             margin: 0 auto;
             display: inline-block;
@@ -36,19 +36,36 @@
         }
 
         .search .layui-input {
-            width: 200px;
+            width: 150px;
         }
         .btn {
             display: inline-block;
+        }
+        .layui-form-item .layui-input-inline {
+		    float: left;
+		    width: 150px;
+		    margin-right: 10px;
+		}
+        
+        .layui-form {
+        	width: 150px;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .layui-form .layui-input {
+            width: 150px;
         }
 
     </style>
 </head>
 
 <body>
-    <div class="wrap">
+    <div class="wrap" style="text-align: center;">
             <div class="search">
-                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                    <input class="layui-input ksdate" style="text-align: center;" type="text" placeholder="开始日期">
                 </div>
                 <div class="layui-form">
                     <div class="layui-form-item">
@@ -68,7 +85,7 @@
                     </div>
                 </div>
                 <div class="search">
-                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                    <input class="layui-input jsdate" style="text-align: center;" type="text" placeholder="结束日期">
                 </div>
                 <div class="btn">
                     <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>

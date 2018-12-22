@@ -26,7 +26,7 @@
     }
 
     .search {
-      width: 200px;
+      width: 150px;
       height: 38px;
       margin: 0 auto;
       display: inline-block;
@@ -35,7 +35,7 @@
     }
 
     .layui-input {
-      width: 200px;
+      width: 150px;
     }
 
     .btn {
@@ -48,14 +48,30 @@
       padding: 0;
       height: 24px;
     }
+        .layui-form-item .layui-input-inline {
+		    float: left;
+		    width: 150px;
+		    margin-right: 10px;
+		}
+        
+        .layui-form {
+        	width: 150px;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .layui-form .layui-input {
+            width: 150px;}
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="layui-row">
+    <div class="layui-row" style="text-align: center;">
       <div class="search">
-        <input class="layui-input ksdate" type="text" placeholder="开始日期">
+        <input class="layui-input ksdate" style="text-align: center;padding: 0;" type="text" placeholder="开始日期">
       </div>
       <div class="layui-form">
         <div class="layui-form-item">
@@ -75,7 +91,7 @@
         </div>
       </div>
       <div class="search">
-        <input class="layui-input jsdate" type="text" placeholder="结束日期">
+        <input class="layui-input jsdate" type="text" style="text-align: center;padding: 0;" placeholder="结束日期">
       </div>
       <div class="btn">
         <button class="layui-btn layui-btn-normal" onclick="chaxun()">查询</button>
@@ -91,7 +107,7 @@
         </div>
       </div> -->
       <div class="btn">
-        <button class="systemsetup layui-btn layui-btn-sm">Excel</button>
+        <button class="systemsetup layui-btn">Excel</button>
       </div>
     </div>
     <!-- <div class="select">

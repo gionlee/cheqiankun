@@ -20,6 +20,7 @@
         .select {
             height: 40px;
             padding: 20px 0;
+            padding-top: 0;
             border-bottom: 1px solid #ccc;
             text-align: center;
         }
@@ -172,7 +173,7 @@
         layer.open({
             title: '详情',
             type: 1,
-            area: '500px',
+            area: ['500px','600px'],
             content: $('.info') //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
         });
 

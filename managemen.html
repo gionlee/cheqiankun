@@ -107,7 +107,7 @@
         }
 
         .search {
-            width: 200px;
+            width: 150px;
             height: 38px;
             margin: 0 auto;
             display: inline-block;
@@ -116,17 +116,23 @@
         }
 
         .search .layui-input {
-            width: 200px;
+            width: 150px;
         }
+        
         .layui-form {
+        	width: 150px;
             display: inline-block;
             margin: 0;
             padding: 0;
             height: 24px;
         }
 
+        .layui-form .layui-input {
+            width: 150px;
+        }
+
         .search {
-            width: 200px;
+            width: 150px;
             height: 38px;
             margin: 0 auto;
             display: inline-block;
@@ -135,40 +141,40 @@
         }
 
         .search .layui-input {
-            width: 200px;
+            width: 150px;
         }
     </style>
 </head>
 
 <body>
-    <div class="wrap">
+    <div class="wrap" style="text-align: center;">
 
             <div class="search">
-                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
-                </div>
-                <div class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select lay-filter="datesel" name="quiz2">
-                                <option value="">请选时段</option>
-                                <option value="0">一季度</option>
-                                <option value="1">二季度</option>
-                                <option value="2">三季度</option>
-                                <option value="3">四季度</option>
-                                <option value="4">上半年</option>
-                                <option value="5">下半年</option>
-                                <option value="6">本年度</option>
-                                <option value="7">上年度</option>
-                            </select>
-                        </div>
+                <input class="layui-input ksdate" type="text" style="text-align: center; padding: 0;" placeholder="开始日期">
+            </div>
+            <div class="layui-form">
+                <div class="layui-form-item">
+                    <div class="layui-input-inline">
+                        <select lay-filter="datesel" name="quiz2">
+                            <option value="">请选时段</option>
+                            <option value="0">一季度</option>
+                            <option value="1">二季度</option>
+                            <option value="2">三季度</option>
+                            <option value="3">四季度</option>
+                            <option value="4">上半年</option>
+                            <option value="5">下半年</option>
+                            <option value="6">本年度</option>
+                            <option value="7">上年度</option>
+                        </select>
                     </div>
                 </div>
-                <div class="search">
-                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
-                </div>
-                <div class="btn">
-                    <button class="layui-btn layui-btn-normal" id="cx">查询</button>
-                </div>
+            </div>
+            <div class="search">
+                <input class="layui-input jsdate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
+            </div>
+            <div class="btn">
+                <button class="layui-btn layui-btn-normal" id="cx">查询</button>
+            </div>
         <table id="table" lay-filter="table" class="layui-table">
             <thead id="head">
                 <tr>

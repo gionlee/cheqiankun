@@ -18,6 +18,7 @@
             width: 100%;
             overflow: auto;
             box-sizing: border-box;
+            min-height: 600px;
         }
 
         .select {
@@ -42,7 +43,7 @@
         }
 
         .layui-input {
-            border: 0;
+            /*border: 0;*/
             outline: none;
         }
 
@@ -124,7 +125,7 @@
             left: 200px;
         }
         .search {
-            width: 200px;
+            width: 150px;
             height: 38px;
             margin: 0 auto;
             display: inline-block;
@@ -133,7 +134,7 @@
         }
 
         .search .layui-input {
-            width: 200px;
+            width: 150px;
         }
         .layui-form {
             display: inline-block;
@@ -143,7 +144,7 @@
         }
 
         .search {
-            width: 200px;
+            width: 150px;
             height: 38px;
             margin: 0 auto;
             display: inline-block;
@@ -152,19 +153,37 @@
         }
 
         .search .layui-input {
-            width: 200px;
+            width: 150px;
         }
+        
+        .layui-form-item .layui-input-inline {
+		    float: left;
+		    width: 150px;
+		    margin-right: 10px;
+		}
+        
+        .layui-form {
+        	width: 150px;
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .layui-form .layui-input {
+            width: 150px;
+		}
     </style>
 </head>
 
 <body>
 
-    <div class="wrap">
-        <div>
-            <div class="layui-btn layui-btn-xs" onclick="addCg()">新增</div>
-        </div>
+    <div class="wrap" style="text-align: center;">
+        <!--<div>-->
+            <div class="layui-btn" style="float: left;" onclick="addCg()">新增</div>
+        <!--</div>-->
             <div class="search">
-                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                    <input class="layui-input ksdate" style="padding: 0; text-align: center;" type="text" placeholder="开始日期">
                 </div>
                 <div class="layui-form">
                     <div class="layui-form-item">
@@ -184,10 +203,10 @@
                     </div>
                 </div>
                 <div class="search">
-                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                    <input class="layui-input jsdate" style="padding: 0; text-align: center;" type="text" placeholder="结束日期">
                 </div>
                 <div class="btn">
-                    <button class="layui-btn layui-btn-normal">查询</button>
+                    <button class="layui-btn layui-btn-normal" onclick="selCx()">查询</button>
                 </div>
         <table class="layui-table" lay-filter="table">
             <thead>
@@ -429,9 +448,10 @@
         });
     }
     let cgList = []
-    
+    selCx ()
     //查询采购列表
-    $.ajax({
+    function selCx () {
+        $.ajax({
         url :`${API}/erpClients/getClientsPageBycustId?custId=${loadUserInfo.customer.id}&startTime=${$('.ksdate').val()}&endTime=${$('.jsdate').val()}`,
         type:'get',
         success: function (res) {
@@ -443,22 +463,22 @@
                 str +=`<tr>
                     <td>${arr.length - i}</td>
                     <td>
-                        ${n.workDt}
+                        ${n.workDt || ''}
                     </td>
                     <td onclick="showList()">
-                        ${n.sheetId}
+                        ${n.sheetId  || ''}
                     </td>
                     <td>
-                        ${n.branchName}
+                        ${n.branchName  || ''}
                     </td>
                     <td>
-                        ${n.customerName}
+                        ${n.customerName  || ''}
                     </td>
                     <td>
-                        ${n.message}
+                        ${n.message  || ''}
                     </td>
                     <td>
-                       ${n.comeLib == 0  ? '已审批' : '未审批'}
+                       ${n.comeLib == 0 || n.comeLib == 1  ? '已审批' : '未审批'}
                     </td>
                     `
                     if(n.comeLib == 0) {
@@ -470,7 +490,7 @@
                     } else {
                         str+=`<td>已入库</td>`
                     }
-                    str +=`<td>${n.fapiaoId}</td>`
+                    str +=`<td>${n.fapiaoId || ''}</td>`
                     if(n.payList == 0) {
                         str+=`<td>未付款</td>`
                     } else if(n.payList == 1) {
@@ -491,4 +511,5 @@
         }
          
     })
+    }
 </script>

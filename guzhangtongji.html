@@ -2,112 +2,132 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
-  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" href="./css/font.css">
-  <link rel="stylesheet" href="./css/xadmin.css">
-  <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="./lib/layui/layui.js" charset="utf-8"></script>
-  <script type="text/javascript" src="./js/xadmin.js"></script>
-  <style>
-    .wrap {
-      padding: 20px;
-    }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				padding: 20px 0;
+				border-bottom: 1px solid #ccc;
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.layui-input {
+				width: 200px;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 150px;
+				margin-right: 10px;
+				float: none;
+				display: inline-block;
+			}
+			
+			.layui-form {
+				/*width: 150px;*/
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				height: 24px;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
+		</style>
+	</head>
 
-    .select {
-      height: 40px;
-      padding: 20px 0;
-      border-bottom: 1px solid #ccc;
-      text-align: center;
-    }
+	<body>
+		<div class="wrap" style="text-align: center;">
 
-    .search {
-      width: 200px;
-      height: 38px;
-      margin: 0 auto;
-      display: inline-block;
-      padding-top: 1px;
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-input-inline">
+						<select name="quiz2">
+							<option value="默认当月" checked>默认当月</option>
+							<option value="上月">上月</option>
+							<option value="上半年">上半年</option>
+							<option value="下半年">下半年</option>
+						</select>
 
-    }
+					</div>
+					<button class="systemsetup layui-btn" style="margin-left:20px;">故障统计</button>
+				</div>
+			</div>
 
-    .layui-input {
-      width: 200px;
-    }
+		</div>
+		<table id="table" lay-filter="table" class="layui-table">
+			<thead id="head">
+				<tr>
+					<th rowspan="2">统计</th>
+					<th rowspan="2">胎压超高</th>
+					<th rowspan="2">胎压超低</th>
+					<th rowspan="2">急剧泄压</th>
+					<th rowspan="2">胎温超高</th>
+					<th colspan="4">车内显示器</th>
+					<th colspan="4">中继器</th>
+					<th colspan="4">胎内传感器</th>
+				</tr>
+				<th>显示故障</th>
+				<th>接口故障</th>
+				<th>USB故障</th>
+				<th>发送故障</th>
+				<th>接收故障</th>
+				<th>传输故障</th>
+				<th>胎压故障</th>
+				<th>胎温故障</th>
+				<th>电池欠压</th>
+				<th>失联</th>
+			</thead>
+			<tbody class="weblist">
 
-    .btn {
-      display: inline-block;
-
-    }
-  </style>
-</head>
-
-<body>
-  <div class="wrap">
-
-    <div class="layui-form">
-      <div class="layui-form-item">
-        <div class="layui-input-inline">
-          <select name="quiz2">
-            <option value="默认当月" checked>默认当月</option>
-            <option value="上月">上月</option>
-            <option value="上半年">上半年</option>
-            <option value="下半年">下半年</option>
-          </select>
-
-        </div>
-        <button class="systemsetup layui-btn" style="margin-left:20px;">故障统计</button>
-      </div>
-    </div>
-
-  </div>
-  <table id="table" lay-filter="table" class="layui-table">
-    <thead id="head">
-      <tr>
-        <th rowspan="2">统计</th>
-        <th rowspan="2">胎压超高</th>
-        <th rowspan="2">胎压超低</th>
-        <th rowspan="2">急剧泄压</th>
-        <th rowspan="2">胎温超高</th>
-        <th colspan="4">车内显示器</th>
-        <th colspan="4">中继器</th>
-        <th colspan="4">胎内传感器</th>
-      </tr>
-      <th>显示故障</th>
-      <th>接口故障</th>
-      <th>USB故障</th>
-      <th>发送故障</th>
-      <th>接收故障</th>
-      <th>传输故障</th>
-      <th>胎压故障</th>
-      <th>胎温故障</th>
-      <th>电池欠压</th>
-      <th>失联</th>
-    </thead>
-    <tbody class="weblist">
-
-    </tbody>
-  </table>
-  </div>
-</body>
-<script src="./js/Global.js"></script>
-<script>
-  let datas = { startDate: '', endDate: '' }
-  var date = new Date();
-  var currentMonth = date.getMonth();
-  $.ajax({
-    url: `${API}/real/selectFault?custId=1`,
-    type: 'post',
-    data: datas,
-    success: function (res) {
-      let data = res.data
-      let str = `<tr>
+			</tbody>
+		</table>
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script>
+		let datas = {
+			startDate: '',
+			endDate: ''
+		}
+		var date = new Date();
+		var currentMonth = date.getMonth();
+		$.ajax({
+			url: `${API}/real/selectFault?custId=1`,
+			type: 'post',
+			data: datas,
+			success: function(res) {
+				let data = res.data
+				let str = `<tr>
           <td>数量</td>
-          <td >`+ data[0] + `</td>
-          <td>`+ data[1] + `</td>
+          <td >` + data[0] + `</td>
+          <td>` + data[1] + `</td>
           <td>0</td>
           <td>0</td>
           <td>0</td>
@@ -140,38 +160,36 @@
         </tr>
         `
 
+				// let str1 = ''
 
-      // let str1 = ''
+				$('.weblist').append(str)
+				layui.form.on('select', function(res) {
+					if(res.value == '默认当月') {
+						datas.startDate = ''
+						datas.endDate = ''
+					}
+					if(res.value == '上月') {
+						currentMonth = new Date().getMonth() - 1
 
+						datas.startDate = getFirst()
+						datas.endDate = getLast()
+					}
+					select()
+				})
+			}
+		})
 
-
-      $('.weblist').append(str)
-      layui.form.on('select', function (res) {
-        if (res.value == '默认当月') {
-          datas.startDate = ''
-          datas.endDate = ''
-        }
-        if (res.value == '上月') {
-          currentMonth = new Date().getMonth() - 1
-
-          datas.startDate = getFirst()
-          datas.endDate = getLast()
-        }
-        select()
-      })
-    }
-  })
-  function select() {
-    $.ajax({
-      url: `${API}/real/selectFault?custId=1`,
-      type: 'post',
-      data: datas,
-      success: function (res) {
-        let data = res.data
-        let str = `<tr>
+		function select() {
+			$.ajax({
+				url: `${API}/real/selectFault?custId=1`,
+				type: 'post',
+				data: datas,
+				success: function(res) {
+					let data = res.data
+					let str = `<tr>
           <td>数量</td>
-          <td >`+ data[0] + `</td>
-          <td>`+ data[1] + `</td>
+          <td >` + data[0] + `</td>
+          <td>` + data[1] + `</td>
           <td>0</td>
           <td>0</td>
           <td>0</td>
@@ -204,27 +222,26 @@
         </tr>
         `
 
+					// let str1 = ''
 
-        // let str1 = ''
+					$('.weblist').html(str)
+				}
+			})
+		}
 
+		function getLast() {
+			var nextMonth = currentMonth;
+			var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+			var oneDay = 1000 * 60 * 60 * 24;
+			return new Date(nextMonthFirstDay - oneDay).getFullYear() + '-' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) < 10 ? '0' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) : +'-' + new Date(nextMonthFirstDay - oneDay).getDate();
+		}
 
-
-        $('.weblist').html(str)
-      }
-    })
-  }
-  function getLast() {
-    var nextMonth = currentMonth;
-    var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
-    var oneDay = 1000 * 60 * 60 * 24;
-    return new Date(nextMonthFirstDay - oneDay).getFullYear() + '-' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) < 10 ? '0' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) : + '-' + new Date(nextMonthFirstDay - oneDay).getDate();
-  }
-  function getFirst() {
-    var nextMonth = ++currentMonth;
-    var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
-    var oneDay = 1000 * 60 * 60 * 24;
-    return new Date(nextMonthFirstDay - oneDay).getFullYear() + '-' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) + '- 01'
-  }
-</script>
+		function getFirst() {
+			var nextMonth = ++currentMonth;
+			var nextMonthFirstDay = new Date(date.getFullYear(), nextMonth, 1);
+			var oneDay = 1000 * 60 * 60 * 24;
+			return new Date(nextMonthFirstDay - oneDay).getFullYear() + '-' + Number(new Date(nextMonthFirstDay - oneDay).getMonth() + 1) + '- 01'
+		}
+	</script>
 
 </html>

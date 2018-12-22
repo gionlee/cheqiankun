@@ -679,6 +679,8 @@
                     <th>单位</th>
                     <th>去向</th>
                     <th>生产编号</th>
+                    <th>二维码</th>
+                    <th>RFID</th>
                     <th>胎压ID</th>
                     <th>胎压</th>
                     <th>数量</th>
@@ -697,7 +699,9 @@
                     <td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
                     <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
                     <td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
-                    <td><input type="text" class="layui-input materiel_sensor_id  wlset_9" data-name="materiel_sensor_id"></td>
+                    <td><input type="text" class="layui-input materielProductionId wlset_9" data-name="materielProductionId"></td>
+                    <td><input type="text" class="layui-input materiel_sensor_id  wlset_10" data-name="materiel_sensor_id"></td>
+                    <td><input type="text" class="layui-input materiel_sensor_id  wlset_11" data-name="materiel_sensor_id"></td>
                     <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
                     <td><input type="text" class="layui-input materielNumber wlset_7" data-name="materielNumber"></td>
                     <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
@@ -766,6 +770,7 @@
         <table class="layui-table">
             <thead>
                 <tr>
+                    <th>序号</th>
                     <th>维修项目</th>
                     <th>来源</th>
                     <th>品名</th>
@@ -791,6 +796,7 @@
         <table class="layui-table">
             <thead>
                 <tr>
+                    <th>序号</th>
                     <th>维修项目</th>
                     <th>来源</th>
                     <th>品名</th>
@@ -1225,7 +1231,9 @@
                 let dclstr = ''
                 $.each(wwcList, function (i, n) {
                     dclstr +=
-                        `<tr><td>${n.repairRepair || ""}</td>
+                        `<tr>
+                        <td>${i+1}</td>
+                        <td>${n.repairRepair || ""}</td>
                         <td>${n.materielSource}</td>
                         <td>${n.materielName}</td>
                         <td>${n.materielBrand}</td>
