@@ -725,7 +725,7 @@
 									</td>
 									<td>录入人</td>
 									<td colspan="2">
-										<input type="text" data-name="inputAttn" class="layui-input carInfos" value="">
+										<input type="text" readonly data-name="inputAttn" class="layui-input carInfos carluru" value="">
 									</td>
 								</tr>
 								<tr>
@@ -1871,7 +1871,7 @@
 	}
 	// 设置税务类型
 	$.ajax({
-		url: `${API}/erpSystemParameters/getparametersByName?name=账户类型`,
+		url: `${API}/erpSystemParameters/getparametersByName?name=税务类型`,
 		type: 'get',
 		success: function (res) {
 			console.log(res)
@@ -1882,6 +1882,8 @@
 			$('.finType').html(str)
 		}
 	})
+	// 设置车辆信息 默认录入人
+	$('.carluru').val(loadUserInfo.user.realName)
 </script>
 
 </html>

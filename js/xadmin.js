@@ -231,4 +231,15 @@ function x_admin_close() {
 	var index = parent.layer.getFrameIndex(window.name);
 	parent.layer.close(index);
 }
+function chooseBox () {
+	console.log('222')
+	let element = ''
+	layui.use('element',function () {
+		element = layui.element;
+		element.tabChange('xbs_tab', 24);
+	})
+	
+
+
+}
 

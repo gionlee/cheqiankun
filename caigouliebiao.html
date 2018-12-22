@@ -123,11 +123,72 @@
             top: 0;
             left: 200px;
         }
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
+        .layui-form {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            height: 24px;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        .search .layui-input {
+            width: 200px;
+        }
     </style>
 </head>
 
 <body>
+
     <div class="wrap">
+        <div>
+            <div class="layui-btn layui-btn-xs" onclick="addCg()">新增</div>
+        </div>
+            <div class="search">
+                    <input class="layui-input ksdate" type="text" placeholder="开始日期">
+                </div>
+                <div class="layui-form">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline">
+                            <select lay-filter="datesel" name="quiz2">
+                                <option value="">请选时段</option>
+                                <option value="0">一季度</option>
+                                <option value="1">二季度</option>
+                                <option value="2">三季度</option>
+                                <option value="3">四季度</option>
+                                <option value="4">上半年</option>
+                                <option value="5">下半年</option>
+                                <option value="6">本年度</option>
+                                <option value="7">上年度</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="search">
+                    <input class="layui-input jsdate" type="text" placeholder="结束日期">
+                </div>
+                <div class="btn">
+                    <button class="layui-btn layui-btn-normal">查询</button>
+                </div>
         <table class="layui-table" lay-filter="table">
             <thead>
                 <tr>
@@ -218,6 +279,9 @@
     </div>
 </body>
 <script>
+    function addCg () {
+        window.location.href = './caigoudingdan.html'
+    }
     layui.use('laydate', function () {
         var laydate = layui.laydate;
 
@@ -368,7 +432,7 @@
     
     //查询采购列表
     $.ajax({
-        url :`${API}/erpClients/getClientsPageBycustId?custId=1`,
+        url :`${API}/erpClients/getClientsPageBycustId?custId=${loadUserInfo.customer.id}&startTime=${$('.ksdate').val()}&endTime=${$('.jsdate').val()}`,
         type:'get',
         success: function (res) {
             console.log(res)

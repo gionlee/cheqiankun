@@ -124,6 +124,12 @@
             background: #01AAED;
             
         }
+        select {
+            height: 30px;
+        }
+        .layui-form-select {
+            height: 30px !important;
+        }
     </style>
 </head>
 
@@ -210,19 +216,19 @@
         <thead>
             <tr>
                 <th colspan="7">轮胎信息</th>
-                <th colspan="9" class="layui-form">
+                <th colspan="9">
                     <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
                     <div style="width:150px;display: inline-block;line-height: 38px;">
                         <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
                         <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" checked="">
+                            <input type="checkbox" lay-skin="primary" title="" >
                         </div>
 
                     </div>
                     <div style="width:150px;display: inline-block;line-height: 38px;">
                         <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
                         <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" checked="">
+                            <input type="checkbox" lay-skin="primary" title="" >
                         </div>
                     </div>
                 </th>
@@ -251,28 +257,25 @@
         <tbody id="list">
         </tbody>
     </table>
-    <div class="title" class="gc">
+    <div class="title gc">
         <span class=" gcarnum"></span> 车辆动态
     </div>
     <table class="layui-table gc">
         <thead>
             <tr>
-                <th colspan="9" class="layui-form">
-                    <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
-                        <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" checked="">
+                    <th colspan="7">轮胎信息</th>
+                    <th colspan="9" >
+                        <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
+                        <div style="width:150px;display: inline-block;line-height: 38px;">
+                            <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
+                                <input type="checkbox"  title="" checked="">
                         </div>
-                    </div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
-                        <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" checked="">
+                        <div style="width:150px;display: inline-block;line-height: 38px;">
+                            <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>                         
+                                <input type="checkbox" lay-skin="primary" title="" checked="">
                         </div>
-                    </div>
-                </th>
-                <th colspan="6">上期轮胎监测信息</th>
+                    </th>
+                    <th colspan="6">上期轮胎监测信息</th>
             </tr>
             <tr>
                 <th style="min-width:30px;">序号</th>
@@ -472,8 +475,8 @@
             $.each(res.data, function (i, n) {
                 str += `<option value="${n.provinceid}">${n.province}</option>`
             })
-            $('.drivingRange1').append(str)
-            $('.drivingRange3').append(str)
+            $('.drivingRange1').html(str)
+            $('.drivingRange3').html(str)
             layform.on('select(drivingRange1)', function (data) {
                 $.ajax({
                     url: `${API}/cities/selectByProId?proId=${data.value}`,
@@ -485,7 +488,7 @@
                             shi +=
                                 `<option value="${n.city}">${n.city}</option>`
                         })
-                        $('.drivingRange2').append(shi)
+                        $('.drivingRange2').html(shi)
                         layform.render()
                     }
                 })
@@ -501,7 +504,7 @@
                             shi +=
                                 `<option value="${n.city}">${n.city}</option>`
                         })
-                        $('.drivingRange4').append(shi)
+                        $('.drivingRange4').html(shi)
                         layform.render()
                     }
                 })
@@ -620,6 +623,7 @@
         }
 
     })
+    console.log(sessionStorage.jcpcar,'000')
     // 保存
     function saveAll() {
         let data = {}
@@ -639,14 +643,16 @@
         data.drivingRange2 = $('.drivingRange2').val()
         data.drivingRange3 = $('.drivingRange3').val()
         data.drivingRange4 = $('.drivingRange4').val()
+        data.carPlate = sessionStorage.jcpcar
         $.ajax({
             url: `${API}/erpManagement/gojianceweihuCarDataSure`,
             type: 'get',
             data: data,
             success: function (res) {
+                let bol = true
                 $('.carList').each(function () {
                     let datas = {}
-                    datas.carPlate = decodeURI(decodeURI(GetRequest().id))
+                    datas.carPlate = sessionStorage.jcpcar
                     datas.orderId = res.data.inspectionOrder.id
                     datas.formId = res.data.management.workId
                     $(this).find('input').each(function () {
@@ -659,9 +665,13 @@
                         type: 'post',
                         data: datas,
                         success: function (res) {
+                            if(res.code == 0) {
+                                bol= false
+                            }
                         }
                     })
                 })
+                if (bol) { layer.msg('保存成功!')}
 
             }
         })

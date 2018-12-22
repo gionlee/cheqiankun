@@ -182,7 +182,7 @@
             $.each(arr, function (i, id) {
 
                 $.ajax({
-                    url: `${API}/erpCustomer/removeCustomer?custId=${id}`,
+                    url: `${API}/erpUser/removeCustUser?customerCarId=${id}`,
                     type: 'get',
                     success: function (res) {
                         $(`.c_${id}`).parent().parent().remove()
@@ -195,7 +195,7 @@
     function del(id) {
         if (confirm('是否删除?')) {
             $.ajax({
-                url: `${API}/erpCustomer/removeCustomer?custId=${id}`,
+                url: `${API}/erpUser/removeCustUser?customerCarId=${id}`,
                 type: 'get',
                 success: function (res) {
                     window.location.reload()
@@ -205,14 +205,41 @@
     }
     // 修改
     function usup(index) {
+    	
+    	
         let json = arr[index]
         let slist = json.groupName.split(',')
-        let str = ''
-        $.each(slist,function (i,n) { 
+        //let str = ''
+        /*$.each(slist,function (i,n) { 
             str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n}' >${n}</td></tr>`
 
-        })
-        $('.list').append(str)
+        })*/
+        $.ajax({
+                url: `${API}/erpCustomer/selectCustomerDownById?id=${loadUserInfo.customer.id}`,
+                type: 'get',
+                success: function (res) {
+                    console.log(res.data);
+                    let str = ''
+                    $.each(res.data,function (i,n) { 
+                    	var pan=false;
+                    	$.each(slist,function (j,m) { 
+                    		if(m==n.cusName){
+                    			pan=true;
+                    			return;
+                    		}
+			            	
+						});
+                    	if(pan){
+                    		str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n.cusName}' checked>${n.cusName}</td></tr>`
+                    	}else{
+                    		str+= `<tr><td colspan="2"></td><td colspan="2"><input class="kchanges" type="checkbox" value='${n.cusName}' >${n.cusName}</td></tr>`
+                    	}
+                    	
+			        })
+                    $('.list').append(str)
+                }
+            })
+        //$('.list').append(str)
         $('.kchanges').on('click', function () {
                 if (!$(this).is(':checked')) {
                     $('.kallchange').prop("checked", false)
@@ -261,10 +288,10 @@
                     })
                     json.realName =$('.username').val()
                     $.ajax({
-                        url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+                        url:`${API}/erpUser/inertOrUpdateCustUser`, 
         				// url:'http://6njkfk.natappfree.cc/erpCustomer/updateCustomer',
                         type:'post',
-                        data:json,
+                        data:{json:JSON.stringify(json)},
                         success:function (res) {
                             window.location.reload()
                         }
@@ -321,8 +348,9 @@
                 content: $('.winbody'),
                 btn: ['保存'],
                 yes: function (index) {
+//              	var json={};
                     json.groupName = ''
-                    json.userId = ''
+//                  json.userId = ''
                     $('.kchanges').each(function () {
                         if($(this).is(':checked')) {
                             json.groupName += $(this).val()
@@ -330,18 +358,43 @@
                        
                     })
                     json.realName =$('.username').val()
+                    json.customerId=`${loadUserInfo.user.customerId}`
+                    json.roleId=0
+                    json.password=`${loadUserInfo.user.password}`
+                    json.status=1
+                    json.branchId=`${loadUserInfo.user.branchId}`
+                    json.branchName=`${loadUserInfo.user.branchName}`
+                    json.groupId=`${loadUserInfo.user.groupId}`
+                    json.allAction=`${loadUserInfo.user.allAction}`
+                    json.phone=$('.username').val()
+                    json.wx=`${loadUserInfo.user.wx}`
+                    json.qq=`${loadUserInfo.user.qq}`
+                    json.userName=`${loadUserInfo.user.userName}`
+                    json.rolesId=`${loadUserInfo.user.rolesId}`
+                    json.eMail=`${loadUserInfo.user.eMail}`
+                    json.id=0
+//                  json.email=`${loadUserInfo.user.eMail}`
+                  
+                  
+                    json.identify=1;
                     $.ajax({
-                        url:`${API}/erpCustomer/inertOrUpdateCustomer`,
+                        url:`${API}/erpUser/inertOrUpdateCustUser`,
                         // url: 'http://6njkfk.natappfree.cc/erpCustomer/inertOrUpdateCustomer',
-                        type:'post',
-                        data:json,
+                        type:'post',            
+                        data:{json:JSON.stringify(json)},
                         success:function (res) {
+                        	alert(res.code)
                         	if(res.code == 0){
                         		window.location.reload()
                         	} else {
                         		alert(res.msg)
                         	}
-                        }
+                        },error: function (XMLHttpRequest, textStatus, errorThrown) { 
+			 　　                
+				　　                 alert(JSON.stringify(XMLHttpRequest)); 
+				　　                alert(textStatus);     
+							 alert(XMLHttpRequest.status); 
+ 　　					} 
                     })
                 }
             });

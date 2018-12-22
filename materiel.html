@@ -123,7 +123,7 @@
     <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
     <div class="wrap">
         <div class="down-xlsx" style="float: right;line-height: 30px;">
-            <a href="./lib/muban.xlsx" download="download">下载模板</a>
+            <a href="./lib/muban.xlsx" download="download">下载Excel</a>
         </div>
         <table class="layui-table">
             <thead>
@@ -173,10 +173,10 @@
                         <input type="text" data-name="materielModel" class="layui-input save-data materielModel" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielPlace" class="layui-input save-data materielPlace" value="">
+                        <input type="text" data-name="materielState" class="layui-input save-data materielPlace" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielState" class="layui-input save-data materielState" value="">
+                        <input type="text" data-name="materielPlace" class="layui-input save-data materielState" value="">
                     </td>
                     <td>
                         <input type="text" data-name="materielUnit" class="layui-input save-data materielUnit" value="">
@@ -187,15 +187,15 @@
                     </td>
                     <td>
                         <span class="scbh"></span>
-                        <input type="text" data-name="shengIds" class="scbh layui-input materielSheng" style="width: 50%;display: inline-block;"
+                        <input type="text" data-name="shengIds" class="scbh layui-input materielSheng isClear" style="width: 50%;display: inline-block;"
                             value="">
                         <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
                     </td>
                     <td class="">
-                        <input type="text" data-name="qrcodes" class="layui-input ercode materielEqcode" value="">
+                        <input type="text" data-name="qrcodes" class="layui-input ercode materielEqcode isClear" value="">
                     </td>
                     <td class="">
-                        <input type="text" data-name="rfIds" class="layui-input rfid materielRfid" value="">
+                        <input type="text" data-name="rfIds" class="layui-input rfid materielRfid isClear" value="">
                     </td>
                     <td>
                         <input type="text" data-name="materielStoragePrice" class="layui-input materielPrice" value="">
@@ -220,7 +220,12 @@
 
             </ul>
         </div>
-        <div style="margin:20px auto;text-align: center;"><a class="layui-btn layui-btn-sm" onclick="save()">保存</a></div>
+        <div style="margin:20px auto;text-align: center;">
+            <a class="layui-btn layui-btn-xs" onclick="save(1)">确认/重复</a>
+            <a class="layui-btn layui-btn-xs" onclick="save(2)">确认/新添</a>
+            <a class="layui-btn layui-btn-xs" onclick="save(3)">确认/结束</a>
+            <a class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</a>
+        </div>
         <table class="layui-table">
             <thead>
                 <tr>
@@ -416,7 +421,7 @@
         })
     }
     // 保存
-    function save() {
+    function save(params) {
         let dataai = {}
         let data = {}
         $('.luntai input').each(function (i, n) {
@@ -481,7 +486,18 @@
                 if (res.code == 0) {
                     layer.msg('保存成功！')
                     selWl()
-
+                    if (params == 1) {
+                    $('.isClear').val('')
+                    
+        }
+        if(params == 2) {
+            $('.saves input').val('')  
+            $('.materielTotal').html('')
+        }
+        if (params == 3) {
+            alert('自动关闭失败,请手动关闭!')
+        }
+                
                 } else {
                     layer.msg(res.msg)
 
@@ -678,8 +694,8 @@
             $('.materielStateAI').val($(_this).parents('.list-8').prev().text())
             $('.materielPlaceAI').val($(_this).parents('.list-7').prev().text())
             $('.materielModelAI').val($(_this).parents('.list-6').prev().text())
-            $('.materielSpecificationsAI').val($(_this).parents('.list-5').prev().text())
-            $('.materielBrandAI').val($(_this).parents('.list-4').prev().text())
+            $('.materielSpecificationsAI').val($(_this).parents('.list-4').prev().text())
+            $('.materielBrandAI').val($(_this).parents('.list-5').prev().text())
             $('.materielNameAI').val($(_this).parents('.list-3').prev().text())
             
         }
@@ -711,14 +727,14 @@
                         <input type="text" data-name="materielNumber" class="layui-input ai-data materielNumber" value="">
                     </td>
                     <td>
-                        <input class=" layui-input scbhai" data-name="chuanIds" value="" />
+                        <input class=" layui-input scbhai isClear" data-name="chuanIds" value=""  style="width:50%;display: inline-block;" />
                         <button class="layui-btn layui-btn-xs"  style="padding:0 10px;" id="seeAiInfo">上传</button>
                     </td>
                     <td >
-                        <input data-name="qrChuanCodes" class="ercodeai layui-input" value="" />
+                        <input data-name="qrChuanCodes" class="ercodeai layui-input isClear" value="" />
                     </td>
                     <td >
-                        <input class="rfidai layui-input" data-name="rfChuanIds" value="" />
+                        <input class="rfidai layui-input isClear" data-name="rfChuanIds" value="" />
                     </td>
                     <td>
                         <input type="text" data-name="materielStoragePrice" class="layui-input materielPrice" value="">

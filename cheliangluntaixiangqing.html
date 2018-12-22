@@ -159,10 +159,10 @@
                     <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
                     <td><input data-name="rimsNum" type="text" class="layui-input rimsNum"></td>
                     <td>
-                        <input type="text" class="layui-input rimsProductionId" data-name="rimsProductionId">
+                        <input type="text" class="layui-input rimsProductionId isClear" data-name="rimsProductionId">
                     </td>
-                    <td><input type="text" class="layui-input rimsQrCode" data-name="rimsQrCode"></td>
-                    <td class=""><input type="text" class="layui-input rimsRfId" data-name="rimsRfId"></td>
+                    <td><input type="text" class="layui-input rimsQrCode isClear" data-name="rimsQrCode"></td>
+                    <td class=""><input type="text" class="layui-input rimsRfId isClear" data-name="rimsRfId"></td>
                     <td class=""><input type="text" class="layui-input rimsStoragePrice" data-name="rimsStoragePrice"></td>
                     <td rowspan="2" class="ai">
                         <input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
@@ -200,13 +200,13 @@
                         <input type="text" data-name="tireNum" class="layui-input save-data" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input tireProductionId" data-name="tireProductionId">
+                        <input type="text" class="layui-input tireProductionId isClear" data-name="tireProductionId">
                     </td>
                     <td class="ercode">
-                        <input type="text" class="layui-input qrCode" data-name="qrCode">
+                        <input type="text" class="layui-input qrCode isClear" data-name="qrCode">
                     </td>
                     <td class="rfid">
-                        <input type="text" class="layui-input rfId" data-name="rfId">
+                        <input type="text" class="layui-input rfId isClear" data-name="rfId">
                     </td>
                     <td>
                         <input type="text" class="layui-input tireStoragePrice" data-name="tireStoragePrice">
@@ -559,37 +559,7 @@
     }
     // 保存
     function save(params) {
-        console.log(params);
-        window.parent.layer.closeAll();
-        if (params == 1) {
-            // $('.rimsProductionId').val('')
-            // $('.tireProductionId').val('')
-            // $('.sensorProductionId').val('')
-
-            // $('.rimsQrCode').val('')
-            // $('.qrCode').val('')
-            // $('.sensorQrCode').val('')
-
-            // $('.rimsRfId').val('')
-            // $('.rfId').val('')
-            // $('.sensorRfId').val('')
-            $('.layui-input').val('');
-        } else if (params == 2) {
-            // $('.layui-input').val('');
-        } else {
-            window.parent.parent.$('.x-iframe').attr('src', '');
-            // window.parent.parent.$('.layui-tab-title li').eq(0).find('i').remove();
-            let arr_li = window.parent.parent.$('.layui-tab-title li');
-            arr_li.each((index, item) => {
-                console.log($(item).text(), $(item).text().indexOf('车辆物料'));
-                if ($(item).text().indexOf('车辆物料') != -1) {
-                    window.parent.parent.$(item).remove();
-                    // window.parent.parent.$('.layui-tab-title li').eq( index ).remove();
-                }
-            });
-        }
-
-        return;
+       
         let data = {};
         $('.saves input').each(function () {
             console.log($(this).data('name') == 'tireName', $(this).val());
@@ -619,6 +589,15 @@
             type: 'post',
             data: data,
             success: function (res) {
+                if (params == 1) {
+            $('.isClear').val('')
+        }
+        if(params == 2) {
+            $('.saves input').val('')  
+        }
+        if (params == 3) {
+            alert('自动关闭失败,请手动关闭!')
+        }
                 selWl()
                 layer.msg("保存成功")
             }
@@ -903,13 +882,13 @@
                         <input type="text" data-name="sensorNum" class="layui-input ai-data sensorNum" value="">
                     </td>
                     <td>
-                        <input  class="layui-input sensorProductionId " data-name="sensorProductionId">
+                        <input  class="layui-input sensorProductionId isClear" data-name="sensorProductionId">
                     </td>
                     <td class="sensorQrCode">
-                        <input  class="layui-input sensorQrCode " data-name="sensorQrCode">
+                        <input  class="layui-input sensorQrCode isClear" data-name="sensorQrCode">
                     </td>
                     <td class="sensorRfId">
-                        <input  class="layui-input sensorRfId " data-name="sensorRfId">
+                        <input  class="layui-input sensorRfId isClear" data-name="sensorRfId">
                     </td>
                     <td class="sensorStoragePrice">
                         <input  class="layui-input sensorStoragePrice " data-name="sensorStoragePrice">

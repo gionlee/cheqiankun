@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        .select {
+            height: 40px;
+            padding: 20px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+        }
+
+        .search {
+            width: 200px;
+            height: 38px;
+            margin: 0 auto;
+            display: inline-block;
+            padding-top: 1px;
+
+        }
+
+        select {
+            height: 36px;
+            min-width: 80px;
+        }
+
+        .layui-input {
+            border: 0;
+            outline: none;
+        }
+
+        .btn {
+            display: inline-block;
+
+        }
+
+        .next {
+            text-align: center;
+        }
+
+        .layui-table td,
+        .layui-table th {
+            padding: 0;
+            text-align: center;
+            height: 36px;
+            line-height: 36px;
+            font-size: 14px;
+        }
+
+        .hanf {
+            width: 49%;
+        }
+
+        .layui-input-block {
+            margin-left: 0px;
+            padding: 0 5px;
+        }
+
+        .control {
+            min-width: 110px;
+        }
+
+        .num {
+            min-width: 50px;
+        }
+
+        .top-nav {
+            font-size: 14px;
+            list-style: none;
+            position: relative;
+            display: none;
+        }
+
+        .top-nav li {
+            float: left;
+            list-style: none;
+            margin-right: 1px;
+        }
+
+        .top-nav li a {
+            height: 40px;
+            line-height: 40px;
+            text-decoration: none;
+            background: #ccc;
+            color: #666666;
+            display: block;
+            width: 200px;
+            text-align: center;
+        }
+
+        .top-nav li a:hover {
+            background: #666;
+            color: #FFF;
+        }
+
+        .top-nav ul {
+            list-style: none;
+            display: none;
+            width: 200px;
+            padding: 0;
+            position: relative;
+        }
+
+        .top-nav li ul {
+            position: absolute;
+            top: 0;
+            left: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">客户信息</li>
+                <li>联系人</li>
+                <li>财务信息</li>
+                <li>积分信息</li>
+                <li>动态信息</li>
+                <li>车辆信息</li>
+                <li>物料寿命</li>
+                <li>仓库管理</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <table id="table" class="layui-table">
+                        <tbody class="khbody">
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 联系人 -->
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th colspan="16">
+                                    提示：为了方便找回密码，请正确填写手机号，邮箱，QQ，微信号
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="num" style="width: 2.5%;">序号</th>
+                                <th style="width: 5%;">姓名</th>
+                                <th style="width: 5%;">性别</th>
+                                <th style="width: 5%;">职务</th>
+                                <th style="width: 5%;">主管范围</th>
+                                <th style="width: 7.5%;">电话</th>
+                                <th style="width: 7.5%;">手机</th>
+                                <th style="width: 7.5%;">传真</th>
+                                <th style="width: 7.5%;">邮箱</th>
+                                <th style="width: 7.5%;">QQ</th>
+                                <th style="width: 7.5%;">微信</th>
+                                <th colspan="2" style="width: 15%">日期类型</th>
+                                <th style="width:5%;">录入人</th>
+                                <th style="width:7.5%;">时间</th>
+                                <th class="control" style="width:10%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="lxrbody">
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    <input type="text" name="conName" class="layui-input" value="薛骥">
+                                </td>
+                                <td>
+                                    <select name="" id="">
+                                        <option value="0" checked>男</option>
+                                        <option value="1">女</option>
+                                    </select>
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conRole" class="layui-input" value="总经理">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conRange" class="layui-input" value="全部">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conPhone" class="layui-input" value="电话">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conMobPhone" class="layui-input" value="手机">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conFax" class="layui-input" value="传真">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conEmail" class="layui-input" value="邮箱">
+
+                                </td>
+                                <td>
+                                    <input type="text" name="conQq" class="layui-input" value="QQ">
+                                </td>
+                                <td>
+                                    <input type="text" name="conWeixin" class="layui-input" value="微信">
+                                </td>
+                                <td>
+                                    <input type="text" name="conDateType" class="layui-input" value="日期类型">
+                                </td>
+                                <td>
+                                    <input type="text" name="conImportantDate" id="typedate" class="layui-input" lay-verify="date" value="">
+                                </td>
+                                <td>薛骥</td>
+                                <td>2018-08-08</td>
+                                <td class="control">
+                                    <button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 财务信息 -->
+                    <table class="layui-table">
+                        <tbody>
+                            <tr>
+                                <td>法人代码号</td>
+                                <td colspan="2"><input type="text" name="finFrNo" class="layui-input"></td>
+                                <td>税务登记号</td>
+                                <td colspan="2"><input type="text" name="finDjNo" class="layui-input"></td>
+                                <td>地址电话</td>
+                                <td colspan="2"><input type="text" name="finAddress" class="layui-input"></td>
+                                <td>税务类型</td>
+                                <td colspan="4"><input type="text" name="finType" class="layui-input"></td>
+                                <td>操作</td>
+                            </tr>
+                            <tr>
+                                <td>账户1</td>
+                                <td colspan="2"><input type="text" name="finvType" class="layui-input"></td>
+                                <td>开户银行</td>
+                                <td colspan="2"><input type="text" name="finvBank" class="layui-input"></td>
+                                <td>账号</td>
+                                <td colspan="2"><input type="text" name="finvNumber" class="layui-input"></td>
+                                <td>录入人</td>
+                                <td colspan="2"><input type="text" name="finvUser" class="layui-input"></td>
+                                <td colspan="2"><input type="text" name="finvDate" class="layui-input"></td>
+                                <td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button
+                                        class="layui-btn layui-btn-danger layui-btn-sm">删除</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 积分信息 -->
+                    <table class="layui-table">
+                        <tbody>
+                            <tr>
+                                <td>累计积分</td>
+                                <td><input type="text" name="intLj" class="layui-input"></td>
+                                <td>使用积分</td>
+                                <td><input type="text" name="intSy" class="layui-input"></td>
+                                <td>可用积分</td>
+                                <td><input type="text" name="intKy" class="layui-input"></td>
+                                <td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm">修改</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 动态信息 -->
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>添加时间</th>
+                                <th colspan="10">信息内容</th>
+                                <th>添加人</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" name="date" lay-verify="date" value="2018-06-05" autocomplete="off" class="layui-input date">
+                                </td>
+                                <td colspan="10"><input type="text" class="layui-input"></td>
+                                <td>薛骥</td>
+                                <td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button
+                                        class="layui-btn layui-btn-danger layui-btn-sm">删除</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 车辆信息 -->
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th class="num" style="width: 2.5%;">序号</th>
+                                <th style="width: 5%;">登记日期</th>
+                                <th style="width: 5%;">车辆品牌</th>
+                                <th style="width: 5%;">车辆型号</th>
+                                <th style="width: 5%;">生产日期</th>
+                                <th style="width: 5%;">车辆牌号</th>
+                                <th style="width: 5%;">自编车号</th>
+                                <th style="width: 5%;">购买日期</th>
+                                <th style="width: 5%;">注册日期</th>
+                                <th style="width: 5%;">识别号</th>
+                                <th style="width: 5%;">变速箱号</th>
+                                <th style="width: 5%;">发动机号</th>
+                                <th style="width: 7.5%;">行驶证号</th>
+                                <th style="width: 5%;">驱动方式</th>
+                                <th style="width: 5%;">车轴/轮数</th>
+                                <th style="width: 5%;">能源类型</th>
+                                <th style="width: 7.5%;">车辆功率</th>
+                                <th class="control" style="width:7.5%;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="clbody">
+                        </tbody>
+                    </table>
+                    <table class="layui-table">
+                        <tbody>
+                            <tr>
+                                <td>登记日期</td>
+                                <td colspan="2">
+                                    <input type="text" name="date" lay-verify="date" value="2018-06-05" autocomplete="off" class="layui-input date">
+                                </td>
+                                <td>车辆牌号</td>
+                                <td colspan="2"><input type="text" class="layui-input" value="苏D9329挂"></td>
+                                <td>自编车号</td>
+                                <td colspan="2"><input type="text" class="layui-input"></td>
+                                <td>注册日期</td>
+                                <td>
+                                    <input type="text" name="date" lay-verify="date" value="2018-06-05" autocomplete="off" class="layui-input date">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>车辆品牌</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>车辆型号</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>车辆识别号</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>发动机号</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>驱动方式</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>车轴/轮数</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>能源类型</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>车辆功率</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>车辆承载</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>车身颜色</td>
+                                <td colspan="2">
+                                    <select name="" id="" class="hanf"></select>
+                                    <select name="" id="" class="hanf"></select>
+                                </td>
+                                <td>车辆类型</td>
+                                <td colspan="2">
+                                    <select name="" id="" class="hanf"></select>
+                                    <select name="" id="" class="hanf"></select>
+                                </td>
+                                <td>车辆自重</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>轮辋规格</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>轮辋型号</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>轮辋类型</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>乘员/尺寸</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>制动类型</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>悬架类型</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>运营范围</td>
+                                <td colspan="2">
+                                    <select name="" id=""></select>
+                                </td>
+                                <td>车辆用途</td>
+                                <td colspan="2">
+                                    <div class="layui-input-block">
+                                        <select name="interest" lay-filter="aihao">
+                                            <option value=""></option>
+                                            <option value="0">写作</option>
+                                            <option value="1" selected="">阅读</option>
+                                            <option value="2">游戏</option>
+                                            <option value="3">音乐</option>
+                                            <option value="4">旅行</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="layui-form">
+                                    <input type="checkbox" name="" lay-skin="primary" title="前桥提升" checked="">
+                                    <input type="checkbox" name="" lay-skin="primary" title="后桥提升" checked="">
+                                    <input type="checkbox" name="" lay-skin="primary" title="随动转向" checked="">
+                                </td>
+                                <td>产权所有</td>
+                                <td colspan="5">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>关联车辆</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="layui-tab-item">
+                    <table class="layui-table" lay-filter="table">
+                        <thead>
+                            <tr>
+                                <th class="num">序号</th>
+                                <th>品名</th>
+                                <th>规格</th>
+                                <th>品牌</th>
+                                <th>型号</th>
+                                <th>产地</th>
+                                <th>寿命类型</th>
+                                <th>提示预警</th>
+                                <th>达限预警</th>
+                                <th>立即更换</th>
+                                <th>启用</th>
+                                <th class="control">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td onclick="setValue()">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td onclick="setValue()">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td onclick="setValue()">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td onclick="setValue()">
+                                    <select name="" id="">
+                                        <option value="1">剩余胎纹</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!-- 物料信息 -->
+                    <ul class="top-nav">
+                        <li><a href="#">电器-GPS主机</a>
+                            <ul>
+                                <li><a href="#">下一级</a>
+                                    <ul>
+                                        <li><a href="#">下一级</a>
+                                            <ul>
+                                                <li><a href="#">下一级</a>
+                                                    <ul>
+                                                        <li><a href="#">下一级</a></li>
+
+                                                    </ul>
+                                                </li>
+
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="layui-tab-item">
+                    <!-- 仓库管理 -->
+                    <table class="layui-table" lay-filter="table">
+                        <thead>
+                            <tr>
+                                <th class="num">序号</th>
+                                <th colspan="2">仓库名</th>
+                                <th colspan="4">地址</th>
+                                <th>负责人</th>
+                                <th>电话</th>
+                                <th colspan="2">录入人</th>
+                                <th class="control">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td colspan="4">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td colspan="2">
+                                    <input type="text" class="layui-input">
+                                </td>
+                                <td>
+                                    <button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const API = 'http://106.12.18.163:3340'
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#typedate'
+        })
+    })
+    layui.use('table', function () {
+        var table = layui.table
+        table.on('edit(table)', function (obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.log(obj.value); //得到修改后的值
+            console.log(obj.field); //当前编辑的字段名
+            console.log(obj.data); //所在行的所有相关数据  
+        });
+    })
+    $(function () {
+        $(".top-nav li").hover(function () {
+            $(this).has("ul").children("ul").fadeIn();
+        },
+            function () {
+                $(this).has("ul").children("ul").hide();
+            });
+    })
+    function setValue() {
+        $('.top-nav').show()
+    }
+    let data = {}
+    $('.lxrbody tr td input').each(function () {
+        console.log($(this))
+        if ($(this).attr('name')) {
+
+            data[$(this).attr('name')] = $(this).val()
+        }
+    })
+    $.ajax({
+        url: `${API}/erpCustomer/getErpCustorByCustId?custId=1`,
+        type: 'get',
+        success: function (res) {
+
+            $('.khbody').append(`
+            <tr>
+                <td style="width: 6.25%">客户编码</td>
+                <td colspan="2" style="width: 12.5%">
+                    <input name="cusCode" class="layui-input" type="text" value="${res.data.cusCode == undefined ? '' : res.data.cusCode}">
+                </td>
+                <td style="width: 6.25%">登记日期</td>
+                <td colspan="2" style="width: 12.5%">
+                    <input name="cusDjDate" type="text" class="layui-input date" value="${res.data.cusDjDate == undefined ? '' : res.data.cusDjDate}">
+                </td>
+                <td style="width: 6.25%">客户名称</td>
+                <td colspan="4" style="width: 25%">
+                    <input name="cusName" class="layui-input" type="text" value="${res.data.cusName == undefined ? '' : res.data.cusName}">
+                </td>
+                <td style="width: 6.25%">客户地址</td>
+                <td colspan="4" style="width: 25%">
+                    <input name="cusAddress" type="text" class="layui-input" value="${res.data.cusAddress == undefined ? '' : res.data.cusAddress}">
+                </td>
+            </tr>
+            <tr>
+                <td>上级单位</td>
+                <td colspan="5">
+                    <input name="cusSupCompanys" type="text" class="layui-input" value="${res.data.cusSupCompanys == undefined ? '' : res.data.cusSupCompanys}">
+                </td>
+                <td>运营类型</td>
+                <td colspan="7">
+                    <select name="" id="">
+                        <option value="">选择</option>
+                    </select>
+                </td>
+                <td style="width:6.25%">客户类型</td>
+                <td><input name="cusCusType" type="text" class="layui-input" value="${res.data.cusCusType == undefined ? '' : res.data.cusCusType}"></td>
+            </tr>
+            <tr>
+                <td>企业性质</td>
+                <td colspan="2">
+                        <input name="cusNature" type="text" class="layui-input" value="${res.data.cusNature == undefined ? '' : res.data.cusNature}">
+                </td>
+                <td>法人名称</td>
+                <td colspan="2">
+                    <input type="text" name="cusLegalPerson" class="layui-input" value="${res.data.cusLegalPerson == undefined ? '' : res.data.cusLegalPerson}">
+                </td>
+                <td>注册日期</td>
+                <td colspan="2">
+                    <input name="cusZcDate" type="text" class="layui-input date" value="${res.data.cusZcDate == undefined ? '' : res.data.cusZcDate}">
+                </td>
+                <td>注册金额（万）</td>
+                <td>
+                    <input name="cusZcFunds" type="text" class="layui-input"value="${res.data.cusZcFunds == undefined ? '' : res.data.cusZcFunds}">
+                </td>
+                <td>企业微信</td>
+                <td colspan="2">
+                    <input type="text" class="layui-input" value="${res.data.cusCode == undefined ? '' : res.data.cusCode}">
+                </td>
+                <td>企业电话</td>
+                <td>
+                    <input type="text" class="layui-input" value="${res.data.cusCode == undefined ? '' : res.data.cusCode}">
+                </td>
+            </tr>
+            <tr>
+                <td>车辆总数（辆）</td>
+                <td colspan="2">
+                    <input name="cusVehicletotal" type="text" class="layui-input" value="${res.data.cusVehicletotal == undefined ? '' : res.data.cusVehicletotal}">
+                </td>
+                <td>客车（辆）</td>
+                <td colspan="2">
+                    <input name="cusPsacar" type="text" class="layui-input" value="${res.data.cusPsacar == undefined ? '' : res.data.cusPsacar}">
+                </td>
+                <td>货车（辆）</td>
+                <td colspan="2">
+                    <input name="cusTruck" type="text" class="layui-input date" value="${res.data.cusTruck == undefined ? '' : res.data.cusTruck}">
+                </td>
+                <td>小型车（辆）</td>
+                <td>
+                    <input name="cusXCar" type="text" class="layui-input" value="${res.data.cusXCar == undefined ? '' : res.data.cusXCar}">
+                </td>
+                <td>管辖单位</td>
+                <td colspan="2">
+                    <input name="cusServiceComs" type="text" class="layui-input" value="${res.data.cusServiceComs == undefined ? '' : res.data.cusServiceComs}">
+                </td>
+                <td>分管经理</td>
+                <td>
+                    <input name="cusChargeManager" type="text" class="layui-input" value="${res.data.cusChargeManager == undefined ? '' : res.data.cusChargeManager}">
+                </td>
+            </tr>`)
+        }
+    })
+
+    // 获取车辆信息
+    $.ajax({
+        url: `${API}/erpCustomerCar/getCustomerCarBycustId?custId=1`,
+        type: 'get',
+        success: function (res) {
+            let data = res.data.reverse()
+            let str = ''
+            for (let i = 0; i < data.length; i++) {
+                let json = data[i]
+                str += `<tr>
+                            <td>${data.length - i}</td>
+                            <td>${json.carDjDate}</td>
+                            <td>${json.carBrand}</td>
+                            <td>${json.carModel}</td>
+                            <td>生产日期</td>
+                            <td>${json.carPlate}</td>
+                            <td>${json.carNumber}</td>
+                            <td>${json.carGzDate}</td>
+                            <td>注册日期</td>
+                            <td>识别号</td>
+                            <td>变速箱号</td>
+                            <td>${json.carEngine}</td>
+                            <td>行驶证号</td>
+                            <td>${json.carDrive}</td>
+                            <td>${json.carWheel}</td>
+                            <td>能源类型</td>
+                            <td>${json.carPower}</td>
+                            <td class="control">
+                                <button class="layui-btn layui-btn-warm layui-btn-sm">修改</button> <button class="layui-btn layui-btn-danger layui-btn-sm">删除</button>
+                            </td>
+                        </tr>`
+            }
+            $('.clbody').append(str)
+        }
+    })
+</script>
+
+</html>

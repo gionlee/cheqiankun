@@ -96,6 +96,7 @@
 </head>
 
 <body>
+    <div class="" onclick="chooseBox()">切换 哈哈哈</div>
     <div class="wrap">
         <ul id="list">
 
@@ -123,7 +124,7 @@
 
 
 
-    function seeInfo(id) {
+    function seeInfo(id,name) {
 
         $.ajax({
             url: API + '/erpManagement/gojianceweihuCar?custId=' + id,
@@ -165,7 +166,8 @@
                 content: $('.winbody'),
                 btn:['确定'],
                 yes: function () {
-                    window.location.href = `./xiaoshouweixiuxiangqing.html?pcar=${pcar}&gcar=${gcar}`
+                    console.log(name)
+                    window.location.href = `./xiaoshouweixiuxiangqing.html?pcar=${pcar}&gcar=${gcar}&custName=${encodeURI(encodeURI(name))}`
                 }
             });
         })
@@ -181,9 +183,7 @@
                 var html = '';
 
                 for (var key = 0 ; key < obj.length; key ++) {
-                    html += '<li onclick="seeInfo(' + obj[key].id + ')">' +
-                        `<div>${obj[key].cusName}</div>` 
-                        '</li>';
+                    html += `<li onclick="seeInfo('${obj[key].id}','${obj[key].cusName}')"><div>${obj[key].cusName}</div></li>`
                 }
                 $("#list").html(html);
             },

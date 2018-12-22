@@ -210,7 +210,6 @@
             }
         });
     })
-
     function goUrl(wareId) {
         console.log(warehouseIds);
         console.log(wareId);
@@ -385,10 +384,10 @@
                         <td>${json[13] == null ? '' : json[13]}</td>
                         <td>${json[12] == null ? '' : json[12]}</td>
                         <td class="isAll">
-                                <input style="width:50px;" type="text" class="layui-input" value="${json[16]}">
+                            <input style="width:50px;" disabled="disabled" type="number" class="layui-input isAll-input" value="${json[16]}">
                         </td>
                         <td class="isAll">
-                                <input type="checkbox">
+                                <input type="checkbox" class="isAll-checkbox" data-id="${json[0]}"/>
                         </td>
                         <td class="ctrl">
                            <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
@@ -396,13 +395,41 @@
                     </tr>`
                 })
                 $('.lists').html(str)
+                $ ( '.isAll-checkbox' ).change ( function () {
+                    $ ( '.isAll-input' ).attr ( 'disabled', "disabled" );
+                    if ( $ ( this ).prop ( 'checked' )) {
+                        $ ( this ).parent ().parent ().find ( '.isAll-input' ).removeAttr ( 'disabled' );
+                    } else {
+                        let val = $ ( this ).parent ().parent ().find ( '.isAll-input' ).val ().trim ();
+                        // console.log ( val, $('.kucun_sel').val ());
+                        // return;
+                        if ( val ) {
+                            $.ajax({
+                                url: `${API}/erpWarehouse/shezhiWarn`,
+                                data: {
+                                    custId: loadUserInfo.customer.id,
+                                    wareId: $('.kucun_sel').val (),
+                                    materielId: $ ( this ).attr ( 'data-id' ),
+                                    materielWarnAmount: Number ( val )
+                                },
+                                type: 'get',
+                                success ( argv ) {
+                                    if ( argv.code == 0 ) {
+
+                                    }
+                                }
+                            }); 
+                        }
+                    }
+                });
+
                 if($('.kucun_sel').val() != 'all') {
-            $('.isAll').show()
-            $('.ctrl').hide()
-        } else {
-            $('.isAll').hide()
-            $('.ctrl').show()
-        }
+                    $('.isAll').show()
+                    $('.ctrl').hide()
+                } else {
+                    $('.isAll').hide()
+                    $('.ctrl').show()
+                }
 
             },
             error: function () {

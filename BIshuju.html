@@ -187,6 +187,8 @@
                     <td>${json[8]}</td>
                     <td>${json[9] == '' ? ' ' : json[9]}</td>
                     <td>${json[10] == '' ? ' ' : json[10]}</td>
+                    <td>${json[19]}</td>
+                    <td>${json[18]}</td>
                     <td>${json[11] == '' ? ' ' : json[11]}</td>
                     <td>${json[14] == '' ? ' ' : json[14]}</td>
                     <td>${json[13]}</td>
@@ -194,39 +196,38 @@
                     <td>${json[15]}</td>
                     <td>${json[16]}</td>
                     <td>${json[17]}</td>
-                    <td>${json[18]}</td>
-                    <td>${json[19]}</td>
                     <td>${json[20]}</td>
                     <td>启动</td>
                     <td>启动</td>
                     <td>
-                        <div class="layui-btn layui-btn-xs"  onclick="update(${i},'${json[9]}lz-zl${json[10]}lz-zl${json[11]}lz-zl${json[12]}')">修改</div>
+                        <div class="layui-btn layui-btn-xs" onclick="update(${i},'${json[9]}lz-zl${json[10]}lz-zl${json[19]}lz-zl${json[18]}', ${json[5]})">修改</div>
                     </td></tr>`
 
             })
             $('.lists').append(str)
         }
     })
-    function update(indexs, a) {
-
+    function update(indexs, a, carPlate) {
         a = a.split('lz-zl')
-        $('.datalist').html()
-        $('.datalist').append(`<tr>
-                    <td>胎压接口</td>
-                    <td><input type="text" class="layui-input tyjk" value="${a[0]}"></td>
-                </tr>
-                <tr>
-                    <td>GPS接口</td>
-                    <td><input type="text" class="layui-input gpsjk" value="${a[1]}"></td>
-                </tr>
-                <tr>
-                    <td>GPS卡号</td>
-                    <td><input type="text" class="layui-input gpskh" value="${a[2]}"></td>
-                </tr>
-                <tr>
-                    <td>胎压卡号</td>
-                    <td><input type="text" class="layui-input tykh" value="${a[3]}"></td>
-                </tr>`)
+        $('.datalist').empty ();
+        $('.datalist').append(
+            `<tr>
+                <td class="ids">胎压接口</td>
+                <td><input type="text" class="layui-input tyjk" value="${a[0]}"></td>
+            </tr>
+            <tr>
+                <td class="ids">GPS接口</td>
+                <td><input type="text" class="layui-input gpsjk" value="${a[1]}"></td>
+            </tr>
+            <tr>
+                <td class="ids">GPS卡号</td>
+                <td><input type="text" class="layui-input gpskh" value="${a[2]}"></td>
+            </tr>
+            <tr>
+                <td class="ids">胎压卡号</td>
+                <td><input type="text" class="layui-input tykh" value="${a[3]}"></td>
+            </tr>`
+        );
         layui.use('layer', function () {
             var layer = layui.layer;
             layer.open({
@@ -239,13 +240,22 @@
                     arrs[index][10] = $('.gpsjk').val()
                     arrs[index][11] = $('.gpskh').val()
                     arrs[index][12] = $('.tykh').val()
-                    console.log(arrs[index])
+
+                    let ids = '';
+                    let value = '';
+                    $ ( '.datalist tr' ).each ( ( index, item ) => {
+                        ids += $ ( item ).find ( '.ids' ).html () + ( index < $ ( '.datalist tr' ).length - 1 ? ',' : '');
+                        value += $ ( item ).find ( 'input' ).val () + ( index < $ ( '.datalist tr' ).length - 1 ? ',' : '');
+                    });
                     $.ajax({
                         url: `${API}/erpBidata/updateBidata`,
                         type: 'post',
                         data: {
-                            ids: arrs[indexs][0],
-                            values: arrs[indexs].toString()
+                            // ids: arrs[indexs][0],
+                            // values: arrs[indexs].toString()
+                            carPlate: carPlate,
+                            ids: ids,
+                            values: value
                         },
                         success: function (res) {
                             layer.close(index);

@@ -318,8 +318,16 @@
                             <tr>
                                 <th>法人代码号</th>
                                 <th>税务登记号</th>
-                                <th>地址电话</th>
+                                <th colspan="2">地址电话</th>
                                 <th>税务类型</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="cwlist">
+
+                        </tbody>
+                        <thead>
+                            <tr>
                                 <th>账户</th>
                                 <th>开户银行</th>
                                 <th>账号</th>
@@ -328,7 +336,7 @@
                                 <th>操作</th>
                             </tr>
                         </thead>
-                        <tbody class="cwlist">
+                        <tbody class="zhlist">
 
                         </tbody>
                     </table>
@@ -998,6 +1006,20 @@
         }
 
     })
+
+
+    // 设置 账户类型下拉
+    let zhlxList = []
+    $.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=账户类型`,
+        type: 'get',
+        async: false,
+        success: function (res) {
+            zhlxList = res.data.parametersChildList
+
+        }
+
+    })
     // 运营类型修改
     let typeStr = ''
 
@@ -1041,7 +1063,6 @@
         data.cusOperateType = typeStr
         data.id = custId
         data.cusNature = $('.cusNature').val()
-        console.log(data)
         $.ajax({
             url: `${API}/erpCustomer/inertOrUpdateCustomer`,
             type: 'post',
@@ -1059,6 +1080,7 @@
     let cwList = []
     // 查询财务信息
     selCw()
+    let cwData = {}
 
     function selCw() {
         $.ajax({
@@ -1066,27 +1088,49 @@
             type: 'get',
             success: function (res) {
                 cwList = res.data.reverse()
-                let str = ''
+                let str =
+                    `<tr class="savecw">
+                    <td><input type="hidden" data-name="viceId" value="" ><input type="hidden" data-name="id" value="" ><input type="text" data-name="finFrNo" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="finDjNo" class="layui-input" value=""></td>
+                    <td colspan="2"><input type="text" data-name="finAddress" class="layui-input" value=""></td>
+                    <td> <select class="finvType_new">
+                            </select></td>
+                            <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveCw()">保存</button>
+                    </tr>`
+                let zhstr = ''
+
                 $.each(cwList, function (i, json) {
-                    str +=
-                        `<tr class="cwxx_${i}">
+                    cwData = json
+                    str =
+                        `<tr class="savecw">
                     <td><input type="hidden" data-name="viceId" value="${json.viceId}" ><input type="hidden" data-name="id" value="${json.id}" ><input type="text" data-name="finFrNo" class="layui-input" value="${json.finFrNo == null ? '' : json.finFrNo}"></td>
                     <td><input type="text" data-name="finDjNo" class="layui-input" value="${json.finDjNo == null ? '' : json.finDjNo}"></td>
-                    <td><input type="text" data-name="finAddress" class="layui-input" value="${json.finAddress == null ? '' : json.finAddress}"></td>
+                    <td colspan="2"><input type="text" data-name="finAddress" class="layui-input" value="${json.finAddress == null ? '' : json.finAddress}"></td>
                     <td> <select class="finvType_${i}">
                             </select></td>
-                    <td>
-                        <input type="text" data-name="finvType" class="layui-input" value="${json.finvType == null ? '' : json.finvType}"></td>
+                            <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveCw(${i})">保存</button>
+                    </tr>`
+                    zhstr +=
+                        `<tr class="cwxx_${i}"><td>
+                        <select></select>
+                        </td>
                     <td><input type="text" data-name="finvBank" class="layui-input" value="${json.finvBank == null ? '' : json.finvBank}"></td>
                     <td><input type="text" data-name="finvNumber" class="layui-input" value="${json.finvNumber == null ? '' : json.finvNumber}"></td>
                     <td><input type="text" data-name="finvUser" readonly class="layui-input" value="${json.finvUser == null ? '' : json.finvUser}"></td>
                     <td><input type="text" data-name="finvDate" readonly class="layui-input" value="${json.finvDate == null ? '' : json.finvDate}"></td>
-                    <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveCw(${i})">保存</button>
-                        <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="delCw(${i})">删除</button>
+                    <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveZh(${i},'${json.viceId}')">保存</button>
+                        <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="delZh(${i})">删除</button>
                         </td>
                     </tr>`
                 })
                 $('.cwlist').html(str)
+                $('.zhlist').html(zhstr)
+                let newstr = '<option></option>'
+                $.each(swlxList, function (j, k) {
+                    newstr += `<option value="${k.name}">${k.name}</option>`
+                })
+                $(`.finvType_new`).html(newstr)
+
                 $.each(cwList, function (i, json) {
                     let str = '<option></option>'
                     $.each(swlxList, function (j, k) {
@@ -1094,6 +1138,16 @@
                     })
                     $(`.finvType_${i}`).html(str)
                     $(`.finvType_${i}`).val(json.finType)
+
+
+                    let zhstr = '<option></option>'
+                    $.each(zhlxList, function (i, k) {
+                        zhstr += `<option value="${k.name}">${k.name}</option>`
+                    })
+                    $(`.cwxx_${i} select`).html(zhstr)
+                    console.log(json.finvType,'666')
+                    $(`.cwxx_${i} select`).val(json.finvType)
+
                 })
                 layui.use('laydate', function () {
                     var laydate = layui.laydate;
@@ -1120,31 +1174,63 @@
         })
     }
     // 删除财务信息
-    function delCw(i) {
+    function delZh(i) {
         if (confirm('是否删除？')) {
             $.ajax({
-                url: `${API}/erpCustomerFinance/removeCustomerFinance?customerCarId=${cwList[i].id}`,
+                url: `${API}/erpCustomerFinanceVice/removeCustFinanceVice?customerCarId=${cwList[i].viceId}`,
                 type: 'get',
                 success: function (res) {
 
                     layer.msg('删除成功!')
+                    selCw()
                 }
             })
         }
     }
-    // 保存财务信息
-    function saveCw(index) {
+    // 保存银行信息
+    function saveZh(index,id) {
+        console.log(id)
         let data = {}
-        $(`.cwxx_${index} input`).each(function () {
-            data[$(this).data('name')] = $(this).val()
+        data.finType = cwData.finType
+        data.attribute = loadUserInfo.user.id
+        data.financeId = cwData.id
+        data.customerId = loadUserInfo.customer.id
+        if (index != 'undefined') {
+
+            $(`.cwxx_${index} input`).each(function () {
+                data[$(this).data('name')] = $(this).val()
+            })
+            data.finvType = $(`.cwxx_${index} select`).val()
+            data.id = id
+        } else {
+            $(`.cwxx input`).each(function () {
+                data[$(this).data('name')] = $(this).val()
+            })
+        }
+        $.ajax({
+            url: `${API}/erpCustomerFinanceVice/inertOrUpdateCustFinanceVice`,
+            type: 'post',
+            data: data,
+            success: function (res) {
+                if (res.code == 0) {
+                    layer.msg('保存成功!')
+                    selCw()
+                }
+            }
         })
-        data.finType = $(`.finvType_${index}`).val()
-        data.customerId = custId
-        console.log(data, '2222')
+
+    }
+    // 保存财务信息
+    function saveCw() {
+
+        $('.savecw input').each(function () {
+            cwData[$(this).data('name')] = $(this).val()
+        })
+        cwData.finType = $('.savecw select').val()
         $.ajax({
             url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
             type: 'post',
-            data: data,
+            data: cwData,
             success: function (res) {
                 layer.msg('保存成功！');
                 selCw()
@@ -1153,21 +1239,26 @@
     }
     // 新增财务信息
     function addCw() {
-        $('.cwlist').append(
+        $('.zhlist').prepend(
             `<tr class="cwxx">
-                    <td><input type="text" data-name="finFrNo" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="finDjNo" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="finAddress" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="finType" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="finvType" class="layui-input" value=""></td>
+                    <td>
+                        <select class='newCw'>
+                            
+                            </select>    
+                    </td>
                     <td><input type="text" data-name="finvBank" class="layui-input" value=""></td>
                     <td><input type="text" data-name="finvNumber" class="layui-input" value=""></td>
                     <td><input type="text" data-name="finvUser" class="layui-input" readonly value="${loadUserInfo.user.realName}"></td>
                     <td><input type="text" data-name="finvDate" class="layui-input" readonly value="${getDays()}"></td>
-                    <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveCw()">保存</button>
+                    <td class="control"><button class="layui-btn  layui-btn-xs" onclick="saveZh()">保存</button>
                         </td>
                     </tr>`
         )
+        let str = '<option></option>'
+        $.each(zhlxList, function (i, k) {
+            str += `<option value="${k.name}">${k.name}</option>`
+        })
+        $('.newCw').html(str)
     }
     // 查询积分信息
     function selJf() {
@@ -1175,7 +1266,6 @@
             url: `${API}/erpCustomerIntegral/getcustIntegralByCustId?custId=${custId}`,
             type: 'get',
             success: function (res) {
-                console.log(res);
                 let json = res.data
                 $('.jfxx').html(
                     `<td width="16%">累计积分<input type="hidden" data-name="id" class="layui-input" value="${json.id}"></td>
@@ -1208,31 +1298,37 @@
         })
     }
     // 保存车辆信息
-    function saveCarInfo(i,index) {
+    function saveCarInfo(i, index, bol) {
         let data = {}
-        if (i == 'true') {
+        if (bol) {
             data.id = ''
             data.carFrontAxle = $('.aqqts').is(':checked')
             data.carRearAxle = $('.ahqts').is(':checked')
             data.carTurn = $('.azdzx').is(':checked')
-            $('.table .carInfos').each(function () {
-                data[$(this).data('name')] = $(this).val()
-            })
+            if (index) {
+                $(`.table_${index} .carInfos`).each(function () {
+                    data[$(this).data('name')] = $(this).val()
+                })
+            } else {
+                $('.table .carInfos').each(function () {
+                    data[$(this).data('name')] = $(this).val()
+                })
+            }
             data.carDrive = $('.table .carDrive').val() // 驱动方式
-        data.carWheel = $('.table .carWheel').val() // 车轴轮数
-        data.carLoad = $('.table .carLoad').val()
-        data.carColor1 = $('.table .carColor1').val()
-        data.carColor2 = $('.table .carColor2').val()
-        data.carType1 = $('.table .carType1').val()
-        data.carType2 = $('.table .carType2').val()
-        data.carRimType = $('.table .carRimType').val()
-        data.carBrakingType = $('.table .carBrakingType').val()
-        data.carSuspensionType = $('.table .carSuspensionType').val()
-        data.carOperationType = $('.table .carOperationType').val()
-        data.carOperateType = $('.table .carOperateType').val()
-        data.carUse = $('.table .carUse').val()
-        data.carServiceCentre = $('.table .carServiceCentre').val()
-        data.carShiBieNumber = $('.table .carShiBieNumber').val()
+            data.carWheel = $('.table .carWheel').val() // 车轴轮数
+            data.carLoad = $('.table .carLoad').val()
+            data.carColor1 = $('.table .carColor1').val()
+            data.carColor2 = $('.table .carColor2').val()
+            data.carType1 = $('.table .carType1').val()
+            data.carType2 = $('.table .carType2').val()
+            data.carRimType = $('.table .carRimType').val()
+            data.carBrakingType = $('.table .carBrakingType').val()
+            data.carSuspensionType = $('.table .carSuspensionType').val()
+            data.carOperationType = $('.table .carOperationType').val()
+            data.carOperateType = $('.table .carOperateType').val()
+            data.carUse = $('.table .carUse').val()
+            data.carServiceCentre = $('.table .carServiceCentre').val()
+            data.carShiBieNumber = $('.table .carShiBieNumber').val()
         } else {
             data = carList[index]
             data.id = i;
@@ -1243,26 +1339,25 @@
                 data[$(this).data('name')] = $(this).val()
             })
             data.carDrive = $(`.table_${index} .carDrive`).val() // 驱动方式
-        data.carWheel = $(`.table_${index} .carWheel`).val() // 车轴轮数
-        data.carLoad = $(`.table_${index} .carLoad`).val()
-        data.carColor1 = $(`.table_${index} .carColor1`).val()
-        data.carColor2 = $(`.table_${index} .carColor2`).val()
-        data.carType1 = $(`.table_${index} .carType1`).val()
-        data.carType2 = $(`.table_${index} .carType2`).val()
-        data.carRimType = $(`.table_${index} .carRimType`).val()
-        data.carBrakingType = $(`.table_${index} .carBrakingType`).val()
-        data.carSuspensionType = $(`.table_${index} .carSuspensionType`).val()
-        data.carOperationType = $(`.table_${index} .carOperationType`).val()
-        data.carOperateType = $(`.table_${index} .carOperateType`).val()
-        data.carUse = $(`.table_${index} .carUse`).val()
-        data.carServiceCentre = $(`.table_${index} .carServiceCentre`).val()
-        data.carShiBieNumber = $(`.table_${index} .carShiBieNumber`).val()
+            data.carWheel = $(`.table_${index} .carWheel`).val() // 车轴轮数
+            data.carLoad = $(`.table_${index} .carLoad`).val()
+            data.carColor1 = $(`.table_${index} .carColor1`).val()
+            data.carColor2 = $(`.table_${index} .carColor2`).val()
+            data.carType1 = $(`.table_${index} .carType1`).val()
+            data.carType2 = $(`.table_${index} .carType2`).val()
+            data.carRimType = $(`.table_${index} .carRimType`).val()
+            data.carBrakingType = $(`.table_${index} .carBrakingType`).val()
+            data.carSuspensionType = $(`.table_${index} .carSuspensionType`).val()
+            data.carOperationType = $(`.table_${index} .carOperationType`).val()
+            data.carOperateType = $(`.table_${index} .carOperateType`).val()
+            data.carUse = $(`.table_${index} .carUse`).val()
+            data.carServiceCentre = $(`.table_${index} .carServiceCentre`).val()
+            data.carShiBieNumber = $(`.table_${index} .carShiBieNumber`).val()
         }
 
-        
+
         data.userId = loadUserInfo.user.id
         data.customerId = custId
-        console.log(data)
         if (flag_car) { // 新增
             $.ajax({
                 url: `${API}/erpCustomerCar/inertOrUpdateCustomerCar`,
@@ -1366,18 +1461,10 @@
         var owlsmList = document.querySelectorAll('.wlsmList')[0];
         var aowlsmList_tr = owlsmList.querySelectorAll('tr');
         var oqiyong = aowlsmList_tr[i].querySelectorAll('.qiyong')[0];
-
-        // console.log(wlsmList[i]);
-        // console.log(owlsmList);
-        // console.log(aowlsmList_tr);
-        // console.log(aowlsmList_tr[i]);
-        // console.log(oqiyong);
         if ($(oqiyong).html().replace(/(^\s*)|(\s*$)/g, "") == '启用') {
             data.limEnable = 1;
-            // console.log($(oqiyong).html());
         } else if ($(oqiyong).html().replace(/(^\s*)|(\s*$)/g, "") == '停用') {
             data.limEnable = 0;
-            // console.log($(oqiyong).html());
         }
 
 
@@ -1507,7 +1594,6 @@
             $(`.ckgl_${index} input`).each(function () {
                 data[$(this).data('name')] = $(this).val()
             })
-            console.log(data)
         } else {
             $(`.ckgl input`).each(function () {
                 data[$(this).data('name')] = $(this).val()
@@ -1515,6 +1601,7 @@
         }
         data.customerId = custId
         data.warDate = `${new Date().getFullYear()}- ${new Date().getMonth() + 1} - ${new Date().getDate()}`
+        data.ren = loadUserInfo.user.realName
         $.ajax({
             url: `${API}/erpCustomerWarehouse/inertOrUpdateCustWarehouse`,
             type: 'post',
@@ -1692,7 +1779,6 @@
             url: `${API}/erpCustomerLimit/getcustLimitByCustId?custId=${custId}`,
             type: 'get',
             success: function (res) {
-                console.log(res);
                 let arr = res.data.reverse()
                 let str = ''
                 wlsmList = res.data.reverse()
@@ -1859,7 +1945,7 @@
                 content: $('.addbody'),
                 btn: ['保存', '取消'],
                 yes: function (index) {
-                    saveCarInfo('true')
+                    saveCarInfo('', '', true)
                     layui.layer.close(index)
                 }
             })
@@ -2036,7 +2122,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr><td>`
+                                <tr><td colspan="3">`
         if (json.carFrontAxle == 'true') {
             carstr += `<input type="checkbox"  class="qqts" name="" lay-skin="primary" title="前桥提升" checked>前桥提升`
         } else {
@@ -2136,11 +2222,11 @@
                 content: $('.winbody'),
                 btn: ['保存', '另存', '取消'],
                 yes: function (indexs) {
-                    saveCarInfo(json.id,index)
+                    saveCarInfo(json.id, index)
                     layui.layer.close(indexs)
                 },
                 btn2: function (index) {
-                    saveCarInfo(true)
+                    saveCarInfo('', index, true)
                     layer.close(index)
                 }
             })
@@ -2317,7 +2403,6 @@
     }
     //　保存联系人信息
     function saveLxr(index) {
-        console.log(Boolean(index))
         let data = {}
         if (index || index == 0) {
             data = saveLxr[index]
@@ -2333,6 +2418,7 @@
             })
             data.conSex = $(`.sex`).val()
             data.luRuPeople = loadUserInfo.user.realName
+            data.ren = loadUserInfo.user.realName
         }
         data.customerId = custId
         $.ajax({
@@ -2489,7 +2575,6 @@
         var operate_states;
         for (var i in setData) {
             var params_name = setData[i].name;
-            // console.log(params_name)
             switch (params_name) {
                 case '驱动方式':
                     driving_mode = setData[i].parametersChildList;
