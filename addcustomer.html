@@ -381,15 +381,19 @@
 								<td>操作</td>
 							</tr>
 							<tr>
-								<td>账户1</td>
-								<td colspan="2"><input type="text" data-name="finvType" class="layui-input"></td>
+								<td>账户</td>
+								<td colspan="2">
+									<select data-name="finvType" class="cwzh">
+										
+									</select>
+								</td>
 								<td>开户银行</td>
 								<td colspan="2"><input type="text" data-name="finvBank" class="layui-input"></td>
 								<td>账号</td>
 								<td colspan="2"><input type="text" data-name="finvNumber" class="layui-input"></td>
 								<td>录入人</td>
 								<td colspan="2"><input type="text" readonly data-name="finvUser" class="layui-input cwlrr"></td>
-								<td colspan="2"><input type="text" data-name="finvDate" class="layui-input cwlrsj"></td>
+								<td colspan="2"><input type="text" readonly data-name="finvDate" class="layui-input cwlrsj"></td>
 								<td class="control"><button class="layui-btn layui-btn-warm layui-btn-sm" onclick="saveCw()">保存</button></td>
 							</tr>
 						</tbody>
@@ -442,20 +446,20 @@
 						<table class="layui-table">
 							<tbody>
 								<tr>
-									<td>登记日期 <input type="hidden" class="carInfos" data-name="id" value=""></td>
+									<td style="width: 6.25%">登记日期 <input type="hidden" class="carInfos" data-name="id" value=""></td>
 									<td colspan="2">
 										<input type="text" data-name="carDjDate" name="date" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos cl_dj">
 									</td>
-									<td>车辆品牌</td>
+									<td style="width: 6.25%">车辆品牌</td>
 									<td colspan="2">
 										<input type="text" data-name="carBrand" class="layui-input carInfos" value="">
 									</td>
-									<td>车辆型号</td>
+									<td style="width: 6.25%">车辆型号</td>
 									<td colspan="2">
 										<input type="text" data-name="carModel" class="layui-input carInfos" value="">
 									</td>
 
-									<td>生产日期</td>
+									<td style="width: 6.25%">生产日期</td>
 									<td colspan="2">
 										<input type="text" name="date" data-name="carAddDate" lay-verify="date" value="" autocomplete="off" class="layui-input carInfos carscrq">
 									</td>
@@ -707,7 +711,7 @@
 										<input type="text" data-name="carOperateDate" class="layui-input caryyrq carInfos" value="">
 									</td>
 									<td>运营状态</td>
-									<td colspan="">
+									<td colspan="2">
 										<select name="" id="" class="carOperateType">
 											<option value=""></option>
 											<!--<option value="出售">出售</option>
@@ -906,6 +910,7 @@
 	$('.cwlrr').val(loadUserInfo.user.realName)
 	$('.dtxxlrr').val(loadUserInfo.user.realName)
 	$('.cklrr').val(loadUserInfo.user.realName)
+	$('.cwlrsj').val(new Date())
 	let custId = loadUserInfo.customer.id;
 	var layer = '';
 	let form = ''
@@ -1334,6 +1339,24 @@
 			}
 		})
 	}
+
+	
+	// 查询财务 账户类型
+	$.ajax({
+        url: `${API}/erpSystemParameters/getparametersByName?name=账户类型`,
+        type: 'get',
+        async: false,
+        success: function (res) {
+		   let arr  = res.data.parametersChildList
+		   let str = '<option></option>'
+		   $.each(arr,function (i,k) {
+			
+			str +=`<option value="${k.name}">${k.name}</option>`
+		   })
+			$('.cwzh').html(str)
+        }
+
+    })
 	// 保存财务信息
 	function saveCw() {
 		let data = {}
@@ -1342,6 +1365,7 @@
 		})
 		data.finType = $('.finType').val()
 		data.customerId = custId
+		data.finvType = $('.cwzh').val()
 		$.ajax({
 			url: `${API}/erpCustomerFinance/inertOrUpdateCustomerFinance`,
 			type: 'post',

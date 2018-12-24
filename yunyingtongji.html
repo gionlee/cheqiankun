@@ -1,144 +1,159 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/Global.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				padding: 10px;
+				display: none;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+		</style>
+	</head>
 
-        ul {
-            width: 100%;
-        }
+	<body>
+		<div class="wrap">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th rowspan="3">序号</th>
+						<th rowspan="2">客户名称</th>
+						<th colspan="5">经营收入</th>
+						<th colspan="6">费用支出</th>
+						<th>维修维护</th>
+						<th>燃油费用</th>
+						<th>轮胎费用</th>
+						<th>综合费用</th>
+						<th>利润金额</th>
+					</tr>
+					<tr>
+						<!--<th>序号</th>-->
+						<!--<th>客户名称</th>-->
+						<th>销售输入</th>
+						<th>维修输入</th>
+						<th>维护收入</th>
+						<th>其他收入</th>
+						<th>合计</th>
+						<th>采购支出</th>
+						<th>维修支出</th>
+						<th>维护支出</th>
+						<th>燃油支出</th>
+						<th>其他支出</th>
+						<th>合计</th>
+						<th>运营利润</th>
+						<th>车辆总数</th>
+						<th>运营车数</th>
+						<th>运营里程</th>
+					</tr>
+					<tr>
+						<!--<th>序号</th>-->
+						<th class="khmc">客户名称</th>
+						<th class="xssr">销售输入</th>
+						<th class="wxsr">维修输入</th>
+						<th class="whsr">维护收入</th>
+						<th class="qtsr">其他收入</th>
+						<th class="jysr">合计</th>
+						<th class="cgzc">采购支出</th>
+						<th class="wxzc">维修支出</th>
+						<th class="whzc">维护支出</th>
+						<th class="ryzc">燃油支出</th>
+						<th class="qtzc">其他支出</th>
+						<th class="fyzc">合计</th>
+						<th class="yylr">运营利润</th>
+						<th class="clzs">车辆总数</th>
+						<th class="yycs">运营车数</th>
+						<th class="yylc">运营里程</th>
+					</tr>
+				</thead>
+				<tbody class="list">
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
-
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
-
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            padding: 10px;
-            display: none;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-        <table class="layui-table">
-            <thead>
-                <tr>
-
-                    <th>
-                        序号
-                    </th>
-                    <th>
-                        分支机构
-                    </th>
-                    <th>
-                        运营里程
-                    </th>
-                    <th>
-                        经营收入
-                    </th>
-                    <th>
-                        维修维护
-                    </th>
-                    <th>
-                        燃油费用
-                    </th>
-                    <th>
-                        轮胎费用
-                    </th>
-                    <th>
-                        综合费用
-                    </th>
-                    <th>
-                        利润金额
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody class="list">
-                
-            </tbody>
-        </table>
-    </div>
-</body>
-<script>
-    $.ajax({
-        url:`${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=1&endDate=2019-01-01&startDate=2000-01-01`,
-        type:'get',
-        success: function (res) {
-            let arr = res.data
-            let str = ''
-            $.each(arr,function (i,n){
-                str+=`<tr>
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script>
+		$.ajax({
+			url: `${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=1&endDate=2019-01-01&startDate=2000-01-01`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data
+				let str = ''
+				$.each(arr, function(i, n) {
+					str += `<tr>
                     <td>${i+1}</td>
                     <td>${n.customerName}</td>
                     <td>${n.mileage}</td>
@@ -149,8 +164,8 @@
                     <td>${n.fuel + n.tyre}</td>
                     <td>${n.income - n.fuel - n.tyre}</td>
                 </tr>`
-            })
-            $('.list').html(str)
-        }
-    })
-</script>
+				})
+				$('.list').html(str)
+			}
+		})
+	</script>

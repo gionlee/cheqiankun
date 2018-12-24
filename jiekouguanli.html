@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/Global.js"></script>
+    <style>
+        .wrap {
+            padding: 20px;
+            width: 100%;
+            overflow: auto;
+            box-sizing: border-box;
+        }
+
+        ul {
+            width: 100%;
+        }
+
+        ul li {
+            width: 25%;
+            float: left;
+            height: 36px;
+            line-height: 36px;
+            /* background: #ccc; */
+            text-align: center;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-top: 0px;
+            cursor: pointer;
+        }
+
+        ul li:first-of-type {
+            border: 1px solid #ccc;
+        }
+
+        ul li:nth-of-type(2) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(3) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        ul li:nth-of-type(4) {
+            border: 1px solid #ccc;
+            border-left: 0px;
+
+        }
+
+        .winbody {
+            padding: 10px;
+            display: none;
+        }
+
+        .carlist {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .tabs {
+            /* width: 900px; */
+        }
+
+        .tabs a {
+            width: 120px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+            display: inline-block;
+        }
+
+        .layui-input {
+            border: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>接口类型</th>
+                    <th>接口编号</th>
+                    <th>接口名称</th>
+                    <th>备注</th>
+                    <th>修改人</th>
+                    <th>修改时间</th>
+                    <th>编辑</th>
+                </tr>
+            </thead>
+            <tbody>
+				<tr>
+					<td>2</td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td>
+						<button class="layui-btn layui-btn-sm" style="margin:0 auto;">修改</button>
+						<button class="layui-btn layui-btn-sm layui-btn-danger" style="margin:0 auto;">删除</button>
+					</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td><input type="text" class="layui-input" /></td>
+					<td>
+						<button class="layui-btn layui-btn-sm" style="margin:0 auto;">修改</button>
+						<button class="layui-btn layui-btn-sm layui-btn-danger" style="margin:0 auto;">删除</button>
+					</td>
+				</tr>
+            </tbody>
+        </table>
+            
+    </div>
+</body>
+<script>
+    let layer = ''
+    layui.use('layer',function () {
+        layer = layui.layer
+    })
+</script>

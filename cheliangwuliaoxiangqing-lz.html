@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				/* border-bottom: 1px solid #ccc; */
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.layui-input {
+				border: 0px;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-table td {
+				padding: 0px;
+				height: 30px;
+				line-height: 0px;
+				text-align: center;
+			}
+			
+			.layui-table td {
+				margin: 0px;
+			}
+			
+			.layui-form-item {
+				margin: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 100%;
+				margin: 0px !important;
+				height: 100%;
+			}
+			
+			.layui-unselect {
+				height: 100%;
+			}
+			
+			.layui-select-title {
+				height: 100%;
+			}
+			
+			.title {
+				font-size: 16px;
+				text-align: center;
+				padding: 10px;
+			}
+			
+			.qianming {
+				width: 652px;
+				margin: 0 auto;
+			}
+			
+			ul.qianming li {
+				display: inline-block;
+				width: 160px;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			ul.qianming input {
+				width: 100px;
+				display: inline-block;
+				border-bottom: 1px solid #ccc;
+			}
+		</style>
+	</head>
+
+	<body>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="23"><span id="car"></span> 车辆物料档案</th>
+				</tr>
+				<tr>
+					<th>GPS接口</th>
+					<th>GPS主机</th>
+					<th>GPS卡号</th>
+					<th>胎压接口</th>
+					<th>胎压主机</th>
+					<th>胎压卡号</th>
+					<th>后视镜</th>
+					<th>OBD</th>
+					<th>多媒体</th>
+					<th>行车记录</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+				</tr>
+			</tbody>
+		</table>
+		<table class="layui-table">
+
+			<thead>
+
+				<tr>
+					<th>序号</th>
+					<th>胎位</th>
+					<th>品牌</th>
+					<th>规格</th>
+					<th>型号</th>
+					<th>生产编号</th>
+					<th>购置日期</th>
+					<th>购置价格</th>
+					<th>维修维护</th>
+					<th>运营里程</th>
+					<th>预计里程</th>
+					<th>元/千公里</th>
+					<th>状态</th>
+					<th colspan="4">胎纹深度</th>
+					<th>检测日期</th>
+					<th>胎压传感器</th>
+					<th>胎位定位器</th>
+					<th>轮辋</th>
+				</tr>
+			</thead>
+			<tbody>
+
+			</tbody>
+			<tbody id="list">
+
+			</tbody>
+
+		</table>
+
+	</body>
+	<script>
+		var myArray = new Array();
+
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串  
+			var theRequest = new Object();
+			if(url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for(var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+
+		function selBi() {
+			$.ajax({
+				url: `${API}/carId=${GetRequest().id}`,
+				type: 'get',
+				success: function(res) {}
+			})
+		}
+		let carNum = ''
+		$(function() {
+			var id = GetRequest().id;
+			$.ajax({
+				url: API + '/erpCarTireArchives/getTireByCarId?carId=' + id + '&custId=' + loadUserInfo.customer.id,
+				type: 'get',
+				dataType: 'json',
+				success: function(ret) {
+					var objkacha = ret.data.reverse();
+					var html = '';
+					let arr = ret.data
+					let narr = []
+					$.each(arr, function(i, n) {
+						let data = {}
+						data.name = n.tire_location
+						data.arr = []
+						$.each(arr, function(j, k) {
+
+							if(n.tire_location == k.tire_location) {
+
+								data.arr.push(n)
+							}
+						})
+						console.log(data)
+						if(narr.indexOf(data) == -1) {
+							narr.push(data)
+						}
+
+					})
+					console.log(narr)
+					for(var key = 0; key < objkacha.length; key++) {
+						html += ' <tr>' +
+							'                <td>' + (objkacha.length - key) + '</td>' +
+							'                <td>' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>' +
+							'                <td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
+							'                <td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
+							'                <td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
+							'                <td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+							'                <td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
+							'                <td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
+							'                <td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
+							'                <td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
+							'                <td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
+							'                <td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
+							'                <td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
+							'                <td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
+							'                <td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
+							'                <td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
+							'                <td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
+							'                <td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+							'                <td>' + (objkacha[key].positioner_id == null ? '' : objkacha[key].positioner_id) + '</td>' +
+							'                <td>' + (objkacha[key].sensors_id == null ? '' : objkacha[key].sensors_id) + '</td>' +
+							'                <td>' + (objkacha[key].car_rim_type == null ? '' : objkacha[key].car_rim_type) + '</td>' +
+							'            </tr>';
+
+						$('#car').html(objkacha[key].car_plate == null ? '' : objkacha[key].car_plate)
+						carNum = objkacha[key].car_plate == null ? '' : objkacha[key].car_plate
+					}
+					$("#list").html(html);
+
+				},
+				error: function(err) {
+					alert("系统错误");
+
+				}
+			});
+
+		})
+
+		function seeInfo(id) {
+
+		}
+	</script>
+
+</html>

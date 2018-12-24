@@ -241,7 +241,7 @@
     }
     // 添加参数类型
     function addType() {
-        let addval = $('#addval').val()
+        let addval = encodeURI($('#addval').val())
         if (addval) {
             $.ajax({
                 url: `${API}/erpSystemParameters/inertOrUpdateParameters?name=${addval}`,
@@ -311,7 +311,7 @@
     }
     // 添加子类型
     function addChildType() {
-        let name = $('.child').val()
+        let name = encodeURI($('.child').val())
         $.ajax({
             url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}`,
             type: 'get',
@@ -324,7 +324,7 @@
     }
     // 修改子类型
     function upChildType(id) {
-        let name = $(`.getid${id}`).val()
+        let name = encodeURI($(`.getid${id}`).val())
         $.ajax({
             url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}&id=${id}`,
             type: 'get',

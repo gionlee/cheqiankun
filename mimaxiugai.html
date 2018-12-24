@@ -38,7 +38,7 @@
         </table>
         <div>
             <a class="layui-btn layui-btn-sm" onclick="save()">保存</a>
-            <a class="layui-btn layui-btn-sm layui-btn-danger">取消</a>
+            <a class="layui-btn layui-btn-sm layui-btn-danger" onclick="cancel()">取消</a>
         </div>
     </div>
 </body>
@@ -57,6 +57,9 @@
             // $('.nicheng').val(res.data.cusNickname)
         }
     })
+    function cancel(){
+    	$('.nicheng').val('');
+    }
     function save() {
         let data = {}
         data.password  = $('.nicheng').val()

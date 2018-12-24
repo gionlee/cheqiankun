@@ -127,25 +127,25 @@
         type:'get',
         success: function (res) {
             console.log(res)
-            let arr = res.data.records
+            let arr = res.data.records.reverse();
             let str = ``
             $.each(arr,function (i,n) {
                 str +=`<tr>
-                    <td>${i+1}</td>
+                    <td>${arr.length - i}</td>
                     <td>${n.scrDt == null ? '' : n.scrDt}</td>
                     <td>${n.scrSource == null ? '' : n.scrSource}</td>
-                    <td>${n.scrName == null ? '' : n.scrName}</td>
-                    <td>${n.scrBrand == null ? '' : n.scrBrand}</td>
-                    <td>${n.scrSpecifications == null ? '' : n.scrSpecifications}</td>
-                    <td>${n.scrModel == null ? '' : n.scrModel}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('scrName','${n.scrName == null ? '' : n.scrName}')">${n.scrName == null ? '' : n.scrName}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('scrBrand','${n.scrBrand == null ? '' : n.scrBrand}')">${n.scrBrand == null ? '' : n.scrBrand}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('scrSpecifications','${n.scrSpecifications == null ? '' : n.scrSpecifications}')">${n.scrSpecifications == null ? '' : n.scrSpecifications}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('scrModel','${n.scrModel == null ? '' : n.scrModel}')">${n.scrModel == null ? '' : n.scrModel}</td>
                     <td>${n.scrProduceid == null ? '' : n.scrProduceid}</td>
-                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+                    <td>${n.scrPalydate == null ? '' : n.scrPalydate}</td>
                     <td>${n.purchaseRefurbishment == null ? '' : n.purchaseRefurbishment}</td>
                     <td>${n.scrMileage == null ? '' : n.scrMileage}</td>
                     <td>${n.scrPperatingmileage == null ? '' : n.scrPperatingmileage}</td>
                     <td>${n.scrEstimatedmileage == null ? '' : n.scrEstimatedmileage}</td>
                     <td>${n.scrPricerepair == null ? '' : n.scrPricerepair}</td>
-                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+                    <td>${n.scrState == null ? '' : n.scrState}</td>
                     <td>胎纹1：${n.scrTread1} 胎纹2：${n.scrTread2} 胎纹3：${n.scrTread3} 胎纹4：${n.scrTread4}</td>
                     <td>${n.scrInput == null ? '' : n.scrInput}</td>
                 </tr>`
@@ -153,6 +153,46 @@
             $('.list').html(str)
         }
     })
+    
+    function fn_filter(key,value){
+    	$.ajax({
+	        url:`${API}/erpScrapTire/getScrapTirePageBycustId?custId=${loadUserInfo.customer.id}`,
+	        type:'get',
+	        success: function (res) {
+	            console.log(res)
+	            let arr = res.data.records.reverse();
+	            let str = ``
+	            let newArr = []
+	            $.each(arr,function (i,n) {
+	            	if(n[key] == value){
+                		newArr.push(n);
+                	}
+	            })
+	            $.each(newArr,function (i,n) {
+	                str +=`<tr>
+	                    <td>${arr.length - i}</td>
+	                    <td>${n.scrDt == null ? '' : n.scrDt}</td>
+	                    <td>${n.scrSource == null ? '' : n.scrSource}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('scrName','${n.scrName == null ? '' : n.scrName}')">${n.scrName == null ? '' : n.scrName}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('scrBrand','${n.scrBrand == null ? '' : n.scrBrand}')">${n.scrBrand == null ? '' : n.scrBrand}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('scrSpecifications','${n.scrSpecifications == null ? '' : n.scrSpecifications}')">${n.scrSpecifications == null ? '' : n.scrSpecifications}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('scrModel','${n.scrModel == null ? '' : n.scrModel}')">${n.scrModel == null ? '' : n.scrModel}</td>
+	                    <td>${n.scrProduceid == null ? '' : n.scrProduceid}</td>
+	                    <td>${n.scrPalydate == null ? '' : n.scrPalydate}</td>
+	                    <td>${n.purchaseRefurbishment == null ? '' : n.purchaseRefurbishment}</td>
+	                    <td>${n.scrMileage == null ? '' : n.scrMileage}</td>
+	                    <td>${n.scrPperatingmileage == null ? '' : n.scrPperatingmileage}</td>
+	                    <td>${n.scrEstimatedmileage == null ? '' : n.scrEstimatedmileage}</td>
+	                    <td>${n.scrPricerepair == null ? '' : n.scrPricerepair}</td>
+	                    <td>${n.scrState == null ? '' : n.scrState}</td>
+	                    <td>胎纹1：${n.scrTread1} 胎纹2：${n.scrTread2} 胎纹3：${n.scrTread3} 胎纹4：${n.scrTread4}</td>
+	                    <td>${n.scrInput == null ? '' : n.scrInput}</td>
+	                </tr>`
+	            })
+	            $('.list').html(str)
+	        }
+	    })
+    }
 </script>
 
 </html>

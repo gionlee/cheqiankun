@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				padding: 10px;
+				display: none;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="wrap">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th rowspan="3">序号</th>
+						<th rowspan="2">客户名称</th>
+						<th colspan="5">经营收入</th>
+						<th colspan="6">费用支出</th>
+						<th rowspan="2">运营利润</th>
+						<th rowspan="2">车辆总数</th>
+						<th rowspan="2">运营车数</th>
+						<th rowspan="2">运营里程</th>
+					</tr>
+					<tr>
+						<!--<th>序号</th>-->
+						<!--<th>客户名称</th>-->
+						<th>销售输入</th>
+						<th>维修输入</th>
+						<th>维护收入</th>
+						<th>其他收入</th>
+						<th>合计</th>
+						<th>采购支出</th>
+						<th>维修支出</th>
+						<th>维护支出</th>
+						<th>燃油支出</th>
+						<th>其他支出</th>
+						<th>合计</th>
+						<!--<th>运营利润</th>-->
+						<!--<th>车辆总数</th>-->
+						<!--<th>运营车数</th>-->
+						<!--<th>运营里程</th>-->
+					</tr>
+					<tr>
+						<!--<th>序号</th>-->
+						<th class="khmc"><!--客户名称--></th>
+						<th class="xssr"><!--销售输入--></th>
+						<th class="wxsr"><!--维修输入--></th>
+						<th class="whsr"><!--维护收入--></th>
+						<th class="qtsr"><!--其他收入--></th>
+						<th class="srhj"><!--合计--></th>
+						<th class="cgzc"><!--采购支出--></th>
+						<th class="wxzc"><!--维修支出--></th>
+						<th class="whzc"><!--维护支出--></th>
+						<th class="ryzc"><!--燃油支出--></th>
+						<th class="qtzc"><!--其他支出--></th>
+						<th class="zchj"><!--合计--></th>
+						<th class="yylr"><!--运营利润--></th>
+						<th class="clzs"><!--车辆总数--></th>
+						<th class="yycs"><!--运营车数--></th>
+						<th class="yylc"><!--运营里程--></th>
+					</tr>
+				</thead>
+				<tbody class="list">
+
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script>
+		$.ajax({
+			url: `${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=${getUrlParam('id')}`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data;
+				let str = '';
+				let xiaoshoushouru_num = 0;
+				let repairshouru_num = 0;
+				let maintianshouru_num = 0;
+				let qitashouru_num = 0;
+				
+				let caigouzhichu_num = 0;
+				let repairzhichu_num = 0;
+				let maintianzhichu_num = 0;
+				let carRefueling_num = 0;
+				let qitazhichu_num = 0;
+				
+				let carAllNum_num = 0;
+				let yunyingshuliang_num = 0;
+				let mileage_num = 0;
+				$.each(arr, function(i, n) {
+					str += `<tr>
+			                    <td>${i+1}</td>
+			                    <td>${n.customerName == null ? 0 : n.customerName}</td>
+			                    <td>${n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru}</td>
+			                    <td>${n.repairshouru == null ? 0 : n.repairshouru}</td>
+			                    <td>${n.maintianshouru == null ? 0 : n.maintianshouru}</td>
+			                    <td>${n.qitashouru == null ? 0 : n.qitashouru}</td>
+			                    <td>${(n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru) + (n.repairshouru == null ? 0 : n.repairshouru) + (n.maintianshouru == null ? 0 : n.maintianshouru) + (n.qitashouru == null ? 0 : n.qitashouru)}</td>
+			                    
+			                    <td>${n.caigouzhichu == null ? 0 : n.caigouzhichu}</td>
+			                    <td>${n.repairzhichu == null ? 0 : n.repairzhichu}</td>
+			                    <td>${n.maintianzhichu == null ? 0 : n.maintianzhichu}</td>
+			                    <td>${n.carRefueling == null ? 0 : n.carRefueling}</td>
+			                    <td>${n.qitazhichu == null ? 0 : n.qitazhichu}</td>
+			                    <td>${(n.caigouzhichu == null ? 0 : n.caigouzhichu) + (n.repairzhichu == null ? 0 : n.repairzhichu) + (n.maintianzhichu == null ? 0 : n.maintianzhichu) + (n.carRefueling == null ? 0 : n.carRefueling) + (n.qitazhichu == null ? 0 : n.qitazhichu)}</td>
+			                    
+			                    <td>${(n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru) + (n.repairshouru == null ? 0 : n.repairshouru) + (n.maintianshouru == null ? 0 : n.maintianshouru) + (n.qitashouru == null ? 0 : n.qitashouru) - (n.caigouzhichu == null ? 0 : n.caigouzhichu) - (n.repairzhichu == null ? 0 : n.repairzhichu) - (n.maintianzhichu == null ? 0 : n.maintianzhichu) - (n.carRefueling == null ? 0 : n.carRefueling) - (n.qitazhichu == null ? 0 : n.qitazhichu)}</td>
+			                    <td>${n.carAllNum}</td>
+			                    <td>${n.yunyingshuliang}</td><!--运营车数-->
+			                    <td>${n.mileage}</td>
+			                    
+			                    <!--<td>${n.fuel}</td>
+			                    <td>${n.tyre}</td>
+			                    <td>${n.fuel + n.tyre}</td>
+			                    <td>${n.income - n.fuel - n.tyre}</td>-->
+			                </tr>`;
+			        xiaoshoushouru_num += (n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru);
+			        repairshouru_num += (n.repairshouru == null ? 0 : n.repairshouru);
+			        maintianshouru_num += (n.maintianshouru == null ? 0 : n.maintianshouru);
+			        qitashouru_num += (n.qitashouru == null ? 0 : n.qitashouru);
+			        
+			        caigouzhichu_num += (n.caigouzhichu == null ? 0 : n.caigouzhichu);
+			        repairzhichu_num += (n.repairzhichu == null ? 0 : n.repairzhichu);
+			        maintianzhichu_num += (n.maintianzhichu == null ? 0 : n.maintianzhichu);
+			        carRefueling_num += (n.carRefueling == null ? 0 : n.carRefueling);
+			        qitazhichu_num += (n.qitazhichu == null ? 0 : n.qitazhichu);
+			        
+			        carAllNum_num += (n.carAllNum == null ? 0 : n.carAllNum);
+			        yunyingshuliang_num += (n.yunyingshuliang == null ? 0 : n.yunyingshuliang);
+			        mileage_num += (n.mileage == null ? 0 : n.mileage);
+				})
+				$('.list').html(str)
+				$('.khmc').html(arr.length);
+			    $('.xssr').html(xiaoshoushouru_num);
+			    $('.wxsr').html(repairshouru_num);
+			    $('.whsr').html(maintianshouru_num);
+			    $('.qtsr').html(qitashouru_num);
+			    $('.srhj').html(xiaoshoushouru_num + repairshouru_num + maintianshouru_num + qitashouru_num);
+			    
+			    $('.cgzc').html(caigouzhichu_num);
+			    $('.wxzc').html(repairzhichu_num);
+			    $('.whzc').html(maintianzhichu_num);
+			    $('.ryzc').html(carRefueling_num);
+			    $('.qtzc').html(qitazhichu_num);
+			    $('.zchj').html(caigouzhichu_num + repairzhichu_num + maintianzhichu_num + carRefueling_num + qitazhichu_num);
+			    
+			    $('.yylr').html($('.srhj').html() - $('.zchj').html());
+			    $('.clzs').html(carAllNum_num);
+			    $('.yycs').html(yunyingshuliang_num);
+			    $('.yylc').html(mileage_num);
+			}
+		})
+	</script>

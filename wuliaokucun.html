@@ -150,8 +150,11 @@
                     <th>期末数量</th>
                     <th>未税单价</th>
                     <th>含税单价</th>
+                    <th>操作</th>
                     <th class="isAll">预警设置</th>
-                    <th class="ctrl">操作</th>
+                    <td class="isAll ">
+                        <input type="checkbox" class="allset">
+                     </td>
                 </tr>
             </thead>
             <tbody class="lists">
@@ -331,15 +334,16 @@
                         <td>${json[10] == null ? '' : json[10]}</td>
                         <td>${json[13] == null ? '' : json[13]}</td>
                         <td>${json[12] == null ? '' : json[12]}</td>
+                        <td>
+                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
+                        </td>
                         <td class="isAll">
                                 <input type="text" class="layui-input" value="${json[16]}">
                         </td>
                         <td class="isAll">
                            <input type="checkbox">
                         </td>
-                        <td class="ctrl">
-                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
-                        </td>
+                        
                     </tr>`
         })
         $('.lists').html(str)
@@ -389,18 +393,29 @@
                         <td>${json[10] == null ? '' : json[10]}</td>
                         <td>${json[13] == null ? '' : json[13]}</td>
                         <td>${json[12] == null ? '' : json[12]}</td>
+                        <td>
+                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
+                        </td>
                         <td class="isAll">
-                            <input style="width:50px;" disabled="disabled" type="number" class="layui-input isAll-input" value="${json[16]}">
+                            <input style="width:80px;" disabled="disabled" type="number" class="layui-input isAll-input" value="${json[16]}">
                         </td>
                         <td class="isAll">
                                 <input type="checkbox" class="isAll-checkbox" data-id="${json[0]}"/>
                         </td>
-                        <td class="ctrl">
-                           <div class="layui-btn layui-btn-xs" onclick="goUrl('${json[0]}')">查看</div>
-                        </td>
+                        
                     </tr>`
                 })
                 $('.lists').html(str)
+                $('.allset').change( function () {
+                    console.log($('.allset').is(':checked'))
+                    if($('.allset').is(':checked')) {
+                        $ ( '.isAll-checkbox' ).attr( 'checked','true' )
+                        $( '.isAll-input' ).removeAttr ( 'disabled' )
+                    } else {
+                        $ ( '.isAll-checkbox' ).removeAttr( 'checked')
+                        $( '.isAll-input' ).attr( 'disabled', 'disabled' )
+                    }
+                })
                 $ ( '.isAll-checkbox' ).change ( function () {
                     $ ( '.isAll-input' ).attr ( 'disabled', "disabled" );
                     if ( $ ( this ).prop ( 'checked' )) {
@@ -431,10 +446,8 @@
 
                 if($('.kucun_sel').val() != 'all') {
                     $('.isAll').show()
-                    $('.ctrl').hide()
                 } else {
                     $('.isAll').hide()
-                    $('.ctrl').show()
                 }
 
             },

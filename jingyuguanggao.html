@@ -98,6 +98,9 @@
         	background-color: #009688 !important;
         	color: #fff !important;
         }
+        select {
+            height: 30px;
+        }
     </style>
 </head>
 
@@ -194,9 +197,9 @@
                 </tr>
                 <tr>
                         <td>编号</td>
-                        <td><input type="text" class="layui-input" readonly="readonly" id="checkNumber"><input type="hidden" id="id" value="0"><input type="hidden" id="upTimeId"></td>
+                        <td><input  class="layui-input"  id="checkNumber"><input type="hidden" id="id" value="0"><input type="hidden" id="upTimeId"></td>
                     <td>申请项目</td>
-                    <td class="layui-form "><select  lay-verify="" id="programs">
+                    <td ><select  lay-verify="" id="programs">
                             <option value="播放">播放</option>
                             <option value="删除">删除</option>
                             <option value="修改">修改</option>
@@ -240,7 +243,7 @@
 		        type: 'get',
 		        success: function (res) {
                     $("#checkNumber").val(res.data)
-                    
+                    $("#checkNumber").attr('type','hidden')
 		        }
 		    })
         $("#id").val('0');
@@ -335,11 +338,20 @@ $.ajax({
                     <td>
                         ${n.checkPeople}
                     </td>`
+                    if(n.checkState==1) {
+                        str += `
+                    <td>
+                        <button  class="layui-btn layui-btn-xs" type="button" onclick="update('${n.id}',true)">查看</button>
+                    </td></tr>
+                    `
+                    } else {
                         str += `
                     <td>
                         <button  class="layui-btn layui-btn-xs" type="button" onclick="update(${n.id})">修改</button>
                     </td></tr>
                     `
+                    }
+                       
                     
                     $('.fybj').append(str);
                     })
@@ -413,8 +425,8 @@ $.ajax({
     	}
     
     }
-    function update(id) {
-
+    function update(id,bol) {
+        console.log(id)
         $.ajax({
             url: `${API}/erpAdvertisementCheck/getcheckById?webId=${id}`,
             type: 'get',
@@ -433,7 +445,23 @@ $.ajax({
 		        	$("#checkNumber").val(res.data.checkNumber);
                     $("#programs").val(res.data.programs);
                     $("#upTimeId").val(res.data.upTimeId)
-                    layer.open({
+                    $("#checkNumber").attr('type','text')
+                    if(bol) {
+                        $('.xg').find('input').attr("disabled","disabled")
+                        $('.xg').find('select').attr("disabled","disabled")
+                        layer.open({
+                        type:1,
+                        content: $('.winbody'),
+                        btn:['查看'],
+                        area:['740px'],
+                        yes: function (index) {
+                            
+                        }
+                    })
+                    } else {
+                        $('.xg').find('input').removeAttr("disabled","disabled")
+                        $('.xg').find('select').removeAttr("disabled","disabled")
+                        layer.open({
                         type:1,
                         content: $('.winbody'),
                         btn:['提交'],
@@ -442,6 +470,8 @@ $.ajax({
                             ti(index)
                         }
                     })
+                    }
+                    
             }
         })
     }

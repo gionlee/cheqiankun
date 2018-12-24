@@ -119,7 +119,6 @@ $(function() {
 	//左侧菜单效果
 	// $('#content').bind("click",function(event){
 	$('.left-nav #nav li').click(function(event) {
-
 		if($(this).children('.sub-menu').length) {
 			if($(this).hasClass('open')) {
 				$(this).removeClass('open');
@@ -139,8 +138,17 @@ $(function() {
 			var url = $(this).children('a').attr('_href');
 			var title = $(this).find('cite').html();
 			var index = $('.left-nav #nav li').index($(this));
-			console.log(index)
-			localStorage.pageIndex = index
+			let bol = false
+			bol = true
+			let arr = loadUserInfo.role.roleAction.split(',')
+
+		$.each(arr,function (j,n) {
+			if (arr[j] == index) {
+				bol =true 
+			}
+		})
+			if(bol) {
+				localStorage.pageIndex = index
 			for(var i = 0; i < $('.x-iframe').length; i++) {
 				if($('.x-iframe').eq(i).attr('tab-id') == index + 1) {
 					tab.tabChange(index + 1);
@@ -151,6 +159,9 @@ $(function() {
 
 			tab.tabAdd(title, url, index + 1);
 			tab.tabChange(index + 1);
+			} else {
+				alert('没有权限!')
+			}
 		}
 
 		event.stopPropagation();

@@ -130,6 +130,41 @@
         .layui-form-select {
             height: 30px !important;
         }
+        .hover-body {
+            position: relative;
+        }
+        .hover-show {
+            position:absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 10;
+            display: none;
+        }
+        .hover-show li {
+            width: 150px;
+            height: 30px;
+            background: #fff;
+            border-bottom:1px solid #ccc;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+        }
+        .hover-show li:hover {
+            background: #ccc;
+            /* color: #fff; */
+        }
+        .hover-show div {
+            top: 0;
+            position: absolute;
+            width: 150px;
+        }
+        .hover-show div ul {
+            position: absolute;
+            top: 0;
+            left: 150px;
+        }
     </style>
 </head>
 
@@ -203,7 +238,7 @@
                     </div>
                 </td>
                 <td><input type="text" data-name="customerName" class="layui-input" value=""></td>
-                <td><input type="text" data-name="attn" class="layui-input" value=""></td>
+                <td><input type="text" data-name="attn" class="layui-input attn" readonly value=""></td>
             </tr>
         </tbody>
 
@@ -212,23 +247,28 @@
     <div class="title">
         <span class="carnum"></span> 车辆动态
     </div>
+    <div class="hover-body">
+        <ul class="hover-show">
+
+        </ul>
+    </div>
     <table class="layui-table">
         <thead>
             <tr>
-                <th colspan="7">轮胎信息</th>
+                <th colspan="8">轮胎信息</th>
                 <th colspan="9">
                     <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;">
+                    <div style="width:150px;display: inline-block;line-height: 38px;margin-left: 50px;">
                         <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
                         <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" >
+                            <input type="checkbox" lay-skin="primary" title="">
                         </div>
 
                     </div>
                     <div style="width:150px;display: inline-block;line-height: 38px;">
                         <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
                         <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="" >
+                            <input type="checkbox" lay-skin="primary" title="">
                         </div>
                     </div>
                 </th>
@@ -236,6 +276,7 @@
             </tr>
             <tr>
                 <th style="min-width:30px;">序号</th>
+                <th>品名</th>
                 <th>品牌</th>
                 <th>型号</th>
                 <th>规格</th>
@@ -263,22 +304,23 @@
     <table class="layui-table gc">
         <thead>
             <tr>
-                    <th colspan="7">轮胎信息</th>
-                    <th colspan="9" >
-                        <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
-                        <div style="width:150px;display: inline-block;line-height: 38px;">
-                            <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
-                                <input type="checkbox"  title="" checked="">
-                        </div>
-                        <div style="width:150px;display: inline-block;line-height: 38px;">
-                            <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>                         
-                                <input type="checkbox" lay-skin="primary" title="" checked="">
-                        </div>
-                    </th>
-                    <th colspan="6">上期轮胎监测信息</th>
+                <th colspan="8">轮胎信息</th>
+                <th colspan="9">
+                    <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
+                    <div style="width:150px;display: inline-block;line-height: 38px;margin-left: 50px;">
+                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
+                        <input type="checkbox" title="">
+                    </div>
+                    <div style="width:150px;display: inline-block;line-height: 38px;">
+                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
+                        <input type="checkbox" lay-skin="primary" title="">
+                    </div>
+                </th>
+                <th colspan="6">上期轮胎监测信息</th>
             </tr>
             <tr>
                 <th style="min-width:30px;">序号</th>
+                <th>品名</th>
                 <th>品牌</th>
                 <th>型号</th>
                 <th>规格</th>
@@ -323,7 +365,8 @@
         </tbody>
     </table>
     <div class="title">
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveAll()">保存</button>
+        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveAll()">确认/结束</button>
+        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="goWx()">确认/维修</button>
     </div>
     <div class="layui-form winbody" style="display: none;">
 
@@ -343,10 +386,7 @@
         }
         return theRequest;
     }
-    let layform = ''
-    layui.use('form', function () {
-        layform = layui.form
-    })
+
     layui.use('laydate', function () {
         layui.laydate.render({
             elem: '.dates'
@@ -356,6 +396,7 @@
     let fkfs = []
     let syjy = []
     let ltztList = []
+    $('.attn').val(loadUserInfo.customer.id)
     // 轮胎状态
     $.ajax({
         url: `${API}/erpSystemParameters/getparametersByName?name=轮胎状态`,
@@ -367,9 +408,16 @@
                 str += `<div>${k.name}</div>`
             })
             $('.winbody').html(str)
-            layform.render()
+
+
         }
     })
+
+    function goWx() {
+        sessionStorage.pcar = sessionStorage.jcpcar
+        sessionStorage.gcar = sessionStorage.jcgcar
+        window.location.href = `./xiaoshouweixiuxiangqing.html?custName=${getUrlParam('custName')}`
+    }
 
     function setLt(_this) {
         let val = $(_this).val()
@@ -421,7 +469,12 @@
                 })
             })
             $('.fkfslist').html(str)
-            layform.render()
+            var form = ''
+            form = layui.use('form', function () {
+                form = layui.form
+                form.render()
+            })
+
         }
     })
     let syjyList = []
@@ -447,7 +500,11 @@
                 })
             })
             $('.fkfslist').html(str)
-            layform.render()
+            var form = ''
+            form = layui.use('form', function () {
+                form = layui.form
+                form.render()
+            })
         }
     })
     $.ajax({
@@ -463,7 +520,11 @@
                 })
             })
             $('.jcwhlist').html(str)
-            layform.render()
+            var form = ''
+            form = layui.use('form', function () {
+                form = layui.form
+                form.render()
+            })
         }
     })
     // 获取地区
@@ -471,44 +532,58 @@
         url: `${API}/cities/getAllProvinces`,
         type: 'get',
         success: function (res) {
-            let str = ''
+            let str = '<option></option>'
             $.each(res.data, function (i, n) {
                 str += `<option value="${n.provinceid}">${n.province}</option>`
             })
             $('.drivingRange1').html(str)
             $('.drivingRange3').html(str)
-            layform.on('select(drivingRange1)', function (data) {
-                $.ajax({
-                    url: `${API}/cities/selectByProId?proId=${data.value}`,
-                    type: 'get',
-                    success: function (res) {
-                        let shi = ''
-                        $.each(res.data, function (i, n) {
+            layui.use('form', function () {
+                var form = layui.form;
 
-                            shi +=
-                                `<option value="${n.city}">${n.city}</option>`
-                        })
-                        $('.drivingRange2').html(shi)
-                        layform.render()
-                    }
-                })
-            })
-            layform.on('select(drivingRange3)', function (data) {
-                $.ajax({
-                    url: `${API}/cities/selectByProId?proId=${data.value}`,
-                    type: 'get',
-                    success: function (res) {
-                        let shi = ''
-                        $.each(res.data, function (i, n) {
 
-                            shi +=
-                                `<option value="${n.city}">${n.city}</option>`
-                        })
-                        $('.drivingRange4').html(shi)
-                        layform.render()
-                    }
+                form.on('select(drivingRange1)', function (data) {
+                    $.ajax({
+                        url: `${API}/cities/selectByProId?proId=${data.value}`,
+                        type: 'get',
+                        success: function (res) {
+                            let shi = '<option></option>'
+                            $.each(res.data, function (i, n) {
+
+                                shi +=
+                                    `<option value="${n.city}">${n.city}</option>`
+                            })
+                            $('.drivingRange2').html(shi)
+                            var form = ''
+                            form = layui.use('form', function () {
+                                form = layui.form
+                                form.render()
+                            })
+                        }
+                    })
                 })
-            })
+                form.on('select(drivingRange3)', function (data) {
+                    $.ajax({
+                        url: `${API}/cities/selectByProId?proId=${data.value}`,
+                        type: 'get',
+                        success: function (res) {
+                            let shi = '<option></option>'
+                            $.each(res.data, function (i, n) {
+
+                                shi +=
+                                    `<option value="${n.city}">${n.city}</option>`
+                            })
+                            $('.drivingRange4').html(shi)
+                            var form = ''
+                            form = layui.use('form', function () {
+                                form = layui.form
+                                form.render()
+                            })
+                        }
+                    })
+                })
+                //各种基于事件的操作，下面会有进一步介绍
+            });
         }
     })
     $(function () {
@@ -522,23 +597,31 @@
                 var str = '';
                 $.each(arr, function (i, n) {
                     str +=
-                        `<tr  class="carList">
+                        `<tr  class="carList xxx_${i}">
                 <td>${i + 1}</td>
-                <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}"></td>
-                <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}"></td>
-                <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}"></td>
+                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
+                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
+                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
+                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
                 
                 <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-                <td><input type="text" data-name='tirePlace' class="layui-input" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>
-                <td><input type="text" data-name='errorOrTure' class="layui-input" value=""></td>
-                <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
+                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
+                    if (n.errorOrTure == null) {
+                        str +=
+                            ` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+                    } else {
+                        str +=
+                            ` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+                    }
+                    str +=
+                        ` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
                 <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
                 <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td ><input type="text" data-name='tireStatus' class="layui-input" value="" onclick="setLt(this)"></td>
+                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
                 <td>
                 <select class="userAd syjy_${i}"></select>
                 </td>
@@ -586,6 +669,7 @@
                         str +=
                             `<tr  class="carList">
                 <td>${i + 1}</td>
+                <td><input type="text" data-name='srcName' class="layui-input" value="${n.srcName == null ? '' : n.srcName}"></td>
                 <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}"></td>
                 <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}"></td>
                 <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}"></td>
@@ -600,7 +684,7 @@
                 <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
                 <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td><input type="text" data-name='tireStatus' class="layui-input" value=""></td>
+                <td><input type="text" data-name='tireStatus' class="layui-input" onclick="setLt(this)"  value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
                 <td><input type="text" data-name='useDevice' class="layui-input" value="">
                     <select class="userAd syjy_${i}"></select>
                 </td>
@@ -623,7 +707,6 @@
         }
 
     })
-    console.log(sessionStorage.jcpcar,'000')
     // 保存
     function saveAll() {
         let data = {}
@@ -635,6 +718,8 @@
         data.userId = 1
         $('.jcinfo input').each(function (i, n) {
             data[$(this).data('name')] = $(this).val()
+
+
         })
         data.roadStatus = $('.layui-unselect').eq(0).val()
         data.paidMethod = $('.layui-unselect').eq(1).val()
@@ -659,24 +744,204 @@
 
 
                         datas[$(this).data('name')] = $(this).val()
+                        if ($(this).hasClass('checkbox') == 'true') {
+                            if ($(this).is(':checked')) {
+                                data[$(this).data('name')] = 'true'
+                            } else {
+                                data[$(this).data('name')] = null
+                            }
+
+                        }
                     })
                     $.ajax({
                         url: `${API}/erpManagement/jianceweihuCarInspectionContent`,
                         type: 'post',
                         data: datas,
                         success: function (res) {
-                            if(res.code == 0) {
-                                bol= false
+                            if (res.code == 0) {
+                                bol = false
                             }
                         }
                     })
                 })
-                if (bol) { layer.msg('保存成功!')}
+                if (bol) {
+                    layer.msg('保存成功!')
+                }
 
             }
         })
 
     }
+    let setCls = ''
+
+    function showLv1(cls) {
+        setCls = cls
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTop`,
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arrs = res.data
+                $.each(arrs, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+                })
+                $('.hover-show').html(str)
+                $('.hover-show').show()
+            }
+        })
+    }
+    // 查找品名
+    function showLv2(zid, _this) {
+        $(`.hover-show .list-2`).html('')
+        aiZid = zid
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找规格
+    function showLv3(zid, _this) {
+        $(`.hover-show .list-3`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找品牌
+    function showLv4(zid, _this) {
+        $(`.hover-show .list-4`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找型号
+    function showLv5(zid, _this) {
+        $(`.hover-show .list-5`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv6(zid, _this) {
+        $(`.hover-show .list-6`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                console.log(res)
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找
+    function showLv7(zid, _this) {
+        $(`.hover-show .list-7`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv8(zid, _this) {
+        $(`.hover-show .list-8`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function setWlVal(_this) {
+        $(`.${setCls} .materielUnit`).val($(_this).text())
+        $(`.${setCls} .materielState`).val($(_this).parents('.list-8').prev().text())
+        $(`.${setCls} .materielPlace`).val($(_this).parents('.list-7').prev().text())
+        $(`.${setCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+        $(`.${setCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+        $(`.${setCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+        $(`.${setCls} .materielName`).val($(_this).parents('.list-3').prev().text())
+        aiName = $(_this).parents('.list-2').prev().text()
+        $('.hover-body').hide()
+    }
+    $(document).on('click', function () {
+        // $('.hover-body').hide()
+    })
 </script>
 
 </html>

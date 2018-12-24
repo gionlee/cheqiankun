@@ -573,28 +573,6 @@
                 </tr>
             </thead>
             <tbody class="splblist">
-                <tr>
-                    <td>1</td>
-                    <td>金方舟</td>
-                    <td>轮胎</td>
-                    <td>固特异</td>
-                    <td>205/45R17</td>
-                    <td>EAGLE F1 GSD3 91V</td>
-                    <td>国产</td>
-                    <td>新物品</td>
-                    <td>条</td>
-                    <td>1</td>
-                    <td>1</td>
-                    <td>苏D23186-右1轮</td>
-                    <td>单价</td>
-                    <td>金额</td>
-                    <td>安装胎压</td>
-                    <td onclick="setDph()">动平衡1</td>
-                    <td>动平衡2</td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
-                    </td>
-                </tr>
             </tbody>
         </table>
     </div>
@@ -724,20 +702,6 @@
                         </tr>
                     </thead>
                     <tbody class="wxhclist">
-                        <tr class="lzwxhc">
-                            <td class="layui-form"><input class="layui-input" type="hidden" data-name="pid">
-                                <select class='hcck'></select>
-                            </td>
-                            <td><input class="layui-input hcck_0 " data-name="materielName" onclick="setLyInfo(this,true)"></td>
-                            <td><input class="layui-input hcck_1  " data-name="materielBrand"></td>
-                            <td><input class="layui-input hcck_2  " data-name="materielSpecifications"></td>
-                            <td><input class="layui-input hcck_3  " data-name="materielModel"></td>
-                            <td><input class="layui-input" data-name="materielNumber"></td>
-                            <td>
-                                <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="addWxhc()">新增</div>
-                                <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -928,6 +892,7 @@
 </body>
 <script src="./js/Global.js"></script>
 <script>
+    console.log(decodeURI(decodeURI(getUrlParam('custName'))))
     $('.customerName').val(decodeURI(decodeURI(getUrlParam('custName'))))
     let layform = ''
     layui.use('form', function () {
@@ -949,8 +914,11 @@
     if (sessionStorage.gcar) {
         $('.trailerPlate').val(sessionStorage.gcar)
     }
+    if(sessionStorage.custName) {
+        $('.customerName').val(sessionStorage.custName)
+    }
     let saleList = []
-    let carNum = sessionStorage.pcar
+    let carNum = sessionStorage.pcar || sessionStorage.gcar
     let wlwxbol = false
     let selType = 0 // 要查询的类型
     let isHcck = false // 是否为耗材仓库
@@ -1306,6 +1274,12 @@
             yes: function (index) {
                 layer.close(index)
 
+            },
+            cancel: function () {
+        $('.hover-show').hide()
+        $('.ly-show').hide()
+        $('.qx-show').hide()
+        $('.qxxm-show').hide()
             }
         })
     }
@@ -1462,7 +1436,6 @@
             str += `<option>${n.warName}</option>`
         })
         $('.wxsel').html(str)
-
         layui.use('form', function () {
             var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
             form.render();
@@ -1521,8 +1494,7 @@
         $('#clwx input').each(function () {
             data[$(this).data('name')] = $(this).val()
         })
-        data.carPai = trimStr(sessionStorage.pcar)
-        console.log(data)
+        data.carPai = trimStr(carNum)
         $.ajax({
             url: `${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
             type: 'post',
@@ -1598,7 +1570,7 @@
         data.orderId = '1'
         data.warehouseId = '1'
 
-        data.carPai = trimStr(sessionStorage.pcar)
+        data.carPai = trimStr(carNum)
         $.ajax({
             url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
             type: 'post',
@@ -1621,7 +1593,7 @@
             }
         })
     }
-    $('.ly-car-num').html(sessionStorage.pcar)
+    $('.ly-car-num').html(carNum)
     // 显示一晃
     function showLy(_this) {
         $('.ly-body').show()
@@ -1644,7 +1616,7 @@
             url: `${API}/erpWarehouse/selectByCarPlate?carIdAndPlate=${str}`,
             success: function (res) {
                 if (res.code == 0 && res.data) {
-                    $('.materielSource').val(str)
+                    
                     $('.wlset_0').val(res.data.materielName)
                     $('.wlset_1').val(res.data.materielBrand)
                     $('.wlset_2').val(res.data.materielSpecifications)
@@ -1655,8 +1627,10 @@
                     // $('.wlset_7').val(res.data.materielNumber)
                     $('.wlset_8').val(res.data.materielProductionId)
                     $('.wlset_9').val(res.data.materielSensorId)
-                    $('.ly-body').hide()
+                    
                 }
+                $('.materielSource').val(str)
+                $('.ly-body').hide()
             }
         })
     }
@@ -1707,7 +1681,6 @@
         $('.qx-body').show()
         let left = $(_this).offset().left
         let top = $(_this).offset().top + 40
-        console.log(left, top)
         $('.qx-body').css({
             'left': left + 'px',
             'top': top + 'px'
@@ -1911,12 +1884,7 @@
             }
         })
     }
-    $(document).on('click', function () {
-        $('.hover-show').hide()
-        $('.ly-show').hide()
-        $('.qx-show').hide()
-        $('.qxxm-show').hide()
-    })
+    
 
     function setWlVal(_this) {
         $(`.${osCls} .materielUnit`).val($(_this).text())

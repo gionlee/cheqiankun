@@ -247,7 +247,7 @@
         let addval = $('#addval').val()
         if (addval) {
             $.ajax({
-                url: `${API}/erpSystemParameters/inertOrUpdateParameters?name=${addval}`,
+                url: `${API}/erpSystemParameters/inertOrUpdateParameters?name=${encodeURI(addval)}`,
                 type: 'get',
                 success: function (res) {
                     console.log(res)
@@ -305,12 +305,12 @@
         let clsname = '.getid' + id
         let name = $(clsname).val()
         $.ajax({
-            url: `${API}/erpSystemParameters/inertOrUpdateParameters?id=${id}&name=${name}`,
+            url: `${API}/erpSystemParameters/inertOrUpdateParameters?id=${id}&name=${encodeURI(name)}`,
             type: 'get',
             success: function (res) {
                 if (res.code == 0) {
                     layer.msg('修改成功！');
-                    getList()
+                    selType()
                 }
             }
         })
@@ -319,7 +319,7 @@
     function addChildType() {
         let name = $('.child').val()
         $.ajax({
-            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}`,
+            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${encodeURI(name)}`,
             type: 'get',
             success: function (res) {
                 layer.msg('添加成功！')
@@ -332,7 +332,7 @@
     function upChildType(id) {
         let name = $(`.getid${id}`).val()
         $.ajax({
-            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${name}&id=${id}`,
+            url: `${API}/erpSystemParametersChild/inertOrUpdateParametersChild?pid=${parentId}&name=${encodeURI(name)}&id=${id}`,
             type: 'get',
             success: function (res) {
                 layer.msg('修改成功！')

@@ -157,7 +157,7 @@
                     <td><input data-name="rimsPlace" type="text" class="layui-input rimsPlace"></td>
                     <td><input data-name="rimsState" type="text" class="layui-input rimsState"></td>
                     <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
-                    <td><input data-name="rimsNum" type="text" class="layui-input rimsNum"></td>
+                    <td><input data-name="rimsNum" type="text" class="layui-input rimsNum" value="1"></td>
                     <td>
                         <input type="text" class="layui-input rimsProductionId isClear" data-name="rimsProductionId">
                     </td>
@@ -197,7 +197,7 @@
                         <input type="text" data-name="tireUnit" class="layui-input save-data tireUnit" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="tireNum" class="layui-input save-data" value="">
+                        <input type="text" data-name="tireNum" class="layui-input save-data" value="1">
                     </td>
                     <td>
                         <input type="text" class="layui-input tireProductionId isClear" data-name="tireProductionId">
@@ -442,6 +442,7 @@
             selWl()
         }
     })
+    let carList = []
     // 查询车辆
     function selWl() {
         $.ajax({
@@ -450,6 +451,7 @@
             success: function (res) {
                 let arr = res.data
                 let str = ''
+                carList = res.data
                 $.each(arr, function (i, n) {
                     if (n.zhiNeng) {
                         str +=
@@ -559,8 +561,20 @@
     }
     // 保存
     function save(params) {
-       
-        let data = {};
+        let bol = true
+       if($('.tireLocation').val() == '') {
+           alert('请选择胎位')
+           return false
+       }
+       $.each(carList,function (i,k) {
+           if(k.tireLocation == $('.tireLocation').val()) {
+               alert('胎位重复!')
+               bol = false
+               return false
+           }
+       })
+        if(bol) {
+            let data = {};
         $('.saves input').each(function () {
             console.log($(this).data('name') == 'tireName', $(this).val());
             if ($(this).data('name') == 'tireName' && $(this).val() == '轮胎(智能)') {
@@ -569,15 +583,6 @@
             data[$(this).data('name')] = $(this).val()
         })
         data.tireLocation = $('.tireLocation').val()
-        // data.tireProductionId = tireProductionId.toString()
-        // data.qrCode = qrCode.toString()
-        // data.rfId = rfId.toString()
-        // data.sensorProductionId = sensorProductionId.toString()
-        // data.sensorRfId = sensorRfId.toString()
-        // data.sensorQrCode = sensorQrCode.toString()
-        // data.rimsProductionId = rimsProductionId.toString()
-        // data.rimsRfId = rimsRfId.toString()
-        // data.rimsQrCode = rimsQrCode.toString()
         data.custId = loadUserInfo.customer.id
         data.userId = loadUserInfo.user.id
         data.carPlate = decodeURI(decodeURI(getUrlParam('carnum')))
@@ -602,6 +607,7 @@
                 layer.msg("保存成功")
             }
         })
+        }
     }
 
     function hoverShow() {
@@ -879,7 +885,7 @@
                         <input type="text" data-name="sensorUnit" class="layui-input ai-data sensorUnit" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="sensorNum" class="layui-input ai-data sensorNum" value="">
+                        <input type="text" data-name="sensorNum" class="layui-input ai-data sensorNum" value="1">
                     </td>
                     <td>
                         <input  class="layui-input sensorProductionId isClear" data-name="sensorProductionId">
@@ -905,6 +911,7 @@
     $(document).on('click', function () {
         $('.hover-show').hide()
     })
+    showLv1()
 </script>
 
 </html>

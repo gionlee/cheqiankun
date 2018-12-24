@@ -172,7 +172,45 @@
 
         .layui-form .layui-input {
             width: 150px;
-		}
+        }
+        .hover-body {
+            position: relative;
+        }
+        .hover-show {
+            position:absolute;
+            top: 10px;
+            left: 50px;
+            z-index: 99999999999999999999999999999999999999;
+            display: none;
+        }
+        .hover-show li {
+            width: 150px;
+            height: 30px;
+            background: #fff;
+            border-bottom:1px solid #ccc;
+            line-height: 30px;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            
+        }
+        .hover-show li:hover {
+            background: #ccc;
+            /* color: #fff; */
+        }
+        .hover-show li ul {
+
+        }
+        .hover-show div {
+            top: 0;
+            position: absolute;
+            width: 150px;
+        }
+        .hover-show div ul {
+            position: absolute;
+            top: 0;
+            left: 150px;
+        }
     </style>
 </head>
 
@@ -198,6 +236,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="search">
             <input class="layui-input jsdate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
         </div>
@@ -205,6 +244,11 @@
             <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
         </div>
         <div style="float: left;"><button class="layui-btn layui-btn-normal" onclick="addPlan()">新增</button> </div>
+        <div class="hover-body">
+            <ul class="hover-show">
+    
+            </ul>
+        </div>
         <table class="layui-table" lay-filter="table">
             <thead>
                 <tr>
@@ -227,6 +271,7 @@
             </tbody>
         </table>
     </div>
+    
     <div class="winbody">
         <div class="layui-btn layui-btn-xs" onclick="addList()">新增</div>
         <table class="layui-table">
@@ -464,34 +509,34 @@
             
         let list = res.data.materielList.reverse()
         $.each(list,function (j,n) {
-            str += `<tr class="mlist sss_${i}"><td >
+            str += `<tr class="mlist sss_${j}"><td >
                     <input type="hidden" data-name="id" value="${n.id}">
                     <input type="hidden" data-name="workState" value="${n.workState}">
-                        <input type="text" class="layui-input" data-name="materielName" value="${n.materielName}">
+                        <input type="text" class="layui-input materielName" data-name="materielName" value="${n.materielName}" onclick="showLv1('sss_${j}')">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielBrand" value="${n.materielBrand}">
+                        <input type="text" class="layui-input materielBrand" data-name="materielBrand" value="${n.materielBrand}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielSpecifications" value="${n.materielSpecifications}">
+                        <input type="text" class="layui-input materielSpecifications" data-name="materielSpecifications" value="${n.materielSpecifications}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielModel" value="${n.materielModel}">
+                        <input type="text" class="layui-input materielModel" data-name="materielModel" value="${n.materielModel}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielPlace" value="${n.materielPlace}">
+                        <input type="text" class="layui-input materielPlace" data-name="materielPlace" value="${n.materielPlace}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielState" value="${n.materielState}">
+                        <input type="text" class="layui-input materielState" data-name="materielState" value="${n.materielState}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="${n.materielUnit}">
+                        <input type="text" class="layui-input materielUnit" data-name="materielUnit" value="${n.materielUnit}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielAmount" value="${n.materielAmount}">
+                        <input type="text" class="layui-input materielAmount" data-name="materielAmount" value="${n.materielAmount}">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="remark" value="${n.remark}">
+                        <input type="text" class="layui-input remark" data-name="remark" value="${n.remark}">
                     </td></tr>`
         })
         $('.dbody').html(str)
@@ -551,28 +596,28 @@
                         <input type="hidden" data-name="workState"  value="0">
                         <input type="hidden" data-name="bManager"  value="${loadUserInfo.user.realName}">
                         
-                        <input type="text" class="layui-input" data-name="materielName" value="">
+                        <input type="text" class="layui-input materielName" data-name="materielName" value="" onclick="showLv1('list_${adaddcount}')">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielBrand" value="">
+                        <input type="text" class="layui-input materielBrand" data-name="materielBrand" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielSpecifications" value="">
+                        <input type="text" class="layui-input materielSpecifications" data-name="materielSpecifications" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielModel" value="">
+                        <input type="text" class="layui-input materielModel" data-name="materielModel" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielPlace" value="">
+                        <input type="text" class="layui-input materielPlace" data-name="materielPlace" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielState" value="">
+                        <input type="text" class="layui-input materielState" data-name="materielState" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielUnit" value="">
+                        <input type="text" class="layui-input materielUnit" data-name="materielUnit" value="">
                     </td>
                     <td>
-                        <input type="text" class="layui-input" data-name="materielAmount" value="">
+                        <input type="text" class="layui-input materielAmount" data-name="materielAmount" value="">
                     </td>
                     <td>
                         <input type="text" class="layui-input" data-name="remark" value="">
@@ -614,6 +659,7 @@
                     })
                     saveData.customerId = loadUserInfo.customer.id
                     saveData.json = JSON.stringify(list)
+                    
                     $.ajax({
                         url:`${API}/erpOrderd/addOrderd`,
                         data:saveData,
@@ -625,6 +671,9 @@
                             }
                         }
                     }) 
+            },
+            cancel: function () {
+                $('.hover-body').hide()
             }
         })
     }
@@ -635,7 +684,7 @@
         <tr class="mlist list_${addCount}"><td>
                         <input type="hidden" data-name="id"  value="0">
                         <input type="hidden" data-name="workState"  value="0">
-                        <input type="text" class="layui-input" data-name="materielName" value="">
+                        <input type="text" class="layui-input" data-name="materielName" value="" onclick="showLv1('list_${addCount}')">
                     </td>
                     <td>
                         <input type="text" class="layui-input" data-name="materielBrand" value="">
@@ -678,5 +727,170 @@
         }
     }
 
+    let setCls = ''
+    function showLv1(cls) {
+        setCls = cls
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTop`,
+            type: 'get',
+            success: function (res) {
+                let str = ''
+                let arrs = res.data
+                $.each(arrs, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+                })
+                $('.hover-show').html(str)
+                $('.hover-show').show()
+            }
+        })
+    }
+    // 查找品名
+    function showLv2(zid, _this) {
+        $(`.hover-show .list-2`).html('')
+        aiZid = zid
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找规格
+    function showLv3(zid, _this) {
+        $(`.hover-show .list-3`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找品牌
+    function showLv4(zid, _this) {
+        $(`.hover-show .list-4`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找型号
+    function showLv5(zid, _this) {
+        $(`.hover-show .list-5`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv6(zid, _this) {
+        $(`.hover-show .list-6`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                console.log(res)
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+                })
+                str += '</ul>'
+                console.log(str)
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    // 查找
+    function showLv7(zid, _this) {
+        $(`.hover-show .list-7`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str +=
+                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+
+    function showLv8(zid, _this) {
+        $(`.hover-show .list-8`).html('')
+        $.ajax({
+            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+            type: 'get',
+            async: false,
+            success: function (res) {
+                let arr = res.data
+                let str = '<ul>'
+                $.each(arr, function (k, v) {
+                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+                })
+                str += '</ul>'
+                $(_this).children('div').html(str)
+            }
+        })
+    }
+    function setWlVal(_this) {
+        $(`.${setCls} .materielUnit`).val($(_this).text())
+            $(`.${setCls} .materielState`).val($(_this).parents('.list-8').prev().text())
+            $(`.${setCls} .materielPlace`).val($(_this).parents('.list-7').prev().text())
+            $(`.${setCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+            $(`.${setCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+            $(`.${setCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+            $(`.${setCls} .materielName`).val($(_this).parents('.list-3').prev().text())
+            aiName = $(_this).parents('.list-2').prev().text()
+            $('.hover-body').hide()
+    }
     
 </script>

@@ -34,10 +34,10 @@
 			display: none;
 		}
 		.change {
-			width: 200px;
+			width: 100px;
 			height:90px;
 			line-height: 90px;
-			float: left;
+			float: right;
 			text-align: center;
 		}
 		.jjWin {
@@ -67,24 +67,23 @@
 				top: 90px !important;
 			}
 		}
+		.layui-nav-bar{
+			display: none;
+		}
 	</style>
 </head>
 
 <body>
 	<!-- 顶部开始 -->
-	<div class="container" style="height: 90px;background: #ccc;">
+	<div class="container" style="height: 90px;background: #ccc; text-align: center;">
 		<div class="logo">
-			<a href="./index.html" style="line-height: 90px; padding: 0;">
+			<a href="./index.html" style="line-height: 90px; padding: 0; text-align: left;">
 				<img src="images/logo.png" width="180" height="90" />
 			</a>
 		</div>
-		<div class="left_open" style="height: 90px;">
+		<!--<div class="left_open" style="height: 90px;">
 			<i title="展开/隐藏左侧栏" class="iconfont" style="margin-top: 29px;background: #000;">&#xe699;</i>
-		</div>
-		<div class="change">
-			<div class="layui-btn layui-btn-xs " onclick="showJj()">竞技</div>
-			<div class="layui-btn layui-btn-xs ">广告</div>
-		</div>
+		</div>-->
 		<div class="banner-text" style="text-align:center;">
 
 		</div>
@@ -110,6 +109,10 @@
           </li> -->
 			<li class="layui-nav-item to-index"><a onclick="seeInfoD()">消息<sup>1</sup></a></li>
 		</ul>
+		<div class="change">
+			<div class="layui-btn layui-btn-xs " onclick="showJj()">竞技</div>
+			<div class="layui-btn layui-btn-xs ">广告</div>
+		</div>
 
 	</div>
 	<!-- 顶部结束 -->
@@ -654,6 +657,12 @@
 							</a>
 						</li>
 						<li>
+							<a _href="./jiekouguanli.html">
+								<i class="iconfont">&#xe6a7;</i>
+								<cite>接口管理</cite>
+							</a>
+						</li>
+						<li>
 							<a _href="./nichengxiugai.html">
 								<i class="iconfont">&#xe6a7;</i>
 								<cite>昵称修改</cite>
@@ -1087,16 +1096,7 @@
 </body>
 <script>
 	//权限设定
-	// let arr = loadUserInfo.user.groupId.split(',')
-	// $('.sub-menu > li').each(function (i) {
-	// 	let _this = $(this)
-	// 	$(this).hide()
-	// 	$.each(arr,function (j,n) {
-	// 		if (i == n - 1) {
-	// 			_this.show()
-	// 		}
-	// 	})
-	// })
+	
 	//　广告
 	let adList = []
 	let form = ''
@@ -1110,21 +1110,52 @@
 			adList = res.data.records
 			let nums = 0
 			$('.banner-text').html(adList[nums].content)
+			let cor = '#fff'
+			if (adList[nums].contentColor == '红色') {
+				cor = 'red'
+			} else if (adList[nums].contentColor == '蓝色') {
+				cor = 'blue'
+			} else if (adList[nums].contentColor == '黑色') {
+				cor = 'black'
+			} else if (adList[nums].contentColor == '黑色') {
+				cor = 'yellow'
+			}
 			$('.banner-text').css({
 				'font-family': adList[nums].contentFamily,
 				'font-size': adList[nums].contentSize,
-				'color': adList[nums].contentColor,
+				'color': cor,
 			})
 			setInterval(function () {
-				console.log(nums, adList.length)
-				if (nums = adList.length) {
+				if (nums == adList.length) {
 					nums = 0
+				}
+				let cor = '#fff'
+			console.log(adList[nums].contentColor)
+			if (adList[nums].contentColor == '红色') {
+				cor = 'red'
+			} else if (adList[nums].contentColor == '蓝色') {
+				cor = 'blue'
+			} else if (adList[nums].contentColor == '黑色') {
+				cor = 'black'
+			} else if (adList[nums].contentColor == '黑色') {
+				cor = 'yellow'
+			}
+				if (adList[nums].contentSize == '20px') {
+					$('.banner-text').css({
+						'line-height': '35px',
+						'text-align': 'left'
+					})
+				} else {
+					$('.banner-text').css({
+						'line-height': '70px',
+						'text-align': 'center'
+					})
 				}
 				$('.banner-text').html(adList[nums].content)
 				$('.banner-text').css({
 					'font-family': adList[nums].contentFamily,
 					'font-size': adList[nums].contentSize,
-					'color': adList[nums].contentColor,
+					'color': cor,
 				})
 				nums++
 			}, 12000)

@@ -300,10 +300,10 @@
         type: 'get',
         success: function (res) {
             var str ="";
-            $.each(res.data.records, function (i,n) {
+            $.each(res.data.reverse(), function (i,n) {
                 
         	   str+=`<tr><td>
-                        ${i+1}
+                        ${res.data.length - i}
                     </td>
                     <td>
                         ${n.changeDate}

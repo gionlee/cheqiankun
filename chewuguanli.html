@@ -90,6 +90,9 @@
             border: 0;
             text-align: center;
         }
+        select {
+            height: 30px;
+        } 
     </style>
 </head>
 
@@ -140,11 +143,23 @@
     layui.use('layer',function () {
         layer = layui.layer
     })
+    let gList = []
+    // 查询挂车
+    $.ajax({
+        url: `${API}/erpManagement/getGuaCar?custId=${loadUserInfo.customer.id}`,
+        type: 'get',
+        async: false,
+        success: function (res) {
+            gList = res.data.guache
+        }
+    })
+    
     $.ajax({
         url: `${API}/erpDriverRepair/getdriverRepair`,
         type: 'get',
+        
         success: function (res) {
-            console.log(res)
+
             let str = ''
             $.each(res.data.reverse(), function (i,json) {
                 str += `<tr class="cwgl">
@@ -159,30 +174,64 @@
             $('.cars').html(str)
         }
     })
-
-    $.ajax({
+    
+    function getCarList(){
+    	var htmlstr = '<option value=""></option>';
+	    $.ajax({
+	        url: `${API}/erpManagement/getNoGuaCar?custId=${loadUserInfo.customer.id}`,
+	        type: 'get',
+	        async: false,
+	        success: function (res) {
+	            $.each(res.data.car, function (i,json) {
+	                htmlstr += `<option value="${json.carPlate == null ? '' : json.carPlate}">${json.carPlate == null ? '' : json.carPlate}</option>`
+	            })
+	        }
+	    })
+	    return htmlstr
+    }
+    var car_list = getCarList();
+    selCw ()
+    function selCw () {
+        $.ajax({
         url: `${API}/erpDriver/getdriverBycustId?custId=${loadUserInfo.customer.id}`,
         type: 'get',
+        
         success: function (res) {
             let str = ''
             $.each(res.data, function (i,json) {
-                str += `<tr>
-                    <td>${res.data.length -  i}</td>
-                    <td><input class="layui-input" data-name="carNumber" value="${json.carPlate == null ? '' : json.carPlate}"></td>
-                    <td><input class="layui-input" data-name="trailerNumber" value="${json.trailerNumber == null ? '' : json.trailerNumber}"></td>
-                    <td><input class="layui-input" data-name="driverA" value="${json.driverA == null ? '' : json.driverA}"></td>
-                    <td><input class="layui-input" data-name="driverAPhone" value="${json.driverAPhone == null ? '' : json.driverAPhone}"></td>
-                    <td><input class="layui-input" data-name="driverB" value="${json.driverB == null ? '' : json.driverB}"></td>
-                    <td><input class="layui-input" data-name="driverBPhone" value="${json.driverBPhone == null ? '' : json.driverBPhone}"></td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs" onclick="saveList(${i},${json.id})">保存</div>
-                        
-                    </td>
-                </tr>`
+                let gstr = ''
+                $.each(gList, function (i,n) {
+                    gstr += `<option value="${n.carPlate}">${n.carPlate}</option>`
             })
-            $('.lists').html(str)
+            console.log(gstr)
+                str += `<tr>
+		                    <td>${res.data.length -  i} <input class="layui-input" type="hidden" data-name="carId"  value="${json.carId}" /> </td>
+		                    <!--<td><input class="layui-input" data-name="carNumber" value="${json.carPlate == null ? '' : json.carPlate}"></td>-->
+		                    <td>
+		                    	<select class="carPlate_${i}" data-name="carPlate">
+		                    		${car_list}
+		                    	</select>
+		                    </td>
+                            <td><select  class=" gcarPlate_${i}">${gstr}</select></td>
+                            <td><input class="layui-input" data-name="driverA" value="${json.driverA == null ? '' : json.driverA}"></td>
+		                    <td><input class="layui-input" data-name="driverAPhone" value="${json.driverAPhone == null ? '' : json.driverAPhone}"></td>
+		                    <td><input class="layui-input" data-name="driverB" value="${json.driverB == null ? '' : json.driverB}"></td>
+		                    <td><input class="layui-input" data-name="driverBPhone" value="${json.driverBPhone == null ? '' : json.driverBPhone}"></td>
+		                    <td>
+		                        <div class="layui-btn layui-btn-xs" onclick="saveList(${i},${json.id})">保存</div>
+		                        
+		                    </td>
+		                </tr>`
+            })
+            $('.lists').html(str);
+            $.each(res.data, function (i,json) {
+                $('.carPlate_' + i).val(json.carPlate == null ? '' : json.carPlate)
+                $(`.gcarPlate_${i}`).val(json.trailerNumber == null ? '' : json.trailerNumber)
+                
+            })
         }
     })
+    }
     //<div class="layui-btn layui-btn-xs layui-btn-danger" onclick="dele(${json.id})">删除</div>
     function save() {
         let data = {
@@ -202,16 +251,20 @@
             }
         })
     }
+    // 保存
     function saveList(index, id) {
-        let str = $('.lists tr')[index]
+        let str = $('.lists tr').eq(index)
         let tags = $(str).find('input')
-        let json = `id=${id}`
+        let json ={id:id}
         $.each(tags, function (i) {
-            json += '&' + $(this).data('name') + '=' + $(this).val()
+            json [$(this).data('name')]= $(this).val()
         })
+        json.carPlate = $(`.carPlate_${index}`).val()
+        json.trailerNumber = $(`.gcarPlate_${index}`).val()
         $.ajax({
-            url: `${API}/erpDriver/inertOrUpdateDriver?${json}`,
-            type: 'get',
+            url: `${API}/erpDriver/inertOrUpdateDriver`,
+            type: 'post',
+            data:json,
             success: function (res) {
                 if(res.code == 0) {
                     layer.msg('保存成功!')

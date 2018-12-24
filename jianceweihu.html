@@ -119,12 +119,14 @@
 
     var cokeid = 1;
 
+
     sessionStorage.removeItem('jcgcar');
     sessionStorage.removeItem('jcpcar');
 
-    function seeInfo(id) {
+    function seeInfo(id,name) {
         sessionStorage.removeItem('jcgcar');
     sessionStorage.removeItem('jcpcar');
+    sessionStorage.custName = name
         $.ajax({
             url: API + '/erpManagement/gojianceweihuCar?custId=' + id,
             type: 'get',
@@ -158,7 +160,7 @@
                 btn: ['确定'],
                 yes: function () {
                     if (pcar.length > 0) {
-                        window.location.href = 'jianceweihuxiangqing.html'
+                        window.location.href = `jianceweihuxiangqing.html`
                     } else {
                         alert('请选择车辆！')
                     }
@@ -171,7 +173,7 @@
     $(function () {
 
         $.ajax({
-            url: API + '/erpManagement/gojianceweihu?custId=' + cokeid,
+            url: API + `/erpManagement/gojianceweihu?custId= + ${loadUserInfo.customer.id}`  ,
             type: 'get',
             dataType: 'json',
             success: function (ret) {
@@ -179,11 +181,7 @@
                 var html = '';
 
                 for (let key = 0; key < obj.length; key++) {
-                    html += '<li onclick="seeInfo(' + obj[key].id + ')">' +
-                        '<a>' +
-                        '' + obj[key].cusName + '' +
-                        '</a>' +
-                        '</li>';
+                    html += `<li onclick="seeInfo('${obj[key].id}','${obj[key].cusName}')"><a>${obj[key].cusName} </a></li>`;
                 }
                 $("#list").html(html);
             },

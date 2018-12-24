@@ -103,9 +103,6 @@
             background: #ccc;
             /* color: #fff; */
         }
-        .hover-show li ul {
-
-        }
         .hover-show div {
             top: 0;
             position: absolute;
@@ -123,7 +120,7 @@
     <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
     <div class="wrap">
         <div class="down-xlsx" style="float: right;line-height: 30px;">
-            <a href="./lib/muban.xlsx" download="download">下载Excel</a>
+            <a href="./lib/muban.xlsx" download="download">导入模板</a>
         </div>
         <table class="layui-table">
             <thead>
@@ -183,7 +180,7 @@
                     </td>
                     <td>
                         <input type="text" data-name="materielNumber" class="layui-input save-data materielNumber"
-                            value="">
+                            value="1">
                     </td>
                     <td>
                         <span class="scbh"></span>
@@ -376,7 +373,7 @@
             url: `${API}/erpWarehouse/getMateriels?custId=${loadUserInfo.user.id}`,
             type: 'get',
             success: function (res) {
-                let arr = res.data
+                let arr = res.data.reverse()
                 let str = ''
                 $.each(arr, function (i, n) {
                     // let fp = fplx[n.materiel_invoice_type].name
@@ -395,7 +392,42 @@
                     } else if (fp_type == 5) {
                         fp_text = '运输发票';
                     }
-                    str +=
+                    console.log(n.materiel_name.search('智能'))
+                    if(n.materiel_name.search('智能') != -1) {
+                        str +=
+                        `<tr>
+                    <td rowspan="2">${n.materiel_storage_date == null ? '' : n.materiel_storage_date}</td>
+                    <td rowspan="2">${n.war_name == null ? '' : n.war_name}</td>
+                    <td rowspan="2">${n.materiel_name == null ? '' : n.materiel_name}</td>
+                    <td>${n.materiel_brand == null ? '' : n.materiel_brand}</td>
+                    <td>${n.materiel_Specifications == null ? '' : n.materiel_Specifications}</td>
+                    <td>${n.materiel_model == null ? '' : n.materiel_model}</td>
+                    <td>${n.materiel_place == null ? '' : n.materiel_place}</td>
+                    <td>${n.materiel_state == null ? '' : n.materiel_state}</td>
+                    <td>${n.materiel_unit == null ? '' : n.materiel_unit}</td>
+                    <td>${n.num == null ? '' : n.num}</td>
+                    <td>${n.materiel_production_id == null ? '' : n.materiel_production_id}</td>
+                    <td>${n.materiel_eqcode == null ? '' : n.materiel_eqcode}</td>
+                    <td>${n.materiel_rfid == null ? '' : n.materiel_rfid}</td>
+                    <td>${n.materiel_storage_price == null ? '' : n.materiel_storage_price}</td>
+                    <td rowspan="2">${n.totalPrice == null ? '' : n.totalPrice}</td>
+                    <td rowspan="2">${fp_text}</td>
+                    </tr><tr>
+                    <td>${arr[i+1].materiel_brand == null ? '' : arr[i+1].materiel_brand}</td>
+                    <td>${arr[i+1].materiel_Specifications == null ? '' : arr[i+1].materiel_Specifications}</td>
+                    <td>${arr[i+1].materiel_model == null ? '' : arr[i+1].materiel_model}</td>
+                    <td>${arr[i+1].materiel_place == null ? '' : arr[i+1].materiel_place}</td>
+                    <td>${arr[i+1].materiel_state == null ? '' : arr[i+1].materiel_state}</td>
+                    <td>${arr[i+1].materiel_unit == null ? '' : arr[i+1].materiel_unit}</td>
+                    <td>${arr[i+1].num == null ? '' : arr[i+1].num}</td>
+                    <td>${arr[i+1].materiel_production_id == null ? '' : arr[i+1].materiel_production_id}</td>
+                    <td>${arr[i+1].materiel_eqcode == null ? '' : arr[i+1].materiel_eqcode}</td>
+                    <td>${arr[i+1].materiel_rfid == null ? '' : arr[i+1].materiel_rfid}</td>
+                    <td>${arr[i+1].materiel_storage_price == null ? '' : arr[i+1].materiel_storage_price}</td>
+                    </tr>`
+                        i++
+                    } else {
+                        str +=
                         `<tr>
                     <td>${n.materiel_storage_date == null ? '' : n.materiel_storage_date}</td>
                     <td>${n.war_name == null ? '' : n.war_name}</td>
@@ -413,7 +445,9 @@
                     <td>${n.materiel_storage_price == null ? '' : n.materiel_storage_price}</td>
                     <td>${n.totalPrice == null ? '' : n.totalPrice}</td>
                     <td>${fp_text}</td>
-                    <tr>`
+                    </tr>`
+                    }
+                    
                 })
 
                 $('.matlist').html(str)
@@ -724,7 +758,7 @@
                         <input type="text" data-name="materielUnit" class="layui-input ai-data materielUnitAI" value="">
                     </td>
                     <td>
-                        <input type="text" data-name="materielNumber" class="layui-input ai-data materielNumber" value="">
+                        <input type="text" data-name="materielNumber" class="layui-input ai-data materielNumber" value="1">
                     </td>
                     <td>
                         <input class=" layui-input scbhai isClear" data-name="chuanIds" value=""  style="width:50%;display: inline-block;" />

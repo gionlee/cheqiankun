@@ -125,7 +125,8 @@
 
 
     function seeInfo(id,name) {
-
+        sessionStorage.removeItem('gcar');
+    sessionStorage.removeItem('pcar');
         $.ajax({
             url: API + '/erpManagement/gojianceweihuCar?custId=' + id,
             type: 'get',
