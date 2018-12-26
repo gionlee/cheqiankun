@@ -1,259 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/Global.js"></script>
-    <style>
-        html {
-            height: 100%;
-        }
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-            min-height: 600px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			html {
+				height: 100%;
+			}
+			
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+				min-height: 600px;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				width: 720px;
+				padding: 10px;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				height: 24px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+		</style>
+	</head>
 
-        ul {
-            width: 100%;
-        }
+	<body>
+		<div class="wrap" style="text-align: center;">
+			<div class="search">
+				<input class="layui-input ksdate" style="text-align: center; padding: 0;" type="text" id="startDate" placeholder="开始日期">
+			</div>
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-input-inline">
+						<select lay-filter="datesel" name="quiz2">
+							<option value="">请选时段</option>
+							<option value="0">一季度</option>
+							<option value="1">二季度</option>
+							<option value="2">三季度</option>
+							<option value="3">四季度</option>
+							<option value="4">上半年</option>
+							<option value="5">下半年</option>
+							<option value="6">本年度</option>
+							<option value="7">上年度</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="search">
+				<input class="layui-input jsdate" style="text-align: center; padding: 0;" id="endDate" type="text" placeholder="结束日期">
+			</div>
+			<div class="search">
+				&nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+			</div>
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>车辆类型</th>
+						<th>车辆轴数</th>
+						<th>驱动方式</th>
+						<th>左1轮</th>
+						<th>右1轮</th>
+						<th>左2轮</th>
+						<th>右2轮</th>
+						<th>备胎</th>
+					</tr>
+				</thead>
+				<tbody id="list">
 
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script>
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
 
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
+			//执行一个laydate实例
+			laydate.render({
+				elem: '.ksdate' //指定元素
+			});
+			laydate.render({
+				elem: '.jsdate' //指定元素
+			});
+		});
+    
+    $('.ksdate').val(getCurrentMonthFirst())
+    $('.jsdate').val(getCurrentMonthLast())
+		layui.use('form', function() {
+			var form = layui.form
+			form.on('select(datesel)', function(data) {
+				let val = data.value
+				let years = new Date().getFullYear()
+				switch(val) {
+					case '0':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-03-31`)
+						break;
+					case '1':
+						$('.ksdate').val(`${years}-04-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '2':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-09-30`)
+						break;
+					case '3':
+						$('.ksdate').val(`${years}-10-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '4':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '5':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '6':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '7':
+						$('.ksdate').val(`${years-1}-01-01`)
+						$('.jsdate').val(`${years-1}-12-31`)
+						break;
+				}
+			});
+		})
+		sel()
 
-        }
-
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            width: 720px;
-            padding: 10px;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .search .layui-input {
-            width: 200px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-        <div class="search">
-            <input class="layui-input ksdate" type="text" id="startDate" placeholder="开始日期">
-        </div>
-        <div class="layui-form">
-            <div class="layui-form-item">
-                <div class="layui-input-inline">
-                    <select lay-filter="datesel" name="quiz2">
-                        <option value="">请选时段</option>
-                        <option value="0">一季度</option>
-                        <option value="1">二季度</option>
-                        <option value="2">三季度</option>
-                        <option value="3">四季度</option>
-                        <option value="4">上半年</option>
-                        <option value="5">下半年</option>
-                        <option value="6">本年度</option>
-                        <option value="7">上年度</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="search">
-            <input class="layui-input jsdate" id="endDate" type="text" placeholder="结束日期">
-        </div>
-        <div class="search">
-             &nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
-        </div>
-
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>车辆类型</th>
-                    <th>车辆轴数</th>
-                    <th>驱动方式</th>
-                    <th>左1轮</th>
-                    <th>右1轮</th>
-                    <th>左2轮</th>
-                    <th>右2轮</th>
-                    <th>备胎</th>
-                </tr>
-            </thead>
-            <tbody id="list">
-               
-            </tbody>
-        </table>
-    </div>
-</body>
-<script>
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-
-        //执行一个laydate实例
-        laydate.render({
-            elem: '.ksdate' //指定元素
-        });
-        laydate.render({
-            elem: '.jsdate' //指定元素
-        });
-    });
-    layui.use('form', function () {
-        var form = layui.form
-        form.on('select(datesel)', function (data) {
-            let val = data.value
-            let years = new Date().getFullYear()
-            switch (val) {
-                case '0':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-03-31`)
-                    break;
-                case '1':
-                    $('.ksdate').val(`${years}-04-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '2':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-09-30`)
-                    break;
-                case '3':
-                    $('.ksdate').val(`${years}-10-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '4':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '5':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '6':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                    case '7':
-                    $('.ksdate').val(`${years-1}-01-01`)
-                    $('.jsdate').val(`${years-1}-12-31`)
-                    break;
-            }
-        });
-    })
-    sel ()
-    function sel () {
-        let data = {
-            custId:loadUserInfo.customer.id,
-            catPlate:decodeURI(decodeURI(getUrlParam('carnum'))),
-            startDate: $('#startDate').val(),
-            endDate: $('#endDate').val()
-        }
+		function sel() {
+			let data = {
+				custId: loadUserInfo.customer.id,
+				catPlate: decodeURI(decodeURI(getUrlParam('carnum'))),
+				startDate: $('#startDate').val(),
+				endDate: $('#endDate').val()
+			}
 			$.ajax({
-				url:API + `/erpTireArchivesWork/tongjiguanliLTMH`,
-                type: 'post',
-                data:data,
-				success:function(ret) {
+				url: API + `/erpTireArchivesWork/tongjiguanliLTMH`,
+				type: 'post',
+				data: data,
+				success: function(ret) {
 					var objkacha = ret.data;
 					var html = '';
 
-					for(var key = 0; key < objkacha.length;key ++) {
-						
-							html +=' <tr>'+
- '                    <td>'+(objkacha[key].carType1 == null ? '' : objkacha[key].carType1)+'</td>'+
- '                    <td>'+(objkacha[key].carWheel  == null ? '' : objkacha[key].carWheel)+'</td>'+
- '                    <td>'+(objkacha[key].carDrive  == null ? '' : objkacha[key].carDrive)+'</td>'+
- '                    <td>'+(objkacha[key].zuoOne  == null ? '' : objkacha[key].zuoOne)+'</td>'+
- '                    <td>'+(objkacha[key].youOne  == null ? '' : objkacha[key].youOne)+'</td>'+
- '                    <td>'+(objkacha[key].zuoTwo  == null ? '' : objkacha[key].zuoTwo)+'</td>'+
- '                    <td>'+(objkacha[key].zuoTwo  == null ? '' : objkacha[key].zuoTwo)+'</td>'+
- '                    <td>'+(objkacha[key].beitai  == null ? '' : objkacha[key].beitai)+'</td>'+
- '                </tr>';
-							
-						
-						
-						
+					for(var key = 0; key < objkacha.length; key++) {
+
+						html += ' <tr>' +
+							'                    <td>' + (objkacha[key].carType1 == null ? '' : objkacha[key].carType1) + '</td>' +
+							'                    <td>' + (objkacha[key].carWheel == null ? '' : objkacha[key].carWheel) + '</td>' +
+							'                    <td>' + (objkacha[key].carDrive == null ? '' : objkacha[key].carDrive) + '</td>' +
+							'                    <td>' + (objkacha[key].zuoOne == null ? '' : objkacha[key].zuoOne) + '</td>' +
+							'                    <td>' + (objkacha[key].youOne == null ? '' : objkacha[key].youOne) + '</td>' +
+							'                    <td>' + (objkacha[key].zuoTwo == null ? '' : objkacha[key].zuoTwo) + '</td>' +
+							'                    <td>' + (objkacha[key].zuoTwo == null ? '' : objkacha[key].zuoTwo) + '</td>' +
+							'                    <td>' + (objkacha[key].beitai == null ? '' : objkacha[key].beitai) + '</td>' +
+							'                </tr>';
+
 					}
 					$("#list").html(html);
-								           		         		
+
 				},
-				error:function(err) {
+				error: function(err) {
 					alert("系统错误");
 
 				}
 			});
-    }
-
-</script>
+		}
+	</script>

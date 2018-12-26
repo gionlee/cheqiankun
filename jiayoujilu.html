@@ -131,7 +131,7 @@
         <div style="text-align:center;">
 
             <div class="search">
-                <input class="layui-input ksdate" style="text-align: center;" type="text" placeholder="开始日期">
+                <input class="layui-input ksdate" style="text-align: center; padding: 0;" type="text" placeholder="开始日期">
             </div>
             <div class="layui-form">
                 <div class="layui-form-item">
@@ -151,7 +151,7 @@
                 </div>
             </div>
             <div class="search">
-                <input class="layui-input jsdate" style="text-align: center;" type="text" placeholder="结束日期">
+                <input class="layui-input jsdate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
             </div>
             <div class="search">
                 <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
@@ -226,6 +226,9 @@ layui.use('laydate', function () {
             elem: '.jsdate' //指定元素
         });
     });
+    
+    $('.ksdate').val(getCurrentMonthFirst())
+    $('.jsdate').val(getCurrentMonthLast())
     layui.use('form', function () {
         var form = layui.form
         form.on('select(datesel)', function (data) {

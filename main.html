@@ -1130,16 +1130,15 @@
 					nums = 0
 				}
 				let cor = '#fff'
-			console.log(adList[nums].contentColor)
-			if (adList[nums].contentColor == '红色') {
-				cor = 'red'
-			} else if (adList[nums].contentColor == '蓝色') {
-				cor = 'blue'
-			} else if (adList[nums].contentColor == '黑色') {
-				cor = 'black'
-			} else if (adList[nums].contentColor == '黑色') {
-				cor = 'yellow'
-			}
+				if (adList[nums].contentColor == '红色') {
+					cor = 'red'
+				} else if (adList[nums].contentColor == '蓝色') {
+					cor = 'blue'
+				} else if (adList[nums].contentColor == '黑色') {
+					cor = 'black'
+				} else if (adList[nums].contentColor == '黑色') {
+					cor = 'yellow'
+				}
 				if (adList[nums].contentSize == '20px') {
 					$('.banner-text').css({
 						'line-height': '35px',

@@ -226,6 +226,9 @@
 				elem: '.jsdate'
 			})
 		})
+    
+    $('.ksdate').val(getCurrentMonthFirst())
+    $('.jsdate').val(getCurrentMonthLast())
 		layui.use('form', function() {
 			var form = layui.form
 			form.on('select(datesel)', function(data) {

@@ -232,6 +232,9 @@
         });
     })
     
+    $('.ksdate').val(getCurrentMonthFirst())
+    $('.jsdate').val(getCurrentMonthLast())
+    
     let name = decodeURI(decodeURI(getUrlParam('name')))
     selWork()
     let list = []

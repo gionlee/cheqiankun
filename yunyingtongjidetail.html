@@ -82,11 +82,95 @@
 				font-size: 14px;
 				display: inline-block;
 			}
+			
+			#zzt,
+			#bt,
+			#zxt {
+				width: 600px;
+				height: 600px;
+				display: none;
+			}
+			#zzt-con,
+			#bt-con,
+			#zxt-con {
+				width: 600px;
+				height: 550px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="wrap">
+			<!-- 柱形图 -->
+			<div id="zzt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="zhu">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="zzt-con">
+
+				</div>
+			</div>
+			<!-- 饼形图 -->
+			<div id="bt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="bing">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="bt-con">
+
+				</div>
+			</div>
+			<!-- 折线图 -->
+			<div id="zxt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="zhe">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="zxt-con">
+
+				</div>
+			</div>
+			<div style="margin-bottom: 10px; text-align:center ;">
+				<form class="layui-form layui-col-md1" style="float: right;">
+					<select lay-filter="tu" class="ttt">
+						<option value="">图表类型</option>
+						<option value="1">柱状图</option>
+						<option value="2">饼状图</option>
+						<option value="3">曲线图</option>
+					</select>
+				</form>
+				<div style="clear: both;"></div>
+			</div>
 			<table class="layui-table">
 				<thead>
 					<tr>
@@ -120,22 +204,54 @@
 					</tr>
 					<tr>
 						<!--<th>序号</th>-->
-						<th class="khmc"><!--客户名称--></th>
-						<th class="xssr"><!--销售输入--></th>
-						<th class="wxsr"><!--维修输入--></th>
-						<th class="whsr"><!--维护收入--></th>
-						<th class="qtsr"><!--其他收入--></th>
-						<th class="srhj"><!--合计--></th>
-						<th class="cgzc"><!--采购支出--></th>
-						<th class="wxzc"><!--维修支出--></th>
-						<th class="whzc"><!--维护支出--></th>
-						<th class="ryzc"><!--燃油支出--></th>
-						<th class="qtzc"><!--其他支出--></th>
-						<th class="zchj"><!--合计--></th>
-						<th class="yylr"><!--运营利润--></th>
-						<th class="clzs"><!--车辆总数--></th>
-						<th class="yycs"><!--运营车数--></th>
-						<th class="yylc"><!--运营里程--></th>
+						<th class="khmc">
+							<!--客户名称-->
+						</th>
+						<th class="xssr">
+							<!--销售输入-->
+						</th>
+						<th class="wxsr">
+							<!--维修输入-->
+						</th>
+						<th class="whsr">
+							<!--维护收入-->
+						</th>
+						<th class="qtsr">
+							<!--其他收入-->
+						</th>
+						<th class="srhj">
+							<!--合计-->
+						</th>
+						<th class="cgzc">
+							<!--采购支出-->
+						</th>
+						<th class="wxzc">
+							<!--维修支出-->
+						</th>
+						<th class="whzc">
+							<!--维护支出-->
+						</th>
+						<th class="ryzc">
+							<!--燃油支出-->
+						</th>
+						<th class="qtzc">
+							<!--其他支出-->
+						</th>
+						<th class="zchj">
+							<!--合计-->
+						</th>
+						<th class="yylr">
+							<!--运营利润-->
+						</th>
+						<th class="clzs">
+							<!--车辆总数-->
+						</th>
+						<th class="yycs">
+							<!--运营车数-->
+						</th>
+						<th class="yylc">
+							<!--运营里程-->
+						</th>
 					</tr>
 				</thead>
 				<tbody class="list">
@@ -144,7 +260,108 @@
 			</table>
 		</div>
 	</body>
+	<script src="./js/echarts.min.js" charset="utf-8"></script>
 	<script>
+		var data_post = {
+			custId: loadUserInfo.customer.id,
+			type: 1
+		}
+		var tu_type = 1;
+		layui.use('form', function() {
+			let forms = layui.form
+			forms.on('select(tu)', function(data) {
+
+				let con = ''
+				if(data.value == 1) {
+					con = $('#zzt')
+					tu_type = 1
+				} else if(data.value == 2) {
+					con = $('#bt')
+					tu_type = 2
+				} else {
+					con = $('#zxt')
+					tu_type = 3
+				}
+				selTu()
+				layui.use('layer', function() {
+					layui.layer.open({
+						type: 1,
+						content: con,
+						area: ['600px']
+					})
+				})
+			})
+			forms.on('select(zhu)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+			forms.on('select(bing)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+			forms.on('select(zhe)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+		})
+
+		function selTu() {
+
+			let post_url = "";
+			if(tu_type == 1) { // 柱状图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJZhu`
+			} else if(tu_type == 2) { // 饼图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJBing`
+			} else if(tu_type == 3) { // 折线图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJBingZhe`
+			}
+			$.ajax({
+				url: post_url,
+				type: 'post',
+				data: data_post,
+				async: false,
+				success: function(res) {
+					var myChart;
+					console.log(res)
+					if(tu_type == 1) { // 柱状图
+						myChart = echarts.init(document.getElementById('zzt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if(tu_type == 2) { // 饼图
+						myChart = echarts.init(document.getElementById('bt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if(tu_type == 3) { // 折线图
+						myChart = echarts.init(document.getElementById('zxt-con'));
+						myChart.setOption(JSON.parse(res));
+					}
+				}
+			})
+		}
+		selTu()
+		
 		$.ajax({
 			url: `${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=${getUrlParam('id')}`,
 			type: 'get',

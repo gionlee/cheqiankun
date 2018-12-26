@@ -121,6 +121,7 @@
     <div class="wrap">
         <div class="down-xlsx" style="float: right;line-height: 30px;">
             <a href="./lib/muban.xlsx" download="download">导入模板</a>
+            <p id="tableExporter" class="layui-btn layui-btn-sm" onclick="getOut()" style="background: #fff; color: #333;">导出excel</p>
         </div>
         <table class="layui-table">
             <thead>
@@ -223,7 +224,7 @@
             <a class="layui-btn layui-btn-xs" onclick="save(3)">确认/结束</a>
             <a class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</a>
         </div>
-        <table class="layui-table">
+        <table class="layui-table ">
             <thead>
                 <tr>
                     <th>入库时间</th>
@@ -249,7 +250,14 @@
 
     </div>
 </body>
+<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
 <script>
+	function getOut(){
+		$('.tableExporter').tableExport({
+    		format:"xls",
+    		filename:'期初数据-期初物料'
+    	})
+	}
     let layform = ''
     let layer = ''
     layui.use('form', function () {

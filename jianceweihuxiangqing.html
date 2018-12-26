@@ -1,947 +1,1329 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				/* border-bottom: 1px solid #ccc; */
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.layui-input {
+				border: 0px;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-table td {
+				padding: 0px;
+				height: 30px;
+				line-height: 0px;
+				text-align: center;
+			}
+			
+			.layui-table td {
+				margin: 0px;
+			}
+			
+			.layui-form-item {
+				margin: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 100%;
+				margin: 0px !important;
+				height: 100%;
+			}
+			
+			.layui-select-title {
+				height: 100%;
+			}
+			
+			.title {
+				font-size: 16px;
+				text-align: center;
+				padding: 10px;
+			}
+			
+			.qianming {
+				width: 652px;
+				margin: 0 auto;
+			}
+			
+			ul.qianming li {
+				display: inline-block;
+				width: 160px;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			ul.qianming input {
+				width: 100px;
+				display: inline-block;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.layui-form-checkbox[lay-skin=primary] {
+				margin: 0 auto;
+				padding: 0px;
+			}
+			
+			.gc,
+			#gclist {
+				display: none;
+			}
+			
+			.winbody {
+				width: 1200px;
+				padding: 10px;
+			}
+			
+			.winbody>div {
+				width: 200px;
+				height: 40px;
+				float: left;
+				width: 150px;
+				text-align: center;
+				line-height: 40px;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				cursor: pointer;
+			}
+			
+			.winbody .active {
+				color: #fff;
+				background: #01AAED;
+			}
+			
+			select {
+				height: 30px;
+			}
+			
+			.layui-form-select {
+				height: 30px !important;
+			}
+			
+			.hover-body {
+				position: relative;
+			}
+			
+			.hover-show {
+				position: absolute;
+				top: 10px;
+				left: 50px;
+				z-index: 10;
+				display: none;
+			}
+			
+			.hover-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.hover-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.hover-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.hover-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+			
+			.userAd {
+				width: 120px;
+			}
+		</style>
+	</head>
 
-        .select {
-            height: 40px;
-            /* border-bottom: 1px solid #ccc; */
-            text-align: center;
-        }
+	<body>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th style="width:10%;">检测日期</th>
+					<th style="width:15%;">检测单号</th>
+					<th style="width:15%;">检测地点</th>
+					<th style="width:30%;" colspan="2">驾驶区间</th>
+					<th style="width:5%;">车辆里程</th>
+					<th style="width:15%;">运营路况</th>
+					<th style="width:5%;">客户经办</th>
+					<th style="width:5%;">服务经办</th>
+				</tr>
+			</thead>
+			<tbody class="jcinfo">
+				<tr>
+					<td><input type="text" data-name="inspectionDt" class="layui-input dates"></td>
+					<td><input type="text" data-name="formId" class="layui-input" readonly></td>
+					<td><input type="text" data-name="place" class="layui-input" value=""></td>
+					<td class="layui-form">
+						<div class="layui-form-item">
+							<div class="layui-input-inline" style="width:45%;">
+								<select class="qsheng drivingRange1" name="interest" lay-filter="drivingRange1">
+									<option value=""></option>
+								</select>
+								<!-- <input class="layui-input" data-name="drivingRange1" type="text"> -->
+							</div>
+							<div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+							<div class="layui-input-inline" style="width:45%;">
+								<select class="qshi drivingRange2" name="interest" lay-filter="drivingRange2">
+									<option value=""></option>
+								</select>
+							</div>
+						</div>
+					</td>
+					<td class="layui-form">
+						<div class="layui-form-item">
+							<div class="layui-input-inline" style="width:45%;">
+								<select class="qsheng drivingRange3" name="interest" lay-filter="drivingRange3">
+									<option value=""></option>
+								</select>
+							</div>
+							<div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
+							<div class="layui-input-inline" style="width:45%;">
+								<select class="qsheng drivingRange4" name="interest" lay-filter="drivingRange4">
+									<option value=""></option>
+								</select>
+							</div>
+						</div>
+					</td>
+					<td><input type="text" data-name="mileage" class="layui-input" value=""></td>
 
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
+					<td class="layui-form yylk">
+						<div class="layui-form-item">
+							<div class="layui-input-inline">
+								<select name="interest" class="jcwhlist" data-name="roadStatus" lay-filter="aihao">
+									<option value=""></option>
+									<option value="0">国道省道</option>
+									<option value="1" selected="">高速/国道</option>
+									<option value="2" selected="">丘陵/盘山</option>
+									<option value="3" selected="">水泥路面</option>
+									<option value="4" selected="">泥土道路</option>
+									<option value="5" selected="">混合道路</option>
+									<option value="6" selected="">非道路</option>
+									<option value="7" selected="">城镇道路</option>
+								</select>
+							</div>
+						</div>
+					</td>
+					<td><input type="text" data-name="customerName" class="layui-input" value=""></td>
+					<td><input type="text" data-name="attn" class="layui-input attn" readonly value=""></td>
+				</tr>
+			</tbody>
 
-        }
+		</table>
 
-        .layui-input {
-            border: 0px;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-        }
+		<div class="title">
+			<span class="carnum"></span> 车辆动态
+		</div>
+		<div class="hover-body">
+			<ul class="hover-show">
 
-        .btn {
-            display: inline-block;
+			</ul>
+		</div>
+		<table class="layui-table">
+			<thead>
+				<tr>
+					<th colspan="8">轮胎信息</th>
+					<th colspan="9">
+						<div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
+						<div style="width:150px;display: inline-block;line-height: 38px;float: right;">
+							<label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
+							<div class="layui-input-inline" style="width:30px;">
+								<input type="checkbox" lay-skin="primary" title="">
+							</div>
 
-        }
+						</div>
+						<div style="width:150px;display: inline-block;line-height: 38px;float: right;">
+							<label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
+							<div class="layui-input-inline" style="width:30px;">
+								<input type="checkbox" lay-skin="primary" title="">
+							</div>
+						</div>
+					</th>
+					<th colspan="6">上期轮胎监测信息</th>
+				</tr>
+				<tr>
+					<th style="min-width:30px;">序号</th>
+					<th width="70px">胎位</th>
+					<th width="110px">品名</th>
+					<th width="110px">品牌</th>
+					<th width="110px">规格</th>
+					<th width="110px">型号</th>
+					<th>胎号</th>
+					<th>报错</th>
+					<th>胎压</th>
+					<th>芯/帽</th>
+					<th>小修</th>
+					<th colspan="4">内外平均纹深度</th>
+					<th>轮胎状态</th>
+					<th width="120px">使用建议</th>
+					<th>胎压</th>
+					<th colspan="4">内外评论纹深度</th>
+					<th>轮胎状态</th>
+				</tr>
+			</thead>
 
-        .layui-table td {
-            padding: 0px;
-            height: 30px;
-            line-height: 0px;
-            text-align: center;
-        }
+			<tbody id="list">
+			</tbody>
+		</table>
+		<div class="title gc">
+			<span class=" gcarnum"></span> 车辆动态
+		</div>
+		<table class="layui-table gc">
+			<thead>
+				<tr>
+					<th colspan="8">轮胎信息</th>
+					<th colspan="9">
+						<div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
+						<div style="width:150px;display: inline-block;line-height: 38px;float: right;">
+							<label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
+							<input type="checkbox" title="">
+						</div>
+						<div style="width:150px;display: inline-block;line-height: 38px;float: right;">
+							<label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
+							<input type="checkbox" lay-skin="primary" title="">
+						</div>
+					</th>
+					<th colspan="6">上期轮胎监测信息</th>
+				</tr>
+				<tr>
+					<th style="min-width:30px;">序号</th>
+					<th width="70px">胎位</th>
+					<th width="110px">品名</th>
+					<th width="110px">品牌</th>
+					<th width="110px">规格</th>
+					<th width="110px">型号</th>
+					<th>胎号</th>
+					<th>报错</th>
+					<th>胎压</th>
+					<th>芯/帽</th>
+					<th>小修</th>
+					<th colspan="4">内外平均纹深度</th>
+					<th>轮胎状态</th>
+					<th>使用建议</th>
+					<th>胎压</th>
+					<th colspan="4">内外评论纹深度</th>
+					<th>轮胎状态</th>
+				</tr>
+			</thead>
+			<tbody id="gclist">
+			</tbody>
+		</table>
+		<table class="layui-table" class="jfxf">
+			<tbody>
+				<tr>
+					<td style="width:10%;">费用合计</td>
+					<td style="width:10%;"><input type="text" data-name="allFee" class="layui-input" value=""></td>
+					<td style="width:10%;">消费积分</td>
+					<td style="width:10%;"><input type="text" data-name="integralFee" class="layui-input" value=""></td>
+					<td style="width:10%;">实收金额</td>
+					<td style="width:10%;"><input type="text" data-name="actualFee" class="layui-input" value=""></td>
+					<td style="width:10%;">付款方式</td>
+					<td style="width:10%;" class="layui-form fkfs">
+						<div class="layui-form-item">
+							<div class="layui-input-inline">
+								<select name="interest" class="fkfslist" lay-filter="aihao">
+								</select>
+							</div>
+						</div>
+					</td>
+					<td style="width:10%;">本次积分</td>
+					<td style="width:10%;"><input type="text" data-name="integral" class="layui-input" value=""></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="title">
+			<button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveAll()">确认/结束</button>
+			<button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="goWx()">确认/维修</button>
+		</div>
+		<div class="layui-form winbody" style="display: none;">
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script>
+		function GetRequest() {
+			var url = location.search; //获取url中"?"符后的字串  
+			var theRequest = new Object();
+			if(url.indexOf("?") != -1) {
+				var str = url.substr(1);
+				strs = str.split("&");
+				for(var i = 0; i < strs.length; i++) {
+					theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+				}
+			}
+			return theRequest;
+		}
+		layui.use('laydate', function() {
+			layui.laydate.render({
+				elem: '.dates'
+			})
+		})
+		let jcwhlist = []
+		let fkfs = []
+		let syjy = []
+		let ltztList = []
+		$('.attn').val(loadUserInfo.user.realName)
+		// 轮胎状态
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=轮胎状态`,
+			type: 'get',
+			success: function(res) {
+				ltztList = res.data.parametersChildList
+				let str = ''
+				$.each(ltztList, function(i, k) {
+					str += `<div>${k.name}</div>`
+				})
+				$('.winbody').html(str)
 
-        .layui-table td {
-            margin: 0px;
-        }
+			}
+		})
 
-        .layui-form-item {
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-        }
+		function goWx() {
+			sessionStorage.pcar = sessionStorage.jcpcar
+			sessionStorage.gcar = sessionStorage.jcgcar
+			window.location.href = `./xiaoshouweixiuxiangqing.html?custName=${getUrlParam('custName')}`
+		}
 
-        .layui-form-item .layui-input-inline {
-            width: 100%;
-            margin: 0px !important;
-            height: 100%;
-        }
+		function setLt(_this) {
+			let val = $(_this).val()
+			$(val.split(','), function(i, k) {
+				$('.winbody div').each(function() {
+					if($(this).text() == k) {
+						$(this).addClass('active')
+					}
+				})
+			})
+			$('.winbody div').on('click', function() {
+				if($(this).hasClass('active')) {
+					$(this).removeClass('active')
+				} else {
+					$(this).addClass('active')
+				}
+			})
+			layui.use(['layer', 'form'], function() {
+				layui.layer.open({
+					type: 1,
+					title: '轮胎状态',
+					area: ['1240px'],
+					content: $('.winbody'),
+					btn: ['保存', '取消'],
+					yes: function(index) {
+						layui.layer.close(index)
+						let str = []
+						$('.winbody div').each(function(i, k) {
+							if($(this).hasClass('active')) {
+								str.push($(this).text())
+							}
+						})
+						$(_this).val(str.toString())
+					}
+				})
+			})
+		}
 
-        .layui-select-title {
-            height: 100%;
-        }
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = '<option></option>'
+				$.each(arr, function(i, k) {
+					str += `<option value="${k.name}" >${k.name}</option>`
+					fkfs.push({
+						name: k.name
+					})
+				})
+				$('.fkfslist').html(str)
+				var form = ''
+				form = layui.use('form', function() {
+					form = layui.form
+					form.render()
+				})
 
-        .title {
-            font-size: 16px;
-            text-align: center;
-            padding: 10px;
-        }
+			}
+		})
+		let syjyList = []
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=使用建议`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				syjyList = res.data.parametersChildList
 
-        .qianming {
-            width: 652px;
-            margin: 0 auto;
-        }
+			}
+		})
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = '<option></option>'
+				$.each(arr, function(i, k) {
+					str += `<option value="${k.name}" >${k.name}</option>`
+					fkfs.push({
+						name: k.name
+					})
+				})
+				$('.fkfslist').html(str)
+				var form = ''
+				form = layui.use('form', function() {
+					form = layui.form
+					form.render()
+				})
+			}
+		})
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=运营路况`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = '<option></option>'
+				$.each(arr, function(i, k) {
+					str += `<option value="${k.name}" >${k.name}</option>`
+					jcwhlist.push({
+						name: k.name
+					})
+				})
+				$('.jcwhlist').html(str)
+				var form = ''
+				form = layui.use('form', function() {
+					form = layui.form
+					form.render()
+				})
+			}
+		})
+		// 获取地区
+		$.ajax({
+			url: `${API}/cities/getAllProvinces`,
+			type: 'get',
+			success: function(res) {
+				let str = '<option></option>'
+				$.each(res.data, function(i, n) {
+					str += `<option value="${n.provinceid}">${n.province}</option>`
+				})
+				$('.drivingRange1').html(str)
+				$('.drivingRange3').html(str)
+				layui.use('form', function() {
+					var form = layui.form;
 
-        ul.qianming li {
-            display: inline-block;
-            width: 160px;
-            height: 30px;
-            line-height: 30px;
-        }
+					form.on('select(drivingRange1)', function(data) {
+						$.ajax({
+							url: `${API}/cities/selectByProId?proId=${data.value}`,
+							type: 'get',
+							success: function(res) {
+								let shi = '<option></option>'
+								$.each(res.data, function(i, n) {
 
-        ul.qianming input {
-            width: 100px;
-            display: inline-block;
-            border-bottom: 1px solid #ccc;
-        }
+									shi +=
+										`<option value="${n.city}">${n.city}</option>`
+								})
+								$('.drivingRange2').html(shi)
+								var form = ''
+								form = layui.use('form', function() {
+									form = layui.form
+									form.render()
+								})
+							}
+						})
+					})
+					form.on('select(drivingRange3)', function(data) {
+						$.ajax({
+							url: `${API}/cities/selectByProId?proId=${data.value}`,
+							type: 'get',
+							success: function(res) {
+								let shi = '<option></option>'
+								$.each(res.data, function(i, n) {
 
-        .layui-form-checkbox[lay-skin=primary] {
-            margin: 0 auto;
-            padding: 0px;
-        }
+									shi +=
+										`<option value="${n.city}">${n.city}</option>`
+								})
+								$('.drivingRange4').html(shi)
+								var form = ''
+								form = layui.use('form', function() {
+									form = layui.form
+									form.render()
+								})
+							}
+						})
+					})
+					//各种基于事件的操作，下面会有进一步介绍
+				});
+			}
+		})
+		$(function() {
+			$('.carnum').html(sessionStorage.jcpcar)
+			$.ajax({
+				// url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcpcar,
+				url: API + '/erpCarTireArchives/getTireByCarId?carPlate=' + sessionStorage.jcpcar,
+				type: 'get',
+				dataType: 'json',
+				success: function(res) {
+					// var arr = res.data.contents;
+					var arr = res.data;
+					var str = '';
+					$.each(arr, function(i, n) {
+						if(n.zhiNeng){
+							str +=
+								`<tr  class="carList xxx_${i}">
+				                <td rowspan="3">${i + 1}</td>
+				                <td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								if(n.tireErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
+					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+					            </tr>
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.sensorName == null ? '' : n.sensorName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.sensorBrand == null ? '' : n.sensorBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.sensorSpecifications == null ? '' : n.sensorSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.sensorModel == null ? '' : n.sensorModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.sensorId == null ? '' : n.sensorId}"></td>`
+								if(n.sensorErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.sensorPressure == null ? '' : n.sensorPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.sensorCoreCap == null ? '' : n.sensorCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.sensorminorRepairs == null ? '' : n.sensorminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.sensorDeepLines1 == null ? '' : n.sensorDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.sensorDeepLines2 == null ? '' : n.sensorDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.sensorDeepLines3 == null ? '' : n.sensorDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.sensorDeepLines4 == null ? '' : n.sensorDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.sensorStatus == null ? '' : n.sensorStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.sensorPressure == null ? '' : n.sensorPressure}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines1 == null ? '' : n.oldSensorDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines2 == null ? '' : n.oldSensorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines3 == null ? '' : n.oldSensorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines4 == null ? '' : n.oldSensorDeepLines4}</td>
+					                <td style='width:60px;'>${n.sensorStatus == null ? '' : n.sensorStatus}</td>
+					            </tr>
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
+								if(n.rimsErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
+					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
+					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
+					            </tr>`
+						} else {
+							str +=
+								`<tr  class="carList xxx_${i}">
+				                <td rowspan="2">${i + 1}</td>
+				                <td rowspan="2"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								if(n.tireErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
+					                <td style='width:60px;'>${n.tireStatus = null ? '' : n.tireStatus}</td>
+					            </tr>
+					            
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
+								if(n.rimsErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
+					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
+					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
+					            </tr>`
+						}
+						/*str +=
+							`<tr  class="carList xxx_${i}">
+			                <td>${i + 1}</td>
+			                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
+			                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
+			                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
+			                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
+			                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
+			                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
+							if(n.errorOrTure == null) {
+								str +=
+									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+							} else {
+								str +=
+									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+							}
+							str +=
+								` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
+				                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+				                <td>
+				                <select class="userAd syjy_${i}"></select>
+				                </td>
+				                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
+				                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
+				                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
+				                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
+				                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
+				                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+				                
+				            </tr>`*/
+					})
 
-        .gc,#gclist {
-            display: none;
-        }
-        .winbody {
-            width: 1200px;
-            padding: 10px;
-        }
-        .winbody > div {
-            width: 200px;
-            height: 40px;
-            float:left;
-            width: 150px;
-            text-align: center;
-            line-height: 40px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            cursor: pointer;
-        }
-        .winbody .active {
-            color: #fff;
-            background: #01AAED;
-            
-        }
-        select {
-            height: 30px;
-        }
-        .layui-form-select {
-            height: 30px !important;
-        }
-        .hover-body {
-            position: relative;
-        }
-        .hover-show {
-            position:absolute;
-            top: 10px;
-            left: 50px;
-            z-index: 10;
-            display: none;
-        }
-        .hover-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .hover-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .hover-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .hover-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-    </style>
-</head>
+					$("#list").html(str);
+					$.each(arr, function(i, n) {
+						let str = '<option></option>'
+						$.each(syjyList, function(i, k) {
+							str += `<option value="${k.name}" >${k.name}</option>`
+							syjy.push({
+								name: k.name
+							})
+						})
+						$('[class *= syjy_]').html(str)
+					})
 
-<body>
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th style="width:10%;">检测日期</th>
-                <th style="width:15%;">检测单号</th>
-                <th style="width:15%;">检测地点</th>
-                <th style="width:30%;" colspan="2">驾驶区间</th>
-                <th style="width:5%;">车辆里程</th>
-                <th style="width:15%;">运营路况</th>
-                <th style="width:5%;">客户经办</th>
-                <th style="width:5%;">服务经办</th>
-            </tr>
-        </thead>
-        <tbody class="jcinfo">
-            <tr>
-                <td><input type="text" data-name="inspectionDt" class="layui-input dates"></td>
-                <td><input type="text" data-name="formId" class="layui-input" readonly></td>
-                <td><input type="text" data-name="place" class="layui-input" value=""></td>
-                <td class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange1" name="interest" lay-filter="drivingRange1">
-                                <option value=""></option>
-                            </select>
-                            <!-- <input class="layui-input" data-name="drivingRange1" type="text"> -->
-                        </div>
-                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
-                        <div class="layui-input-inline" style="width:45%;">
-                            <select class="qshi drivingRange2" name="interest" lay-filter="drivingRange2">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange3" name="interest" lay-filter="drivingRange3">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                        <div class="layui-input-inline" style="width:10%;line-height: 30px;">--</div>
-                        <div class="layui-input-inline" style="width:45%;">
-                            <select class="qsheng drivingRange4" name="interest" lay-filter="drivingRange4">
-                                <option value=""></option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td><input type="text" data-name="mileage" class="layui-input" value=""></td>
+				},
+				error: function(err) {
+					alert("系统错误");
 
-                <td class="layui-form yylk">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select name="interest" class="jcwhlist" data-name="roadStatus" lay-filter="aihao">
-                                <option value=""></option>
-                                <option value="0">国道省道</option>
-                                <option value="1" selected="">高速/国道</option>
-                                <option value="2" selected="">丘陵/盘山</option>
-                                <option value="3" selected="">水泥路面</option>
-                                <option value="4" selected="">泥土道路</option>
-                                <option value="5" selected="">混合道路</option>
-                                <option value="6" selected="">非道路</option>
-                                <option value="7" selected="">城镇道路</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td><input type="text" data-name="customerName" class="layui-input" value=""></td>
-                <td><input type="text" data-name="attn" class="layui-input attn" readonly value=""></td>
-            </tr>
-        </tbody>
+				}
+			});
+			if(sessionStorage.jcgcar) {
+				$('.gcarnum').html(sessionStorage.jcgcar)
+				$('.gc').show()
+				$('#gclist').show()
 
-    </table>
+				$.ajax({
+					// url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcpcar,
+					url: API + '/erpCarTireArchives/getTireByCarId?carPlate=' + sessionStorage.jcgcar,
+					type: 'get',
+					dataType: 'json',
+					success: function(res) {
+						// var arr = res.data.contents;
+						var arr = res.data;
+						var str = '';
+						$.each(arr, function(i, n) {
+						if(n.zhiNeng){
+							str +=
+								`<tr  class="carList xxx_${i}">
+				                <td rowspan="3">${i + 1}</td>
+				                <td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								if(n.tireErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
+					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+					            </tr>
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.sensorName == null ? '' : n.sensorName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.sensorBrand == null ? '' : n.sensorBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.sensorSpecifications == null ? '' : n.sensorSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.sensorModel == null ? '' : n.sensorModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.sensorId == null ? '' : n.sensorId}"></td>`
+								if(n.sensorErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.sensorPressure == null ? '' : n.sensorPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.sensorCoreCap == null ? '' : n.sensorCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.sensorminorRepairs == null ? '' : n.sensorminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.sensorDeepLines1 == null ? '' : n.sensorDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.sensorDeepLines2 == null ? '' : n.sensorDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.sensorDeepLines3 == null ? '' : n.sensorDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.sensorDeepLines4 == null ? '' : n.sensorDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.sensorStatus == null ? '' : n.sensorStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.sensorPressure == null ? '' : n.sensorPressure}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines1 == null ? '' : n.oldSensorDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines2 == null ? '' : n.oldSensorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines3 == null ? '' : n.oldSensorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldSensorDeepLines4 == null ? '' : n.oldSensorDeepLines4}</td>
+					                <td style='width:60px;'>${n.sensorStatus == null ? '' : n.sensorStatus}</td>
+					            </tr>
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
+								if(n.rimsErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
+					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
+					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
+					            </tr>`
+						} else {
+							str +=
+								`<tr  class="carList xxx_${i}">
+				                <td rowspan="2">${i + 1}</td>
+				                <td rowspan="2"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								if(n.tireErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
+					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+					            </tr>
+					            
+					            
+					            <tr  class="carList xxx_${i}">
+				                <!--<td rowspan="3">${i + 1}</td>-->
+				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
+				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
+				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
+				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
+				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
+				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
+								if(n.rimsErrorOrTure == null) {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+								} else {
+									str +=
+										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+								}
+								str +=
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
+					                <td>
+					                <select class="userAd syjy_${i}"></select>
+					                </td>
+					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
+					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
+					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
+					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
+					            </tr>`
+						}
+						/*str +=
+							`<tr  class="carList xxx_${i}">
+			                <td>${i + 1}</td>
+			                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
+			                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
+			                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
+			                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
+			                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
+			                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
+							if(n.errorOrTure == null) {
+								str +=
+									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
+							} else {
+								str +=
+									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
+							}
+							str +=
+								` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
+				                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
+				                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+				                <td>
+				                <select class="userAd syjy_${i}"></select>
+				                </td>
+				                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
+				                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
+				                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
+				                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
+				                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
+				                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
+				                
+				            </tr>`*/
+					})
 
-    <div class="title">
-        <span class="carnum"></span> 车辆动态
-    </div>
-    <div class="hover-body">
-        <ul class="hover-show">
+						$("#gclist").html(str);
+						$.each(arr, function(i, n) {
+							let str = '<option></option>'
+							$.each(syjyList, function(i, k) {
+								str += `<option value="${k.name}" >${k.name}</option>`
+								syjy.push({
+									name: k.name
+								})
+							})
+							$('[class *= syjy_]').html(str)
+						})
+					},
+					error: function(err) {
+						alert("系统错误");
 
-        </ul>
-    </div>
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th colspan="8">轮胎信息</th>
-                <th colspan="9">
-                    <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;margin-left: 50px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
-                        <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="">
-                        </div>
+					}
+				});
+			}
+		})
+		// 保存
+		function saveAll() {
+			let data = {}
 
-                    </div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
-                        <div class="layui-input-inline" style="width:30px;">
-                            <input type="checkbox" lay-skin="primary" title="">
-                        </div>
-                    </div>
-                </th>
-                <th colspan="6">上期轮胎监测信息</th>
-            </tr>
-            <tr>
-                <th style="min-width:30px;">序号</th>
-                <th>品名</th>
-                <th>品牌</th>
-                <th>型号</th>
-                <th>规格</th>
-                <th>胎号</th>
-                <th>胎位</th>
-                <th>报错</th>
-                <th>胎压</th>
-                <th>芯/帽</th>
-                <th>小修</th>
-                <th colspan="4">内外平均纹深度</th>
-                <th>轮胎状态</th>
-                <th width="120px">使用建议</th>
-                <th>胎压</th>
-                <th colspan="4">内外评论纹深度</th>
-                <th>轮胎状态</th>
-            </tr>
-        </thead>
+			// $('.jfxf input').each(function (i, n) {
+			//     data[$(this).data('name')] = $(this).val()
+			// })
+			data.custId = 1
+			data.userId = 1
+			$('.jcinfo input').each(function(i, n) {
+				data[$(this).data('name')] = $(this).val()
 
-        <tbody id="list">
-        </tbody>
-    </table>
-    <div class="title gc">
-        <span class=" gcarnum"></span> 车辆动态
-    </div>
-    <table class="layui-table gc">
-        <thead>
-            <tr>
-                <th colspan="8">轮胎信息</th>
-                <th colspan="9">
-                    <div style="display: inline-block;line-height: 38px;">本期轮胎检测信息</div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;margin-left: 50px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">胎压调节</label>
-                        <input type="checkbox" title="">
-                    </div>
-                    <div style="width:150px;display: inline-block;line-height: 38px;">
-                        <label class="layui-form-label" style="padding:0 10px;margin: 0;line-height: 38px;">异物清理</label>
-                        <input type="checkbox" lay-skin="primary" title="">
-                    </div>
-                </th>
-                <th colspan="6">上期轮胎监测信息</th>
-            </tr>
-            <tr>
-                <th style="min-width:30px;">序号</th>
-                <th>品名</th>
-                <th>品牌</th>
-                <th>型号</th>
-                <th>规格</th>
-                <th>胎号</th>
-                <th>胎位</th>
-                <th>报错</th>
-                <th>胎压</th>
-                <th>芯/帽</th>
-                <th>小修</th>
-                <th colspan="4">内外平均纹深度</th>
-                <th>轮胎状态</th>
-                <th>使用建议</th>
-                <th>胎压</th>
-                <th colspan="4">内外评论纹深度</th>
-                <th>轮胎状态</th>
-            </tr>
-        </thead>
-        <tbody id="gclist">
-        </tbody>
-    </table>
-    <table class="layui-table" class="jfxf">
-        <tbody>
-            <tr>
-                <td style="width:10%;">费用合计</td>
-                <td style="width:10%;"><input type="text" data-name="allFee" class="layui-input" value=""></td>
-                <td style="width:10%;">消费积分</td>
-                <td style="width:10%;"><input type="text" data-name="integralFee" class="layui-input" value=""></td>
-                <td style="width:10%;">实收金额</td>
-                <td style="width:10%;"><input type="text" data-name="actualFee" class="layui-input" value=""></td>
-                <td style="width:10%;">付款方式</td>
-                <td style="width:10%;" class="layui-form fkfs">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select name="interest" class="fkfslist" lay-filter="aihao">
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td style="width:10%;">本次积分</td>
-                <td style="width:10%;"><input type="text" data-name="integral" class="layui-input" value=""></td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="title">
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveAll()">确认/结束</button>
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="goWx()">确认/维修</button>
-    </div>
-    <div class="layui-form winbody" style="display: none;">
+			})
+			data.roadStatus = $('.layui-unselect').eq(0).val()
+			data.paidMethod = $('.layui-unselect').eq(1).val()
+			data.carPlate = decodeURI(decodeURI(GetRequest().id))
+			data.drivingRange1 = $('.drivingRange1').val()
+			data.drivingRange2 = $('.drivingRange2').val()
+			data.drivingRange3 = $('.drivingRange3').val()
+			data.drivingRange4 = $('.drivingRange4').val()
+			data.carPlate = sessionStorage.jcpcar
+			$.ajax({
+				url: `${API}/erpManagement/gojianceweihuCarDataSure`,
+				type: 'get',
+				data: data,
+				success: function(res) {
+					let bol = true
+					$('.carList').each(function() {
+						let datas = {}
+						datas.carPlate = sessionStorage.jcpcar
+						datas.orderId = res.data.inspectionOrder.id
+						datas.formId = res.data.management.workId
+						$(this).find('input').each(function() {
 
-    </div>
-</body>
-<script src="./js/Global.js"></script>
-<script>
-    function GetRequest() {
-        var url = location.search; //获取url中"?"符后的字串  
-        var theRequest = new Object();
-        if (url.indexOf("?") != -1) {
-            var str = url.substr(1);
-            strs = str.split("&");
-            for (var i = 0; i < strs.length; i++) {
-                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-            }
-        }
-        return theRequest;
-    }
+							datas[$(this).data('name')] = $(this).val()
+							if($(this).hasClass('checkbox') == 'true') {
+								if($(this).is(':checked')) {
+									data[$(this).data('name')] = 'true'
+								} else {
+									data[$(this).data('name')] = null
+								}
+							}
+						})
+						$.ajax({
+							url: `${API}/erpManagement/jianceweihuCarInspectionContent`,
+							type: 'post',
+							data: datas,
+							success: function(res) {
+								if(res.code == 0) {
+									bol = false
+								}
+							}
+						})
+					})
+					if(bol) {
+						layer.msg('保存成功!')
+					}
 
-    layui.use('laydate', function () {
-        layui.laydate.render({
-            elem: '.dates'
-        })
-    })
-    let jcwhlist = []
-    let fkfs = []
-    let syjy = []
-    let ltztList = []
-    $('.attn').val(loadUserInfo.customer.id)
-    // 轮胎状态
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=轮胎状态`,
-        type: 'get',
-        success: function (res) {
-            ltztList = res.data.parametersChildList
-            let str = ''
-            $.each(ltztList, function (i, k) {
-                str += `<div>${k.name}</div>`
-            })
-            $('.winbody').html(str)
+				}
+			})
 
+		}
+		let setCls = ''
 
-        }
-    })
+		function showLv1(cls) {
+			setCls = cls
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTop`,
+				type: 'get',
+				success: function(res) {
+					let str = ''
+					let arrs = res.data
+					$.each(arrs, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+					})
+					$('.hover-show').html(str)
+					$('.hover-show').show()
+				}
+			})
+		}
+		// 查找品名
+		function showLv2(zid, _this) {
+			$(`.hover-show .list-2`).html('')
+			aiZid = zid
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找规格
+		function showLv3(zid, _this) {
+			$(`.hover-show .list-3`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+					})
+					str += '</ul>'
+					console.log(str)
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找品牌
+		function showLv4(zid, _this) {
+			$(`.hover-show .list-4`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找型号
+		function showLv5(zid, _this) {
+			$(`.hover-show .list-5`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function goWx() {
-        sessionStorage.pcar = sessionStorage.jcpcar
-        sessionStorage.gcar = sessionStorage.jcgcar
-        window.location.href = `./xiaoshouweixiuxiangqing.html?custName=${getUrlParam('custName')}`
-    }
+		function showLv6(zid, _this) {
+			$(`.hover-show .list-6`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					console.log(res)
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+					})
+					str += '</ul>'
+					console.log(str)
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找
+		function showLv7(zid, _this) {
+			$(`.hover-show .list-7`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function setLt(_this) {
-        let val = $(_this).val()
-        $(val.split(','), function (i, k) {
-            $('.winbody div').each(function () {
-                if ($(this).text() == k) {
-                    $(this).addClass('active')
-                }
-            })
-        })
-        $('.winbody div').on('click', function () {
-            if ($(this).hasClass('active')) {
-                $(this).removeClass('active')
-            } else {
-                $(this).addClass('active')
-            }
-        })
-        layui.use(['layer', 'form'], function () {
-            layui.layer.open({
-                type: 1,
-                title: '轮胎状态',
-                area: ['1240px'],
-                content: $('.winbody'),
-                btn: ['保存', '取消'],
-                yes: function (index) {
-                    layui.layer.close(index)
-                    let str = []
-                    $('.winbody div').each(function (i, k) {
-                        if ($(this).hasClass('active')) {
-                            str.push($(this).text())
-                        }
-                    })
-                    $(_this).val(str.toString())
-                }
-            })
-        })
-    }
+		function showLv8(zid, _this) {
+			$(`.hover-show .list-8`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k.name}" >${k.name}</option>`
-                fkfs.push({
-                    name: k.name
-                })
-            })
-            $('.fkfslist').html(str)
-            var form = ''
-            form = layui.use('form', function () {
-                form = layui.form
-                form.render()
-            })
-
-        }
-    })
-    let syjyList = []
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=使用建议`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            syjyList = res.data.parametersChildList
-
-        }
-    })
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k.name}" >${k.name}</option>`
-                fkfs.push({
-                    name: k.name
-                })
-            })
-            $('.fkfslist').html(str)
-            var form = ''
-            form = layui.use('form', function () {
-                form = layui.form
-                form.render()
-            })
-        }
-    })
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=运营路况`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k.name}" >${k.name}</option>`
-                jcwhlist.push({
-                    name: k.name
-                })
-            })
-            $('.jcwhlist').html(str)
-            var form = ''
-            form = layui.use('form', function () {
-                form = layui.form
-                form.render()
-            })
-        }
-    })
-    // 获取地区
-    $.ajax({
-        url: `${API}/cities/getAllProvinces`,
-        type: 'get',
-        success: function (res) {
-            let str = '<option></option>'
-            $.each(res.data, function (i, n) {
-                str += `<option value="${n.provinceid}">${n.province}</option>`
-            })
-            $('.drivingRange1').html(str)
-            $('.drivingRange3').html(str)
-            layui.use('form', function () {
-                var form = layui.form;
-
-
-                form.on('select(drivingRange1)', function (data) {
-                    $.ajax({
-                        url: `${API}/cities/selectByProId?proId=${data.value}`,
-                        type: 'get',
-                        success: function (res) {
-                            let shi = '<option></option>'
-                            $.each(res.data, function (i, n) {
-
-                                shi +=
-                                    `<option value="${n.city}">${n.city}</option>`
-                            })
-                            $('.drivingRange2').html(shi)
-                            var form = ''
-                            form = layui.use('form', function () {
-                                form = layui.form
-                                form.render()
-                            })
-                        }
-                    })
-                })
-                form.on('select(drivingRange3)', function (data) {
-                    $.ajax({
-                        url: `${API}/cities/selectByProId?proId=${data.value}`,
-                        type: 'get',
-                        success: function (res) {
-                            let shi = '<option></option>'
-                            $.each(res.data, function (i, n) {
-
-                                shi +=
-                                    `<option value="${n.city}">${n.city}</option>`
-                            })
-                            $('.drivingRange4').html(shi)
-                            var form = ''
-                            form = layui.use('form', function () {
-                                form = layui.form
-                                form.render()
-                            })
-                        }
-                    })
-                })
-                //各种基于事件的操作，下面会有进一步介绍
-            });
-        }
-    })
-    $(function () {
-        $('.carnum').html(sessionStorage.jcpcar)
-        $.ajax({
-            url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcpcar,
-            type: 'get',
-            dataType: 'json',
-            success: function (res) {
-                var arr = res.data.contents;
-                var str = '';
-                $.each(arr, function (i, n) {
-                    str +=
-                        `<tr  class="carList xxx_${i}">
-                <td>${i + 1}</td>
-                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
-                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
-                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
-                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
-                
-                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
-                    if (n.errorOrTure == null) {
-                        str +=
-                            ` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-                    } else {
-                        str +=
-                            ` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-                    }
-                    str +=
-                        ` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-                <td>
-                <select class="userAd syjy_${i}"></select>
-                </td>
-                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
-                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
-                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
-                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
-                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
-                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-                
-            </tr>`
-                })
-
-                $("#list").html(str);
-                $.each(arr, function (i, n) {
-                    let str = '<option></option>'
-                    $.each(syjyList, function (i, k) {
-                        str += `<option value="${k.name}" >${k.name}</option>`
-                        syjy.push({
-                            name: k.name
-                        })
-                    })
-                    $('[class *= syjy_]').html(str)
-                })
-
-            },
-            error: function (err) {
-                alert("系统错误");
-
-            }
-        });
-        if (sessionStorage.jcgcar) {
-            $('.gcarnum').html(sessionStorage.jcgcar)
-            $('.gc').show()
-            $('#gclist').show()
-
-            $.ajax({
-                url: API + '/erpManagement/gojianceweihuCarData?catPlate=' + sessionStorage.jcgcar,
-                type: 'get',
-                dataType: 'json',
-                success: function (res) {
-                    var arr = res.data.contents;
-                    var str = '';
-                    $.each(arr, function (i, n) {
-                        str +=
-                            `<tr  class="carList">
-                <td>${i + 1}</td>
-                <td><input type="text" data-name='srcName' class="layui-input" value="${n.srcName == null ? '' : n.srcName}"></td>
-                <td><input type="text" data-name='brand' class="layui-input" value="${n.brand == null ? '' : n.brand}"></td>
-                <td><input type="text" data-name='size' class="layui-input" value="${n.size == null ? '' : n.size}"></td>
-                <td><input type="text" data-name='specification' class="layui-input" value="${n.specification == null ? '' : n.specification}"></td>
-                
-                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-                <td><input type="text" data-name='tirePlace' class="layui-input" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>
-                <td><input type="text" data-name='errorOrTure' class="layui-input" value=""></td>
-                <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-                <td><input type="text" data-name='tireStatus' class="layui-input" onclick="setLt(this)"  value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-                <td><input type="text" data-name='useDevice' class="layui-input" value="">
-                    <select class="userAd syjy_${i}"></select>
-                </td>
-                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
-                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
-                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
-                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
-                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
-                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-            </tr>`
-                    })
-
-                    $("#gclist").html(str);
-                },
-                error: function (err) {
-                    alert("系统错误");
-
-                }
-            });
-        }
-
-    })
-    // 保存
-    function saveAll() {
-        let data = {}
-
-        // $('.jfxf input').each(function (i, n) {
-        //     data[$(this).data('name')] = $(this).val()
-        // })
-        data.custId = 1
-        data.userId = 1
-        $('.jcinfo input').each(function (i, n) {
-            data[$(this).data('name')] = $(this).val()
-
-
-        })
-        data.roadStatus = $('.layui-unselect').eq(0).val()
-        data.paidMethod = $('.layui-unselect').eq(1).val()
-        data.carPlate = decodeURI(decodeURI(GetRequest().id))
-        data.drivingRange1 = $('.drivingRange1').val()
-        data.drivingRange2 = $('.drivingRange2').val()
-        data.drivingRange3 = $('.drivingRange3').val()
-        data.drivingRange4 = $('.drivingRange4').val()
-        data.carPlate = sessionStorage.jcpcar
-        $.ajax({
-            url: `${API}/erpManagement/gojianceweihuCarDataSure`,
-            type: 'get',
-            data: data,
-            success: function (res) {
-                let bol = true
-                $('.carList').each(function () {
-                    let datas = {}
-                    datas.carPlate = sessionStorage.jcpcar
-                    datas.orderId = res.data.inspectionOrder.id
-                    datas.formId = res.data.management.workId
-                    $(this).find('input').each(function () {
-
-
-                        datas[$(this).data('name')] = $(this).val()
-                        if ($(this).hasClass('checkbox') == 'true') {
-                            if ($(this).is(':checked')) {
-                                data[$(this).data('name')] = 'true'
-                            } else {
-                                data[$(this).data('name')] = null
-                            }
-
-                        }
-                    })
-                    $.ajax({
-                        url: `${API}/erpManagement/jianceweihuCarInspectionContent`,
-                        type: 'post',
-                        data: datas,
-                        success: function (res) {
-                            if (res.code == 0) {
-                                bol = false
-                            }
-                        }
-                    })
-                })
-                if (bol) {
-                    layer.msg('保存成功!')
-                }
-
-            }
-        })
-
-    }
-    let setCls = ''
-
-    function showLv1(cls) {
-        setCls = cls
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTop`,
-            type: 'get',
-            success: function (res) {
-                let str = ''
-                let arrs = res.data
-                $.each(arrs, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
-                })
-                $('.hover-show').html(str)
-                $('.hover-show').show()
-            }
-        })
-    }
-    // 查找品名
-    function showLv2(zid, _this) {
-        $(`.hover-show .list-2`).html('')
-        aiZid = zid
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找规格
-    function showLv3(zid, _this) {
-        $(`.hover-show .list-3`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找品牌
-    function showLv4(zid, _this) {
-        $(`.hover-show .list-4`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找型号
-    function showLv5(zid, _this) {
-        $(`.hover-show .list-5`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-
-    function showLv6(zid, _this) {
-        $(`.hover-show .list-6`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                console.log(res)
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找
-    function showLv7(zid, _this) {
-        $(`.hover-show .list-7`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-
-    function showLv8(zid, _this) {
-        $(`.hover-show .list-8`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-
-    function setWlVal(_this) {
-        $(`.${setCls} .materielUnit`).val($(_this).text())
-        $(`.${setCls} .materielState`).val($(_this).parents('.list-8').prev().text())
-        $(`.${setCls} .materielPlace`).val($(_this).parents('.list-7').prev().text())
-        $(`.${setCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
-        $(`.${setCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
-        $(`.${setCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
-        $(`.${setCls} .materielName`).val($(_this).parents('.list-3').prev().text())
-        aiName = $(_this).parents('.list-2').prev().text()
-        $('.hover-body').hide()
-    }
-    $(document).on('click', function () {
-        // $('.hover-body').hide()
-    })
-</script>
+		function setWlVal(_this) {
+			$(`.${setCls} .materielUnit`).val($(_this).text())
+			$(`.${setCls} .materielState`).val($(_this).parents('.list-8').prev().text())
+			$(`.${setCls} .materielPlace`).val($(_this).parents('.list-7').prev().text())
+			$(`.${setCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+			$(`.${setCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+			$(`.${setCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+			$(`.${setCls} .materielName`).val($(_this).parents('.list-3').prev().text())
+			aiName = $(_this).parents('.list-2').prev().text()
+			$('.hover-body').hide()
+		}
+		$(document).on('click', function() {
+			// $('.hover-body').hide()
+		})
+	</script>
 
 </html>

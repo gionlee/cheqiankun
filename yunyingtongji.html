@@ -82,11 +82,95 @@
 				font-size: 14px;
 				display: inline-block;
 			}
+			
+			#zzt,
+			#bt,
+			#zxt {
+				width: 600px;
+				height: 600px;
+				display: none;
+			}
+			#zzt-con,
+			#bt-con,
+			#zxt-con {
+				width: 600px;
+				height: 550px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
 		</style>
 	</head>
 
 	<body>
 		<div class="wrap">
+			<!-- 柱形图 -->
+			<div id="zzt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="zhu">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="zzt-con">
+
+				</div>
+			</div>
+			<!-- 饼形图 -->
+			<div id="bt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="bing">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="bt-con">
+
+				</div>
+			</div>
+			<!-- 折线图 -->
+			<div id="zxt" style="text-align: center;">
+				<form class="layui-form" style="margin: 10px;">
+					<select lay-filter="zhe">
+						<option value="1">经营收入</option>
+						<option value="2">费用支出</option>
+						<option value="3">运营利润</option>
+						<option value="4">运营里程</option>
+					</select>
+				</form>
+				<div id="zxt-con">
+
+				</div>
+			</div>
+			<div style="margin-bottom: 10px; text-align:center ;">
+				<form class="layui-form layui-col-md1" style="float: right;">
+					<select lay-filter="tu" class="ttt">
+						<option value="">图表类型</option>
+						<option value="1">柱状图</option>
+						<option value="2">饼状图</option>
+						<option value="3">曲线图</option>
+					</select>
+				</form>
+				<div style="clear: both;"></div>
+			</div>
 			<table class="layui-table">
 				<thead>
 					<tr>
@@ -94,11 +178,10 @@
 						<th rowspan="2">客户名称</th>
 						<th colspan="5">经营收入</th>
 						<th colspan="6">费用支出</th>
-						<th>维修维护</th>
-						<th>燃油费用</th>
-						<th>轮胎费用</th>
-						<th>综合费用</th>
-						<th>利润金额</th>
+						<th rowspan="2">运营利润</th>
+						<th rowspan="2">车辆总数</th>
+						<th rowspan="2">运营车数</th>
+						<th rowspan="2">运营里程</th>
 					</tr>
 					<tr>
 						<!--<th>序号</th>-->
@@ -114,29 +197,61 @@
 						<th>燃油支出</th>
 						<th>其他支出</th>
 						<th>合计</th>
-						<th>运营利润</th>
-						<th>车辆总数</th>
-						<th>运营车数</th>
-						<th>运营里程</th>
+						<!--<th>运营利润</th>-->
+						<!--<th>车辆总数</th>-->
+						<!--<th>运营车数</th>-->
+						<!--<th>运营里程</th>-->
 					</tr>
 					<tr>
 						<!--<th>序号</th>-->
-						<th class="khmc">客户名称</th>
-						<th class="xssr">销售输入</th>
-						<th class="wxsr">维修输入</th>
-						<th class="whsr">维护收入</th>
-						<th class="qtsr">其他收入</th>
-						<th class="jysr">合计</th>
-						<th class="cgzc">采购支出</th>
-						<th class="wxzc">维修支出</th>
-						<th class="whzc">维护支出</th>
-						<th class="ryzc">燃油支出</th>
-						<th class="qtzc">其他支出</th>
-						<th class="fyzc">合计</th>
-						<th class="yylr">运营利润</th>
-						<th class="clzs">车辆总数</th>
-						<th class="yycs">运营车数</th>
-						<th class="yylc">运营里程</th>
+						<th class="khmc">
+							<!--客户名称-->
+						</th>
+						<th class="xssr">
+							<!--销售输入-->
+						</th>
+						<th class="wxsr">
+							<!--维修输入-->
+						</th>
+						<th class="whsr">
+							<!--维护收入-->
+						</th>
+						<th class="qtsr">
+							<!--其他收入-->
+						</th>
+						<th class="srhj">
+							<!--合计-->
+						</th>
+						<th class="cgzc">
+							<!--采购支出-->
+						</th>
+						<th class="wxzc">
+							<!--维修支出-->
+						</th>
+						<th class="whzc">
+							<!--维护支出-->
+						</th>
+						<th class="ryzc">
+							<!--燃油支出-->
+						</th>
+						<th class="qtzc">
+							<!--其他支出-->
+						</th>
+						<th class="zchj">
+							<!--合计-->
+						</th>
+						<th class="yylr">
+							<!--运营利润-->
+						</th>
+						<th class="clzs">
+							<!--车辆总数-->
+						</th>
+						<th class="yycs">
+							<!--运营车数-->
+						</th>
+						<th class="yylc">
+							<!--运营里程-->
+						</th>
 					</tr>
 				</thead>
 				<tbody class="list">
@@ -145,27 +260,192 @@
 			</table>
 		</div>
 	</body>
+	<script src="./js/echarts.min.js" charset="utf-8"></script>
 	<script>
+		var data_post = {
+			custId: loadUserInfo.customer.id,
+			type: 1
+		}
+		var tu_type = 1;
+		layui.use('form', function() {
+			let forms = layui.form
+			forms.on('select(tu)', function(data) {
+
+				let con = ''
+				if(data.value == 1) {
+					con = $('#zzt')
+					tu_type = 1
+				} else if(data.value == 2) {
+					con = $('#bt')
+					tu_type = 2
+				} else {
+					con = $('#zxt')
+					tu_type = 3
+				}
+				selTu()
+				layui.use('layer', function() {
+					layui.layer.open({
+						type: 1,
+						content: con,
+						area: ['600px']
+					})
+				})
+			})
+			forms.on('select(zhu)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+			forms.on('select(bing)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+			forms.on('select(zhe)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else if(data.value == 3) {
+					data_post.type = 3
+				} else {
+					data_post.type = 4
+				}
+				selTu()
+			})
+		})
+
+		function selTu() {
+
+			let post_url = "";
+			if(tu_type == 1) { // 柱状图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJZhu`
+			} else if(tu_type == 2) { // 饼图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJBing`
+			} else if(tu_type == 3) { // 折线图
+				post_url = `${API}/erpTireArchivesWork/tongjiguanliYYTJBingZhe`
+			}
+			$.ajax({
+				url: post_url,
+				type: 'post',
+				data: data_post,
+				async: false,
+				success: function(res) {
+					var myChart;
+					console.log(res)
+					if(tu_type == 1) { // 柱状图
+						myChart = echarts.init(document.getElementById('zzt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if(tu_type == 2) { // 饼图
+						myChart = echarts.init(document.getElementById('bt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if(tu_type == 3) { // 折线图
+						myChart = echarts.init(document.getElementById('zxt-con'));
+						myChart.setOption(JSON.parse(res));
+					}
+				}
+			})
+		}
+		selTu()
 		$.ajax({
-			url: `${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=1&endDate=2019-01-01&startDate=2000-01-01`,
+			url: `${API}/erpTireArchivesWork/tongjiguanliYYTJ?custId=${loadUserInfo.customer.id}`,
 			type: 'get',
 			success: function(res) {
-				let arr = res.data
-				let str = ''
+				let arr = res.data;
+				let str = '';
+				let xiaoshoushouru_num = 0;
+				let repairshouru_num = 0;
+				let maintianshouru_num = 0;
+				let qitashouru_num = 0;
+
+				let caigouzhichu_num = 0;
+				let repairzhichu_num = 0;
+				let maintianzhichu_num = 0;
+				let carRefueling_num = 0;
+				let qitazhichu_num = 0;
+
+				let carAllNum_num = 0;
+				let yunyingshuliang_num = 0;
+				let mileage_num = 0;
 				$.each(arr, function(i, n) {
-					str += `<tr>
-                    <td>${i+1}</td>
-                    <td>${n.customerName}</td>
-                    <td>${n.mileage}</td>
-                    <td>${n.income}</td>
-                    <td>${n.maintain}</td>
-                    <td>${n.fuel}</td>
-                    <td>${n.tyre}</td>
-                    <td>${n.fuel + n.tyre}</td>
-                    <td>${n.income - n.fuel - n.tyre}</td>
-                </tr>`
+					str += `<tr style="cursor:pointer;" onclick="go_url('${n.id}')">
+			                    <td>${i+1}</td>
+			                    <td>${n.customerName == null ? 0 : n.customerName}</td>
+			                    <td>${n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru}</td>
+			                    <td>${n.repairshouru == null ? 0 : n.repairshouru}</td>
+			                    <td>${n.maintianshouru == null ? 0 : n.maintianshouru}</td>
+			                    <td>${n.qitashouru == null ? 0 : n.qitashouru}</td>
+			                    <td>${(n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru) + (n.repairshouru == null ? 0 : n.repairshouru) + (n.maintianshouru == null ? 0 : n.maintianshouru) + (n.qitashouru == null ? 0 : n.qitashouru)}</td>
+			                    
+			                    <td>${n.caigouzhichu == null ? 0 : n.caigouzhichu}</td>
+			                    <td>${n.repairzhichu == null ? 0 : n.repairzhichu}</td>
+			                    <td>${n.maintianzhichu == null ? 0 : n.maintianzhichu}</td>
+			                    <td>${n.carRefueling == null ? 0 : n.carRefueling}</td>
+			                    <td>${n.qitazhichu == null ? 0 : n.qitazhichu}</td>
+			                    <td>${(n.caigouzhichu == null ? 0 : n.caigouzhichu) + (n.repairzhichu == null ? 0 : n.repairzhichu) + (n.maintianzhichu == null ? 0 : n.maintianzhichu) + (n.carRefueling == null ? 0 : n.carRefueling) + (n.qitazhichu == null ? 0 : n.qitazhichu)}</td>
+			                    
+			                    <td>${(n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru) + (n.repairshouru == null ? 0 : n.repairshouru) + (n.maintianshouru == null ? 0 : n.maintianshouru) + (n.qitashouru == null ? 0 : n.qitashouru) - (n.caigouzhichu == null ? 0 : n.caigouzhichu) - (n.repairzhichu == null ? 0 : n.repairzhichu) - (n.maintianzhichu == null ? 0 : n.maintianzhichu) - (n.carRefueling == null ? 0 : n.carRefueling) - (n.qitazhichu == null ? 0 : n.qitazhichu)}</td>
+			                    <td>${n.carAllNum}</td>
+			                    <td>${n.yunyingshuliang}</td><!--运营车数-->
+			                    <td>${n.mileage}</td>
+			                    
+			                    <!--<td>${n.fuel}</td>
+			                    <td>${n.tyre}</td>
+			                    <td>${n.fuel + n.tyre}</td>
+			                    <td>${n.income - n.fuel - n.tyre}</td>-->
+			                </tr>`;
+					xiaoshoushouru_num += (n.xiaoshoushouru == null ? 0 : n.xiaoshoushouru);
+					repairshouru_num += (n.repairshouru == null ? 0 : n.repairshouru);
+					maintianshouru_num += (n.maintianshouru == null ? 0 : n.maintianshouru);
+					qitashouru_num += (n.qitashouru == null ? 0 : n.qitashouru);
+
+					caigouzhichu_num += (n.caigouzhichu == null ? 0 : n.caigouzhichu);
+					repairzhichu_num += (n.repairzhichu == null ? 0 : n.repairzhichu);
+					maintianzhichu_num += (n.maintianzhichu == null ? 0 : n.maintianzhichu);
+					carRefueling_num += (n.carRefueling == null ? 0 : n.carRefueling);
+					qitazhichu_num += (n.qitazhichu == null ? 0 : n.qitazhichu);
+
+					carAllNum_num += (n.carAllNum == null ? 0 : n.carAllNum);
+					yunyingshuliang_num += (n.yunyingshuliang == null ? 0 : n.yunyingshuliang);
+					mileage_num += (n.mileage == null ? 0 : n.mileage);
 				})
 				$('.list').html(str)
+				$('.khmc').html(arr.length);
+				$('.xssr').html(xiaoshoushouru_num);
+				$('.wxsr').html(repairshouru_num);
+				$('.whsr').html(maintianshouru_num);
+				$('.qtsr').html(qitashouru_num);
+				$('.srhj').html(xiaoshoushouru_num + repairshouru_num + maintianshouru_num + qitashouru_num);
+
+				$('.cgzc').html(caigouzhichu_num);
+				$('.wxzc').html(repairzhichu_num);
+				$('.whzc').html(maintianzhichu_num);
+				$('.ryzc').html(carRefueling_num);
+				$('.qtzc').html(qitazhichu_num);
+				$('.zchj').html(caigouzhichu_num + repairzhichu_num + maintianzhichu_num + carRefueling_num + qitazhichu_num);
+
+				$('.yylr').html($('.srhj').html() - $('.zchj').html());
+				$('.clzs').html(carAllNum_num);
+				$('.yycs').html(yunyingshuliang_num);
+				$('.yylc').html(mileage_num);
 			}
 		})
+
+		function go_url(param) {
+			window.location.href = 'yunyingtongjidetail.html?id=' + param;
+		}
 	</script>

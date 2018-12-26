@@ -1,379 +1,379 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-	<meta charset="UTF-8">
-	<title>欢迎页面-X-admin2.0</title>
-	<meta name="renderer" content="webkit">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"
-	/>
-	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="./css/font.css">
-	<link rel="stylesheet" href="./css/xadmin.css">
-	<link rel="stylesheet" type="text/css" href="css/common.css" />
+	<head>
+		<meta charset="UTF-8">
+		<title>欢迎页面-X-admin2.0</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
 
-	<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-	<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
-	<script type="text/javascript" src="./js/xadmin.js"></script>
-	<script type="text/javascript" src="./js/echarts.min.js"></script>
-	<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
-	<!--[if lt IE 9]>
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script type="text/javascript" src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<script type="text/javascript" src="./js/echarts.min.js"></script>
+		<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+		<!--[if lt IE 9]>
 		    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
 		    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
 			<![endif]-->
-			<style>
-				
-				#zzt,#bt,#zxt{
-					width: 600px;
-					height: 600px;
-					display: none;
-				}
-				.layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
-
-        .search {
-            width: 150px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .search .layui-input {
-            width: 150px;
-        }
-		.btn {
-			display: inline-block;
-		}
-		form {
+		<style>
+			#zzt,
+			#bt,
+			#zxt {
+				width: 600px;
+				height: 600px;
+				display: none;
+			}
+			#zzt-con,
+			#bt-con,
+			#zxt-con {
+				width: 600px;
+				height: 550px;
+			}
 			
-		}
-        .layui-form-item .layui-input-inline {
-		    float: left;
-		    width: 150px;
-		    margin-right: 10px;
-		}
-        
-        .layui-form {
-        	width: 150px;
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
+			.layui-form {
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				height: 24px;
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			form {}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				height: 24px;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
+		</style>
+	</head>
 
-        .layui-form .layui-input {
-            width: 150px;
-            }
-			</style>
-</head>
-
-<body>
-	<div class="x-body">
-		<div class="layui-row" style="text-align: center;">
+	<body>
+		<div class="x-body">
+			<div class="layui-row" style="text-align: center;">
 				<div class="search">
-						<input class="layui-input ksdate" type="text" style="text-align: center; padding: 0;" placeholder="开始日期">
-					</div>
-					<div class="layui-form">
-						<div class="layui-form-item">
-							<div class="layui-input-inline">
-								<select lay-filter="datesel" name="quiz2">
-									<option value="">请选时段</option>
-									<option value="0">一季度</option>
-									<option value="1">二季度</option>
-									<option value="2">三季度</option>
-									<option value="3">四季度</option>
-									<option value="4">上半年</option>
-									<option value="5">下半年</option>
-									<option value="6">本年度</option>
-									<option value="7">上年度</option>
-								</select>
-							</div>
+					<input class="layui-input ksdate" type="text" style="text-align: center; padding: 0;" placeholder="开始日期">
+				</div>
+				<div class="layui-form">
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+							<select lay-filter="datesel" name="quiz2">
+								<option value="">请选时段</option>
+								<option value="0">一季度</option>
+								<option value="1">二季度</option>
+								<option value="2">三季度</option>
+								<option value="3">四季度</option>
+								<option value="4">上半年</option>
+								<option value="5">下半年</option>
+								<option value="6">本年度</option>
+								<option value="7">上年度</option>
+							</select>
 						</div>
 					</div>
-					<div class="search">
-						<input class="layui-input jsdate" type="text" style="text-align: center; padding: 0;" placeholder="结束日期">
-					</div>
-					<div class="btn">
-						<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
-					</div>
-					<form class="layui-form layui-col-md2" style="float: right;">
-							<select onchange="figure()"  lay-filter="tu" class=" ttt">
-								<option value="">图标选择</option>
-								<option value="1">柱状图</option>
-								<option value="2">饼状图</option>
-								<option value="3">曲线图</option>
-							</select>
-						</form>
-			
+				</div>
+				<div class="search">
+					<input class="layui-input jsdate" type="text" style="text-align: center; padding: 0;" placeholder="结束日期">
+				</div>
+				<div class="btn">
+					<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+				</div>
+				<form class="layui-form layui-col-md2" style="float: right;">
+					<select onchange="figure()" lay-filter="tu" class="ttt">
+						<option value="">图表类型</option>
+						<option value="1">柱状图</option>
+						<option value="2">饼状图</option>
+						<option value="3">曲线图</option>
+					</select>
+				</form>
+
+			</div>
+
+			<!-- 报警列表 -->
+			<table class="layui-table" text lay-size="sm">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>客户名称</th>
+						<th>车牌号</th>
+						<th>胎位</th>
+						<th>报警时间</th>
+						<th>报警类型</th>
+						<th>解决时间</th>
+						<th>解决时长 小时 分</th>
+						<th>故障原因</th>
+						<th>单位主管</th>
+						<th>电话</th>
+						<th>单位维修</th>
+						<th>电话</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody class="baojing">
+
+				</tbody>
+			</table>
 		</div>
+		<!-- 柱形图 -->
+		<div id="zzt" style="text-align: center;">
+			<form class="layui-form" style="margin: 10px;">
+				<select lay-filter="zhu">
+					<option value="1">报警原因</option>
+					<option value="2">报警类型</option>
+					<option value="3">胎位</option>
+				</select>
+			</form>
+			<div id="zzt-con">
+				
+			</div>
+		</div>
+		<!-- 饼形图 -->
+		<div id="bt" style="text-align: center;">
+			<form class="layui-form" style="margin: 10px;">
+				<select lay-filter="bing">
+					<option value="1">报警原因</option>
+					<option value="2">报警类型</option>
+					<option value="3">胎位</option>
+				</select>
+			</form>
+			<div id="bt-con">
+				
+			</div>
+		</div>
+		<!-- 折线图 -->
+		<div id="zxt" style="text-align: center;">
+			<form class="layui-form" style="margin: 10px;">
+				<select lay-filter="zhe">
+					<option value="1">报警原因</option>
+					<option value="2">报警类型</option>
+					<option value="3">胎位</option>
+				</select>
+			</form>
+			<div id="zxt-con">
+				
+			</div>
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script src="./js/echarts.min.js" charset="utf-8"></script>
+	<script>
+		$('.ksdate').val(getCurrentMonthFirst())
+		$('.jsdate').val(getCurrentMonthLast())
+		sel()
+		var data_post = {
+			startTime: $('.ksdate').val(),
+			endTime: $('.jsdate').val(),
+			type: 1
+		}
+		var tu_type = 1;
+
+		function sel() {
+			let ddata = {
+				startDate: $('.ksdate').val(),
+				endDate: $('.jsdate').val()
+			}
+			$.ajax({
+				url: `${API}/real/selectBaoPolice?custId=${loadUserInfo.customer.id}`,
+				type: 'post',
+				data: ddata,
+				success: function(res) {
+					let str = ''
+					let list = res.data.car.reverse()
+					// let str1 = ''
+					$.each(list, function(i, json1) {
+						let json = res.data.cust;
+						let json2 = res.data.erpTirePolice[i];
+						str += `
+				        	<tr><td>${list.length - i}</td>
+				            <td>${json.cusName == null ? '' : json.cusName}</td>
+				            <td>${json1.id == null ? '' : json1.id}</td>
+				            <td>${json2.tireLocation == null ? '' : json2.tireLocation}</td>
+				            <td>${json2.policeDt == null ? '' : json2.policeDt}</td>
+				            <td>${json2.policeType == null ? '' : json2.policeTypeName}</td>
+				        	//缺少四个字段
+				            <td>${json2.solveDt == null ? '' : json2.solveDt}</td>
+				            <td>${json.reason == null ? '' : json.reason}</td>   //未找到字段
+				        	<td>${json2.reason == null ? '' : json2.reason}</td>   
+				            <td>${json1.carCqsy == null ? '' : json1.carCqsy}</td>
+							<td>${json1.flowMateriel == null ? '' : json.flowMateriel}</td>
+				            <td>${json1.materielWhereabouts == null ? '' : json1.materielWhereabouts}</td>
+				            <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
+				            <td>${json1.beitai == null ? '' : json1.beitai}</td>
+			                </tr>`
+					})
+					$('.baojing').html(str)
+				}
+			})
+		}
+		layui.use('form', function() {
+			let forms = layui.form
+			forms.on('select(tu)', function(data) {
+
+				let con = ''
+				if(data.value == 1) {
+					con = $('#zzt')
+					tu_type = 1
+				} else if(data.value == 2) {
+					con = $('#bt')
+					tu_type = 2
+				} else {
+					con = $('#zxt')
+					tu_type = 3
+				}
+				selTu()
+				layui.use('layer', function() {
+					layui.layer.open({
+						type: 1,
+						content: con,
+						area: ['600px']
+					})
+				})
+			})
+			forms.on('select(zhu)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else {
+					data_post.type = 3
+				}
+				selTu()
+			})
+			forms.on('select(bing)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else {
+					data_post.type = 3
+				}
+				selTu()
+			})
+			forms.on('select(zhe)', function(data) {
+				if(data.value == 1) {
+					data_post.type = 1
+				} else if(data.value == 2) {
+					data_post.type = 2
+				} else {
+					data_post.type = 3
+				}
+				selTu()
+			})
+		})
 		
-		<!-- 报警列表 -->
-		<table class="layui-table" text lay-size="sm">
-			<thead>
-				<tr>
-					<th>序号</th>
-					<th>客户名称</th>
-					<th>车牌号</th>
-					<th>胎位</th>
-					<th>报警时间</th>
-					<th>报警类型</th>
-					<th>解决时间</th>
-					<th>解决时长 小时 分</th>
-					<th>故障原因</th>
-					<th>单位主管</th>
-					<th>电话</th>
-					<th>单位维修</th>
-					<th>电话</th>
-					<th>备注</th>
-				</tr>
-			</thead>
-			<tbody class="baojing">
-
-			</tbody>
-		</table>
-	</div>
-	<!-- 柱形图 -->
-	<div id="zzt"></div>
-	<!-- 饼形图 -->
-	<div id="bt"></div>
-	<!-- 折线图 -->
-	<div id="zxt"></div>
-</body>
-<script src="./js/Global.js"></script>
-<script src="./js/echarts.min.js" charset="utf-8"></script>
-<script>
-	
-    sel()
-	function sel() {
-        let ddata = {
-		startDate :$('.ksdate').val(),
-		endDate:$('.jsdate').val()
-    }
-        $.ajax({
-		url: `${API}/real/selectBaoPolice?custId=${loadUserInfo.customer.id}`,
-		type: 'post',
-		data:ddata,
-		success: function (res) {
-			let str = ''
-			let list  = res.data.car.reverse()
-			// let str1 = ''
-			$.each(list, function (i, json1) {
-				let json = res.data.cust;
-				let json2 = res.data.erpTirePolice[i];
-				str += `
-            <tr><td>${list.length - i}</td>
-                <td>${json.cusName == null ? '' : json.cusName}</td>
-                <td>${json1.id == null ? '' : json1.id}</td>
-                <td>${json2.tireLocation == null ? '' : json2.tireLocation}</td>
-                <td>${json2.policeDt == null ? '' : json2.policeDt}</td>
-                <td>${json2.policeType == null ? '' : json2.policeTypeName}</td>
-
-
-
-        //缺少四个字段
-             <td>${json2.solveDt == null ? '' : json2.solveDt}</td>
-                    <td>${json.reason == null ? '' : json.reason}</td>   //未找到字段
-        <td>${json2.reason == null ? '' : json2.reason}</td>   
-              <td>${json1.carCqsy == null ? '' : json1.carCqsy}</td>
-
-
-
-                     <td>${json1.flowMateriel == null ? '' : json.flowMateriel}</td>
-                            <td>${json1.materielWhereabouts == null ? '' : json1.materielWhereabouts}</td>
-                                   <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
-                                              <td>${json1.beitai == null ? '' : json1.beitai}</td>
-                </tr>`
+		function selTu() {
+			let post_url = "";
+			if (tu_type == 1) { // 柱状图
+				post_url = `${API}/real/getEchartsZhu`
+			} else if (tu_type == 2) { // 饼图
+				post_url = `${API}/real/getEchartsBing`
+			} else if (tu_type == 3) { // 折线图
+				post_url = `${API}/real/getEchartsZhe`
+			}
+			$.ajax({
+				url: post_url,
+				type: 'post',
+				async: false,
+				data: data_post,
+				success: function(res) {
+					var myChart
+					if (tu_type = 1) { // 柱状图
+						myChart = echarts.init(document.getElementById('zzt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if (tu_type = 2) { // 饼图
+						myChart = echarts.init(document.getElementById('bt-con'));
+						myChart.setOption(JSON.parse(res));
+					} else if (tu_type = 3) { // 折线图
+						myChart = echarts.init(document.getElementById('zxt-con'));
+						myChart.setOption(res);
+					}
+				}
 			})
-			console.log(str)
-			$('.baojing').html(str)
 		}
-	})
-    }
-	layui.use('form',function () {
-		let forms = layui.form
-		forms.on('select(tu)',function (data) {
-			
-			let con = ''
-		if(data.value == 1) {
-			con = $('#zzt')
-		}  else if (data.value == 2) {
-			con = $('#bt')
-		} else {
-			con = $('#zxt')
-		}
-		layui.use('layer',function () {
-			layui.layer.open({
-				type:1,
-				content:con,
-				area:['600px']
+		selTu()
+	</script>
+	<script>
+		layui.use('laydate', function() {
+			layui.laydate.render({
+				elem: '.ksdate'
+			})
+			layui.laydate.render({
+				elem: '.jsdate'
 			})
 		})
+		layui.use('form', function() {
+			var form = layui.form
+			form.on('select(datesel)', function(data) {
+				let val = data.value
+				let years = new Date().getFullYear()
+				switch(val) {
+					case '0':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-03-31`)
+						break;
+					case '1':
+						$('.ksdate').val(`${years}-04-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '2':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-09-30`)
+						break;
+					case '3':
+						$('.ksdate').val(`${years}-10-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '4':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '5':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '6':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '7':
+						$('.ksdate').val(`${years - 1}-01-01`)
+						$('.jsdate').val(`${years - 1}-12-31`)
+						break;
+				}
+			});
 		})
-	})
-	var option = {
-    color: ['#3398DB'],
-    tooltip : {
-        trigger: 'axis',
-        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis : [
-        {
-            type : 'category',
-            data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            axisTick: {
-                alignWithLabel: true
-            }
-        }
-    ],
-    yAxis : [
-        {
-            type : 'value'
-        }
-    ],
-    series : [
-        {
-            name:'',
-            type:'bar',
-            barWidth: '60%',
-            data:[10, 52, 200, 334, 390, 330, 220]
-        }	
-    ]
-};
-function selTu() {
-    let data = {
-    startTime:$('.ksdate').val(),
-    endTime:$('.jsdate').val(),
-    type:1
-}
-$.ajax({
-    url:`${API}/real/getEchartsBing`,
-    type:'post',
-    data:data,
-    success: function (res) {
-        console.log(res)
-    }
-})
-}
-selTu()
-var option1 = {
-    title : {
-        x:'center'
-    },
-    tooltip : {
-        trigger: 'item',
-        formatter: "{a} <br/>{b} : {c} ({d}%)"
-    },
-    legend: {
-        orient: 'vertical',
-        left: 'left',
-        data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-    },
-    series : [
-        {
-            type: 'pie',
-            radius : '55%',
-            center: ['50%', '60%'],
-            data:[
-                {value:335, name:'直接访问'},
-                {value:310, name:'邮件营销'},
-                {value:234, name:'联盟广告'},
-                {value:135, name:'视频广告'},
-                {value:1548, name:'搜索引擎'}
-            ],
-            itemStyle: {
-                emphasis: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
-                }
-            }
-        }
-    ]
-};
-var option2 = {
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-        type: 'value'
-    },
-    series: [{
-        data: [820, 932, 901, 934, 1290, 1330, 1320],
-        type: 'line'
-    }]
-};
-var myChart = echarts.init(document.getElementById('zzt'));
-myChart.setOption(option);
-var myChart1 = echarts.init(document.getElementById('bt'));
-myChart1.setOption(option1);
-var myChart2 = echarts.init(document.getElementById('zxt'));
-myChart2.setOption(option2);
-</script>
-<script>
-    layui.use('laydate',function () {
-        layui.laydate.render({
-            elem:'.ksdate'
-        })
-        layui.laydate.render({
-            elem:'.jsdate'
-        })
-    })
-layui.use('form', function () {
-        var form = layui.form
-        form.on('select(datesel)', function (data) {
-            let val = data.value
-            let years = new Date().getFullYear()
-            switch (val) {
-                case '0':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-03-31`)
-                    break;
-                case '1':
-                    $('.ksdate').val(`${years}-04-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '2':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-09-30`)
-                    break;
-                case '3':
-                    $('.ksdate').val(`${years}-10-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '4':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '5':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '6':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '7':
-                    $('.ksdate').val(`${years - 1}-01-01`)
-                    $('.jsdate').val(`${years - 1}-12-31`)
-                    break;
-            }
-        });
-    })
-</script>
+	</script>
+
 </html>

@@ -77,7 +77,7 @@
         }
 
         .title {
-            font-size: 16px;
+            /* font-size: 16px; */
             text-align: center;
             padding: 10px;
         }
@@ -212,9 +212,18 @@
         .ly-3,.ly-khkc{
             display: none;
         }
+        
         .ly-car:hover .ly-3,.ly-show > li:hover .ly-khkc{
             display: block;
         }
+        .ly-3-g{
+            display: none;
+        }
+        
+        .ly-gcar:hover .ly-3-g{
+            display: block;
+        }
+
         .yhlist {
             text-align: center;
             
@@ -258,11 +267,15 @@
         .qx-3,.qx-khkc{
             display: none;
         }
+        .qx-3-g{
+            display: none;
+        }
         .qx-car:hover .qx-3,.qx-show > li:hover .qx-khkc{
             display: block;
         }
-
-
+        .qx-gcar:hover .qx-3-g{
+            display: block;
+        }
         .qxxm-body {
             position: relative;
         }
@@ -299,495 +312,145 @@
         .xjdsb {
             display:none;
         }
+        .ly-gcar {
+            display: none;
+        }
     </style>
 </head>
 
 <body>
-    <div class="ly-body">
-        <ul class="ly-show">
-            <li class="ly-car">
-                <span class="names ly-car-num"></span>
-                <div class="ly-3"></div>
-            </li>
-            <li class="">
-                <span class="names">客户库存</span>
-                <div class="ly-khkc"></div>
-            </li>
-            <li class="">
-                <span class="names">客户留存</span>
-                <div class="ly-khkc"></div>
-            </li>
-        </ul>
-    </div>
-    <div class="qx-body">
-        <ul class="qx-show">
-            <li class="qx-car">
-                <span class="names ly-car-num">客户库存</span>
-                <div class="qx-3"></div>
-            </li>
-            <li class="">
-                <span class="names">客户库存</span>
-                <div class="qx-khkc"></div>
-            </li>
-            <li class="">
-                <span class="names">客户留存</span>
-                <div class="qx-khkc"></div>
-            </li>
-        </ul>
-    </div>
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th>工作日期</th>
-                <th>里程表数</th>
-                <th>工作单号</th>
-                <th style="width:20%;">客户名称</th>
-                <th>车辆牌号</th>
-                <th>挂车牌号</th>
-
-            </tr>
-        </thead>
-        <tbody class="saveOne">
-            <tr>
-                <td><input type="text" data-name="saleRepairDate" class="layui-input  date" value=""></td>
-                <td><input type="text" data-name="saleRepairMileage" class="layui-input" value=""></td>
-                <td><input type="text" data-name="saleRepairSheetId" readonly class="layui-input" value=""></td>
-                <td><input data-name="customerName" type="text" class="layui-input customerName" value=""></td>
-                <td><input type="text" data-name="carPlate" class="layui-input carPlate" value=""></td>
-                <td><input type="text" data-name="trailerPlate" class="layui-input trailerPlate" value=""></td>
-            </tr>
-        </tbody>
-
-    </table>
-    <div class="hover-body">
-        <ul class="hover-show">
-
-        </ul>
-    </div>
-    <div class="qxxm-body">
-        <ul class="qxxm-show">
-
-        </ul>
-    </div>
-    <div class="title">
-        商品销售 <div class="layui-btn-xs layui-btn" onclick="saleEdit()">编辑</div>
-    </div>
-    <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th style="width:10%;">来源</th>
-                <th>品名</th>
-                <th>品牌</th>
-                <th colspan="2">规格</th>
-                <th>型号</th>
-                <th>产地</th>
-                <th>单位</th>
-                <th>生产编号</th>
-                <th>物料新旧</th>
-                <th>去向</th>
-                <th style="width:5%;">数量</th>
-                <th style="width:5%;">单价</th>
-                <th style="width:5%;">金额</th>
-            </tr>
-        </thead>
-
-        <tbody class="spxs">
-        </tbody>
-    </table>
-    <div class="title">
-        物料维修 <div class="layui-btn-xs layui-btn" onclick="wlEdit()">编辑</div>
-    </div>
-    <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th style="width:10%;">来源</th>
-                <th>品名</th>
-                <th>品牌</th>
-                <th>规格</th>
-                <th>型号</th>
-                <th>产地</th>
-                <th>单位</th>
-                <th>生产编号</th>
-                <th>物料新旧</th>
-                <th>去向</th>
-                <th style="width:5%;">数量</th>
-                <th style="width:5%;">单价</th>
-                <th style="width:5%;">金额</th>
-            </tr>
-        </thead>
-
-        <tbody class="wlwx">
-            <tr>
-            </tr>
-        </tbody>
-    </table>
-    <div class="title">
-        车辆维修 <div class="layui-btn-xs layui-btn" onclick="carEdit()">编辑</div>
-    </div>
-    <table class="layui-table">
-        <thead>
-            <tr>
-                <th>汽修项目</th>
-                <th>维修科目</th>
-                <th>维修方式</th>
-                <th>工时</th>
-                <th>费用</th>
-                <th>费用承担</th>
-                <th>保险单号</th>
-                <th>保险公司</th>
-                <th>备注</th>
-            </tr>
-        </thead>
-        <tbody class="clwx">
-
-        </tbody>
-    </table>
-    <table class="layui-table">
-        <tbody>
-            <tr class="fyjf">
-                <td style="width:10%;">费用合计</td>
-                <td style="width:10%;"><input type="text" data-name="saleRepairCost" class="layui-input" value=""></td>
-                <td style="width:10%;">消费积分</td>
-                <td style="width:10%;"><input type="text" data-name="saleRepairIntegralConsumption" class="layui-input"
-                        value=""></td>
-                <td style="width:10%;">实收金额</td>
-                <td style="width:10%;"><input type="text" data-name="saleRepairPaidAmount" class="layui-input" value=""></td>
-                <td style="width:10%;">付款方式</td>
-                <td style="width:10%;" class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select name="interest" class="fkfs" lay-filter="aihao">
-                                <option value='银行支票'>银行支票</option>
-                                <option value='网银电汇'>网银电汇</option>
-                                <option value='银行承兑'>银行承兑</option>
-                                <option value='现金收款'>现金收款</option>
-                                <option value='应收账款'>应收账款</option>
-                                <option value='免费'>免费</option>
-                                <option value='预收账款'>预收账款</option>
-                            </select>
-                        </div>
-                    </div>
-                </td>
-                <td style="width:10%;">本次积分</td>
-                <td style="width:10%;"><input type="text" data-name="saleRepairIntegral" class="layui-input" value=""></td>
-            </tr>
-        </tbody>
-    </table>
-    <ul class="qianming">
-        <li>
-            <label for="fwjb">服务经办</label>
-            <input type="text" data-name="serviceAttn" class="layui-input">
-        </li>
-        <li>
-            <label for="fwjb">库管经办</label>
-            <input type="text" data-name="serviceAttn" class="layui-input">
-        </li>
-        <li>
-            <label for="fwjb">客户经办</label>
-            <input type="text" data-name="customerAttn" class="layui-input">
-        </li>
-        <li>
-            <label for="fwjb">财务经办</label>
-            <input type="text" data-name="financeAttn" class="layui-input">
-        </li>
-    </ul>
-    <div class="title">
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(false)">确认/结束</button>
-        <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(true)">确认/检测</button>
-    </div>
-    <!-- 商品销售编辑页 -->
-    <div class="saleWindow">
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>物料新旧</th>
-                    <th>单位</th>
-                    <th>去向</th>
-                    <th>生产编号</th>
-                    <th>数量</th>
-                    <th>单价</th>
-                    <th>金额</th>
-                    <th>安装胎压</th>
-                    <th colspan="2">动平衡</th>
-                </tr>
-            </thead>
-            <tbody class="spxsList">
-                <tr>
-                    <td class="layui-form">
-                        <select name="" class="sel" id=""></select>
-                    </td>
-                    <td><input type="text" class="layui-input materielName set_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
-                    <td><input type="text" class="layui-input materielBrand set_1" data-name="materielBrand"></td>
-                    <td><input type="text" class="layui-input materielSpecifications set_2" data-name="materielSpecifications"></td>
-                    <td><input type="text" class="layui-input materielModel set_3" data-name="materielModel"></td>
-                    <td><input type="text" class="layui-input materielPlace set_4" data-name="materielPlace"></td>
-                    <td><input type="text" class="layui-input materielState set_5" data-name="materielState"></td>
-                    <td><input type="text" class="layui-input materielUnit set_6" data-name="materielUnit"></td>
-                    <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
-                    <td><input type="text" class="layui-input materielProductionId" data-name="materielProductionId"></td>
-                    <td><input type="text" id="shu" class="layui-input materielNumber set_7" data-name="materielNumber"
-                            oninput="setXong()"></td>
-                    <td><input type="text" id="dan" class="layui-input materielPrice" data-name="materielPrice" oninput="setXong()"></td>
-                    <td><input type="text" id="zong" class="layui-input materielTotal" data-name="materielTotal"></td>
-                    <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
-                    <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
-                    <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingRight" class="layui-input"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div style="text-align:center">
-            <div class="layui-btn layui-btn-xs" onclick="saveRe(1)">确认/重复</div>
-            <div class="layui-btn layui-btn-xs" onclick="saveRe(2)">确认/新添</div>
-            <div class="layui-btn layui-btn-xs" onclick="saveRe(3)">确认/结束</div>
-            <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
+    <div class="wrap">
+        <div class="ly-body">
+            <ul class="ly-show">
+                <li class="ly-car">
+                    <span class="names ly-car-num"></span>
+                    <div class="ly-3"></div>
+                </li>
+                <li class="ly-gcar">
+                    <span class="names ly-gcar-num"></span>
+                    <div class="ly-3-g"></div>
+                </li>
+                <li class="">
+                    <span class="names">客户库存</span>
+                    <div class="ly-khkc"></div>
+                </li>
+                <li class="">
+                    <span class="names">客户留存</span>
+                    <div class="ly-khkc"></div>
+                </li>
+            </ul>
         </div>
-        <div style="text-align:center;margin:10px;">商品列表</div>
-        <table class="layui-table saleList">
-            <thead>
-                <tr>
-                    <th>序号</th>
-                    <th>来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>生产编号</th>
-                    <th>物料新旧</th>
-                    <th>去向</th>
-                    <th>数量</th>
-                    <th>单价</th>
-                    <th>金额</th>
-                    <th>安装胎压</th>
-                    <th colspan="2">动平衡</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody class="splblist">
-            </tbody>
-        </table>
-    </div>
-    <!-- 动平衡 -->
-    <div class="dphWindow">
-        <table class="layui-table">
-            <tbody>
-                <tr>
-                    <td style="background:#fff;" colspan="5" class="dphnum"></td>
-                </tr>
-                <tr>
-                    <td class="dphtype" style="background:#fff;">20寸</td>
-                    <td class="dphtype" style="background:#fff;">22.5寸</td>
-                    <td class="dphtype" style="background:#fff;">轿车</td>
-                    <td style="background:#fff;">
-                        <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="delDph()">消除</div>
-                    </td>
-                    <td style="background:#fff;">
-                        <div class="layui-btn  layui-btn-xs" onclick="saveDph()">确定</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="background:#fff;" class="dph">5</td>
-                    <td style="background:#fff;" class="dph">10</td>
-                    <td style="background:#fff;" class="dph">20</td>
-                    <td style="background:#fff;" class="dph">50</td>
-                    <td style="background:#fff;" class="dph">100</td>
-                </tr>
-                <tr>
-                    <td style="background:#fff;" class="dph">150</td>
-                    <td style="background:#fff;" class="dph">200</td>
-                    <td style="background:#fff;" class="dph">250</td>
-                    <td style="background:#fff;" class="dph">300</td>
-                    <td style="background:#fff;" class="dph">350</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <!-- 物料维修编辑页 -->
-    <div class="wlWindow">
-        <table class="layui-table">
-            <tr class="wxbj">
-                <td style="width:10%;">
-                    维修项目
-                </td>
-                <td style="width:15%;" onclick="showWxxm()">
-                    <input type="text" data-name="repairRepair" class="layui-input repairRepair">
-                </td>
-                <td style="width:10%;">
-                    物品状态
-                </td>
-                <td style="width:15%;" onclick="showWpzt()">
-                    <input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
-                </td>
-                <td style="width:10%;">
-                    胎纹深度
-                </td>
-                <td>
-                    <input type="text" data-name="tireTread1" class="layui-input">
-                </td>
-                <td>
-                    <input type="text" data-name="tireTread2" class="layui-input">
-                </td>
-                <td>
-                    <input type="text" data-name="tireTread3" class="layui-input">
-                </td>
-                <td>
-                    <input type="text" data-name="tireTread4" class="layui-input">
-                </td>
-            </tr>
-        </table>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>物料新旧</th>
-                    <th>单位</th>
-                    <th>去向</th>
-                    <th>生产编号</th>
-                    <th>二维码</th>
-                    <th>RFID</th>
-                    <th>胎压ID</th>
-                    <th>胎压</th>
-                    <th>数量</th>
-                    <th>维修金额</th>
-                </tr>
-            </thead>
-            <tbody class="wlwxList">
-                <tr>
-                    <td><input type="text" class="layui-input materielSource" data-name="materielSource" onclick="showLy(this)"></td>
-                    <td><input type="text" class="layui-input materielName wlset_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
-                    <td><input type="text" class="layui-input materielBrand wlset_1" data-name="materielBrand"></td>
-                    <td><input type="text" class="layui-input materielSpecifications wlset_2" data-name="materielSpecifications"></td>
-                    <td><input type="text" class="layui-input materielModel wlset_3" data-name="materielModel"></td>
-                    <td><input type="text" class="layui-input materielPlace wlset_4" data-name="materielPlace"></td>
-                    <td><input type="text" class="layui-input materielState wlset_5" data-name="materielState"></td>
-                    <td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
-                    <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
-                    <td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
-                    <td><input type="text" class="layui-input materielProductionId wlset_9" data-name="materielProductionId"></td>
-                    <td><input type="text" class="layui-input materiel_sensor_id  wlset_10" data-name="materiel_sensor_id"></td>
-                    <td><input type="text" class="layui-input materiel_sensor_id  wlset_11" data-name="materiel_sensor_id"></td>
-                    <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
-                    <td><input type="text" class="layui-input materielNumber wlset_7" data-name="materielNumber"></td>
-                    <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
-                </tr>
-            </tbody>
-        </table>
-        <div style="text-align:center">维修耗材</div>
-        <div>
-            <div style="width:70%; float:left;">
-                <table class="layui-table">
-                    <thead>
-                        <tr>
-                            <th>耗材仓库</th>
-                            <th>品名</th>
-                            <th>品牌</th>
-                            <th>规格</th>
-                            <th>型号</th>
-                            <th>数量</th>
-                            <th style="width: 100px;">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody class="wxhclist">
-                    </tbody>
-                </table>
-            </div>
-            <div style="width: 25%;float:right;">
-                <table class="layui-table">
-                    <tr>
-                        <td rowspan="2">动平衡</td>
-                        <td>
-                            <input type="text" data-name="dynamicBalancingLeft" onclick="setDph(this)" class="layui-input">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="text" data-name="dynamicBalancingRight" onclick="setDph(this)" class="layui-input">
-                        </td>
-                    </tr>
-                </table>
-            </div>
+        <div class="qx-body">
+            <ul class="qx-show">
+                <li class="qx-car">
+                    <span class="names ly-car-num">客户库存</span>
+                    <div class="qx-3"></div>
+                </li>
+                <li class="qx-gcar">
+                        <span class="names ly-gcar-num"></span>
+                        <div class="qx-3-g"></div>
+                    </li>
+                <li class="">
+                    <span class="names">客户库存</span>
+                    <div class="qx-khkc"></div>
+                </li>
+                <li class="">
+                    <span class="names">客户留存</span>
+                    <div class="qx-khkc"></div>
+                </li>
+            </ul>
         </div>
-        <div style="clear:both;"></div>
-        <div style="text-align:center">
-            <div class="layui-btn layui-btn-xs" onclick="saveWx(1)">确认/重复</div>
-            <div class="layui-btn layui-btn-xs" onclick="saveWx(2)">确认/新添</div>
-            <div class="layui-btn layui-btn-xs" onclick="saveWx(3)">确认/结束</div>
-            <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
+        <table class="layui-table">
+            <thead>
+                <tr>
+                    <th>工作日期</th>
+                    <th>里程表数</th>
+                    <th>工作单号</th>
+                    <th style="width:20%;">客户名称</th>
+                    <th>车辆牌号</th>
+                    <th>挂车牌号</th>
+    
+                </tr>
+            </thead>
+            <tbody class="saveOne">
+                <tr>
+                    <td><input type="text" data-name="saleRepairDate" class="layui-input  date" value=""></td>
+                    <td><input type="text" data-name="saleRepairMileage" class="layui-input" value=""></td>
+                    <td><input type="text" data-name="saleRepairSheetId" readonly class="layui-input" value=""></td>
+                    <td><input data-name="customerName" type="text" class="layui-input customerName" value=""></td>
+                    <td><input type="text" data-name="carPlate" class="layui-input carPlate" value=""></td>
+                    <td><input type="text" data-name="trailerPlate" class="layui-input trailerPlate" value=""></td>
+                </tr>
+            </tbody>
+    
+        </table>
+        <div class="hover-body">
+            <ul class="hover-show">
+    
+            </ul>
+        </div>
+        <div class="qxxm-body">
+            <ul class="qxxm-show">
+    
+            </ul>
         </div>
         <div class="title">
-            待处理
+            物料销售 <div class="layui-btn-xs layui-btn" onclick="saleEdit()">编辑</div>
         </div>
+        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th>序号</th>
-                    <th>维修项目</th>
-                    <th>来源</th>
+                    <th style="width:10%;">来源</th>
                     <th>品名</th>
                     <th>品牌</th>
-                    <th>规格</th>
+                    <th colspan="2">规格</th>
                     <th>型号</th>
                     <th>产地</th>
-                    <th>物料新旧</th>
                     <th>单位</th>
-                    <th>数量</th>
                     <th>生产编号</th>
-                    <th>胎压ID</th>
-                    <th>操作</th>
+                    <th>物料新旧</th>
+                    <th>去向</th>
+                    <th style="width:5%;">数量</th>
+                    <th style="width:5%;">单价</th>
+                    <th style="width:5%;">金额</th>
                 </tr>
             </thead>
-            <tbody class="dcllist">
-
+    
+            <tbody class="spxs">
             </tbody>
         </table>
         <div class="title">
-            已完成
+            物料维修 <div class="layui-btn-xs layui-btn" onclick="wlEdit()">编辑</div>
         </div>
+        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
         <table class="layui-table">
             <thead>
                 <tr>
-                    <th>序号</th>
-                    <th>维修项目</th>
-                    <th>来源</th>
+                    <th style="width:10%;">来源</th>
                     <th>品名</th>
                     <th>品牌</th>
                     <th>规格</th>
                     <th>型号</th>
                     <th>产地</th>
-                    <th>物料新旧</th>
                     <th>单位</th>
-                    <th>数量</th>
-                    <th>去向</th>
                     <th>生产编号</th>
-                    <th>胎压ID</th>
-                    <th>物品状态</th>
-                    <th>金额</th>
-                    <th>操作</th>
+                    <th>物料新旧</th>
+                    <th>去向</th>
+                    <th style="width:5%;">数量</th>
+                    <th style="width:5%;">单价</th>
+                    <th style="width:5%;">金额</th>
                 </tr>
             </thead>
-            <tbody class="ywclist">
-
+    
+            <tbody class="wlwx">
+                <tr>
+                </tr>
             </tbody>
         </table>
-    </div>
-    <!-- 车辆维修编辑页 -->
-    <div class="carWindow">
         <div class="title">
-            车辆维修 </div>
+            车辆维修 <div class="layui-btn-xs layui-btn" onclick="carEdit()">编辑</div>
+        </div>
         <table class="layui-table">
             <thead>
                 <tr>
@@ -800,99 +463,476 @@
                     <th>保险单号</th>
                     <th>保险公司</th>
                     <th>备注</th>
-                    <th style="width:100px;">操作</th>
                 </tr>
             </thead>
-            <tbody class="clwxxq">
-                <tr id="clwx">
-                    <td><input type="text" class="layui-input garageProject" data-name="garageProject" value="" onclick="setQxxm('clwx',this)"></td>
-                    <td><input type="text" class="layui-input repairProject" data-name="repairProject" value=""></td>
-                    <td><input type="text" class="layui-input repairMode" data-name="repairMode" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="money" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div>
-                    </td>
-                </tr>
+            <tbody class="clwx">
+    
             </tbody>
         </table>
-        <div class="title">
-            耗材明细
-        </div>
         <table class="layui-table">
-            <thead>
-                <tr>
-                    <th style="width:10%;">来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>状态</th>
-                    <th style="width:5%;">单位</th>
-                    <th style="width:5%;">数量</th>
-                    <th>备注</th>
-                    <th style="width:15%;">操作</th>
-                </tr>
-            </thead>
             <tbody>
-                <tr class="lzhcmx">
-                    <td class="layui-form">
+                <tr class="fyjf">
+                    <td style="width:10%;">费用合计</td>
+                    <td style="width:10%;"><input type="text" data-name="saleRepairCost" class="layui-input" value=""></td>
+                    <td style="width:10%;">消费积分</td>
+                    <td style="width:10%;"><input type="text" data-name="saleRepairIntegralConsumption" class="layui-input"
+                            value=""></td>
+                    <td style="width:10%;">实收金额</td>
+                    <td style="width:10%;"><input type="text" data-name="saleRepairPaidAmount" class="layui-input" value=""></td>
+                    <td style="width:10%;">付款方式</td>
+                    <td style="width:10%;" class="layui-form">
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
-                                <select name="interest" class="cheliangweixiusel" lay-filter="cheliangweixiu">
-                                    <option value=""></option>
-                                    <option value="0">金方舟</option>
+                                <select name="interest" class="fkfs" lay-filter="aihao">
+                                    <option value='银行支票'>银行支票</option>
+                                    <option value='网银电汇'>网银电汇</option>
+                                    <option value='银行承兑'>银行承兑</option>
+                                    <option value='现金收款'>现金收款</option>
+                                    <option value='应收账款'>应收账款</option>
+                                    <option value='免费'>免费</option>
+                                    <option value='预收账款'>预收账款</option>
                                 </select>
                             </div>
                         </div>
                     </td>
-                    <td><input type="text" class="layui-input materielName hcset_0" data-name="scrName" onclick="setLyInfo(this,false)"
-                            value=""></td>
-                    <td><input type="text" class="layui-input materielBrand hcset_1" data-name="scrBrand" value=""></td>
-                    <td><input type="text" class="layui-input materielSpecifications hcset_2" data-name="scrSpecifications"
-                            value=""></td>
-                    <td><input type="text" class="layui-input materielModel hcset_3" data-name="scrModel" value=""></td>
-                    <td><input type="text" class="layui-input materielPlace hcset_4" data-name="chanDi" value=""></td>
-                    <td><input type="text" class="layui-input materielState hcset_5" data-name="state" value=""></td>
-                    <td><input type="text" class="layui-input materielUnit hcset_6" data-name="danWei" value=""></td>
-                    <td><input type="text" class="layui-input  hcset_7" data-name="number" value=""></td>
-                    <td><input type="text" class="layui-input" data-name="bz" value=""></td>
-                    <td>
-                        <div class="layui-btn  layui-btn-xs layui-btn-normal" onclick="saveHcmx()">保存</div>
-                    </td>
+                    <td style="width:10%;">本次积分</td>
+                    <td style="width:10%;"><input type="text" data-name="saleRepairIntegral" class="layui-input" value=""></td>
                 </tr>
             </tbody>
         </table>
-        <div style="text-align: center">
-            <div class="layui-btn layui-btn-xs" onclick="saveCar(true)">确认/结束</div>
-            <div class="layui-btn layui-btn-xs" onclick="saveCar()">取消/结束</div>
+        <ul class="qianming">
+            <li>
+                <label for="fwjb">服务经办</label>
+                <input type="text" data-name="serviceAttn" class="layui-input">
+            </li>
+            <li>
+                <label for="fwjb">库管经办</label>
+                <input type="text" data-name="serviceAttn" class="layui-input">
+            </li>
+            <li>
+                <label for="fwjb">客户经办</label>
+                <input type="text" data-name="customerAttn" class="layui-input">
+            </li>
+            <li>
+                <label for="fwjb">财务经办</label>
+                <input type="text" data-name="financeAttn" class="layui-input">
+            </li>
+        </ul>
+        <div class="title">
+            <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(false)">确认/结束</button>
+            <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(true)">确认/检测</button>
         </div>
-    </div>
-    <div class="wxxmwin">
-        <ul>
-            <li></li>
-        </ul>
-    </div>
-    <div class="wpztwin">
-        <ul>
-            <li></li>
-        </ul>
-    </div>
-
-    <div class="xjdsb">
-        <table class="yhlist layui-table">
-
-        </table>
+        <!-- 商品销售编辑页 -->
+        <div class="saleWindow">
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>物料新旧</th>
+                        <th>单位</th>
+                        <th>去向</th>
+                        <th>生产编号</th>
+                        <th>数量</th>
+                        <th>单价</th>
+                        <th>金额</th>
+                        <th>安装胎压</th>
+                        <th colspan="2">动平衡</th>
+                    </tr>
+                </thead>
+                <tbody class="spxsList">
+                    <tr>
+                        <td class="layui-form">
+                            <select name="" class="sel" id=""></select>
+                        </td>
+                        <td><input type="text" class="layui-input materielName set_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
+                        <td><input type="text" class="layui-input materielBrand set_1" data-name="materielBrand"></td>
+                        <td><input type="text" class="layui-input materielSpecifications set_2" data-name="materielSpecifications"></td>
+                        <td><input type="text" class="layui-input materielModel set_3" data-name="materielModel"></td>
+                        <td><input type="text" class="layui-input materielPlace set_4" data-name="materielPlace"></td>
+                        <td><input type="text" class="layui-input materielState set_5" data-name="materielState"></td>
+                        <td><input type="text" class="layui-input materielUnit set_6" data-name="materielUnit"></td>
+                        <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
+                        <td><input type="text" class="layui-input materielProductionId" data-name="materielProductionId"></td>
+                        <td><input type="text" id="shu" class="layui-input materielNumber set_7" data-name="materielNumber"
+                                oninput="setXong()"></td>
+                        <td><input type="text" id="dan" class="layui-input materielPrice" data-name="materielPrice" oninput="setXong()"></td>
+                        <td><input type="text" id="zong" class="layui-input materielTotal" data-name="materielTotal"></td>
+                        <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+                        <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
+                        <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingRight" class="layui-input"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align:center">
+                <div class="layui-btn layui-btn-xs" onclick="saveRe(1)">确认/重复</div>
+                <div class="layui-btn layui-btn-xs" onclick="saveRe(2)">确认/新添</div>
+                <div class="layui-btn layui-btn-xs" onclick="saveRe(3)">确认/结束</div>
+                <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
+            </div>
+            <div style="text-align:center;margin:10px;">物料列表</div>
+            <table class="layui-table saleList">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>单位</th>
+                        <th>生产编号</th>
+                        <th>物料新旧</th>
+                        <th>去向</th>
+                        <th>数量</th>
+                        <th>单价</th>
+                        <th>金额</th>
+                        <th>安装胎压</th>
+                        <th colspan="2">动平衡</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody class="splblist">
+                </tbody>
+            </table>
+        </div>
+        <!-- 动平衡 -->
+        <div class="dphWindow">
+            <table class="layui-table">
+                <tbody>
+                    <tr>
+                        <td style="background:#fff;" colspan="5" class="dphnum"></td>
+                    </tr>
+                    <tr>
+                        <td class="dphtype" style="background:#fff;">20寸</td>
+                        <td class="dphtype" style="background:#fff;">22.5寸</td>
+                        <td class="dphtype" style="background:#fff;">轿车</td>
+                        <td style="background:#fff;">
+                            <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="delDph()">消除</div>
+                        </td>
+                        <td style="background:#fff;">
+                            <div class="layui-btn  layui-btn-xs" onclick="saveDph()">确定</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#fff;" class="dph">5</td>
+                        <td style="background:#fff;" class="dph">10</td>
+                        <td style="background:#fff;" class="dph">20</td>
+                        <td style="background:#fff;" class="dph">50</td>
+                        <td style="background:#fff;" class="dph">100</td>
+                    </tr>
+                    <tr>
+                        <td style="background:#fff;" class="dph">150</td>
+                        <td style="background:#fff;" class="dph">200</td>
+                        <td style="background:#fff;" class="dph">250</td>
+                        <td style="background:#fff;" class="dph">300</td>
+                        <td style="background:#fff;" class="dph">350</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- 物料维修编辑页 -->
+        <div class="wlWindow">
+            <table class="layui-table">
+                <tr class="wxbj">
+                    <td style="width:10%;">
+                        维修项目
+                    </td>
+                    <td style="width:15%;" onclick="showWxxm()">
+                        <input type="text" data-name="repairRepair" class="layui-input repairRepair">
+                    </td>
+                    <td style="width:10%;">
+                        物品状态
+                    </td>
+                    <td style="width:15%;" onclick="showWpzt()">
+                        <input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
+                    </td>
+                    <td style="width:10%;">
+                        胎纹深度
+                    </td>
+                    <td>
+                        <input type="text" data-name="tireTread1" class="layui-input">
+                    </td>
+                    <td>
+                        <input type="text" data-name="tireTread2" class="layui-input">
+                    </td>
+                    <td>
+                        <input type="text" data-name="tireTread3" class="layui-input">
+                    </td>
+                    <td>
+                        <input type="text" data-name="tireTread4" class="layui-input">
+                    </td>
+                </tr>
+            </table>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>物料新旧</th>
+                        <th>单位</th>
+                        <th>去向</th>
+                        <th>生产编号</th>
+                        <th>二维码</th>
+                        <th>RFID</th>
+                        <th>胎压ID</th>
+                        <th>胎压</th>
+                        <th>数量</th>
+                        <th>维修金额</th>
+                    </tr>
+                </thead>
+                <tbody class="wlwxList">
+                    <tr>
+                        <td><input type="text" class="layui-input materielSource" data-name="materielSource" onclick="showLy(this)"></td>
+                        <td><input type="text" class="layui-input materielName wlset_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
+                        <td><input type="text" class="layui-input materielBrand wlset_1" data-name="materielBrand"></td>
+                        <td><input type="text" class="layui-input materielSpecifications wlset_2" data-name="materielSpecifications"></td>
+                        <td><input type="text" class="layui-input materielModel wlset_3" data-name="materielModel"></td>
+                        <td><input type="text" class="layui-input materielPlace wlset_4" data-name="materielPlace"></td>
+                        <td><input type="text" class="layui-input materielState wlset_5" data-name="materielState"></td>
+                        <td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
+                        <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
+                        <td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
+                        <td><input type="text" class="layui-input materielProductionId wlset_9" data-name="materielProductionId"></td>
+                        <td><input type="text" class="layui-input materiel_sensor_id  wlset_10" data-name="materiel_sensor_id"></td>
+                        <td><input type="text" class="layui-input materiel_sensor_id  wlset_11" data-name="materiel_sensor_id"></td>
+                        <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+                        <td><input type="text" class="layui-input materielNumber wlset_7" data-name="materielNumber"></td>
+                        <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align:center">维修耗材</div>
+            <div>
+                <div style="width:70%; float:left;">
+                    <table class="layui-table">
+                        <thead>
+                            <tr>
+                                <th>耗材仓库</th>
+                                <th>品名</th>
+                                <th>品牌</th>
+                                <th>规格</th>
+                                <th>型号</th>
+                                <th>数量</th>
+                                <th style="width: 100px;">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody class="wxhclist">
+                                <tr class="lzwxhc">
+                                        <td class="layui-form"><input class="layui-input" type="hidden" data-name="pid">
+                                            <select class='hcck'></select>
+                                        </td>
+                                        <td><input class="layui-input hcck_0 " data-name="materielName" onclick="setLyInfo(this,true)"></td>
+                                        <td><input class="layui-input hcck_1  " data-name="materielBrand"></td>
+                                        <td><input class="layui-input hcck_2  " data-name="materielSpecifications"></td>
+                                        <td><input class="layui-input hcck_3  " data-name="materielModel"></td>
+                                        <td><input class="layui-input" data-name="materielNumber"></td>
+                                        <td>
+                                            <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="addWxhc()">新增</div>
+                                            <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
+                                        </td>
+                                    </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div style="width: 25%;float:right;">
+                    <table class="layui-table">
+                        <tr>
+                            <td rowspan="2">动平衡</td>
+                            <td>
+                                <input type="text" data-name="dynamicBalancingLeft" onclick="setDph(this)" class="layui-input">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" data-name="dynamicBalancingRight" onclick="setDph(this)" class="layui-input">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div style="clear:both;"></div>
+            <div style="text-align:center">
+                <div class="layui-btn layui-btn-xs" onclick="saveWx(1)">确认/重复</div>
+                <div class="layui-btn layui-btn-xs" onclick="saveWx(2)">确认/新添</div>
+                <div class="layui-btn layui-btn-xs" onclick="saveWx(3)">确认/结束</div>
+                <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
+            </div>
+            <div class="title">
+                待处理
+            </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>维修项目</th>
+                        <th>来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>物料新旧</th>
+                        <th>单位</th>
+                        <th>数量</th>
+                        <th>生产编号</th>
+                        <th>胎压ID</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody class="dcllist">
+    
+                </tbody>
+            </table>
+            <div class="title">
+                已完成
+            </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>维修项目</th>
+                        <th>来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>物料新旧</th>
+                        <th>单位</th>
+                        <th>数量</th>
+                        <th>去向</th>
+                        <th>生产编号</th>
+                        <th>胎压ID</th>
+                        <th>物品状态</th>
+                        <th>金额</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody class="ywclist">
+    
+                </tbody>
+            </table>
+        </div>
+        <!-- 车辆维修编辑页 -->
+        <div class="carWindow">
+            <div class="title">
+                车辆维修 </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th>汽修项目</th>
+                        <th>维修科目</th>
+                        <th>维修方式</th>
+                        <th>工时</th>
+                        <th>费用</th>
+                        <th>费用承担</th>
+                        <th>保险单号</th>
+                        <th>保险公司</th>
+                        <th>备注</th>
+                        <th style="width:100px;">操作</th>
+                    </tr>
+                </thead>
+                <tbody class="clwxxq">
+                    <tr id="clwx">
+                        <td><input type="text" class="layui-input garageProject" data-name="garageProject" value="" onclick="setQxxm('clwx',this)"></td>
+                        <td><input type="text" class="layui-input repairProject" data-name="repairProject" value=""></td>
+                        <td><input type="text" class="layui-input repairMode" data-name="repairMode" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="money" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
+                        <td>
+                            <div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="title">
+                耗材明细
+            </div>
+            <table class="layui-table">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">来源</th>
+                        <th>品名</th>
+                        <th>品牌</th>
+                        <th>规格</th>
+                        <th>型号</th>
+                        <th>产地</th>
+                        <th>状态</th>
+                        <th style="width:5%;">单位</th>
+                        <th style="width:5%;">数量</th>
+                        <th>备注</th>
+                        <th style="width:15%;">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="lzhcmx">
+                        <td class="layui-form">
+                            <div class="layui-form-item">
+                                <div class="layui-input-inline">
+                                    <select name="interest" class="cheliangweixiusel" lay-filter="cheliangweixiu">
+                                        <option value=""></option>
+                                        <option value="0">金方舟</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="text" class="layui-input materielName hcset_0" data-name="scrName" onclick="setLyInfo(this,false)"
+                                value=""></td>
+                        <td><input type="text" class="layui-input materielBrand hcset_1" data-name="scrBrand" value=""></td>
+                        <td><input type="text" class="layui-input materielSpecifications hcset_2" data-name="scrSpecifications"
+                                value=""></td>
+                        <td><input type="text" class="layui-input materielModel hcset_3" data-name="scrModel" value=""></td>
+                        <td><input type="text" class="layui-input materielPlace hcset_4" data-name="chanDi" value=""></td>
+                        <td><input type="text" class="layui-input materielState hcset_5" data-name="state" value=""></td>
+                        <td><input type="text" class="layui-input materielUnit hcset_6" data-name="danWei" value=""></td>
+                        <td><input type="text" class="layui-input  hcset_7" data-name="number" value=""></td>
+                        <td><input type="text" class="layui-input" data-name="bz" value=""></td>
+                        <td>
+                            <div class="layui-btn  layui-btn-xs layui-btn-normal" onclick="saveHcmx()">保存</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="text-align: center">
+                <div class="layui-btn layui-btn-xs" onclick="saveCar(true)">确认/结束</div>
+                <div class="layui-btn layui-btn-xs" onclick="saveCar()">取消/结束</div>
+            </div>
+        </div>
+        <div class="wxxmwin">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div class="wpztwin">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+    
+        <div class="xjdsb">
+            <table class="yhlist layui-table">
+    
+            </table>
+        </div>
     </div>
 </body>
 <script src="./js/Global.js"></script>
 <script>
-    console.log(decodeURI(decodeURI(getUrlParam('custName'))))
+    
     $('.customerName').val(decodeURI(decodeURI(getUrlParam('custName'))))
     let layform = ''
     layui.use('form', function () {
@@ -922,6 +962,14 @@
     let wlwxbol = false
     let selType = 0 // 要查询的类型
     let isHcck = false // 是否为耗材仓库
+    if(sessionStorage.pcar && sessionStorage.gcar) {
+        
+        $('.ly-gcar-num').html(sessionStorage.gcar)
+        $('.ly-gcar').css({
+            'display':'block'
+        })
+    } 
+    $('.ly-car-num').html(carNum)
     // 设置总金额
     function setXong() {
         if (!isNaN(Number($('#shu').val())) && !isNaN(Number($('#dan').val()))) {
@@ -1593,7 +1641,8 @@
             }
         })
     }
-    $('.ly-car-num').html(carNum)
+    
+    
     // 显示一晃
     function showLy(_this) {
         $('.ly-body').show()
@@ -1654,6 +1703,25 @@
                 $('.qx-3').html(qxstr)
             }
         })
+        if(sessionStorage.gcar) {
+            $.ajax({
+            url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.gcar}`,
+            type: 'get',
+            success: function (res) {
+                let qxstr = '<ul>'
+                let str = '<ul>'
+                $.each(res.data.taiwei, function (i, k) {
+                    str +=
+                        `<li onclick="setLyByCar('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
+                    qxstr +=
+                        `<li onclick="setQxs('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
+                })
+                str += '</ul>'
+                $('.ly-3-g').html(str)
+                $('.qx-3-g').html(qxstr)
+            }
+        })
+        }
         $.ajax({
             url: `${API}/erpCustomerWarehouse/getcustWarehouseByCustId?custId=${loadUserInfo.customer.id}`,
             type: 'get',

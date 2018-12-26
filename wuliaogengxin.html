@@ -1,177 +1,187 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-        }
-        .layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			.layui-form {
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				/*height: 24px;*/
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				/*height: 24px;*/
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
+		</style>
+	</head>
 
-        .search {
-            width: 150px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
+	<body>
+		<div class="wrap" style="text-align: center;">
+			<div class="search">
+				<input class="layui-input ksdate" style="text-align: center; padding: 0;" type="text" placeholder="开始日期">
+			</div>
+			<div class="layui-form" style="height: 24px;">
+				<div class="layui-form-item">
+					<div class="layui-input-inline">
+						<select lay-filter="datesel" name="quiz2">
+							<option value="">请选时段</option>
+							<option value="0">一季度</option>
+							<option value="1">二季度</option>
+							<option value="2">三季度</option>
+							<option value="3">四季度</option>
+							<option value="4">上半年</option>
+							<option value="5">下半年</option>
+							<option value="6">本年度</option>
+							<option value="7">上年度</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="search">
+				<input class="layui-input jsdate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
+			</div>
+			<div class="btn">
+				<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+			</div>
+			<!--<div class="btn" style="float: right;">
+				<button class="layui-btn layui-btn-normal" onclick="getOut()">导出excel</button>
+			</div>-->
+			<form class="layui-form" style="margin: 10px; float: right; margin-top: 0;">
+				<select lay-filter="getout">
+					<option value="">导出类型</option>
+					<option value="1">excel</option>
+					<option value="2">word</option>
+				</select>
+			</form>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>
+							序号
+						</th>
+						<th>
+							工作日期
+						</th>
+						<th>
+							客户名称
+						</th>
+						<th>
+							工作单号
+						</th>
+						<th>
+							服务中心
+						</th>
+						<th>
+							来源
+						</th>
+						<th>
+							品名
+						</th>
+						<th>
+							品牌
+						</th>
+						<th>
+							规格
+						</th>
+						<th>
+							型号
+						</th>
+						<th>
+							生产编号
+						</th>
+						<th>
+							去向
+						</th>
+						<th>
+							物料状态
+						</th>
+						<th>
+							经办人
+						</th>
 
-        }
+					</tr>
+				</thead>
+				<tbody class="gengxin">
 
-        .search .layui-input {
-            width: 150px;
-        }
-        .btn {
-            display: inline-block;
-        }
-        .layui-form-item .layui-input-inline {
-		    float: left;
-		    width: 150px;
-		    margin-right: 10px;
-		}
-        
-        .layui-form {
-        	width: 150px;
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		sel()
+		$('.ksdate').val(getCurrentMonthFirst())
+		$('.jsdate').val(getCurrentMonthLast())
 
-        .layui-form .layui-input {
-            width: 150px;
-        }
+		function sel() {
+			$.ajax({
+				url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=${loadUserInfo.customer.id}&startDate=${$('.ksdate').val()}&endDate=${$('.jsdate').val()}`,
+				type: 'post',
+				success: function(res) {
+					let str = ''
+					// let str1 = ''
+					$.each(res.data, function(i, n) {
+						console.log(n);
+						let json = n;
 
-    </style>
-</head>
-
-<body>
-    <div class="wrap" style="text-align: center;">
-            <div class="search">
-                    <input class="layui-input ksdate" style="text-align: center;" type="text" placeholder="开始日期">
-                </div>
-                <div class="layui-form">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline">
-                            <select lay-filter="datesel" name="quiz2">
-                                <option value="">请选时段</option>
-                                <option value="0">一季度</option>
-                                <option value="1">二季度</option>
-                                <option value="2">三季度</option>
-                                <option value="3">四季度</option>
-                                <option value="4">上半年</option>
-                                <option value="5">下半年</option>
-                                <option value="6">本年度</option>
-                                <option value="7">上年度</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="search">
-                    <input class="layui-input jsdate" style="text-align: center;" type="text" placeholder="结束日期">
-                </div>
-                <div class="btn">
-                    <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
-                </div>
-                <div class="btn">
-                    <button class="layui-btn layui-btn-normal" onclick="getOut()">导出excel</button>
-                </div>
-        
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>
-                        序号
-                    </th>
-                    <th>
-                        工作日期
-                    </th>
-                    <th>
-                        客户名称
-                    </th>
-                    <th>
-                        工作单号
-                    </th>
-                    <th>
-                        服务中心
-                    </th>
-                    <th>
-                        来源
-                    </th>
-                    <th>
-                        品名
-                    </th>
-                    <th>
-                        品牌
-                    </th>
-                    <th>
-                        规格
-                    </th>
-                    <th>
-                        型号
-                    </th>
-                    <th>
-                        生产编号
-                    </th>
-                    <th>
-                        去向
-                    </th>
-                    <th>
-                        物料状态
-                    </th>
-                    <th>
-                        经办人
-                    </th>
-
-                </tr>
-            </thead>
-            <tbody class="gengxin">
-
-            </tbody>
-        </table>
-    </div>
-</body>
-<script src="./js/Global.js"></script>
-<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
-<script>
-    sel ()
-    function sel () {
-        $.ajax({
-        url: `${API}/erpTireArchivesWork/tongjiguanliWLGX?custId=${loadUserInfo.customer.id}&startDate=${$('.ksdate').val()}&endDate=${$('.jsdate').val()}`,
-        type: 'post',
-        success: function (res) {
-            let str = ''
-            // let str1 = ''
-            $.each(res.data, function (i, n) {
-				console.log(n);
-                let json = n;
-
-                //              str += `
-                //              <td>${json.car_model == null ? '' : json.car_model}</td>
-                //              <td>${json.car_type == null ? '' : json.car_type}</td>
-                // </tr>`
-                $.each(n.flowSummaryList, function (j, m) {
-                    let json1 = m;
-                    // console.log(res.data[0].flowSummaryList[1].id,'222');
-                    //          alert(res.data[0].flowSummaryList[1].id);
-                    str += `
+						//              str += `
+						//              <td>${json.car_model == null ? '' : json.car_model}</td>
+						//              <td>${json.car_type == null ? '' : json.car_type}</td>
+						// </tr>`
+						$.each(n.flowSummaryList, function(j, m) {
+							let json1 = m;
+							// console.log(res.data[0].flowSummaryList[1].id,'222');
+							//          alert(res.data[0].flowSummaryList[1].id);
+							str += `
             <tr><td>${ j + 1 }</td>
                 <td>${m.materielFlowDate == null ? '' : m.materielFlowDate}</td>
                 <td>${n.customerName == null ? '' : n.customerName}</td>
@@ -190,73 +200,82 @@
                                    <td>${json1.flowMateriel.materielState == null ? '' : json1.flowMateriel.materielState}</td>
                                              <td>${json1.flowAttn == null ? '' : json1.flowAttn}</td>
                 </tr>`
-                })
-            })
-            $('.gengxin').append(str)
-        }
-    })
-    }
+						})
+					})
+					$('.gengxin').append(str)
+				}
+			})
+		}
 
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '.ksdate' //指定元素
-        });
-        laydate.render({
-            elem: '.jsdate' //指定元素
-        });
-    });
-    layui.use('form', function () {
-        var form = layui.form
-        form.on('select(datesel)', function (data) {
-            let val = data.value
-            let years = new Date().getFullYear()
-            switch (val) {
-                case '0':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-03-31`)
-                    break;
-                case '1':
-                    $('.ksdate').val(`${years}-04-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '2':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-09-30`)
-                    break;
-                case '3':
-                    $('.ksdate').val(`${years}-10-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '4':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '5':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '6':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                    case '7':
-                    $('.ksdate').val(`${years-1}-01-01`)
-                    $('.jsdate').val(`${years-1}-12-31`)
-                    break;
-            }
-        });
-    })
-    function goInfo() {
-        window.location.href = './wuliaogengxinxiangqing.html'
-    }
-    
-    function getOut(){
-    	$('.layui-table').tableExport({
-			filename: '物料更新',
-			format: 'xls'
+			//执行一个laydate实例
+			laydate.render({
+				elem: '.ksdate' //指定元素
+			});
+			laydate.render({
+				elem: '.jsdate' //指定元素
+			});
 		});
-    }
-</script>
+		layui.use('form', function() {
+			var form = layui.form
+			form.on('select(datesel)', function(data) {
+				let val = data.value
+				let years = new Date().getFullYear()
+				switch(val) {
+					case '0':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-03-31`)
+						break;
+					case '1':
+						$('.ksdate').val(`${years}-04-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '2':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-09-30`)
+						break;
+					case '3':
+						$('.ksdate').val(`${years}-10-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '4':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '5':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '6':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '7':
+						$('.ksdate').val(`${years-1}-01-01`)
+						$('.jsdate').val(`${years-1}-12-31`)
+						break;
+				}
+			});
+			form.on('select(getout)', function(data) {
+
+				if(data.value == 1) {
+					getOut()
+				} else {
+					
+				}
+			})
+		})
+
+		function goInfo() {
+			window.location.href = './wuliaogengxinxiangqing.html'
+		}
+
+		function getOut() {
+			$('.layui-table').tableExport({
+				filename: '物料更新',
+				format: 'xls'
+			});
+		}
+	</script>

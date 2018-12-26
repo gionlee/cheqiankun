@@ -1,186 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/Global.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-            min-height: 600px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+				min-height: 600px;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				width: 720px;
+				padding: 10px;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				height: 24px;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				float: left;
+				width: 150px;
+				margin-right: 10px;
+			}
+			
+			.layui-form .layui-input {
+				width: 150px;
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+		</style>
+	</head>
 
-        ul {
-            width: 100%;
-        }
+	<body>
+		<div class="wrap" style="text-align: center;">
+			<div class="search">
+				<input class="layui-input ksdate" type="text" style="text-align: center; padding: 0;" id="startDate" placeholder="开始日期">
+			</div>
+			<div class="layui-form">
+				<div class="layui-form-item">
+					<div class="layui-input-inline">
+						<select lay-filter="datesel" name="quiz2">
+							<option value="">请选时段</option>
+							<option value="0">一季度</option>
+							<option value="1">二季度</option>
+							<option value="2">三季度</option>
+							<option value="3">四季度</option>
+							<option value="4">上半年</option>
+							<option value="5">下半年</option>
+							<option value="6">本年度</option>
+							<option value="7">上年度</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="search">
+				<input class="layui-input jsdate" id="endDate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
+			</div>
+			<div class="search">
+				&nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th rowspan="2">
+							车辆牌号
+						</th>
+						<th rowspan="2">
+							车轮/轴数
+						</th>
+						<th rowspan="2">
+							驱动方式
+						</th>
+						<th rowspan="2">
+							轮胎规格
+						</th>
+						<th rowspan="2">
+							品牌
+						</th>
+						<th rowspan="2">
+							型号
+						</th>
+						<th>
+							平磨
+						</th>
+						<th>
+							偏磨
+						</th>
+						<th>
+							啃胎
+						</th>
+						<th>
+							破损
+						</th>
+						<th rowspan="2">
+							检测单号
+						</th>
+					</tr>
+				</thead>
+				<tbody id="list">
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
-
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
-
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            width: 720px;
-            padding: 10px;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .search .layui-input {
-            width: 200px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-    	<div class="search">
-            <input class="layui-input ksdate" type="text" id="startDate" placeholder="开始日期">
-        </div>
-        <div class="layui-form">
-            <div class="layui-form-item">
-                <div class="layui-input-inline">
-                    <select lay-filter="datesel" name="quiz2">
-                        <option value="">请选时段</option>
-                        <option value="0">一季度</option>
-                        <option value="1">二季度</option>
-                        <option value="2">三季度</option>
-                        <option value="3">四季度</option>
-                        <option value="4">上半年</option>
-                        <option value="5">下半年</option>
-                        <option value="6">本年度</option>
-                        <option value="7">上年度</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="search">
-            <input class="layui-input jsdate" id="endDate" type="text" placeholder="结束日期">
-        </div>
-        <div class="search">
-             &nbsp; &nbsp; &nbsp;&nbsp;<button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th rowspan="2">
-                        车辆牌号
-                    </th>
-                    <th rowspan="2">
-                        车轮/轴数
-                    </th>
-                    <th rowspan="2">
-                        驱动方式
-                    </th>
-                    <th rowspan="2">
-                        轮胎规格
-                    </th>
-                    <th rowspan="2">
-                        品牌
-                    </th>
-                    <th rowspan="2">
-                        型号
-                    </th>
-                    <th>
-                        平磨
-                    </th>
-                    <th>
-                        偏磨
-                    </th>
-                    <th>
-                        啃胎
-                    </th>
-                    <th>
-                        破损
-                    </th>
-                    <th rowspan="2">
-                        检测单号
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="list">
-                
-            </tbody>
-        </table>
-    </div>
-    <!--<div class="winbody">
+				</tbody>
+			</table>
+		</div>
+		<!--<div class="winbody">
         <table class="layui-table">
             <tbody>
                 <tr>
@@ -211,20 +218,24 @@
             
         </table>
     </div>-->
-</body>
-<script>
-    function seeInfo(id) {
-        layui.use('layer', function () {
-            let layer = layui.layer;
-            layer.open({
-                type: 1,
-                area: ['1200px'],
-                title: '车辆牌号',
-                content: $('.winbody')
-            });
-        })
-    }
-    function GetRequest() {
+	</body>
+	<script>
+		$('.ksdate').val(getCurrentMonthFirst())
+		$('.jsdate').val(getCurrentMonthLast())
+
+		function seeInfo(id) {
+			layui.use('layer', function() {
+				let layer = layui.layer;
+				layer.open({
+					type: 1,
+					area: ['1200px'],
+					title: '车辆牌号',
+					content: $('.winbody')
+				});
+			})
+		}
+
+		function GetRequest() {
 			var url = location.search; //获取url中"?"符后的字串  
 			var theRequest = new Object();
 			if(url.indexOf("?") != -1) {
@@ -236,117 +247,117 @@
 			}
 			return theRequest;
 		}
-    function sel () {
-        var id =GetRequest().id;
+
+		function sel() {
+			var id = GetRequest().id;
 			$.ajax({
-				url: API+'/erpTireArchivesWork/tongjiguanliLTZT?catPlate='+decodeURI(decodeURI(id))+'&custId='+loadUserInfo.customer.id,
+				url: API + '/erpTireArchivesWork/tongjiguanliLTZT?catPlate=' + decodeURI(decodeURI(id)) + '&custId=' + loadUserInfo.customer.id,
 				type: 'get',
 				dataType: 'json',
-				success:function(ret) {
+				success: function(ret) {
 					var objkacha = ret.data;
 					var html = '';
 
 					for(var key = 0; key < objkacha.length; key++) {
-						
-							html +=' <tr>'+
- '                    <td >'+
- '                        '+(objkacha[key].catPlate == null ? '' : objkacha[key].catPlate)+' '+
- '                    </td>'+	
- '                    <td >'+
- '                         '+(objkacha[key].chelunzhoushju  == null ? '' : objkacha[key].chelunzhoushju)+''+
- '                    </td>'+
- '                    <td >'+
- '                        '+(objkacha[key].qudong  == null ? '' : objkacha[key].qudong)+''+
- '                    </td>'+
- '                    <td >'+
- '                        '+(objkacha[key].luntaiguige  == null ? '' : objkacha[key].luntaiguige)+''+
- '                    </td>'+
- '                    <td >'+
- '                        '+(objkacha[key].pinpai  == null ? '' : objkacha[key].pinpai)+''+
- '                    </td>'+
- '                    <td >'+
- '                        '+(objkacha[key].xinghao  == null ? '' : objkacha[key].xinghao)+''+
- '                    </td>'+
- '                    <td>'+
- '                        '+(objkacha[key].pingmo  == null ? '' : objkacha[key].pingmo)+''+
- '                    </td>'+
- '                    <td>'+
- '                        '+(objkacha[key].pianmo  == null ? '' : objkacha[key].pianmo)+''+
- '                    </td>'+
- '                    <td>'+
- '                        '+(objkacha[key].kentai  == null ? '' : objkacha[key].kentai)+''+
- '                    </td>'+
- '                    <td>'+
- '                        '+(objkacha[key].posun  == null ? '' : objkacha[key].posun)+''+
- '                    </td>'+
- '                    <td onclick="goJianCe()">'+
- '                        '+(objkacha[key].jiancedate  == null ? '' : objkacha[key].jiancedate)+''+
- '                    </td>'+
- '                </tr>'
-						
-						
+
+						html += ' <tr>' +
+							'                    <td >' +
+							'                        ' + (objkacha[key].catPlate == null ? '' : objkacha[key].catPlate) + ' ' +
+							'                    </td>' +
+							'                    <td >' +
+							'                         ' + (objkacha[key].chelunzhoushju == null ? '' : objkacha[key].chelunzhoushju) + '' +
+							'                    </td>' +
+							'                    <td >' +
+							'                        ' + (objkacha[key].qudong == null ? '' : objkacha[key].qudong) + '' +
+							'                    </td>' +
+							'                    <td >' +
+							'                        ' + (objkacha[key].luntaiguige == null ? '' : objkacha[key].luntaiguige) + '' +
+							'                    </td>' +
+							'                    <td >' +
+							'                        ' + (objkacha[key].pinpai == null ? '' : objkacha[key].pinpai) + '' +
+							'                    </td>' +
+							'                    <td >' +
+							'                        ' + (objkacha[key].xinghao == null ? '' : objkacha[key].xinghao) + '' +
+							'                    </td>' +
+							'                    <td>' +
+							'                        ' + (objkacha[key].pingmo == null ? '' : objkacha[key].pingmo) + '' +
+							'                    </td>' +
+							'                    <td>' +
+							'                        ' + (objkacha[key].pianmo == null ? '' : objkacha[key].pianmo) + '' +
+							'                    </td>' +
+							'                    <td>' +
+							'                        ' + (objkacha[key].kentai == null ? '' : objkacha[key].kentai) + '' +
+							'                    </td>' +
+							'                    <td>' +
+							'                        ' + (objkacha[key].posun == null ? '' : objkacha[key].posun) + '' +
+							'                    </td>' +
+							'                    <td onclick="goJianCe()">' +
+							'                        ' + (objkacha[key].jiancedate == null ? '' : objkacha[key].jiancedate) + '' +
+							'                    </td>' +
+							'                </tr>'
+
 					}
-				
+
 					$("#list").html(html);
-								           		         		
+
 				},
-				error:function(err) {
+				error: function(err) {
 					alert("系统错误");
 
 				}
 			});
-    }
-    sel()
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
+		}
+		sel()
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
 
-        //执行一个laydate实例
-        laydate.render({
-            elem: '.ksdate' //指定元素
-        });
-        laydate.render({
-            elem: '.jsdate' //指定元素
-        });
-    });
-    layui.use('form', function () {
-        var form = layui.form
-        form.on('select(datesel)', function (data) {
-            let val = data.value
-            let years = new Date().getFullYear()
-            switch (val) {
-                case '0':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-03-31`)
-                    break;
-                case '1':
-                    $('.ksdate').val(`${years}-04-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '2':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-09-30`)
-                    break;
-                case '3':
-                    $('.ksdate').val(`${years}-10-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '4':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-06-30`)
-                    break;
-                case '5':
-                    $('.ksdate').val(`${years}-07-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                case '6':
-                    $('.ksdate').val(`${years}-01-01`)
-                    $('.jsdate').val(`${years}-12-31`)
-                    break;
-                    case '7':
-                    $('.ksdate').val(`${years-1}-01-01`)
-                    $('.jsdate').val(`${years-1}-12-31`)
-                    break;
-            }
-        });
-    })
-</script>
+			//执行一个laydate实例
+			laydate.render({
+				elem: '.ksdate' //指定元素
+			});
+			laydate.render({
+				elem: '.jsdate' //指定元素
+			});
+		});
+		layui.use('form', function() {
+			var form = layui.form
+			form.on('select(datesel)', function(data) {
+				let val = data.value
+				let years = new Date().getFullYear()
+				switch(val) {
+					case '0':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-03-31`)
+						break;
+					case '1':
+						$('.ksdate').val(`${years}-04-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '2':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-09-30`)
+						break;
+					case '3':
+						$('.ksdate').val(`${years}-10-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '4':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-06-30`)
+						break;
+					case '5':
+						$('.ksdate').val(`${years}-07-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '6':
+						$('.ksdate').val(`${years}-01-01`)
+						$('.jsdate').val(`${years}-12-31`)
+						break;
+					case '7':
+						$('.ksdate').val(`${years-1}-01-01`)
+						$('.jsdate').val(`${years-1}-12-31`)
+						break;
+				}
+			});
+		})
+	</script>

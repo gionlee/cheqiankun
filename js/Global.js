@@ -1,7 +1,7 @@
 const API = 'http://39.105.111.19:3340'
 // const API = 'http://vmxrr9.natappfree.cc'
 // const API = 'http://vdy7hs.natappfree.cc' 
-// const API = 'http://txpeai.natappfree.cc' 
+// const API = 'http://ix4uaz.natappfree.cc' 
 // 
 
 // 客户信息
@@ -68,6 +68,32 @@ function msToDate(msNum, type) { // type == 1 转换为年/月/日 时:分:秒
 }
 // 去除空格
 function trimStr(str){return str.replace(/(^\s*)|(\s*$)/g,"");}
+// 获取当前月的最后一天
+function getCurrentMonthLast(){
+    var date=new Date();
+    var currentMonth=date.getMonth();
+    var nextMonth=++currentMonth;
+    var nextMonthFirstDay=new Date(date.getFullYear(),nextMonth,1);
+    var oneDay=1000*60*60*24;
+    var lastTime = new Date(nextMonthFirstDay-oneDay);
+    var month = parseInt(lastTime.getMonth()+1);
+    var day = lastTime.getDate();
+    if (month < 10) {
+        month = '0' + month
+    }
+    if (day < 10) {
+        day = '0' + day
+    }
+    return date.getFullYear() + '-' + month + '-' + day ;
+}
 
-
-// 切换标签
+// 获取当前月的第一天
+function getCurrentMonthFirst(){
+    var date=new Date();
+    var currentMonth=date.getMonth() + 1;
+    
+    if (currentMonth < 10) {
+        currentMonth = '0' + currentMonth
+    }
+    return date.getFullYear() + '-' + currentMonth + '-01' ;
+}

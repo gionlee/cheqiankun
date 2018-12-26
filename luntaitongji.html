@@ -1,319 +1,478 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/Global.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-            min-height: 600px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+				min-height: 600px;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				width: 720px;
+				padding: 10px;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.select {
+				text-align: center;
+				margin: 10px;
+			}
+			
+			.layui-input {
+				width: 140px;
+				display: inline-block;
+			}
+			
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				padding: 20px 0;
+				border-bottom: 1px solid #ccc;
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.layui-input {
+				width: 150px;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.select {
+				height: 40px;
+				/* border-bottom: 1px solid #ccc; */
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			table .layui-input {
+				border: 0px;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-table td {
+				padding: 0px;
+				height: 30px;
+				line-height: 0px;
+				text-align: center;
+			}
+			
+			.layui-table td {
+				margin: 0px;
+			}
+			
+			.layui-form-item {
+				margin: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 100%;
+				margin: 0px !important;
+				height: 100%;
+			}
+			
+			.layui-select-title {
+				height: 100%;
+			}
+			
+			h3 {
+				text-align: center;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				/*height: 24px;*/
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+			
+			.layui-form {
+				width: 150px;
+				display: inline-block;
+				margin: 0;
+				padding: 0;
+				/*height: 24px;*/
+			}
+			
+			.search {
+				width: 150px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.search .layui-input {
+				width: 150px;
+			}
+			
+			#zzt,
+			#bt,
+			#zxt {
+				width: 600px;
+				height: 600px;
+				display: none;
+			}
+		</style>
+	</head>
 
-        ul {
-            width: 100%;
-        }
+	<body>
+		<div class="wrap">
+			<!-- 柱形图 -->
+			<div id="zzt"></div>
+			<!-- 饼形图 -->
+			<div id="bt"></div>
+			<!-- 折线图 -->
+			<div id="zxt"></div>
+			<div style="text-align: center;">
+				<div class="layui-form" style="height: 24px;">
+					<div class="layui-form-item">
+						<div class="layui-input-inline">
+							<select lay-filter="datesel" name="quiz2">
+								<option value="全部车辆">全部轮胎</option>
+								<option value="在车轮胎">在车轮胎</option>
+								<option value="库存轮胎">库存轮胎</option>
+								<option value="报废轮胎">报废轮胎</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="btn">
+					<button class="layui-btn layui-btn-normal">查询</button>
+				</div>
+				<form class="layui-form" style="float: right; margin: 10px; margin-right: 20px; margin-top: 0;">
+					<select lay-filter="tu" class="ttt">
+						<option value="">图表类型</option>
+						<option value="1">柱状图</option>
+						<option value="2">饼状图</option>
+						<option value="3">曲线图</option>
+					</select>
+				</form>
+				<!--<button class="layui-btn layui-btn-normal" onclick="getOut()" style="float: right; margin-right: 10px;">导出excel</button>-->
+				<form class="layui-form" style="margin: 10px; float: right; margin-top: 0;">
+					<select lay-filter="getout">
+						<option value="">导出类型</option>
+						<option value="1">excel</option>
+						<option value="2">word</option>
+					</select>
+				</form>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th rowspan="2">序号</th>
+						<th rowspan="2">客户名称</th>
+						<th rowspan="2">品牌</th>
+						<th rowspan="2">规格</th>
+						<th rowspan="2">型号</th>
+						<th rowspan="2">产地</th>
+						<th rowspan="2">车型</th>
+						<th rowspan="2">胎位</th>
+						<th rowspan="2">生产编号</th>
+						<th rowspan="2">DOT号</th>
+						<th>总里程</th>
+						<th>预计里程</th>
+						<th>费用总计</th>
+						<th>元/千公里</th>
+						<th colspan="4">新胎</th>
+						<th colspan="4">翻新1</th>
+						<th colspan="4">翻新2</th>
+						<th colspan="4">翻新3</th>
+					</tr>
+					<tr>
+						<th>0</th>
+						<th>0</th>
+						<th>0</th>
+						<th>0</th>
+						<th>运营里程</th>
+						<th>预计里程</th>
+						<th>费用合计</th>
+						<th>元/千公里</th>
+						<th>运营里程</th>
+						<th>预计里程</th>
+						<th>费用合计</th>
+						<th>元/千公里</th>
+						<th>运营里程</th>
+						<th>预计里程</th>
+						<th>费用合计</th>
+						<th>元/千公里</th>
+						<th>运营里程</th>
+						<th>预计里程</th>
+						<th>费用合计</th>
+						<th>元/千公里</th>
+					</tr>
+				</thead>
+				<tbody class="list">
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
+				</tbody>
+			</table>
+		</div>
+	</body>
+	<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		function getOut() {
+			$('.layui-table').tableExport({
+				filename: '轮胎统计',
+				format: 'xls'
+			});
+		}
 
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
+		layui.use('form', function() {
+			let forms = layui.form
+			forms.on('select(tu)', function(data) {
 
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
+				let con = ''
+				if(data.value == 1) {
+					con = $('#zzt')
+				} else if(data.value == 2) {
+					con = $('#bt')
+				} else {
+					con = $('#zxt')
+				}
+				layui.use('layer', function() {
+					layui.layer.open({
+						type: 1,
+						content: con,
+						area: ['600px']
+					})
+				})
+			})
+			forms.on('select(getout)', function(data) {
 
-        }
-
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            width: 720px;
-            padding: 10px;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .select {
-            text-align: center;
-            margin: 10px;
-        }
-
-        .layui-input {
-            width: 140px;
-            display: inline-block;
-        }
-        .wrap {
-            padding: 20px;
-        }
-
-        .select {
-            height: 40px;
-            padding: 20px 0;
-            border-bottom: 1px solid #ccc;
-            text-align: center;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .layui-input {
-            width: 150px;
-        }
-
-        .btn {
-            display: inline-block;
-
-        }
-        .select {
-            height: 40px;
-            /* border-bottom: 1px solid #ccc; */
-            text-align: center;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        table .layui-input {
-            border: 0px;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-        }
-
-        .btn {
-            display: inline-block;
-
-        }
-
-        .layui-table td {
-            padding: 0px;
-            height: 30px;
-            line-height: 0px;
-            text-align: center;
-        }
-
-        .layui-table td {
-            margin: 0px;
-        }
-
-        .layui-form-item {
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-        }
-
-        .layui-form-item .layui-input-inline {
-            width: 100%;
-            margin: 0px !important;
-            height: 100%;
-        }
-
-        .layui-select-title {
-            height: 100%;
-        }
-
-        h3 {
-            text-align: center;
-        }
-        .layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .search .layui-input {
-            width: 200px;
-        }
-        .layui-form {
-            display: inline-block;
-            margin: 0;
-            padding: 0;
-            height: 24px;
-        }
-
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
-
-        }
-
-        .search .layui-input {
-            width: 200px;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-        <div>
-            <div class="layui-form">
-                <div class="layui-form-item">
-                    <div class="layui-input-inline">
-                        <select lay-filter="datesel" name="quiz2">
-                            <option value="全部车辆">全部轮胎</option>
-                            <option value="在车轮胎">在车轮胎</option>
-                            <option value="库存轮胎">库存轮胎</option>
-                            <option value="报废轮胎">报废轮胎</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="btn">
-                <button class="layui-btn layui-btn-normal">查询</button>
-            </div>
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th rowspan="2">序号</th>
-                    <th rowspan="2">客户名称</th>
-                    <th rowspan="2">品牌</th>
-                    <th rowspan="2">规格</th>
-                    <th rowspan="2">型号</th>
-                    <th rowspan="2">产地</th>
-                    <th rowspan="2">车型</th>
-                    <th rowspan="2">胎位</th>
-                    <th rowspan="2">生产编号</th>
-                    <th rowspan="2">DOT号</th>
-                    <th>总里程</th>
-                    <th>预计里程</th>
-                    <th>费用总计</th>
-                    <th>元/千公里</th>
-                    <th colspan="4">新胎</th>
-                    <th colspan="4">翻新1</th>
-                    <th colspan="4">翻新2</th>
-                    <th colspan="4">翻新3</th>
-                </tr>
-                <tr>
-                    <th>0</th>
-                    <th>0</th>
-                    <th>0</th>
-                    <th>0</th>
-                    <th>运营里程</th>
-                    <th>预计里程</th>
-                    <th>费用合计</th>
-                    <th>元/千公里</th>
-                    <th>运营里程</th>
-                    <th>预计里程</th>
-                    <th>费用合计</th>
-                    <th>元/千公里</th>
-                    <th>运营里程</th>
-                    <th>预计里程</th>
-                    <th>费用合计</th>
-                    <th>元/千公里</th>
-                    <th>运营里程</th>
-                    <th>预计里程</th>
-                    <th>费用合计</th>
-                    <th>元/千公里</th>
-                </tr>
-            </thead>
-            <tbody class="list">
-
-            </tbody>
-        </table>
-    </div>
-</body>
-<script>
-    layui.use('form', function () {
-        var form = layui.form
-    })
-    $.ajax({
-        url: `${API}/erpTireArchivesWork/getTireState?custId=1`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data
-            let str = ''
-            $.each(arr, function (i, n) {
-                str +=
-                    `<tr>
+				if(data.value == 1) {
+					getOut()
+				} else {
+					
+				}
+			})
+		})
+		var option = {
+			color: ['#3398DB'],
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: { // 坐标轴指示器，坐标轴触发有效
+					type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: [{
+				type: 'category',
+				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}],
+			yAxis: [{
+				type: 'value'
+			}],
+			series: [{
+				name: '',
+				type: 'bar',
+				barWidth: '60%',
+				data: [10, 52, 200, 334, 390, 330, 220]
+			}]
+		};
+		var option1 = {
+			title: {
+				x: 'center'
+			},
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left',
+				data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+			},
+			series: [{
+				type: 'pie',
+				radius: '55%',
+				center: ['50%', '60%'],
+				data: [{
+						value: 335,
+						name: '直接访问'
+					},
+					{
+						value: 310,
+						name: '邮件营销'
+					},
+					{
+						value: 234,
+						name: '联盟广告'
+					},
+					{
+						value: 135,
+						name: '视频广告'
+					},
+					{
+						value: 1548,
+						name: '搜索引擎'
+					}
+				],
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}]
+		};
+		var option2 = {
+			xAxis: {
+				type: 'category',
+				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				data: [820, 932, 901, 934, 1290, 1330, 1320],
+				type: 'line'
+			}]
+		};
+		var myChart = echarts.init(document.getElementById('zzt'));
+		myChart.setOption(option);
+		var myChart1 = echarts.init(document.getElementById('bt'));
+		myChart1.setOption(option1);
+		var myChart2 = echarts.init(document.getElementById('zxt'));
+		myChart2.setOption(option2);
+		$.ajax({
+			url: `${API}/erpTireArchivesWork/getTireState?custId=1`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data
+				let str = ''
+				$.each(arr, function(i, n) {
+					str +=
+						`<tr>
                     <td>${i+1}</td>
-                    <td></td>
-                    <td>${n.materiel.materielBrand}</td>
-                    <td>${n.materiel.materielSpecifications}</td>
-                    <td>${n.materiel.materielModel}</td>
-                    <td>${n.materiel.materielPlace}</td>
-                    <td>0</td>
-                    <td>0</td>
+                    <td style="cursor:pointer;"></td>
+                    <td style="cursor:pointer;" onclick="fn_filter('materielBrand','${n.materiel.materielBrand == null ? '' : n.materiel.materielBrand}')">${n.materiel.materielBrand}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('materielSpecifications','${n.materiel.materielSpecifications == null ? '' : n.materiel.materielSpecifications}')">${n.materiel.materielSpecifications}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('materielModel','${n.materiel.materielModel == null ? '' : n.materiel.materielModel}')">${n.materiel.materielModel}</td>
+                    <td style="cursor:pointer;" onclick="fn_filter('materielPlace','${n.materiel.materielPlace == null ? '' : n.materiel.materielPlace}')">${n.materiel.materielPlace}</td>
+                    <td style="cursor:pointer;">0</td>
+                    <td style="cursor:pointer;">0</td>
                     <td>${n.materiel.materielProductionId}</td>
                     <td>0</td>
                     <td>0</td>
@@ -337,9 +496,61 @@
                     <td>${n.price3}</td>
                     <td>0</td>
                 </tr>`
-            })
-            console.log(str)
-            $('.list').html(str)
-        }
-    })
-</script>
+				})
+				$('.list').html(str)
+			}
+		})
+
+		function fn_filter(key, value) {
+			$.ajax({
+				url: `${API}/erpTireArchivesWork/getTireState?custId=1`,
+				type: 'get',
+				success: function(res) {
+					let arr = res.data
+					let str = ''
+					let newArr = []
+					$.each(arr, function(i, n) {
+						if(n.materiel[key] == value) {
+							newArr.push(n);
+						}
+					})
+					$.each(newArr, function(i, n) {
+						str +=
+							`<tr>
+	                    <td>${i+1}</td>
+	                    <td style="cursor:pointer;"></td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('materielBrand','${n.materiel.materielBrand == null ? '' : n.materiel.materielBrand}')">${n.materiel.materielBrand}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('materielSpecifications','${n.materiel.materielSpecifications == null ? '' : n.materiel.materielSpecifications}')">${n.materiel.materielSpecifications}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('materielModel','${n.materiel.materielModel == null ? '' : n.materiel.materielModel}')">${n.materiel.materielModel}</td>
+	                    <td style="cursor:pointer;" onclick="fn_filter('materielPlace','${n.materiel.materielPlace == null ? '' : n.materiel.materielPlace}')">${n.materiel.materielPlace}</td>
+	                    <td style="cursor:pointer;">0</td>
+	                    <td style="cursor:pointer;">0</td>
+	                    <td>${n.materiel.materielProductionId}</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>${n.price}</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>${n.priceNew}</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>${n.price1}</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>${n.price2}</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>0</td>
+	                    <td>${n.price3}</td>
+	                    <td>0</td>
+	                </tr>`
+					})
+					$('.list').html(str)
+				}
+			})
+		}
+	</script>

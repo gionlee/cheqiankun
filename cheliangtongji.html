@@ -1,201 +1,401 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-            width: 100%;
-            overflow: auto;
-            box-sizing: border-box;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<style>
+			.wrap {
+				padding: 0 20px;
+				width: 100%;
+				overflow: auto;
+				box-sizing: border-box;
+			}
+			
+			ul {
+				width: 100%;
+			}
+			
+			ul li {
+				width: 25%;
+				float: left;
+				height: 36px;
+				line-height: 36px;
+				/* background: #ccc; */
+				text-align: center;
+				box-sizing: border-box;
+				border: 1px solid #ccc;
+				border-top: 0px;
+				cursor: pointer;
+			}
+			
+			ul li:first-of-type {
+				border: 1px solid #ccc;
+			}
+			
+			ul li:nth-of-type(2) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(3) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			ul li:nth-of-type(4) {
+				border: 1px solid #ccc;
+				border-left: 0px;
+			}
+			
+			.winbody {
+				width: 720px;
+				padding: 10px;
+			}
+			
+			.carlist {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.tabs {
+				/* width: 900px; */
+			}
+			
+			.tabs a {
+				width: 120px;
+				height: 30px;
+				line-height: 30px;
+				text-align: center;
+				font-size: 14px;
+				display: inline-block;
+			}
+			
+			.select {
+				text-align: center;
+				margin: 10px;
+			}
+			
+			.layui-input {
+				width: 140px;
+				display: inline-block;
+			}
+			
+			#zzt,
+			#bt,
+			#zxt {
+				width: 600px;
+				height: 600px;
+				display: none;
+			}
+		</style>
+	</head>
 
-        ul {
-            width: 100%;
-        }
+	<body>
+		<!-- 柱形图 -->
+		<div id="zzt"></div>
+		<!-- 饼形图 -->
+		<div id="bt"></div>
+		<!-- 折线图 -->
+		<div id="zxt"></div>
+		<div style="text-align: center; margin: 20px; margin-bottom: 0;">
+			<form class="layui-form" style="margin: 10px; float: right;">
+				<select lay-filter="tu" class="ttt">
+					<option value="">图表类型</option>
+					<option value="1">柱状图</option>
+					<option value="2">饼状图</option>
+					<option value="3">曲线图</option>
+				</select>
+			</form>
+			<!--<button class="layui-btn layui-btn-normal" onclick="getOut()" style="float: right; margin-right: 10px;">导出excel</button>-->
+			<form class="layui-form" style="margin: 10px; float: right;">
+				<select lay-filter="getout">
+					<option value="">导出类型</option>
+					<option value="1">excel</option>
+					<option value="2">word</option>
+				</select>
+			</form>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="wrap">
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>
+							序号
+						</th>
+						<th>
+							客户名称
+						</th>
+						<th>
+							车辆品牌
+						</th>
+						<th>
+							车辆型号
+						</th>
+						<th>
+							车辆类型
+						</th>
+						<th>
+							驱动方式
+						</th>
+						<th>
+							车轴/轮数
+						</th>
+						<th>
+							车辆用途
+						</th>
+						<th>
+							运营范围
+						</th>
+						<th>
+							能源类型
+						</th>
+						<th>
+							车辆承载
+						</th>
+						<th>
+							制动类型
+						</th>
+						<th>
+							悬架类型
+						</th>
 
-        ul li {
-            width: 25%;
-            float: left;
-            height: 36px;
-            line-height: 36px;
-            /* background: #ccc; */
-            text-align: center;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-top: 0px;
-            cursor: pointer;
-        }
+						<th>
+							前桥提升
+						</th>
+						<th>
+							后桥提升
+						</th>
+						<th>
+							随动转向
+						</th>
+					</tr>
+				</thead>
+				<tbody class="cheliang">
 
-        ul li:first-of-type {
-            border: 1px solid #ccc;
-        }
+				</tbody>
+			</table>
 
-        ul li:nth-of-type(2) {
-            border: 1px solid #ccc;
-            border-left: 0px;
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script src="js/tableExporter.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/echarts.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+		function getOut() {
+			$('.layui-table').tableExport({
+				filename: '车辆统计',
+				format: 'xls'
+			});
+		}
+		layui.use('form', function() {
+			let forms = layui.form
+			forms.on('select(tu)', function(data) {
 
-        }
+				let con = ''
+				if(data.value == 1) {
+					con = $('#zzt')
+				} else if(data.value == 2) {
+					con = $('#bt')
+				} else {
+					con = $('#zxt')
+				}
+				layui.use('layer', function() {
+					layui.layer.open({
+						type: 1,
+						content: con,
+						area: ['600px']
+					})
+				})
+			})
+			forms.on('select(getout)', function(data) {
 
-        ul li:nth-of-type(3) {
-            border: 1px solid #ccc;
-            border-left: 0px;
+				if(data.value == 1) {
+					getOut()
+				} else {
+					
+				}
+			})
+		})
+		var option = {
+			color: ['#3398DB'],
+			tooltip: {
+				trigger: 'axis',
+				axisPointer: { // 坐标轴指示器，坐标轴触发有效
+					type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+				}
+			},
+			grid: {
+				left: '3%',
+				right: '4%',
+				bottom: '3%',
+				containLabel: true
+			},
+			xAxis: [{
+				type: 'category',
+				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+				axisTick: {
+					alignWithLabel: true
+				}
+			}],
+			yAxis: [{
+				type: 'value'
+			}],
+			series: [{
+				name: '',
+				type: 'bar',
+				barWidth: '60%',
+				data: [10, 52, 200, 334, 390, 330, 220]
+			}]
+		};
+		var option1 = {
+			title: {
+				x: 'center'
+			},
+			tooltip: {
+				trigger: 'item',
+				formatter: "{a} <br/>{b} : {c} ({d}%)"
+			},
+			legend: {
+				orient: 'vertical',
+				left: 'left',
+				data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+			},
+			series: [{
+				type: 'pie',
+				radius: '55%',
+				center: ['50%', '60%'],
+				data: [{
+						value: 335,
+						name: '直接访问'
+					},
+					{
+						value: 310,
+						name: '邮件营销'
+					},
+					{
+						value: 234,
+						name: '联盟广告'
+					},
+					{
+						value: 135,
+						name: '视频广告'
+					},
+					{
+						value: 1548,
+						name: '搜索引擎'
+					}
+				],
+				itemStyle: {
+					emphasis: {
+						shadowBlur: 10,
+						shadowOffsetX: 0,
+						shadowColor: 'rgba(0, 0, 0, 0.5)'
+					}
+				}
+			}]
+		};
+		var option2 = {
+			xAxis: {
+				type: 'category',
+				data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+			},
+			yAxis: {
+				type: 'value'
+			},
+			series: [{
+				data: [820, 932, 901, 934, 1290, 1330, 1320],
+				type: 'line'
+			}]
+		};
+		var myChart = echarts.init(document.getElementById('zzt'));
+		myChart.setOption(option);
+		var myChart1 = echarts.init(document.getElementById('bt'));
+		myChart1.setOption(option1);
+		var myChart2 = echarts.init(document.getElementById('zxt'));
+		myChart2.setOption(option2);
+		$.ajax({
+			url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=100`,
+			type: 'post',
+			success: function(res) {
+				let str = ''
+				$.each(res.data.reverse(), function(i, json) {
+					// let json = res.data[i]
+					str +=
+						`<tr><td>${res.data.length - i}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('custName','${json.custName == null ? '' : json.custName}')">${json.custName == null ? '' : json.custName}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_brand','${json.car_brand == null ? '' : json.car_brand}')">${json.car_brand == null ? '' : json.car_brand}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_model','${json.car_model == null ? '' : json.car_model}')">${json.car_model == null ? '' : json.car_model}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_type1','${json.car_type1 == null ? '' : json.car_type1}')">${json.car_type1 == null ? '' : json.car_type1}${json.car_type2 == null ? '' : json.car_type2}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_drive','${json.car_drive == null ? '' : json.car_drive}')">${json.car_drive == null ? '' : json.car_drive}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_wheel','${json.car_wheel == null ? '' : json.car_wheel}')">${json.car_wheel == null ? '' : json.car_wheel}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_use','${json.car_use == null ? '' : json.car_use}')">${json.car_use == null ? '' : json.car_use}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_operation_type','${json.car_operation_type == null ? '' : json.car_operation_type}')">${json.car_operation_type == null ? '' : json.car_operation_type}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_service_centre','${json.car_service_centre == null ? '' : json.car_service_centre}')">${json.car_service_centre == null ? '' : json.car_service_centre}</td><!--未找到字段-->
+	                <td style="cursor:pointer;" onclick="fn_filter('car_load','${json.car_load == null ? '' : json.car_load}')">${json.car_load == null ? '' : json.car_load}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_braking_type','${json.car_braking_type == null ? '' : json.car_braking_type}')">${json.car_braking_type == null ? '' : json.car_braking_type}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_suspension_type','${json.car_suspension_type == null ? '' : json.car_suspension_type}')">${json.car_suspension_type == null ? '' : json.car_suspension_type}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_front_axle','${json.car_front_axle == null ? '' : json.car_front_axle}')">${json.car_front_axle == null || false ? '否' : '是'}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_rear_axle','${json.car_rear_axle == null ? '' : json.car_rear_axle}')">${json.car_rear_axle == null || false ? '否' : '是'}</td>
+	                <td style="cursor:pointer;" onclick="fn_filter('car_turn','${json.car_turn == null ? '' : json.car_turn}')">${json.car_turn == null || false ? '否' : '是'}</td>
+	                </tr>`
+				})
+				$('.cheliang').append(str)
+			}
+		})
 
-        }
+		function fn_filter(key, value) {
+			$.ajax({
+				url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=100`,
+				type: 'post',
+				success: function(res) {
+					let str = ''
+					let newArr = []
+					$.each(res.data.reverse(), function(i, n) {
+						if(n[key] == value) {
+							newArr.push(n);
+						}
+					})
+					$.each(newArr, function(i, json) {
+						// let json = res.data[i]
+						str +=
+							`<tr><td>${newArr.length - i}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('custName','${json.custName == null ? '' : json.custName}')">${json.custName == null ? '' : json.custName}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_brand','${json.car_brand == null ? '' : json.car_brand}')">${json.car_brand == null ? '' : json.car_brand}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_model','${json.car_model == null ? '' : json.car_model}')">${json.car_model == null ? '' : json.car_model}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_type1','${json.car_type1 == null ? '' : json.car_type1}')">${json.car_type1 == null ? '' : json.car_type1}${json.car_type2 == null ? '' : json.car_type2}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_drive','${json.car_drive == null ? '' : json.car_drive}')">${json.car_drive == null ? '' : json.car_drive}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_wheel','${json.car_wheel == null ? '' : json.car_wheel}')">${json.car_wheel == null ? '' : json.car_wheel}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_use','${json.car_use == null ? '' : json.car_use}')">${json.car_use == null ? '' : json.car_use}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_operation_type','${json.car_operation_type == null ? '' : json.car_operation_type}')">${json.car_operation_type == null ? '' : json.car_operation_type}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_service_centre','${json.car_service_centre == null ? '' : json.car_service_centre}')">${json.car_service_centre == null ? '' : json.car_service_centre}</td><!--未找到字段-->
+		                <td style="cursor:pointer;" onclick="fn_filter('car_load','${json.car_load == null ? '' : json.car_load}')">${json.car_load == null ? '' : json.car_load}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_braking_type','${json.car_braking_type == null ? '' : json.car_braking_type}')">${json.car_braking_type == null ? '' : json.car_braking_type}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_suspension_type','${json.car_suspension_type == null ? '' : json.car_suspension_type}')">${json.car_suspension_type == null ? '' : json.car_suspension_type}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_front_axle','${json.car_front_axle == null ? '' : json.car_front_axle}')">${json.car_front_axle == null || false ? '否' : '是'}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_rear_axle','${json.car_rear_axle == null ? '' : json.car_rear_axle}')">${json.car_rear_axle == null || false ? '否' : '是'}</td>
+		                <td style="cursor:pointer;" onclick="fn_filter('car_turn','${json.car_turn == null ? '' : json.car_turn}')">${json.car_turn == null || false ? '否' : '是'}</td>
+		                </tr>`
+					})
+					$('.cheliang').html(str)
+				}
+			})
+		}
 
-        ul li:nth-of-type(4) {
-            border: 1px solid #ccc;
-            border-left: 0px;
-
-        }
-
-        .winbody {
-            width: 720px;
-            padding: 10px;
-        }
-
-        .carlist {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .tabs {
-            /* width: 900px; */
-        }
-
-        .tabs a {
-            width: 120px;
-            height: 30px;
-            line-height: 30px;
-            text-align: center;
-            font-size: 14px;
-            display: inline-block;
-        }
-
-        .select {
-            text-align: center;
-            margin: 10px;
-        }
-
-        .layui-input {
-            width: 140px;
-            display: inline-block;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>
-                        序号
-                    </th>
-                    <th>
-                        客户名称
-                    </th>
-                    <th>
-                        车辆品牌
-                    </th>
-                    <th>
-                        车辆型号
-                    </th>
-                    <th>
-                        车辆类型
-                    </th>
-                    <th>
-                        驱动方式
-                    </th>
-                    <th>
-                        车轴/轮数
-                    </th>
-                    <th>
-                        车辆用途
-                    </th>
-                    <th>
-                        运营范围
-                    </th>
-                    <th>
-                        能源类型
-                    </th>
-                    <th>
-                        车辆承载
-                    </th>
-                    <th>
-                        制动类型
-                    </th>
-                    <th>
-                        悬架类型
-                    </th>
-
-                    <th>
-                        前桥提升
-                    </th>
-                    <th>
-                        后桥提升
-                    </th>
-                    <th>
-                        随动转向
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="cheliang">
-
-            </tbody>
-        </table>
-
-    </div>
-</body>
-<script src="./js/Global.js"></script>
-<script>
-    $.ajax({
-        url: `${API}/erpCustomerCar/getCatInsurance?custId=1&page=1&limit=100`,
-        type: 'post',
-        success: function (res) {
-            let str = ''
-            $.each(res.data.reverse(), function (i) {
-                let json = res.data[i]
-                str +=
-                    `<tr><td>${res.data.length - i}</td>
-                <td>${json.custName == null ? '' : json.custName}</td>
-                <td>${json.car_brand == null ? '' : json.car_brand}</td>
-                <td>${json.car_model == null ? '' : json.car_model}</td>
-                <td>${json.car_type1 == null ? '' : json.car_type1}${json.car_type2 == null ? '' : json.car_type2}</td>
-                <td>${json.car_drive == null ? '' : json.car_drive}</td>
-                <td>${json.car_wheel == null ? '' : json.car_wheel}</td>
-                <td>${json.car_use == null ? '' : json.car_use}</td>
-                <td>${json.car_operation_type == null ? '' : json.car_operation_type}</td>
-                <td>${json.car_service_centre == null ? '' : json.car_service_centre}</td>   //未找到字段
-                <td>${json.car_load == null ? '' : json.car_load}</td>
-                <td>${json.car_braking_type == null ? '' : json.car_braking_type}</td>
-                <td>${json.car_suspension_type == null ? '' : json.car_suspension_type}</td>
-                <td>${json.car_front_axle == null || false ? '否' : '是'}</td>
-                <td>${json.car_rear_axle == null || false ? '否' : '是'}</td>
-                <td>${json.car_turn == null || false ? '否' : '是'}</td>
-                </tr>`
-            })
-            $('.cheliang').append(str)
-        }
-    })
-
-
-
-    function goInfo() {
-        window.location.href = './wuliaogengxinxiangqing.html'
-    }
-</script>
+		function goInfo() {
+			window.location.href = './wuliaogengxinxiangqing.html'
+		}
+	</script>
