@@ -96,10 +96,10 @@
 
         <div class="select">
             <div class="search">
-                <input class="layui-input" style="border:1px solid #ccc;" type="text" placeholder="客户编码 名称 车辆牌号">
+                <input class="layui-input keyword" style="border:1px solid #ccc;" type="text" placeholder="客户编码 名称 车辆牌号">
             </div>
             <div class="btn">
-                <button class="layui-btn layui-btn-normal">查询</button>
+                <button class="layui-btn layui-btn-normal" onclick="getList($('.keyword').val())">查询</button>
             </div>
         </div>
         <table id="table" lay-filter="table" class="layui-table">
@@ -165,48 +165,50 @@
         });
     })
     let arrs = ''
-    $.ajax({
-        url: `${API}/erpBidata/selBiData?userId=${loadUserInfo.user.id}&cs=`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data
-            arrs = res.data
-            let str = ''
-            $.each(arr, function (i) {
-                if (i == 1) {
-                    str = ''
-                }
-                let json = arr[i]
-                str += `<tr><td>${i}</td>
-                    
-                    
-                    <td>${json[4]}</td>
-                    <td>${json[5]}</td>
-                    <td>${json[6]}</td>
-                    <td>${json[7]}</td>
-                    <td>${json[8]}</td>
-                    <td>${json[9] == '' ? ' ' : json[9]}</td>
-                    <td>${json[10] == '' ? ' ' : json[10]}</td>
-                    <td>${json[19]}</td>
-                    <td>${json[18]}</td>
-                    <td>${json[11] == '' ? ' ' : json[11]}</td>
-                    <td>${json[14] == '' ? ' ' : json[14]}</td>
-                    <td>${json[13]}</td>
-                    <td>${json[12]}</td>
-                    <td>${json[15]}</td>
-                    <td>${json[16]}</td>
-                    <td>${json[17]}</td>
-                    <td>${json[20]}</td>
-                    <td>启动</td>
-                    <td>启动</td>
-                    <td>
-                        <div class="layui-btn layui-btn-xs" onclick="update(${i},'${json[9]}lz-zl${json[10]}lz-zl${json[19]}lz-zl${json[18]}', ${json[5]})">修改</div>
-                    </td></tr>`
-
-            })
-            $('.lists').append(str)
-        }
-    })
+    getList('');
+    function getList(param){
+    	$.ajax({
+	        url: `${API}/erpBidata/selBiData?userId=${loadUserInfo.user.id}&cs=${param}`,
+	        type: 'get',
+	        success: function (res) {
+	            let arr = res.data
+	            arrs = res.data
+	            let str = ''
+	            $.each(arr, function (i) {
+	                if (i == 1) {
+	                    str = ''
+	                }
+	                let json = arr[i]
+	                str += `<tr><td>${i}</td>
+	                    <td>${json[4]}</td>
+	                    <td>${json[5]}</td>
+	                    <td>${json[6]}</td>
+	                    <td>${json[7]}</td>
+	                    <td>${json[8]}</td>
+	                    <td>${json[9] == '' ? ' ' : json[9]}</td>
+	                    <td>${json[10] == '' ? ' ' : json[10]}</td>
+	                    <td>${json[19]}</td>
+	                    <td>${json[18]}</td>
+	                    <td>${json[11] == '' ? ' ' : json[11]}</td>
+	                    <td>${json[12]}</td><!--胎压主机-->
+	                    <td>${json[13]}</td>
+	                    <td>${json[14] == '' ? ' ' : json[14]}</td><!--后视镜-->
+	                    <td>${json[15]}</td>
+	                    <td>${json[16]}</td>
+	                    <td>${json[17]}</td>
+	                    <td>${json[20]}</td>
+	                    <td style="cursor:pointer;" onclick="xiafa(${json[12]})">启动</td><!--下发数据-->
+	                    <td style="cursor:pointer;" onclick="mima(${json[12]})">启动</td><!--初始密码-->
+	                    <td>
+	                        <div class="layui-btn layui-btn-xs" onclick="update(${i},'${json[9]}lz-zl${json[10]}lz-zl${json[19]}lz-zl${json[18]}', ${json[5]})">修改</div>
+	                    </td></tr>`
+	
+	            })
+	            $('.lists').html(str)
+	        }
+	    })
+    }
+	    
     function update(indexs, a, carPlate) {
         a = a.split('lz-zl')
         $('.datalist').empty ();
@@ -219,14 +221,14 @@
                 <td class="ids">GPS接口</td>
                 <td><input type="text" class="layui-input gpsjk" value="${a[1]}"></td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td class="ids">GPS卡号</td>
                 <td><input type="text" class="layui-input gpskh" value="${a[2]}"></td>
             </tr>
             <tr>
                 <td class="ids">胎压卡号</td>
                 <td><input type="text" class="layui-input tykh" value="${a[3]}"></td>
-            </tr>`
+            </tr>-->`
         );
         layui.use('layer', function () {
             var layer = layui.layer;
@@ -238,8 +240,8 @@
                 yes: function (index, layero) {
                     arrs[index][9] = $('.tyjk').val()
                     arrs[index][10] = $('.gpsjk').val()
-                    arrs[index][11] = $('.gpskh').val()
-                    arrs[index][12] = $('.tykh').val()
+                    /*arrs[index][11] = $('.gpskh').val()
+                    arrs[index][12] = $('.tykh').val()*/
 
                     let ids = '';
                     let value = '';
@@ -267,6 +269,38 @@
         })
 
     }
+    
+    function xiafa(){
+    	$.ajax({
+            url: `${API}/webServiceController/sendText2`,
+            type: 'post',
+            data: {
+                axis: 1, // 轴距  从1开始
+		        tire: 0, // 胎位 从 0  开始
+		        device_type: 0, // 0 是传感器， 1是定位器
+		        device_id : 1, // ID 号
+		        max_pressure : 20, // 上胎压
+		        min_pressure: 20 // 下胎压
+            },
+            success: function (res) {
+                layer.msg(res.data);
+            }
+        })
+    }
+    function mima(value){
+    	$.ajax({
+            url: `${API}/webServiceController/sendAllData`,
+            type: 'post',
+            data: {
+                name: '胎压主机',
+                value: value
+            },
+            success: function (res) {
+                layer.msg(res.data);
+            }
+        })
+    }
+    
 
 </script>
 

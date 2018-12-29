@@ -173,7 +173,7 @@
             <input class="layui-input jsdate" style="text-align: center; padding: 0;" type="text" placeholder="结束日期">
         </div>
         <div class="btn">
-            <button class="layui-btn layui-btn-normal" id="cx">查询</button>
+            <button class="layui-btn layui-btn-normal" onclick="sel()">查询</button>
         </div>
         <table id="table" lay-filter="table" class="layui-table">
             <thead id="head">
@@ -203,7 +203,6 @@
 </body>
 <script src="./js/Global.js"></script>
 <script>
-    var coke = 1;
     layui.use('laydate', function () {
         var laydate = layui.laydate;
 
@@ -256,11 +255,10 @@
         }
         return theRequest;
     }
-    $(function () {
-        var userid = GetRequest().userid;
-        var id = GetRequest().id;
+    sel ()
+    function sel () {
         $.ajax({
-            url: API + '/erpManagement/getManagements?custId=' + coke,
+            url:`${ API}/erpManagement/getManagements?custId=${loadUserInfo.customer.id}&startTime=${$('.ksdate').val()}&endTime=${$('.jsdate').val()}`,
             type: 'get',
             dataType: 'json',
             success: function (ret) {
@@ -331,87 +329,7 @@
             }
         });
 
-    })
-
-    $("#cx").click(function () {
-
-        var startDate = $("#startDate").val();
-        var endDate = $("#endDate").val();
-        //'http://120.79.205.40:3340/erpTireArchivesWork/tongjiguanliLTMH?catPlate=1&custId=1&startDate='+startDate+'&endDate='+endDate+'',//
-        $.ajax({
-            url: API + '/erpManagement/getManagements?startDate=' + startDate + '&endDate=' + endDate + '&custId=' + coke,
-            type: 'get',
-            dataType: 'json',
-            success: function (ret) {
-                var objkacha = ret.data.mapList;
-                var objkAll = ret.data.topMap;
-                var html = '';
-                var htmlAll = '<th>合计</th>' +
-                    '                    <th>' + objkAll.allNum + '</th>' +
-                    '                    <th>' + objkAll.allcustomerNum + '</th>' +
-                    '                    <th>' + objkAll.allCarNum + '</th>' +
-                    '                    <th>' + objkAll.allPurchase + '</th>' +
-                    '                    <th>' + objkAll.allSail + '</th>' +
-                    '                    <th>' + objkAll.allRepair + '</th>' +
-                    '                    <th>' + objkAll.allMaintian + '</th>' +
-                    '                    <th>' + objkAll.allCash + '</th>' +
-                    '                    <th>' + objkAll.allAccounts + '</th>' +
-                    '                    <th>' + objkAll.allCope + '</th>';
-                $("#listAll").html(htmlAll);
-                for (var key in objkacha) {
-                    html += '  <tr>' +
-                        '                    <td>' +
-                        '                        ' + (objkacha[key].custallNum || '') + '' +
-                        '                    </td>' +
-                        '                    <td onclick="goUrl()">' +
-                        '                        ' + (objkacha[key].custallNum || '') + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '' + (objkacha[key].custallNum || '') + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '' + objkacha[key].custallCarNum + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallPurchase + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallSail + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallRepair + '' +
-                        '                    </td>' +
-                        '' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallMaintian + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallCash + '' +
-                        '                    </td>' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallAccounts + '' +
-                        '                    </td>' +
-                        '' +
-                        '                    <td>' +
-                        '                        ' + objkacha[key].custallCope + '' +
-                        '                    </td>' +
-
-                        '                </tr>';
-
-
-
-
-
-                }
-                $("#list").html(html);
-
-            },
-            error: function (err) {
-                alert("系统错误");
-
-            }
-        });
-    })
+    }
 
     layui.use('laydate', function () {
         var laydate = layui.laydate;

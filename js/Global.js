@@ -1,7 +1,7 @@
 const API = 'http://39.105.111.19:3340'
 // const API = 'http://vmxrr9.natappfree.cc'
 // const API = 'http://vdy7hs.natappfree.cc' 
-// const API = 'http://ix4uaz.natappfree.cc' 
+// const API = 'http://sujunyuan.natapp1.cc' 
 // 
 
 // 客户信息

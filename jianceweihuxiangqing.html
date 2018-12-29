@@ -100,6 +100,7 @@
 			}
 			
 			.gc,
+			.pc,
 			#gclist {
 				display: none;
 			}
@@ -256,7 +257,7 @@
 
 		</table>
 
-		<div class="title">
+		<div class="title pc">
 			<span class="carnum"></span> 车辆动态
 		</div>
 		<div class="hover-body">
@@ -264,7 +265,7 @@
 
 			</ul>
 		</div>
-		<table class="layui-table">
+		<table class="layui-table pc">
 			<thead>
 				<tr>
 					<th colspan="8">轮胎信息</th>
@@ -366,7 +367,7 @@
 					<td style="width:10%;" class="layui-form fkfs">
 						<div class="layui-form-item">
 							<div class="layui-input-inline">
-								<select name="interest" class="fkfslist" lay-filter="aihao">
+								<select name="interest" class="fkfslist" lay-filter="fukuan">
 								</select>
 							</div>
 						</div>
@@ -421,7 +422,9 @@
 
 			}
 		})
-
+		$('.hover-show').on('mouseout',function () {
+			$('.hover-show').hide()
+		})
 		function goWx() {
 			sessionStorage.pcar = sessionStorage.jcpcar
 			sessionStorage.gcar = sessionStorage.jcgcar
@@ -606,16 +609,18 @@
 					var arr = res.data;
 					var str = '';
 					$.each(arr, function(i, n) {
-						if(n.zhiNeng){
-							str +=
-								`<tr  class="carList xxx_${i}">
-				                <td rowspan="3">${i + 1}</td>
-				                <td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+						str +=`<tr  class="carList xxx_${i}">
+				                <td>${i + 1}</td>
+				                <td><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
 				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
 				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
 				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
 				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								<td><input type="text" data-name='tireId' class="layui-input" value="${n.tireProductionId == null ? '' : n.tireProductionId}">
+									<input type="hidden" data-name="unit" value="${n.tireUnit}">
+									<input type="hidden" data-name="producePlace" value="${n.tireState}">
+									<input type="hidden" data-name="state  " value="${n.tirePlace}">	
+									</td>`
 								if(n.tireErrorOrTure == null) {
 									str +=
 										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
@@ -641,186 +646,7 @@
 					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
 					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
 					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-					            </tr>
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.sensorName == null ? '' : n.sensorName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.sensorBrand == null ? '' : n.sensorBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.sensorSpecifications == null ? '' : n.sensorSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.sensorModel == null ? '' : n.sensorModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.sensorId == null ? '' : n.sensorId}"></td>`
-								if(n.sensorErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.sensorPressure == null ? '' : n.sensorPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.sensorCoreCap == null ? '' : n.sensorCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.sensorminorRepairs == null ? '' : n.sensorminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.sensorDeepLines1 == null ? '' : n.sensorDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.sensorDeepLines2 == null ? '' : n.sensorDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.sensorDeepLines3 == null ? '' : n.sensorDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.sensorDeepLines4 == null ? '' : n.sensorDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.sensorStatus == null ? '' : n.sensorStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.sensorPressure == null ? '' : n.sensorPressure}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines1 == null ? '' : n.oldSensorDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines2 == null ? '' : n.oldSensorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines3 == null ? '' : n.oldSensorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines4 == null ? '' : n.oldSensorDeepLines4}</td>
-					                <td style='width:60px;'>${n.sensorStatus == null ? '' : n.sensorStatus}</td>
-					            </tr>
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
-								if(n.rimsErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
-					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
-					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
 					            </tr>`
-						} else {
-							str +=
-								`<tr  class="carList xxx_${i}">
-				                <td rowspan="2">${i + 1}</td>
-				                <td rowspan="2"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
-								if(n.tireErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
-					                <td style='width:60px;'>${n.tireStatus = null ? '' : n.tireStatus}</td>
-					            </tr>
-					            
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
-								if(n.rimsErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
-					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
-					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
-					            </tr>`
-						}
-						/*str +=
-							`<tr  class="carList xxx_${i}">
-			                <td>${i + 1}</td>
-			                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
-			                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
-			                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
-			                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
-			                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-			                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
-							if(n.errorOrTure == null) {
-								str +=
-									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-							} else {
-								str +=
-									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-							}
-							str +=
-								` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-				                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-				                <td>
-				                <select class="userAd syjy_${i}"></select>
-				                </td>
-				                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
-				                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
-				                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
-				                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
-				                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
-				                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-				                
-				            </tr>`*/
 					})
 
 					$("#list").html(str);
@@ -841,6 +667,9 @@
 
 				}
 			});
+			if(sessionStorage.jcpcar){
+				$('.pc').show()
+			}
 			if(sessionStorage.jcgcar) {
 				$('.gcarnum').html(sessionStorage.jcgcar)
 				$('.gc').show()
@@ -856,16 +685,18 @@
 						var arr = res.data;
 						var str = '';
 						$.each(arr, function(i, n) {
-						if(n.zhiNeng){
-							str +=
-								`<tr  class="carList xxx_${i}">
-				                <td rowspan="3">${i + 1}</td>
-				                <td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
+						str +=`<tr  class="carList xxx_${i}">
+				                <td>${i + 1}</td>
+				                <td><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
 				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
 				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
 				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
 				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
+								<td><input type="text" data-name='tireId' class="layui-input" value="${n.tireProductionId == null ? '' : n.tireProductionId}">
+									<input type="hidden" data-name="unit" value="${n.tireUnit}">
+									<input type="hidden" data-name="producePlace" value="${n.tireState}">
+									<input type="hidden" data-name="state  " value="${n.tirePlace}">	
+									</td>`
 								if(n.tireErrorOrTure == null) {
 									str +=
 										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
@@ -874,14 +705,14 @@
 										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
 								}
 								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
+									` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
+					                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
+					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value=""></td>
 					                <td>
 					                <select class="userAd syjy_${i}"></select>
 					                </td>
@@ -891,186 +722,8 @@
 					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
 					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
 					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-					            </tr>
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.sensorName == null ? '' : n.sensorName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.sensorBrand == null ? '' : n.sensorBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.sensorSpecifications == null ? '' : n.sensorSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.sensorModel == null ? '' : n.sensorModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.sensorId == null ? '' : n.sensorId}"></td>`
-								if(n.sensorErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.sensorPressure == null ? '' : n.sensorPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.sensorCoreCap == null ? '' : n.sensorCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.sensorminorRepairs == null ? '' : n.sensorminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.sensorDeepLines1 == null ? '' : n.sensorDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.sensorDeepLines2 == null ? '' : n.sensorDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.sensorDeepLines3 == null ? '' : n.sensorDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.sensorDeepLines4 == null ? '' : n.sensorDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.sensorStatus == null ? '' : n.sensorStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.sensorPressure == null ? '' : n.sensorPressure}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines1 == null ? '' : n.oldSensorDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines2 == null ? '' : n.oldSensorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines3 == null ? '' : n.oldSensorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldSensorDeepLines4 == null ? '' : n.oldSensorDeepLines4}</td>
-					                <td style='width:60px;'>${n.sensorStatus == null ? '' : n.sensorStatus}</td>
-					            </tr>
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
-								if(n.rimsErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
-					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
-					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
 					            </tr>`
-						} else {
-							str +=
-								`<tr  class="carList xxx_${i}">
-				                <td rowspan="2">${i + 1}</td>
-				                <td rowspan="2"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}">${n.tireLocation == null ? '' : n.tireLocation}</td>
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.tireName == null ? '' : n.tireName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.tireBrand == null ? '' : n.tireBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.tireSpecifications == null ? '' : n.tireSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.tireModel == null ? '' : n.tireModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.tireId == null ? '' : n.tireId}"></td>`
-								if(n.tireErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.tirePressure == null ? '' : n.tirePressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.tireCoreCap == null ? '' : n.tireCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.tireminorRepairs == null ? '' : n.tireminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.tireDeepLines1 == null ? '' : n.tireDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.tireDeepLines2 == null ? '' : n.tireDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.tireDeepLines3 == null ? '' : n.tireDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.tireDeepLines4 == null ? '' : n.tireDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.tirePressure == null ? '' : n.tirePressure}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines1 == null ? '' : n.oldTireDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines2 == null ? '' : n.oldTireDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines3 == null ? '' : n.oldTireDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldTireDeepLines4 == null ? '' : n.oldTireDeepLines4}</td>
-					                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-					            </tr>
-					            
-					            
-					            <tr  class="carList xxx_${i}">
-				                <!--<td rowspan="3">${i + 1}</td>-->
-				                <!--<td rowspan="3"><input type="hidden" data-name='tirePlace' class="layui-input materielPlace" value="${n.tireLocation == null ? '' : n.tireLocation}"></td>-->
-				                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.rimsName == null ? '' : n.rimsName}" onclick="showLv1('xxx_${i}')"></td>
-				                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.rimsBrand == null ? '' : n.rimsBrand}"></td>
-				                <td><input type="text" data-name='specification' class="layui-input materielModel" value="${n.rimsSpecifications == null ? '' : n.rimsSpecifications}"></td>
-				                <td><input type="text" data-name='size' class="layui-input tireModel" value="${n.rimsModel == null ? '' : n.rimsModel}"></td>
-				                <td><input type="text" data-name='tireId' class="layui-input" value="${n.rimsId == null ? '' : n.rimsId}"></td>`
-								if(n.rimsErrorOrTure == null) {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-								} else {
-									str +=
-										` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-								}
-								str +=
-									` <td><input type="text" data-name='pressureModi' class="layui-input" value="${n.rimsPressure == null ? '' : n.rimsPressure}"></td>
-					                <td><input type="text" data-name='coreCap' class="layui-input" value="${n.rimsCoreCap == null ? '' : n.rimsCoreCap}"></td>
-					                <td><input type="text" data-name='minorRepairs' class="layui-input" value="${n.rimsminorRepairs == null ? '' : n.rimsminorRepairs}"></td>
-					                <td><input type="text" data-name='deepLines1' class="layui-input" value="${n.rimsDeepLines1 == null ? '' : n.rimsDeepLines1}"></td>
-					                <td><input type="text" data-name='deepLines2' class="layui-input" value="${n.rimsDeepLines2 == null ? '' : n.rimsDeepLines2}"></td>
-					                <td><input type="text" data-name='deepLines3' class="layui-input" value="${n.rimsDeepLines3 == null ? '' : n.rimsDeepLines3}"></td>
-					                <td><input type="text" data-name='deepLines4' class="layui-input" value="${n.rimsDeepLines4 == null ? '' : n.rimsDeepLines4}"></td>
-					                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.rimsStatus == null ? '' : n.rimsStatus}"></td>
-					                <td>
-					                <select class="userAd syjy_${i}"></select>
-					                </td>
-					                <td style='width:50px;'>${n.rimsPressure == null ? '' : n.rimsPressure}</td>
-					                <td style='width:50px;'>${n.oldRimsDeepLines1 == null ? '' : n.oldRimsDeepLines1}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines2 == null ? '' : n.oldRimsorDeepLines2}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines3 == null ? '' : n.oldRimsorDeepLines3}</td>
-					                <td style='width:50px;'>${n.oldRimsorDeepLines4 == null ? '' : n.oldRimsorDeepLines4}</td>
-					                <td style='width:60px;'>${n.rimsStatus == null ? '' : n.rimsStatus}</td>
-					            </tr>`
-						}
-						/*str +=
-							`<tr  class="carList xxx_${i}">
-			                <td>${i + 1}</td>
-			                <td><input type="text" data-name='srcName' class="layui-input materielName" value="${n.srcName == null ? '' : n.srcName}" onclick="showLv1('xxx_${i}')"></td>
-			                <td><input type="text" data-name='brand' class="layui-input materielBrand" value="${n.brand == null ? '' : n.brand}"></td>
-			                <td><input type="text" data-name='size' class="layui-input materielModel" value="${n.size == null ? '' : n.size}"></td>
-			                <td><input type="text" data-name='specification' class="layui-input materielSpecifications" value="${n.specification == null ? '' : n.specification}"></td>
-			                <td><input type="text" data-name='produceId' class="layui-input" value="${n.produceId == null ? '' : n.produceId}"></td>
-			                <td><input type="text" data-name='tirePlace' class="layui-input materielPlace" value="${n.tirePlace == null ? '' : n.tirePlace}"></td>`
-							if(n.errorOrTure == null) {
-								str +=
-									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" /></td>`
-							} else {
-								str +=
-									` <td><input  type="checkbox" class="checkbox" name='a' data-name='errorOrTure' style="width:40px;" checked="true" /></td>`
-							}
-							str +=
-								` <td><input type="text" data-name='pressureModi' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='coreCap' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='minorRepairs' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines1' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines2' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines3' class="layui-input" value=""></td>
-				                <td><input type="text" data-name='deepLines4' class="layui-input" value=""></td>
-				                <td ><input type="text" data-name='tireStatus' class="layui-input"  onclick="setLt(this)" value="${n.tireStatus == null ? '' : n.tireStatus}"></td>
-				                <td>
-				                <select class="userAd syjy_${i}"></select>
-				                </td>
-				                <td style='width:50px;'>${n.pressureModi == null ? '' : n.pressureModi}</td>
-				                <td style='width:50px;'>${n.deepLines1 == null ? '' : n.deepLines1}</td>
-				                <td style='width:50px;'>${n.deepLines2 == null ? '' : n.deepLines2}</td>
-				                <td style='width:50px;'>${n.deepLines3 == null ? '' : n.deepLines3}</td>
-				                <td style='width:50px;'>${n.deepLines4 == null ? '' : n.deepLines4}</td>
-				                <td style='width:60px;'>${n.tireStatus == null ? '' : n.tireStatus}</td>
-				                
-				            </tr>`*/
+				           
 					})
 
 						$("#gclist").html(str);
@@ -1094,6 +747,7 @@
 		})
 		// 保存
 		function saveAll() {
+			let arr = []
 			let data = {}
 
 			// $('.jfxf input').each(function (i, n) {
@@ -1103,14 +757,13 @@
 			data.userId = 1
 			$('.jcinfo input').each(function(i, n) {
 				data[$(this).data('name')] = $(this).val()
-
 			})
-			data.roadStatus = $('.layui-unselect').eq(0).val()
-			data.paidMethod = $('.layui-unselect').eq(1).val()
+			data.roadStatus = $('.yylk').val()
+			data.paidMethod = $('.fkfslist').val()
 			data.carPlate = decodeURI(decodeURI(GetRequest().id))
-			data.drivingRange1 = $('.drivingRange1').val()
+			data.drivingRange1 = $('.drivingRange1 option:selected').text()  
 			data.drivingRange2 = $('.drivingRange2').val()
-			data.drivingRange3 = $('.drivingRange3').val()
+			data.drivingRange3 = $('.drivingRange3 option:selected').text()  
 			data.drivingRange4 = $('.drivingRange4').val()
 			data.carPlate = sessionStorage.jcpcar
 			$.ajax({
@@ -1124,6 +777,8 @@
 						datas.carPlate = sessionStorage.jcpcar
 						datas.orderId = res.data.inspectionOrder.id
 						datas.formId = res.data.management.workId
+						datas.submitName  =loadUserInfo.user.realName
+						datas.useDevice = $('.userAd').val()
 						$(this).find('input').each(function() {
 
 							datas[$(this).data('name')] = $(this).val()

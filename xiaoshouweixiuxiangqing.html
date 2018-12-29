@@ -1,998 +1,1047 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/xadmin.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/xadmin.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				/* border-bottom: 1px solid #ccc; */
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			.layui-input {
+				border: 0px;
+				padding: 0;
+				height: 100%;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.layui-table td {
+				padding: 0px;
+				height: 30px;
+				line-height: 0px;
+				text-align: center;
+			}
+			
+			.layui-table td {
+				margin: 0px;
+			}
+			
+			.layui-form-item {
+				margin: 0px;
+				width: 100%;
+				height: 100%;
+			}
+			
+			.layui-form-item .layui-input-inline {
+				width: 100%;
+				margin: 0px !important;
+				height: 100%;
+			}
+			
+			.layui-unselect {
+				height: 100%;
+			}
+			
+			.layui-select-title {
+				height: 100%;
+			}
+			
+			.title {
+				/* font-size: 16px; */
+				text-align: center;
+				padding: 10px;
+			}
+			
+			.qianming {
+				width: 652px;
+				margin: 0 auto;
+			}
+			
+			ul.qianming li {
+				display: inline-block;
+				width: 160px;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			ul.qianming input {
+				width: 100px;
+				display: inline-block;
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.hover-body {
+				position: relative;
+			}
+			
+			.hover-show {
+				position: absolute;
+				top: 10px;
+				left: 50px;
+				z-index: 9999999999999999999999999;
+				display: none;
+			}
+			
+			.hover-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.hover-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.hover-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.hover-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+			
+			.saleWindow {
+				padding: 10px;
+				display: none;
+			}
+			
+			.dphWindow {
+				width: 600px;
+				padding: 10px;
+				cursor: pointer;
+				display: none;
+			}
+			
+			.wlWindow {
+				padding: 10px;
+				width: 1200px;
+				display: none;
+				overflow: scroll;
+				height: 600px;
+			}
+			
+			.carWindow {
+				width: 1200px;
+				padding: 10px;
+				display: none;
+			}
+			
+			.wxxmwin,
+			.wpztwin {
+				width: 600px;
+				display: none;
+				padding: 10px;
+			}
+			
+			.wxxmwin ul li,
+			.wpztwin ul li {
+				width: 150px;
+				height: 30px;
+				text-align: center;
+				line-height: 30px;
+				border: 0.5px solid #ccc;
+				float: left;
+				box-sizing: border-box;
+				cursor: pointer;
+			}
+			
+			.active {
+				background: rgb(5, 197, 253);
+				color: #fff;
+			}
+			
+			.ly-body {
+				position: relative;
+				/* display: none; */
+			}
+			
+			.ly-show {
+				position: absolute;
+				z-index: 9999999999999999999999999;
+				display: none;
+			}
+			
+			.ly-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.ly-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.ly-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.ly-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+			
+			.ly-3,
+			.ly-khkc {
+				display: none;
+			}
+			
+			.ly-car:hover .ly-3,
+			.ly-show>li:hover .ly-khkc {
+				display: block;
+			}
+			
+			.ly-3-g {
+				display: none;
+			}
+			
+			.ly-gcar:hover .ly-3-g {
+				display: block;
+			}
+			
+			.yhlist {
+				text-align: center;
+			}
+			
+			.qx-body {
+				position: relative;
+			}
+			
+			.qx-show {
+				position: absolute;
+				/* right: 0; */
+				margin: 0 auto;
+				z-index: 9999999999999999999999999;
+				display: none;
+			}
+			
+			.qx-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.qx-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.qx-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.qx-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+			
+			.qx-3,
+			.qx-khkc {
+				display: none;
+			}
+			
+			.qx-3-g {
+				display: none;
+			}
+			
+			.qx-car:hover .qx-3,
+			.qx-show>li:hover .qx-khkc {
+				display: block;
+			}
+			
+			.qx-gcar:hover .qx-3-g {
+				display: block;
+			}
+			
+			.qxxm-body {
+				position: relative;
+			}
+			
+			.qxxm-show {
+				position: absolute;
+				z-index: 9999999999999999999999999;
+				display: none;
+			}
+			
+			.qxxm-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.qxxm-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.qxxm-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.qxxm-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+			
+			.xjdsb {
+				display: none;
+			}
+			
+			.ly-gcar {
+				display: none;
+			}
+		</style>
+	</head>
 
-        .select {
-            height: 40px;
-            /* border-bottom: 1px solid #ccc; */
-            text-align: center;
-        }
+	<body>
+		<div class="wrap">
+			<div class="ly-body">
+				<ul class="ly-show">
+					<li class="ly-car">
+						<span class="names ly-car-num"></span>
+						<div class="ly-3"></div>
+					</li>
+					<li class="ly-gcar">
+						<span class="names ly-gcar-num"></span>
+						<div class="ly-3-g"></div>
+					</li>
+					<li class="">
+						<span class="names">客户库存</span>
+						<div class="ly-khkc"></div>
+					</li>
+					<li class="">
+						<span class="names">客户留存</span>
+						<div class="ly-khkc"></div>
+					</li>
+				</ul>
+			</div>
+			<div class="qx-body">
+				<ul class="qx-show">
+					<li class="qx-car">
+						<span class="names ly-car-num">客户库存</span>
+						<div class="qx-3"></div>
+					</li>
+					<li class="qx-gcar">
+						<span class="names ly-gcar-num"></span>
+						<div class="qx-3-g"></div>
+					</li>
+					<li class="">
+						<span class="names">客户库存</span>
+						<div class="qx-khkc"></div>
+					</li>
+					<li class="">
+						<span class="names">客户留存</span>
+						<div class="qx-khkc"></div>
+					</li>
+				</ul>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>工作日期</th>
+						<th>里程表数</th>
+						<th>工作单号</th>
+						<th style="width:20%;">客户名称</th>
+						<th>车辆牌号</th>
+						<th>挂车牌号</th>
 
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
+					</tr>
+				</thead>
+				<tbody class="saveOne">
+					<tr>
+						<td><input type="text" data-name="saleRepairDate" class="layui-input  date" value=""></td>
+						<td><input type="text" data-name="saleRepairMileage" class="layui-input" value=""></td>
+						<td><input type="text" data-name="saleRepairSheetId" readonly class="layui-input" value=""></td>
+						<td><input data-name="customerName" type="text" class="layui-input customerName" value=""></td>
+						<td><input type="text" data-name="carPlate" class="layui-input carPlate" value=""></td>
+						<td><input type="text" data-name="trailerPlate" class="layui-input trailerPlate" value=""></td>
+					</tr>
+				</tbody>
 
-        }
+			</table>
+			<div class="hover-body">
+				<ul class="hover-show">
 
-        .layui-input {
-            border: 0px;
-            padding: 0;
-            height: 100%;
-            width: 100%;
-            text-align: center;
-        }
+				</ul>
+			</div>
+			<div class="qxxm-body">
+				<ul class="qxxm-show">
 
-        .btn {
-            display: inline-block;
+				</ul>
+			</div>
+			<div class="title">
+				物料销售
+				<div class="layui-btn-xs layui-btn" onclick="saleEdit()">编辑</div>
+			</div>
+			<!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th style="width:10%;">来源</th>
+						<th style="width:10%;">品名</th>
+						<th style="width:10%;">品牌</th>
+						<th style="width:10%;">规格</th>
+						<th style="width:10%;">型号</th>
+						<th style="width:5%;">产地</th>
+						<th style="width:5%;">单位</th>
+						<th style="width:5%;">生产编号</th>
+						<th style="width:10%;">物料新旧</th>
+						<th style="width:10%;">去向</th>
+						<th style="width:5%;">数量</th>
+						<th style="width:5%;">单价</th>
+						<th style="width:5%;">金额</th>
+					</tr>
+				</thead>
 
-        }
+				<tbody class="spxs">
+				</tbody>
+			</table>
+			<div class="title">
+				物料维修
+				<div class="layui-btn-xs layui-btn" onclick="wlEdit()">编辑</div>
+			</div>
+			<!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th style="width:10%;">来源</th>
+						<th style="width:10%;">品名</th>
+						<th style="width:10%;">品牌</th>
+						<th style="width:10%;">规格</th>
+						<th style="width:10%;">型号</th>
+						<th style="width:5%;">产地</th>
+						<th style="width:5%;">单位</th>
+						<th style="width:5%;">生产编号</th>
+						<th style="width:10%;">维修项目</th>
+						<th style="width:10%;">去向</th>
+						<th style="width:5%;">数量</th>
+						<th style="width:5%;">单价</th>
+						<th style="width:5%;">金额</th>
+					</tr>
+				</thead>
 
-        .layui-table td {
-            padding: 0px;
-            height: 30px;
-            line-height: 0px;
-            text-align: center;
-        }
+				<tbody class="wlwx">
+					<tr>
+					</tr>
+				</tbody>
+			</table>
+			<div class="title">
+				车辆维修
+				<div class="layui-btn-xs layui-btn" onclick="carEdit()">编辑</div>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th style="width:10%">汽修项目</th>
+						<th style="width:10%">维修科目</th>
+						<th style="width:10%">维修方式</th>
+						<th style="width:10%">工时</th>
+						<th style="width:10%">费用</th>
+						<th style="width:10%">费用承担</th>
+						<th style="width:15%">保险单号</th>
+						<th style="width:10%">保险公司</th>
+						<th style="width:15%">备注</th>
+					</tr>
+				</thead>
+				<tbody class="clwx">
 
-        .layui-table td {
-            margin: 0px;
-        }
+				</tbody>
+			</table>
+			<table class="layui-table">
+				<tbody>
+					<tr class="fyjf">
+						<td style="width:10%;">费用合计</td>
+						<td style="width:10%;"><input type="text" readonly id="fyhj" data-name="saleRepairCost" class="layui-input" value=""></td>
+						<td style="width:10%;">消费积分</td>
+						<td style="width:10%;"><input type="number" oninput="setSsje()" id="xfjf"  data-name="saleRepairIntegralConsumption" class="layui-input" value=""></td>
+						<td style="width:10%;">实收金额</td>
+						<td style="width:10%;"><input type="text"  id="ssje" data-name="saleRepairPaidAmount" class="layui-input" value=""></td>
+						<td style="width:10%;">付款方式</td>
+						<td style="width:10%;" class="layui-form">
+							<div class="layui-form-item">
+								<div class="layui-input-inline">
+									<select name="interest" class="fkfs" lay-filter="aihao">
+										<option value='银行支票'>银行支票</option>
+										<option value='网银电汇'>网银电汇</option>
+										<option value='银行承兑'>银行承兑</option>
+										<option value='现金收款'>现金收款</option>
+										<option value='应收账款'>应收账款</option>
+										<option value='免费'>免费</option>
+										<option value='预收账款'>预收账款</option>
+									</select>
+								</div>
+							</div>
+						</td>
+						<td style="width:10%;">本次积分</td>
+						<td style="width:10%;"><input type="text" data-name="saleRepairIntegral" class="layui-input" value=""></td>
+					</tr>
+				</tbody>
+			</table>
+			<ul class="qianming">
+				<li>
+					<label for="fwjb">服务经办</label>
+					<input type="text" data-name="serviceAttn" class="layui-input">
+				</li>
+				<li>
+					<label for="fwjb">库管经办</label>
+					<input type="text" data-name="serviceAttn" class="layui-input">
+				</li>
+				<li>
+					<label for="fwjb">客户经办</label>
+					<input type="text" data-name="customerAttn" class="layui-input">
+				</li>
+				<li>
+					<label for="fwjb">财务经办</label>
+					<input type="text" data-name="financeAttn" class="layui-input">
+				</li>
+			</ul>
+			<div class="title">
+				<button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(false)">确认/结束</button>
+				<button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(true)">确认/检测</button>
+			</div>
+			<!-- 商品销售编辑页 -->
+			<div class="saleWindow">
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th>来源</th>
+							<th>品名</th>
+							<th>品牌</th>
+							<th>规格</th>
+							<th>型号</th>
+							<th>产地</th>
+							<th>物料新旧</th>
+							<th>单位</th>
+							<th>去向</th>
+							<th>生产编号</th>
+							<th>数量</th>
+							<th>单价</th>
+							<th>金额</th>
+							<th>安装胎压</th>
+							<th colspan="2">动平衡</th>
+						</tr>
+					</thead>
+					<tbody class="spxsList">
+						<tr>
+							<td class="layui-form">
+								<select name="" class="sel" id=""></select>
+							</td>
+							<td><input type="text" class="layui-input materielName set_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
+							<td><input type="text" class="layui-input materielBrand set_1" data-name="materielBrand"></td>
+							<td><input type="text" class="layui-input materielSpecifications set_2" data-name="materielSpecifications"></td>
+							<td><input type="text" class="layui-input materielModel set_3" data-name="materielModel"></td>
+							<td><input type="text" class="layui-input materielPlace set_4" data-name="materielPlace"></td>
+							<td><input type="text" class="layui-input materielState set_5" data-name="materielState"></td>
+							<td><input type="text" class="layui-input materielUnit set_6" data-name="materielUnit"></td>
+							<td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
+							<td><input type="text" class="layui-input materielProductionId set_7" data-name="materielProductionId"></td>
+							<td><input type="text" id="shu" class="layui-input materielNumber set_7" data-name="materielNumber" oninput="setXong()"></td>
+							<td><input type="text" id="dan" class="layui-input materielPrice" data-name="materielPrice" oninput="setXong()"></td>
+							<td><input type="text" id="zong" class="layui-input materielTotal" data-name="materielTotal"></td>
+							<td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+							<td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
+							<td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingRight" class="layui-input"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="text-align:center">
+					<div class="layui-btn layui-btn-xs" onclick="saveRe(1)">确认/重复</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveRe(2)">确认/新添</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveRe(3)">确认/结束</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveRe(4)">取消/结束</div>
+				</div>
+				<div style="text-align:center;margin:10px;">物料列表</div>
+				<table class="layui-table saleList">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>来源</th>
+							<th>品名</th>
+							<th>品牌</th>
+							<th>规格</th>
+							<th>型号</th>
+							<th>产地</th>
+							<th>单位</th>
+							<th>生产编号</th>
+							<th>物料新旧</th>
+							<th>去向</th>
+							<th>数量</th>
+							<th>单价</th>
+							<th>金额</th>
+							<th>安装胎压</th>
+							<th colspan="2">动平衡</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody class="splblist">
+					</tbody>
+				</table>
+			</div>
+			<!-- 动平衡 -->
+			<div class="dphWindow">
+				<table class="layui-table">
+					<tbody>
+						<tr>
+							<td style="background:#fff;" colspan="5" class="dphnum"></td>
+						</tr>
+						<tr>
+							<td class="dphtype" style="background:#fff;">20寸</td>
+							<td class="dphtype" style="background:#fff;">22.5寸</td>
+							<td class="dphtype" style="background:#fff;">轿车</td>
+							<td style="background:#fff;">
+								<div class="layui-btn layui-btn-danger layui-btn-xs" onclick="delDph()">消除</div>
+							</td>
+							<td style="background:#fff;">
+								<div class="layui-btn  layui-btn-xs" onclick="saveDph()">确定</div>
+							</td>
+						</tr>
+						<tr>
+							<td style="background:#fff;" class="dph">5</td>
+							<td style="background:#fff;" class="dph">10</td>
+							<td style="background:#fff;" class="dph">20</td>
+							<td style="background:#fff;" class="dph">50</td>
+							<td style="background:#fff;" class="dph">100</td>
+						</tr>
+						<tr>
+							<td style="background:#fff;" class="dph">150</td>
+							<td style="background:#fff;" class="dph">200</td>
+							<td style="background:#fff;" class="dph">250</td>
+							<td style="background:#fff;" class="dph">300</td>
+							<td style="background:#fff;" class="dph">350</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<!-- 物料维修编辑页 -->
+			<div class="wlWindow">
+				<table class="layui-table">
+					<tr class="wxbj">
+						<td style="width:12.5%">
+							维修项目
+						</td>
+						<td style="width:12.5%" onclick="showWxxm()">
+							<input type="text" data-name="repairRepair" class="layui-input repairRepair">
+						</td>
+						<td style="width:12.5%">
+							物品状态
+						</td>
+						<td style="width:25%" onclick="showWpzt()">
+							<input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
+						</td>
+						<td style="width:12.5%">
+							胎纹深度
+						</td>
 
-        .layui-form-item {
-            margin: 0px;
-            width: 100%;
-            height: 100%;
-        }
 
-        .layui-form-item .layui-input-inline {
-            width: 100%;
-            margin: 0px !important;
-            height: 100%;
-        }
+						<td style="width:6.25%">
+							<input type="text" data-name="tireTread1" class="layui-input">
+						</td>
+						<td style="width:6.25%">
+							<input type="text" data-name="tireTread2" class="layui-input">
+						</td>
+						<td style="width:6.25%">
+							<input type="text" data-name="tireTread3" class="layui-input">
+						</td>
+						<td style="width:6.25%">
+							<input type="text" data-name="tireTread4" class="layui-input">
+						</td>
+					</tr>
+				</table>
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th style="width:6.25%">来源</th>
+							<th style="width:6.25%">品名</th>
+							<th style="width:6.25%">品牌</th>
+							<th style="width:6.25%">规格</th>
+							<th style="width:6.25%">型号</th>
+							<th style="width:6.25%">产地</th>
+							<th style="width:6.25%">物料新旧</th>
+							<th style="width:6.25%">单位</th>
+							<th style="width:6.25%">去向</th>
+							<th style="width:6.25%">生产编号</th>
+							<th style="width:6.25%">二维码</th>
+							<th style="width:6.25%">RFID</th>
+							<th style="width:6.25%">胎压ID</th>
+							<th style="width:6.25%">胎压</th>
+							<th style="width:6.25%">数量</th>
+							<th style="width:6.25%">维修金额</th>
+						</tr>
+					</thead>
+					<tbody class="wlwxList">
+						<tr>
+							<td><input type="text" class="layui-input materielSource" data-name="materielSource" onclick="showLy(this)"></td>
+							<td><input type="text" class="layui-input materielName wlset_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
+							<td><input type="text" class="layui-input materielBrand wlset_1" data-name="materielBrand"></td>
+							<td><input type="text" class="layui-input materielSpecifications wlset_2" data-name="materielSpecifications"></td>
+							<td><input type="text" class="layui-input materielModel wlset_3" data-name="materielModel"></td>
+							<td><input type="text" class="layui-input materielPlace wlset_4" data-name="materielPlace"></td>
+							<td><input type="text" class="layui-input materielState wlset_5" data-name="materielState"></td>
+							<td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
+							<td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
+							<td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
+							<td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
+							<td><input type="text" class="layui-input materiel_sensor_id  wlset_8" data-name="materiel_sensor_id"></td>
+							<td><input type="text" class="layui-input materiel_sensor_id  wlset_8" data-name="materiel_sensor_id"></td>
+							<td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
+							<td><input type="text" class="layui-input materielNumber wlset_7" data-name="materielNumber"></td>
+							<td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="text-align:center">维修耗材</div>
+				<div>
+					<div >
+						<table class="layui-table" style="width:68.75%;float:left;">
+							<thead >
+								<tr style="width:100%">
+									<th style="width:12.5%">耗材仓库</th>
+									<th style="width:12.5%">品名</th>
+									<th style="width:12.5%">品牌</th>
+									<th style="width:12.5%">规格</th>
+									<th style="width:12.5%">型号</th>
+									<th style="width:6.25%">数量</th>
+									<th style="width:12.5%">操作</th>
+								</tr>
+							</thead>
+							<tbody class="wxhclist">
+								<tr class="lzwxhc">
+									<td >
+										<div style="width: 148px;" class="layui-form">
+												<input class="layui-input" type="hidden" data-name="pid">
+												<select class='hcck'></select>
+										</div>
+									</td>
+									<td><input style="width: 148px;" class="layui-input hcck_0 " data-name="materielName" onclick="setLyInfo(this,true)"></td>
+									<td><input style="width: 148px;" class="layui-input hcck_1  " data-name="materielBrand"></td>
+									<td><input style="width: 148px;" class="layui-input hcck_2  " data-name="materielSpecifications"></td>
+									<td><input style="width: 148px;" class="layui-input hcck_3  " data-name="materielModel"></td>
+									<td><input style="width: 74px;" class="layui-input" data-name="materielNumber" value="1"></td>
+									<td>
+										<div style="width: 148px;"><div class="layui-btn layui-btn-xs layui-btn-normal" onclick="addWxhc()">新增</div>
+										<div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<table style="width: 148px;float:right;" class="layui-table">
+							<tr>
+								<td style="width:12.5%" rowspan="2">动平衡</td>
+								<td style="width:12.5%">
+									<input type="text" data-name="dynamicBalancingLeft" onclick="setDph(this)" class="layui-input">
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type="text" data-name="dynamicBalancingRight" onclick="setDph(this)" class="layui-input">
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div style="clear:both;"></div>
+				<div style="text-align:center">
+					<div class="layui-btn layui-btn-xs" onclick="saveWx(1)">确认/重复</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveWx(2)">确认/新添</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveWx(3)">确认/结束</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveWx(4)">取消/结束</div>
+				</div>
+				<div class="title">
+					待处理
+				</div>
+				<table class="layui-table" style="margin-top:0px;">
+					<thead>
+						<tr>
+							<th style="width: 35px" >序号</th>
+							<th style="width: 140px" >维修项目</th>
+							<th style="width: 110px" >来源</th>
+							<th style="width: 110px" >品名</th>
+							<th style="width: 110px" >品牌</th>
+							<th style="width: 140px" >规格</th>
+							<th style="width: 140px" >型号</th>
+							<th style="width: 110px" >物料新旧</th>
+							<th style="width: 35px" >数量</th>
+							<th style="width: 110px" >去向</th>
+							<th style="width: 110px" >生产编号</th>
+							<th style="width: 110px" >胎压ID</th>
+							<th style="width:60px" >操作</th>
+						</tr>
+					</thead>
+					<tbody class="dcllist">
 
-        .layui-unselect {
-            height: 100%;
-        }
+					</tbody>
+				</table>
+				<div class="title">
+					已完成
+				</div>
+				<table class="layui-table"  style="margin-top:0px;">
+					<thead>
+							<tr>
+									<th style="width: 35px" >序号</th>
+									<th style="width: 140px" >维修项目</th>
+									<th style="width: 110px" >来源</th>
+									<th style="width: 110px" >品名</th>
+									<th style="width: 110px" >品牌</th>
+									<th style="width: 140px" >规格</th>
+									<th style="width: 140px" >型号</th>
+									<th style="width: 110px" >物料新旧</th>
+									<th style="width: 35px" >数量</th>
+									<th style="width: 110px" >去向</th>
+									<th style="width: 110px" >生产编号</th>
+									<th style="width: 110px" >胎压ID</th>
+									<th style="width:60px" >操作</th>
+								</tr>
+					</thead>
+					<tbody class="ywclist">
 
-        .layui-select-title {
-            height: 100%;
-        }
+					</tbody>
+				</table>
+			</div>
+			<!-- 车辆维修编辑页 -->
+			<div class="carWindow">
+				<div class="title">
+					车辆维修 </div>
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th style="width:10%;">汽修项目</th>
+							<th style="width:10%;">维修科目</th>
+							<th style="width:10%;">维修方式</th>
+							<th style="width:10%;">工时</th>
+							<th style="width:10%;">费用</th>
+							<th style="width:10%;">费用承担</th>
+							<th style="width:10%;">保险单号</th>
+							<th style="width:10%;">保险公司</th>
+							<th style="width:10%;">备注</th>
+							<th style="width:10%;">操作</th>
+						</tr>
+					</thead>
+					<tbody class="clwxxq">
+						<tr id="clwx">
+							<td><input type="text" class="layui-input garageProject" data-name="garageProject" value="" onclick="setQxxm('clwx',this)"></td>
+							<td><input type="text" class="layui-input repairProject" data-name="repairProject" value=""></td>
+							<td><input type="text" class="layui-input repairMode" data-name="repairMode" value=""></td>
+							<td><input type="text" class="layui-input" data-name="workTime" value=""></td>
+							<td><input type="text" class="layui-input" data-name="money" value=""></td>
+							<td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
+							<td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
+							<td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
+							<td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
+							<td>
+								<div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="title">
+					耗材明细
+				</div>
+				<table class="layui-table">
+					<thead>
+						<tr>
+							<th style="width:10%;">来源</th>
+							<th style="width:10%;">品名</th>
+							<th style="width:10%;">品牌</th>
+							<th style="width:10%;">规格</th>
+							<th style="width:10%;">型号</th>
+							<th style="width:10%;">产地</th>
+							<th style="width:10%;">状态</th>
+							<th style="width:5%;">单位</th>
+							<th style="width:5%;">数量</th>
+							<th style="width:10%;">备注</th>
+							<th style="width:10%;">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="lzhcmx">
+							<td class="layui-form">
+								<div class="layui-form-item">
+									<div class="layui-input-inline">
+										<select name="interest" class="cheliangweixiusel" lay-filter="cheliangweixiu">
+											<option value=""></option>
+											<option value="0">金方舟</option>
+										</select>
+									</div>
+								</div>
+							</td>
+							<td><input type="text" class="layui-input materielName hcset_0" data-name="scrName" onclick="setLyInfo(this,false)" value=""></td>
+							<td><input type="text" class="layui-input materielBrand hcset_1" data-name="scrBrand" value=""></td>
+							<td><input type="text" class="layui-input materielSpecifications hcset_2" data-name="scrSpecifications" value=""></td>
+							<td><input type="text" class="layui-input materielModel hcset_3" data-name="scrModel" value=""></td>
+							<td><input type="text" class="layui-input materielPlace hcset_4" data-name="chanDi" value=""></td>
+							<td><input type="text" class="layui-input materielState hcset_5" data-name="state" value=""></td>
+							<td><input type="text" class="layui-input materielUnit hcset_6" data-name="danWei" value=""></td>
+							<td><input type="text" class="layui-input  hcset_7" data-name="number" value=""></td>
+							<td><input type="text" class="layui-input" data-name="bz" value=""></td>
+							<td>
+								<div class="layui-btn  layui-btn-xs layui-btn-normal" onclick="saveHcmx()">保存</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div style="text-align: center">
+					<div class="layui-btn layui-btn-xs" onclick="saveCar(true)">确认/结束</div>
+					<div class="layui-btn layui-btn-xs" onclick="saveCar()">取消/结束</div>
+				</div>
+			</div>
+			<div class="wxxmwin">
+				<ul>
+					<li></li>
+				</ul>
+			</div>
+			<div class="wpztwin">
+				<ul>
+					<li></li>
+				</ul>
+			</div>
 
-        .title {
-            /* font-size: 16px; */
-            text-align: center;
-            padding: 10px;
-        }
+			<div class="xjdsb">
+				<table class="yhlist layui-table">
 
-        .qianming {
-            width: 652px;
-            margin: 0 auto;
-        }
+				</table>
+			</div>
+		</div>
+	</body>
+	<script src="./js/Global.js"></script>
+	<script>
+		$('.customerName').val(decodeURI(decodeURI(getUrlParam('custName'))))
+		let layform = ''
+		layui.use('form', function() {
+			layform = layui.form
+		})
+		layui.use('laydate', function() {
+			var laydate = layui.laydate;
+			laydate.render({
+				elem: '.date'
+			})
+		})
+		let layer = ''
+		layui.use('layer', function() {
+			layer = layui.layer
+		})
+		if(sessionStorage.pcar) {
+			$('.carPlate').val(sessionStorage.pcar)
+		}
+		if(sessionStorage.gcar) {
+			$('.trailerPlate').val(sessionStorage.gcar)
+		}
+		if(sessionStorage.custName) {
+			$('.customerName').val(sessionStorage.custName)
+		}
+		let saleList = []
+		let carNum = sessionStorage.pcar || sessionStorage.gcar
+		let wlwxbol = false
+		let selType = 0 // 要查询的类型
+		let isHcck = false // 是否为耗材仓库
+		if(sessionStorage.pcar && sessionStorage.gcar) {
 
-        ul.qianming li {
-            display: inline-block;
-            width: 160px;
-            height: 30px;
-            line-height: 30px;
-        }
-
-        ul.qianming input {
-            width: 100px;
-            display: inline-block;
-            border-bottom: 1px solid #ccc;
-        }
-        .hover-body {
-            position: relative;
-        }
-        .hover-show {
-            position:absolute;
-            top: 10px;
-            left: 50px;
-            z-index: 9999999999999999999999999;
-            display: none;
-        }
-        .hover-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .hover-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .hover-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .hover-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-        .saleWindow {
-            padding: 10px;
-            display: none;
-        }
-        .dphWindow {
-            width: 600px;
-            padding: 10px;
-            cursor: pointer;
-            display: none;
-        }
-        .wlWindow {
-            padding: 10px;
-            width:1200px;
-            display: none;
-            overflow: scroll;
-            height: 600px;
-        }
-        .carWindow {
-            width: 1200px;
-            padding: 10px;
-            display: none;
-        }
-        .wxxmwin,.wpztwin {
-            width: 600px;
-            display: none;
-            padding: 10px;
-        }
-        .wxxmwin ul li, .wpztwin ul li{
-            width: 150px;
-            height: 30px;
-            text-align: center;
-            line-height: 30px;
-            border: 0.5px solid #ccc;
-            float: left;
-            box-sizing: border-box;
-            cursor: pointer;
-        }
-        .active {
-            background:rgb(5, 197, 253);
-            color: #fff;
-        }
-        .ly-body {
-            position: relative;
-            display: none;
-        }
-        .ly-show {
-            position:absolute;
-            z-index: 9999999999999999999999999;
-            /* display: none; */
-        }
-        .ly-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .ly-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .ly-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .ly-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-        .ly-3,.ly-khkc{
-            display: none;
-        }
-        
-        .ly-car:hover .ly-3,.ly-show > li:hover .ly-khkc{
-            display: block;
-        }
-        .ly-3-g{
-            display: none;
-        }
-        
-        .ly-gcar:hover .ly-3-g{
-            display: block;
-        }
-
-        .yhlist {
-            text-align: center;
-            
-        }
-        .qx-body {
-            position: relative;
-            display: none;
-        }
-        .qx-show {
-            position:absolute;
-            /* right: 0; */
-            margin:0 auto;
-            z-index: 9999999999999999999999999;
-            /* display: none; */
-        }
-        .qx-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .qx-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .qx-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .qx-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-        .qx-3,.qx-khkc{
-            display: none;
-        }
-        .qx-3-g{
-            display: none;
-        }
-        .qx-car:hover .qx-3,.qx-show > li:hover .qx-khkc{
-            display: block;
-        }
-        .qx-gcar:hover .qx-3-g{
-            display: block;
-        }
-        .qxxm-body {
-            position: relative;
-        }
-        .qxxm-show {
-            position:absolute;
-            z-index: 9999999999999999999999999;
-            display: none;
-        }
-        .qxxm-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .qxxm-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .qxxm-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .qxxm-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-        .xjdsb {
-            display:none;
-        }
-        .ly-gcar {
-            display: none;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="wrap">
-        <div class="ly-body">
-            <ul class="ly-show">
-                <li class="ly-car">
-                    <span class="names ly-car-num"></span>
-                    <div class="ly-3"></div>
-                </li>
-                <li class="ly-gcar">
-                    <span class="names ly-gcar-num"></span>
-                    <div class="ly-3-g"></div>
-                </li>
-                <li class="">
-                    <span class="names">客户库存</span>
-                    <div class="ly-khkc"></div>
-                </li>
-                <li class="">
-                    <span class="names">客户留存</span>
-                    <div class="ly-khkc"></div>
-                </li>
-            </ul>
-        </div>
-        <div class="qx-body">
-            <ul class="qx-show">
-                <li class="qx-car">
-                    <span class="names ly-car-num">客户库存</span>
-                    <div class="qx-3"></div>
-                </li>
-                <li class="qx-gcar">
-                        <span class="names ly-gcar-num"></span>
-                        <div class="qx-3-g"></div>
-                    </li>
-                <li class="">
-                    <span class="names">客户库存</span>
-                    <div class="qx-khkc"></div>
-                </li>
-                <li class="">
-                    <span class="names">客户留存</span>
-                    <div class="qx-khkc"></div>
-                </li>
-            </ul>
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>工作日期</th>
-                    <th>里程表数</th>
-                    <th>工作单号</th>
-                    <th style="width:20%;">客户名称</th>
-                    <th>车辆牌号</th>
-                    <th>挂车牌号</th>
-    
-                </tr>
-            </thead>
-            <tbody class="saveOne">
-                <tr>
-                    <td><input type="text" data-name="saleRepairDate" class="layui-input  date" value=""></td>
-                    <td><input type="text" data-name="saleRepairMileage" class="layui-input" value=""></td>
-                    <td><input type="text" data-name="saleRepairSheetId" readonly class="layui-input" value=""></td>
-                    <td><input data-name="customerName" type="text" class="layui-input customerName" value=""></td>
-                    <td><input type="text" data-name="carPlate" class="layui-input carPlate" value=""></td>
-                    <td><input type="text" data-name="trailerPlate" class="layui-input trailerPlate" value=""></td>
-                </tr>
-            </tbody>
-    
-        </table>
-        <div class="hover-body">
-            <ul class="hover-show">
-    
-            </ul>
-        </div>
-        <div class="qxxm-body">
-            <ul class="qxxm-show">
-    
-            </ul>
-        </div>
-        <div class="title">
-            物料销售 <div class="layui-btn-xs layui-btn" onclick="saleEdit()">编辑</div>
-        </div>
-        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th style="width:10%;">来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th colspan="2">规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>生产编号</th>
-                    <th>物料新旧</th>
-                    <th>去向</th>
-                    <th style="width:5%;">数量</th>
-                    <th style="width:5%;">单价</th>
-                    <th style="width:5%;">金额</th>
-                </tr>
-            </thead>
-    
-            <tbody class="spxs">
-            </tbody>
-        </table>
-        <div class="title">
-            物料维修 <div class="layui-btn-xs layui-btn" onclick="wlEdit()">编辑</div>
-        </div>
-        <!-- <div class="layui-btn  layui-btn-xs ">新增</div> -->
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th style="width:10%;">来源</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>生产编号</th>
-                    <th>物料新旧</th>
-                    <th>去向</th>
-                    <th style="width:5%;">数量</th>
-                    <th style="width:5%;">单价</th>
-                    <th style="width:5%;">金额</th>
-                </tr>
-            </thead>
-    
-            <tbody class="wlwx">
-                <tr>
-                </tr>
-            </tbody>
-        </table>
-        <div class="title">
-            车辆维修 <div class="layui-btn-xs layui-btn" onclick="carEdit()">编辑</div>
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>汽修项目</th>
-                    <th>维修科目</th>
-                    <th>维修方式</th>
-                    <th>工时</th>
-                    <th>费用</th>
-                    <th>费用承担</th>
-                    <th>保险单号</th>
-                    <th>保险公司</th>
-                    <th>备注</th>
-                </tr>
-            </thead>
-            <tbody class="clwx">
-    
-            </tbody>
-        </table>
-        <table class="layui-table">
-            <tbody>
-                <tr class="fyjf">
-                    <td style="width:10%;">费用合计</td>
-                    <td style="width:10%;"><input type="text" data-name="saleRepairCost" class="layui-input" value=""></td>
-                    <td style="width:10%;">消费积分</td>
-                    <td style="width:10%;"><input type="text" data-name="saleRepairIntegralConsumption" class="layui-input"
-                            value=""></td>
-                    <td style="width:10%;">实收金额</td>
-                    <td style="width:10%;"><input type="text" data-name="saleRepairPaidAmount" class="layui-input" value=""></td>
-                    <td style="width:10%;">付款方式</td>
-                    <td style="width:10%;" class="layui-form">
-                        <div class="layui-form-item">
-                            <div class="layui-input-inline">
-                                <select name="interest" class="fkfs" lay-filter="aihao">
-                                    <option value='银行支票'>银行支票</option>
-                                    <option value='网银电汇'>网银电汇</option>
-                                    <option value='银行承兑'>银行承兑</option>
-                                    <option value='现金收款'>现金收款</option>
-                                    <option value='应收账款'>应收账款</option>
-                                    <option value='免费'>免费</option>
-                                    <option value='预收账款'>预收账款</option>
-                                </select>
-                            </div>
-                        </div>
-                    </td>
-                    <td style="width:10%;">本次积分</td>
-                    <td style="width:10%;"><input type="text" data-name="saleRepairIntegral" class="layui-input" value=""></td>
-                </tr>
-            </tbody>
-        </table>
-        <ul class="qianming">
-            <li>
-                <label for="fwjb">服务经办</label>
-                <input type="text" data-name="serviceAttn" class="layui-input">
-            </li>
-            <li>
-                <label for="fwjb">库管经办</label>
-                <input type="text" data-name="serviceAttn" class="layui-input">
-            </li>
-            <li>
-                <label for="fwjb">客户经办</label>
-                <input type="text" data-name="customerAttn" class="layui-input">
-            </li>
-            <li>
-                <label for="fwjb">财务经办</label>
-                <input type="text" data-name="financeAttn" class="layui-input">
-            </li>
-        </ul>
-        <div class="title">
-            <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(false)">确认/结束</button>
-            <button class="layui-btn  layui-btn-sm layui-btn-normal" onclick="saveOne(true)">确认/检测</button>
-        </div>
-        <!-- 商品销售编辑页 -->
-        <div class="saleWindow">
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>物料新旧</th>
-                        <th>单位</th>
-                        <th>去向</th>
-                        <th>生产编号</th>
-                        <th>数量</th>
-                        <th>单价</th>
-                        <th>金额</th>
-                        <th>安装胎压</th>
-                        <th colspan="2">动平衡</th>
-                    </tr>
-                </thead>
-                <tbody class="spxsList">
-                    <tr>
-                        <td class="layui-form">
-                            <select name="" class="sel" id=""></select>
-                        </td>
-                        <td><input type="text" class="layui-input materielName set_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
-                        <td><input type="text" class="layui-input materielBrand set_1" data-name="materielBrand"></td>
-                        <td><input type="text" class="layui-input materielSpecifications set_2" data-name="materielSpecifications"></td>
-                        <td><input type="text" class="layui-input materielModel set_3" data-name="materielModel"></td>
-                        <td><input type="text" class="layui-input materielPlace set_4" data-name="materielPlace"></td>
-                        <td><input type="text" class="layui-input materielState set_5" data-name="materielState"></td>
-                        <td><input type="text" class="layui-input materielUnit set_6" data-name="materielUnit"></td>
-                        <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
-                        <td><input type="text" class="layui-input materielProductionId" data-name="materielProductionId"></td>
-                        <td><input type="text" id="shu" class="layui-input materielNumber set_7" data-name="materielNumber"
-                                oninput="setXong()"></td>
-                        <td><input type="text" id="dan" class="layui-input materielPrice" data-name="materielPrice" oninput="setXong()"></td>
-                        <td><input type="text" id="zong" class="layui-input materielTotal" data-name="materielTotal"></td>
-                        <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
-                        <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
-                        <td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingRight" class="layui-input"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="text-align:center">
-                <div class="layui-btn layui-btn-xs" onclick="saveRe(1)">确认/重复</div>
-                <div class="layui-btn layui-btn-xs" onclick="saveRe(2)">确认/新添</div>
-                <div class="layui-btn layui-btn-xs" onclick="saveRe(3)">确认/结束</div>
-                <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
-            </div>
-            <div style="text-align:center;margin:10px;">物料列表</div>
-            <table class="layui-table saleList">
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>单位</th>
-                        <th>生产编号</th>
-                        <th>物料新旧</th>
-                        <th>去向</th>
-                        <th>数量</th>
-                        <th>单价</th>
-                        <th>金额</th>
-                        <th>安装胎压</th>
-                        <th colspan="2">动平衡</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody class="splblist">
-                </tbody>
-            </table>
-        </div>
-        <!-- 动平衡 -->
-        <div class="dphWindow">
-            <table class="layui-table">
-                <tbody>
-                    <tr>
-                        <td style="background:#fff;" colspan="5" class="dphnum"></td>
-                    </tr>
-                    <tr>
-                        <td class="dphtype" style="background:#fff;">20寸</td>
-                        <td class="dphtype" style="background:#fff;">22.5寸</td>
-                        <td class="dphtype" style="background:#fff;">轿车</td>
-                        <td style="background:#fff;">
-                            <div class="layui-btn layui-btn-danger layui-btn-xs" onclick="delDph()">消除</div>
-                        </td>
-                        <td style="background:#fff;">
-                            <div class="layui-btn  layui-btn-xs" onclick="saveDph()">确定</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="background:#fff;" class="dph">5</td>
-                        <td style="background:#fff;" class="dph">10</td>
-                        <td style="background:#fff;" class="dph">20</td>
-                        <td style="background:#fff;" class="dph">50</td>
-                        <td style="background:#fff;" class="dph">100</td>
-                    </tr>
-                    <tr>
-                        <td style="background:#fff;" class="dph">150</td>
-                        <td style="background:#fff;" class="dph">200</td>
-                        <td style="background:#fff;" class="dph">250</td>
-                        <td style="background:#fff;" class="dph">300</td>
-                        <td style="background:#fff;" class="dph">350</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!-- 物料维修编辑页 -->
-        <div class="wlWindow">
-            <table class="layui-table">
-                <tr class="wxbj">
-                    <td style="width:10%;">
-                        维修项目
-                    </td>
-                    <td style="width:15%;" onclick="showWxxm()">
-                        <input type="text" data-name="repairRepair" class="layui-input repairRepair">
-                    </td>
-                    <td style="width:10%;">
-                        物品状态
-                    </td>
-                    <td style="width:15%;" onclick="showWpzt()">
-                        <input type="text" data-name="materielRepairState" class="layui-input materielRepairState">
-                    </td>
-                    <td style="width:10%;">
-                        胎纹深度
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireTread1" class="layui-input">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireTread2" class="layui-input">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireTread3" class="layui-input">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireTread4" class="layui-input">
-                    </td>
-                </tr>
-            </table>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>物料新旧</th>
-                        <th>单位</th>
-                        <th>去向</th>
-                        <th>生产编号</th>
-                        <th>二维码</th>
-                        <th>RFID</th>
-                        <th>胎压ID</th>
-                        <th>胎压</th>
-                        <th>数量</th>
-                        <th>维修金额</th>
-                    </tr>
-                </thead>
-                <tbody class="wlwxList">
-                    <tr>
-                        <td><input type="text" class="layui-input materielSource" data-name="materielSource" onclick="showLy(this)"></td>
-                        <td><input type="text" class="layui-input materielName wlset_0" data-name="materielName" onclick="setLyInfo(this,false)"></td>
-                        <td><input type="text" class="layui-input materielBrand wlset_1" data-name="materielBrand"></td>
-                        <td><input type="text" class="layui-input materielSpecifications wlset_2" data-name="materielSpecifications"></td>
-                        <td><input type="text" class="layui-input materielModel wlset_3" data-name="materielModel"></td>
-                        <td><input type="text" class="layui-input materielPlace wlset_4" data-name="materielPlace"></td>
-                        <td><input type="text" class="layui-input materielState wlset_5" data-name="materielState"></td>
-                        <td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
-                        <td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
-                        <td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
-                        <td><input type="text" class="layui-input materielProductionId wlset_9" data-name="materielProductionId"></td>
-                        <td><input type="text" class="layui-input materiel_sensor_id  wlset_10" data-name="materiel_sensor_id"></td>
-                        <td><input type="text" class="layui-input materiel_sensor_id  wlset_11" data-name="materiel_sensor_id"></td>
-                        <td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
-                        <td><input type="text" class="layui-input materielNumber wlset_7" data-name="materielNumber"></td>
-                        <td><input type="text" class="layui-input materielTotal" data-name="materielTotal"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="text-align:center">维修耗材</div>
-            <div>
-                <div style="width:70%; float:left;">
-                    <table class="layui-table">
-                        <thead>
-                            <tr>
-                                <th>耗材仓库</th>
-                                <th>品名</th>
-                                <th>品牌</th>
-                                <th>规格</th>
-                                <th>型号</th>
-                                <th>数量</th>
-                                <th style="width: 100px;">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody class="wxhclist">
-                                <tr class="lzwxhc">
-                                        <td class="layui-form"><input class="layui-input" type="hidden" data-name="pid">
-                                            <select class='hcck'></select>
-                                        </td>
-                                        <td><input class="layui-input hcck_0 " data-name="materielName" onclick="setLyInfo(this,true)"></td>
-                                        <td><input class="layui-input hcck_1  " data-name="materielBrand"></td>
-                                        <td><input class="layui-input hcck_2  " data-name="materielSpecifications"></td>
-                                        <td><input class="layui-input hcck_3  " data-name="materielModel"></td>
-                                        <td><input class="layui-input" data-name="materielNumber"></td>
-                                        <td>
-                                            <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="addWxhc()">新增</div>
-                                            <div class="layui-btn layui-btn-xs layui-btn-danger">删除</div>
-                                        </td>
-                                    </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div style="width: 25%;float:right;">
-                    <table class="layui-table">
-                        <tr>
-                            <td rowspan="2">动平衡</td>
-                            <td>
-                                <input type="text" data-name="dynamicBalancingLeft" onclick="setDph(this)" class="layui-input">
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <input type="text" data-name="dynamicBalancingRight" onclick="setDph(this)" class="layui-input">
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div style="clear:both;"></div>
-            <div style="text-align:center">
-                <div class="layui-btn layui-btn-xs" onclick="saveWx(1)">确认/重复</div>
-                <div class="layui-btn layui-btn-xs" onclick="saveWx(2)">确认/新添</div>
-                <div class="layui-btn layui-btn-xs" onclick="saveWx(3)">确认/结束</div>
-                <div class="layui-btn layui-btn-xs" onclick="alert('请手动关闭!')">取消/结束</div>
-            </div>
-            <div class="title">
-                待处理
-            </div>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>维修项目</th>
-                        <th>来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>物料新旧</th>
-                        <th>单位</th>
-                        <th>数量</th>
-                        <th>生产编号</th>
-                        <th>胎压ID</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody class="dcllist">
-    
-                </tbody>
-            </table>
-            <div class="title">
-                已完成
-            </div>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>维修项目</th>
-                        <th>来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>物料新旧</th>
-                        <th>单位</th>
-                        <th>数量</th>
-                        <th>去向</th>
-                        <th>生产编号</th>
-                        <th>胎压ID</th>
-                        <th>物品状态</th>
-                        <th>金额</th>
-                        <th>操作</th>
-                    </tr>
-                </thead>
-                <tbody class="ywclist">
-    
-                </tbody>
-            </table>
-        </div>
-        <!-- 车辆维修编辑页 -->
-        <div class="carWindow">
-            <div class="title">
-                车辆维修 </div>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th>汽修项目</th>
-                        <th>维修科目</th>
-                        <th>维修方式</th>
-                        <th>工时</th>
-                        <th>费用</th>
-                        <th>费用承担</th>
-                        <th>保险单号</th>
-                        <th>保险公司</th>
-                        <th>备注</th>
-                        <th style="width:100px;">操作</th>
-                    </tr>
-                </thead>
-                <tbody class="clwxxq">
-                    <tr id="clwx">
-                        <td><input type="text" class="layui-input garageProject" data-name="garageProject" value="" onclick="setQxxm('clwx',this)"></td>
-                        <td><input type="text" class="layui-input repairProject" data-name="repairProject" value=""></td>
-                        <td><input type="text" class="layui-input repairMode" data-name="repairMode" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="workTime" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="money" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="moneyC" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="insurancepolicyno" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="insuranceCompany" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
-                        <td>
-                            <div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="title">
-                耗材明细
-            </div>
-            <table class="layui-table">
-                <thead>
-                    <tr>
-                        <th style="width:10%;">来源</th>
-                        <th>品名</th>
-                        <th>品牌</th>
-                        <th>规格</th>
-                        <th>型号</th>
-                        <th>产地</th>
-                        <th>状态</th>
-                        <th style="width:5%;">单位</th>
-                        <th style="width:5%;">数量</th>
-                        <th>备注</th>
-                        <th style="width:15%;">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="lzhcmx">
-                        <td class="layui-form">
-                            <div class="layui-form-item">
-                                <div class="layui-input-inline">
-                                    <select name="interest" class="cheliangweixiusel" lay-filter="cheliangweixiu">
-                                        <option value=""></option>
-                                        <option value="0">金方舟</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="text" class="layui-input materielName hcset_0" data-name="scrName" onclick="setLyInfo(this,false)"
-                                value=""></td>
-                        <td><input type="text" class="layui-input materielBrand hcset_1" data-name="scrBrand" value=""></td>
-                        <td><input type="text" class="layui-input materielSpecifications hcset_2" data-name="scrSpecifications"
-                                value=""></td>
-                        <td><input type="text" class="layui-input materielModel hcset_3" data-name="scrModel" value=""></td>
-                        <td><input type="text" class="layui-input materielPlace hcset_4" data-name="chanDi" value=""></td>
-                        <td><input type="text" class="layui-input materielState hcset_5" data-name="state" value=""></td>
-                        <td><input type="text" class="layui-input materielUnit hcset_6" data-name="danWei" value=""></td>
-                        <td><input type="text" class="layui-input  hcset_7" data-name="number" value=""></td>
-                        <td><input type="text" class="layui-input" data-name="bz" value=""></td>
-                        <td>
-                            <div class="layui-btn  layui-btn-xs layui-btn-normal" onclick="saveHcmx()">保存</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div style="text-align: center">
-                <div class="layui-btn layui-btn-xs" onclick="saveCar(true)">确认/结束</div>
-                <div class="layui-btn layui-btn-xs" onclick="saveCar()">取消/结束</div>
-            </div>
-        </div>
-        <div class="wxxmwin">
-            <ul>
-                <li></li>
-            </ul>
-        </div>
-        <div class="wpztwin">
-            <ul>
-                <li></li>
-            </ul>
-        </div>
-    
-        <div class="xjdsb">
-            <table class="yhlist layui-table">
-    
-            </table>
-        </div>
-    </div>
-</body>
-<script src="./js/Global.js"></script>
-<script>
-    
-    $('.customerName').val(decodeURI(decodeURI(getUrlParam('custName'))))
-    let layform = ''
-    layui.use('form', function () {
-        layform = layui.form
-    })
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-        laydate.render({
-            elem: '.date'
-        })
-    })
-    let layer = ''
-    layui.use('layer', function () {
-        layer = layui.layer
-    })
-    if (sessionStorage.pcar) {
-        $('.carPlate').val(sessionStorage.pcar)
-    }
-    if (sessionStorage.gcar) {
-        $('.trailerPlate').val(sessionStorage.gcar)
-    }
-    if(sessionStorage.custName) {
-        $('.customerName').val(sessionStorage.custName)
-    }
-    let saleList = []
-    let carNum = sessionStorage.pcar || sessionStorage.gcar
-    let wlwxbol = false
-    let selType = 0 // 要查询的类型
-    let isHcck = false // 是否为耗材仓库
-    if(sessionStorage.pcar && sessionStorage.gcar) {
-        
-        $('.ly-gcar-num').html(sessionStorage.gcar)
-        $('.ly-gcar').css({
-            'display':'block'
-        })
-    } 
-    $('.ly-car-num').html(carNum)
-    // 设置总金额
-    function setXong() {
-        if (!isNaN(Number($('#shu').val())) && !isNaN(Number($('#dan').val()))) {
-            $('#zong').val(Number($('#shu').val()) * Number($('#dan').val()))
-        }
-    }
-    //  获取商品列表
-    function selSaleList() {
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuShangPinLieBiao?carPai=${carNum}`,
-            type: 'get',
-            success: function (res) {
-                console.log(res)
-                let arr = res.data
-                saleList = res.data
-                let str = ''
-                let strs = ''
-                $.each(arr, function (i, n) {
-                    str +=
-                        `<tr >
+			$('.ly-gcar-num').html(sessionStorage.gcar)
+			$('.ly-gcar').css({
+				'display': 'block'
+			})
+		}
+		$('.ly-car-num').html(carNum)
+		// 查询未保存的物料销售
+		selSaleList()
+		// 查询未保存的物料维修
+		wlList()
+		// 查询未保存的车辆维修
+		selCar()
+		$(document).on('click',function () {
+			$('.hover-show').hide()
+					$('.ly-show').hide()
+					$('.qx-show').hide()
+					$('.qxxm-show').hide()
+		})
+		// 设置实收金额
+		function setSsje () {
+			$('#ssje').val($('#fyhj').val() - $('#xfjf').val())
+		}
+		// 设置总金额
+		function setXong() {
+			if(!isNaN(Number($('#shu').val())) && !isNaN(Number($('#dan').val()))) {
+				$('#zong').val(Number($('#shu').val()) * Number($('#dan').val()))
+			}
+		}
+		//  获取商品列表
+		function selSaleList() {
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuShangPinLieBiao?carPai=${carNum}`,
+				type: 'get',
+				success: function(res) {
+					console.log(res)
+					let arr = res.data
+					saleList = res.data
+					let str = ''
+					let strs = ''
+					$.each(arr, function(i, n) {
+						str +=
+							`<tr >
                             <td >${n.warehouseName || ''}</td>
                             <td>${n.materielName}</td>
-                            <td colspan="2">${n.materielBrand}</td>
+                            <td >${n.materielBrand}</td>
                             <td>${n.materielSpecifications}</td>
                             <td>${n.materielModel}</td>
                             <td>${n.materielPlace}</td>
@@ -1002,10 +1051,10 @@
                             <td>${n.materielOutTo}</td>
                             <td>${n.materielNumber}</td>
                             <td>${n.materielPrice}</td>
-                            <td>${n.materielTotal}</td>
+                            <td class="jisuanjine">${n.materielTotal}</td>
                         </tr>`
-                    strs +=
-                        `<tr >     
+						strs +=
+							`<tr >     
                             <td>${saleList.length - i}</td>
                             <td >${n.warehouseName == null ? '' : n.warehouseName}</td>
                             <td>${n.materielName == null ? '' : n.materielName}</td>
@@ -1021,359 +1070,396 @@
                             <td>${n.materielPrice == null ? '' : n.materielPrice}</td>
                             <td>${n.materielTotal == null ? '' : n.materielTotal}</td>
                             <td>${n.materielPressure == null ? '' : n.materielPressure}</td>
-                            <td>${n.dynamicBalancingLeft == null ? '' : n.dynamicBalancingLeft}</td>
-                            <td>${n.dynamicBalancingRight == null ? '' : n.dynamicBalancingRight}</td>
+                            <td style="width:30px;">${n.dynamicBalancingLeft == null ? '' : n.dynamicBalancingLeft}</td>
+                            <td  style="width:30px;">${n.dynamicBalancingRight == null ? '' : n.dynamicBalancingRight}</td>
                             <td> <div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delSpxs(${n.id})">删除</div></td>
                         </tr>`
-                })
-                $('.splblist').html(strs)
-                $('.spxs').html(str)
-            }
-        })
-    }
-    // 设置物料值
-    function setVals(index) {
-        $(`.yhlist .cnmsd_${index} td`).each(function (i, k) {
-            if (selType == 1) {
-                $(`.set_${i}`).val($(k).text())
-            } else if (selType == 2) {
-                if (isHcck) {
-                    if (i < 4) {
-                        $(`.hcck_${i}`).val($(k).text())
-                    }
-                } else {
-                    $(`.wlset_${i}`).val($(k).text())
-                }
-            } else if (selType == 3) {
+					})
+					$('.splblist').html(strs)
+					$('.spxs').html(str)
+					jisuanjine()
+				}
+			})
+		}
+		// 设置物料值
+		function setVals(index) {
+			$(`.yhlist .cnmsd_${index} td`).each(function(i, k) {
+				if(selType == 1) {
+					$(`.set_${i}`).val($(k).text())
+				} else if(selType == 2) {
+					if(isHcck) {
+						if(i < 4) {
+							$(`.hcck_${i}`).val($(k).text())
+						}
+					} else {
+						$(`.wlset_${i}`).val($(k).text())
+					}
+				} else if(selType == 3) {
 
-                $(`.hcset_${i}`).val($(k).text())
-            }
-        })
-        $(`.set_7`).val(1)
-        $(`.wlset_7`).val(1)
-        $(`.hcset_7`).val(1)
-        layer.close(layer.index)
+					$(`.hcset_${i}`).val($(k).text())
+				}
+			})
+			$(`.set_7`).val(1)
+			$(`.wlset_7`).val(1)
+			$(`.hcset_7`).val(1)
+			layer.close(layer.index)
 
-    }
-    // selSaleList()
-    // 获取所有的仓库
-    let ckList = []
-    let changeId = ''
-    $.ajax({
-        url: `${API}/erpCustomerWarehouse/getWarehouses?custId=${loadUserInfo.customer.id}`,
-        type: 'get',
-        success: function (res) {
-            let arrs = res.data
-            let str = ''
-            ckList = res.data
-            changeId = arrs[0].id
-            $.each(arrs, function (i, n) {
-                str += `<option value="${n.id}">${n.warName}</option>`
-            })
-            $('.sel').html(str)
-            $('.cheliangweixiusel').html(str)
-            $('.hcck').html(str)
-            var form = ''
-            layui.use('form', function () {
-                form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-                form.render();
-            })
-            form.on('select', function (data) {
-                console.log($(data.elem))
-                console.log($(data.elem).hasClass('hcck'))
-                if ($(data.elem).hasClass('hcck')) {
-                    isHcck = true
-                }
-                setKcList(data.value, '')
-            });
-        }
+		}
+		
+		// 获取所有的仓库
+		let ckList = []
+		let changeId = ''
+		$.ajax({
+			url: `${API}/erpCustomerWarehouse/getWarehouses?custId=${loadUserInfo.customer.id}`,
+			type: 'get',
+			success: function(res) {
+				let arrs = res.data
+				let str = '<option></option>'
+				ckList = res.data
+				changeId = arrs[0].id
+				$.each(arrs, function(i, n) {
+					str += `<option value="${n.id}">${n.warName}</option>`
+				})
+				$('.sel').html(str)
+				$('.cheliangweixiusel').html(str)
+				$('.hcck').html(str)
+				var form = ''
+				layui.use('form', function() {
+					form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+					form.render();
+				})
+				form.on('select', function(data) {
+					console.log($(data.elem))
+					console.log($(data.elem).hasClass('hcck'))
+					selWxHc()
+					if($(data.elem).hasClass('hcck')) {
+						isHcck = true
+					}
+					setKcList(data.value, '')
+				});
+			}
 
-    })
-    // 维修项目
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=物料维修`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = ''
-            $.each(arr, function (i, k) {
-                str += `<li>${k.name}</li>`
-            })
-            $('.wxxmwin ul').html(str)
-            $('.wxxmwin ul li').click(function () {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active')
-                } else {
-                    $(this).addClass('active')
-                }
+		})
+		// 维修项目
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=物料维修`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = ''
+				$.each(arr, function(i, k) {
+					str += `<li>${k.name}</li>`
+				})
+				$('.wxxmwin ul').html(str)
+				$('.wxxmwin ul li').click(function() {
+					if($(this).hasClass('active')) {
+						$(this).removeClass('active')
+					} else {
+						$(this).addClass('active')
+					}
 
-            })
-        }
-    })
-    //  设置维修项目
-    function showWxxm() {
-        layer.open({
-            type: 1,
-            content: $('.wxxmwin'),
-            area: ['620px'],
-            btn: ['确定'],
-            yes: function (index) {
-                let arr = []
-                $('.wxxmwin .active').each(function () {
-                    arr.push($(this).text())
-                })
-                $('.repairRepair').val(arr.toString())
-                layer.close(index)
-            }
-        })
-    }
-    // 物品状态
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=物料状态`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = ''
-            $.each(arr, function (i, k) {
-                str += `<li>${k.name}</li>`
-            })
-            $('.wpztwin ul').html(str)
-            $('.wpztwin ul li').click(function () {
-                if ($(this).hasClass('active')) {
-                    $(this).removeClass('active')
-                } else {
-                    $(this).addClass('active')
-                }
+				})
+			}
+		})
+		//  设置维修项目
+		function showWxxm() {
+			layer.open({
+				type: 1,
+				content: $('.wxxmwin'),
+				area: ['620px'],
+				btn: ['确定'],
+				maxmin:true,
+				yes: function(index) {
+					let arr = []
+					$('.wxxmwin .active').each(function() {
+						arr.push($(this).text())
+					})
+					$('.repairRepair').val(arr.toString())
+					layer.close(index)
+				}
+			})
+		}
+		// 物品状态
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=物料状态`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = ''
+				$.each(arr, function(i, k) {
+					str += `<li>${k.name}</li>`
+				})
+				$('.wpztwin ul').html(str)
+				$('.wpztwin ul li').click(function() {
+					if($(this).hasClass('active')) {
+						$(this).removeClass('active')
+					} else {
+						$(this).addClass('active')
+					}
 
-            })
-        }
-    })
+				})
+			}
+		})
 
-    // 设置物品状态
-    function showWpzt() {
-        layer.open({
-            type: 1,
-            content: $('.wpztwin'),
-            area: ['620px'],
-            btn: ['确定'],
-            yes: function (index) {
-                let arr = []
-                $('.wpztwin .active').each(function () {
-                    arr.push($(this).text())
-                })
-                $('.materielRepairState').val(arr.toString())
-                layer.close(index)
-            }
-        })
-    }
-    // 保存物料维修
-    let Wxdata = {}
+		// 设置物品状态
+		function showWpzt() {
+			layer.open({
+				type: 1,
+				content: $('.wpztwin'),
+				area: ['620px'],
+				btn: ['确定'],
+				maxmin:true,
+				yes: function(index) {
+					let arr = []
+					$('.wpztwin .active').each(function() {
+						arr.push($(this).text())
+					})
+					$('.materielRepairState').val(arr.toString())
+					layer.close(index)
+				}
+			})
+		}
+		// 保存物料维修
+		let Wxdata = {}
 
-    function saveWx(params) {
-        let data = {}
-        $('.wxbj input').each(function () {
-            Wxdata[$(this).data('name')] = $(this).val()
-        })
-        $('.wlwxList input').each(function () {
-            Wxdata[$(this).data('name')] = $(this).val()
-        })
-        Wxdata.json = []
-        let arr = []
-        $('.wxhclist').each(function () {
-            let d = {}
-            $(this).find('input').each(function () {
-                d[$(this).data('name')] = $(this).val()
-            })
-            Wxdata.json.push(d)
-        })
+		function saveWx(params) {
+			let data = {}
+			$('.wxbj input').each(function() {
+				Wxdata[$(this).data('name')] = $(this).val()
+			})
+			$('.wlwxList input').each(function() {
+				Wxdata[$(this).data('name')] = $(this).val()
+			})
+			Wxdata.json = []
+			let arr = []
+			$('.wxhclist').each(function() {
+				let d = {}
+				$(this).find('input').each(function() {
+					d[$(this).data('name')] = $(this).val()
+				})
+				Wxdata.json.push(d)
+			})
 
-        data = Wxdata
-        data.carPlate = trimStr(sessionStorage.pcar)
-        data.json = JSON.stringify(data.json)
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/addWuLiaoWeiXiuNew`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.msg('保存成功!')
-                    Wxdata.weixiutaiweiCount = res.data.weixiutaiweiCount[0]
-                    Wxdata.json = JSON.parse(Wxdata.json)
-                    $.each(res.data.weixiuhaocaiCount, function (i, n) {
-                        console.log(Wxdata.json[i])
-                        Wxdata.json[i]["weixiuhaocaiCount"] = n
-                    })
-                    wlList()
-                    if (params == 1) {
-                        $('.wlset_8').val('')
-                        $('.wlset_9').val('')
-                    } else if (params == 2) {
-                        $('.wlwxList input').val('')
-                    } else {
-                        alert('请手动关闭')
-                    }
-                }
-            }
-        })
+			data = Wxdata
+			data.carPlate = trimStr(sessionStorage.pcar)
+			data.json = JSON.stringify(data.json)
+			if (params == 4) {
+				$('input').val('')
+				layer.closeAll()
+			} else{
+				$.ajax({
+					url: `${API}/erpXiaoShouWeiXiu/addWuLiaoWeiXiuNew`,
+					type: 'post',
+					data: data,
+					success: function(res) {
+						if(res.code == 0) {
+							layer.msg('保存成功!')
+							Wxdata.weixiutaiweiCount = res.data.weixiutaiweiCount[0]
+							Wxdata.json = JSON.parse(Wxdata.json)
+							$.each(res.data.weixiuhaocaiCount, function(i, n) {
+								console.log(Wxdata.json[i])
+								Wxdata.json[i]["weixiuhaocaiCount"] = n
+							})
+							if(params == 1) {
+								$('.wlset_8').val('')
+								$('.wlset_9').val('')
+								$('.wlwxList .materielOutTo').val('')
+							} else if(params == 2) {
+								$('.wlwxList input').val('')
+								$('.wxhclist input').val('')
+								
+							} else if(params == 3){
+								$('input').val('')
+								layer.closeAll()
+							}
+							// 查询未保存的物料销售
+							selSaleList()
+							// 查询未保存的物料维修
+							wlList()
+							// 查询未保存的车辆维修
+							selCar()
+						}
+					}
+				})
+			}
+				
 
-    }
-    // 商品销售
-    function saleEdit() {
-        selType = 1
-        $('.materielOutTo').val('')
-        layer.open({
-            type: 1,
-            content: $('.saleWindow'),
-            area: ['1400px']
-        })
-        setKcList(changeId, $('.sel').val())
-        wlwxbol = true
+		}
+		// 商品销售
+		function saleEdit() {
+			selType = 1
+			$('.materielOutTo').val('')
+			layer.open({
+				type: 1,
+				content: $('.saleWindow'),
+				area: ['1400px', '400px'],
+				maxmin:true,
+			})
+			setKcList(changeId, $('.sel').val())
+			wlwxbol = true
 
-    }
-    let wwcList = []
-    let ywcList = []
-    // 物料维修查询
-    function wlList() {
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXius?carPai=${carNum}`,
-            type: 'get',
-            success: function (res) {
-                console.log(res, '222')
-                wwcList = res.data.weiwancheng
-                ywcList = res.data.yiwancheng
-                let arr = wwcList.concat(ywcList)
-                let str = ''
-                let wcstr = ''
-                let dclstr = ''
-                $.each(wwcList, function (i, n) {
-                    dclstr +=
-                        `<tr>
-                        <td>${i+1}</td>
+		}
+		let wwcList = []
+		let ywcList = []
+		//  维修耗材查询
+		function selWxHc () {
+			$('.hcck').val()
+			$.ajax({
+				url:`${API}/erpHc/selectByCarPlate?wareId=${$('.hcck').val()}`,
+				type:'get',
+				sucess: function (res) {
+					console.log(res)
+				}
+			})
+		}
+		// 物料维修查询
+		function wlList() {
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuLunTaiWeiXius?carPai=${carNum}`,
+				type: 'get',
+				success: function(res) {
+					// console.log(res, '222')
+					wwcList = res.data.weiwancheng
+					ywcList = res.data.yiwancheng
+					let arr = wwcList.concat(ywcList)
+					let str = ''
+					let wcstr = ''
+					let dclstr = ''
+					$.each(wwcList, function(i, n) {
+						dclstr +=
+							`<tr>
+                        <td>${wwcList.length - i}</td>
                         <td>${n.repairRepair || ""}</td>
                         <td>${n.materielSource}</td>
                         <td>${n.materielName}</td>
                         <td>${n.materielBrand}</td>
                         <td>${n.materielSpecifications}</td>
                         <td>${n.materielModel}</td>
-                        <td>${n.materielPlace}</td>
                         <td>${n.materielState}</td>
-                        <td>${n.materielUnit}</td>
-                        <td>${n.materielNumber}</td>
-                        <td>${n.materielProductionId}</td>
-                        <td>${n.materielSensorId}</td>
-                        <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
-                })
-                $.each(ywcList, function (i, n) {
-                    wcstr +=
-                        `<tr><td>${n.repairRepair || ""}</td>
-                        <td>${n.materielSource}</td>
-                        <td>${n.materielName}</td>
-                        <td>${n.materielBrand}</td>
-                        <td>${n.materielSpecifications}</td>
-                        <td>${n.materielModel}</td>
-                        <td>${n.materielPlace}</td>
-                        <td>${n.materielState}</td>
-                        <td>${n.materielUnit}</td>
-                        <td>${n.materielNumber}</td>
-                        <td>${n.materielOutTo}</td>
+                        
+						<td>${n.materielNumber}</td>
+						<td>${n.materielOutTo}</td>
                         <td>${n.materielProductionId}</td>
                         <td>${n.materielPressure}</td>
-                        <td>${n.materielRepairState}</td>
-                        <td>${n.materielTotal}</td>
-                        <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
-                })
-
-                $.each(arr, function (i, n) {
-                    str +=
-                        `<tr>
+                        <td><div class="layui-btn layui-btn-xs layui-btn-normal" onclick="setDatatoWx(${i})">选择</div></td><tr>`
+					})
+					$.each(ywcList, function(i, n) {
+						wcstr +=
+						`<tr>
+                        <td>${ywcList.length - i}</td>
+                        <td>${n.repairRepair || ""}</td>
                         <td>${n.materielSource}</td>
                         <td>${n.materielName}</td>
                         <td>${n.materielBrand}</td>
                         <td>${n.materielSpecifications}</td>
                         <td>${n.materielModel}</td>
-                        <td>${n.materielPlace}</td>
-                        <td>${n.materielUnit}</td>
+                        <td>${n.materielState}</td>
+                        
+						<td>${n.materielNumber}</td>
+						<td>${n.materielOutTo}</td>
                         <td>${n.materielProductionId}</td>
-                        <td>${n.materielRepairState}</td>
-                        <td>${n.materielOutTo}</td>
-                        <td>${n.materielNumber}</td>
-                        <td>${n.materielPrice}</td>
-                        <td>${n.materielTotal}</td>
+                        <td>${n.materielPressure}</td>
+                        <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
+					})
+
+					$.each(arr, function(i, n) {
+						str +=
+							`<tr>
+                        <td>${n.materielSource || ''}</td>
+                        <td>${n.materielName || ''}</td>
+                        <td>${n.materielBrand || ''}</td>
+                        <td>${n.materielSpecifications || ''}</td>
+                        <td>${n.materielModel || ''}</td>
+                        <td>${n.materielPlace || ''}</td>
+                        <td>${n.materielUnit || ''}</td>
+                        <td>${n.materielProductionId || ''}</td>
+                        <td>${n.repairRepair || ''}</td>
+                        <td>${n.materielOutTo || ''}</td>
+                        <td>${n.materielNumber || ''}</td>
+                        <td>${n.materielPressure || ''}</td>
+                        <td class="jisuanjine">${n.materielTotal || ''}</td>
                         </tr>
                       `
-                })
-                $('.wlwx').html(str)
-                $('.dcllist').html(dclstr)
-                $('.ywclist').html(wcstr)
+					})
+					$('.wlwx').html(str)
+					$('.dcllist').html(dclstr)
+					$('.ywclist').html(wcstr)
+					jisuanjine()
+				}
+			})
+		}
+		//  选中数据
+		function setDatatoWx(index) {
+			let data = wwcList[index]
+			for (let key in data) {
+				$(`.wlwxList .${key}`).val(data[key])
+			}
+		}
+		// 物料维修
+		function wlEdit() {
+			selType = 2
+			$('.materielSource').val('')
+			$('.materielOutTo').val('')
+			layer.open({
+				type: 1,
+				content: $('.wlWindow'),
+				area: ['1220px'],
+				maxmin:true,
+				yes: function(index) {
+					layer.close(index)
 
-            }
-        })
-    }
-    // wlList()
-    // 物料维修
-    function wlEdit() {
-        selType = 2
-        $('.materielSource').val('')
-        $('.materielOutTo').val('')
-        layer.open({
-            type: 1,
-            content: $('.wlWindow'),
-            area: ['1220px'],
-            yes: function (index) {
-                layer.close(index)
+				},
+				cancel: function() {
+					$('.hover-show').hide()
+					$('.ly-show').hide()
+					$('.qx-show').hide()
+					$('.qxxm-show').hide()
+				}
+			})
+		}
+		//  删除物料
+		function delWl(id) {
+			if(confirm('是否删除')) {
+				$.ajax({
+					url: `${API}/erpXiaoShouWeiXiu/deleteXiaoshouweixiuLunTaiWeiXius?id=${id}`,
+					type: 'get',
+					success: function(res) {
+						console.log(res)
+						if(res.code == 0) {
+							layer.msg('删除成功！')
+							wlList()
+						}
+					}
+				})
+			}
+		}
 
-            },
-            cancel: function () {
-        $('.hover-show').hide()
-        $('.ly-show').hide()
-        $('.qx-show').hide()
-        $('.qxxm-show').hide()
-            }
-        })
-    }
-    //  删除物料
-    function delWl(id) {
-        if (confirm('是否删除')) {
-            $.ajax({
-                url: `${API}/erpXiaoShouWeiXiu/deleteXiaoshouweixiuLunTaiWeiXius?id=${id}`,
-                type: 'get',
-                success: function (res) {
-                    console.log(res)
-                    if (res.code == 0) {
-                        layer.msg('删除成功！')
-                        wlList()
-                    }
-                }
-            })
-        }
-    }
-
-    //  删除商品销售
-    function delSpxs(id) {
-        if (confirm('是否删除')) {
-            $.ajax({
-                url: `${API}/erpXiaoShouWeiXiu/deletexiaoshouweixiuShangPinLieBiao?id=${id}`,
-                type: 'get',
-                success: function (res) {
-                    console.log(res)
-                    if (res.code == 0) {
-                        layer.msg('删除成功！')
-                        selSaleList()
-                    }
-                }
-            })
-        }
-    }
-    // 车辆维修查询
-    function selCar() {
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuCheLiangWeiXius?carPai=${carNum}`,
-            type: 'get',
-            success: function (res) {
-                let arr = res.data
-                let str = ''
-                let strxq =
-                    `<tr id="clwx">
+		//  删除商品销售
+		function delSpxs(id) {
+			if(confirm('是否删除')) {
+				$.ajax({
+					url: `${API}/erpXiaoShouWeiXiu/deletexiaoshouweixiuShangPinLieBiao?id=${id}`,
+					type: 'get',
+					success: function(res) {
+						console.log(res)
+						if(res.code == 0) {
+							layer.msg('删除成功！')
+							selSaleList()
+						}
+					}
+				})
+			}
+		}
+		// 车辆维修查询
+		function selCar() {
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuCheLiangWeiXius?carPai=${carNum}`,
+				type: 'get',
+				success: function(res) {
+					let arr = res.data
+					let str = ''
+					let strxq =
+						`<tr id="clwx">
                     <td><input type="text" class="layui-input garageProject" data-name="garageProject" value="" onclick="setQxxm('clwx',this)"></td>
                     <td><input type="text" class="layui-input repairProject" data-name="repairProject" value=""></td>
                     <td><input type="text" class="layui-input repairMode" data-name="repairMode" value=""></td>
@@ -1385,9 +1471,9 @@
                     <td><input type="text" class="layui-input" data-name="repairRemarks" value=""></td>
                     <td><div class="layui-btn layui-btn-xs" onclick="saveClwx()">保存</div></td>
                 </tr>`
-                $.each(arr, function (i, n) {
-                    str +=
-                        `<tr>
+					$.each(arr, function(i, n) {
+						str +=
+							`<tr>
                         <td>${n.garageProject == null ? '' : n.garageProject}</td>
                         <td>${n.repairProject == null ? '' : n.repairProject}</td>
                         <td>${n.repairMode == null ? '' : n.repairMode}</td>
@@ -1398,387 +1484,418 @@
                         <td>${n.insuranceCompany == null ? '' : n.insuranceCompany}</td>
                         <td>${n.repairRemarks == null ? '' : n.repairRemarks}</td>
                         </tr>`
-                })
-                $.each(arr, function (i, n) {
-                    strxq +=
-                        `<tr>
+					})
+					$.each(arr, function(i, n) {
+						strxq +=
+							`<tr>
                         <td>${n.garageProject == null ? '' : n.garageProject}</td>
                         <td>${n.repairProject == null ? '' : n.repairProject}</td>
                         <td>${n.repairMode == null ? '' : n.repairMode}</td>
                         <td>${n.workTime == null ? '' : n.workTime}</td>
-                        <td>${n.money == null ? '' : n.money}</td>
-                        <td>${n.moneyC == null ? '' : n.moneyC}</td>
+                        <td class="jisuanjine">${n.money == null ? '' : n.money}</td>
+                        <td >${n.moneyC == null ? '' : n.moneyC}</td>
                         <td>${n.insurancepolicyno == null ? '' : n.insurancepolicyno}</td>
                         <td>${n.insuranceCompany == null ? '' : n.insuranceCompany}</td>
                         <td>${n.repairRemarks == null ? '' : n.repairRemarks}</td>
                         <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="C_del_clwx(${n.id})">删除</div></td>
                         </tr>`
-                })
-                $('.clwx').append(str)
-                $('.clwxxq').html(strxq)
-            }
-        })
-    }
-    // selCar()
-    // 车辆维修
-    function carEdit() {
-        selType = 3
-        layer.open({
-            type: 1,
-            content: $('.carWindow'),
-            area: ['1220px', '600px'],
-            yes: function (index) {
-                layer.close(index)
-                $('.qxxm-body').hide()
-            }
-        })
-    }
-    //　保存车辆维修信息
-    function saveCar(bol) {
-        if (bol) {
+					})
+					$('.clwx').html(str)
+					$('.clwxxq').html(strxq)
+					jisuanjine()
+				}
+			})
+		}
+		// 
+		// 车辆维修
+		function carEdit() {
+			selType = 3
+			layer.open({
+				type: 1,
+				content: $('.carWindow'),
+				area: ['1220px', '600px'],
+				maxmin:true,
+				yes: function(index) {
+					layer.close(index)
+					$('.qxxm-body').hide()
+				}
+			})
+		}
+		function jisuanjine () {
+			let num = 0 
+			$('.jisuanjine').each(function (i,k) {
+				if (isNaN(Number($(this).text()))) {
 
-        } else {
+				} else {
+					num += Number($(this).text())
+				}
+			})
+			console.log(num,'钱')
+			$('#fyhj').val(num)
+		}
+		//　保存车辆维修信息
+		function saveCar(bol) {
+			if(bol) {
 
-        }
-        layer.close(layer.index);
-    }
-    //  删除车辆维修
-    function C_del_clwx(params) {
-        var sure = window.confirm('确定删除？');
-        if (sure) {
-            $.ajax({
-                url: `${API}/erpXiaoShouWeiXiu/delectxiaoshouweixiuCheLiangWeiXius`,
-                type: 'post',
-                data: {
-                    id: params
-                },
-                success: function (res) {
-                    if (res.code == 0) {
-                        selCar()
-                        layer.msg('删除成功');
-                    }
-                }
-            })
-        }
+			} else {
 
-    }
-    //  维修耗材新增
-    function addWxhc() {
+			}
+			$('input').val('')
+			layer.closeAll();
+		}
+		//  删除车辆维修
+		function C_del_clwx(params) {
+			var sure = window.confirm('确定删除？');
+			if(sure) {
+				$.ajax({
+					url: `${API}/erpXiaoShouWeiXiu/delectxiaoshouweixiuCheLiangWeiXius`,
+					type: 'post',
+					data: {
+						id: params
+					},
+					success: function(res) {
+						if(res.code == 0) {
+							selCar()
+							layer.msg('删除成功');
+						}
+					}
+				})
+			}
 
-        $('.wlWindow').css({
-            'width': '1180px'
-        })
-        $('.wxhclist').append(
-            `<tr class="lzwxhc">
+		}
+		//  维修耗材新增
+		function addWxhc() {
+
+			$('.wlWindow').css({
+				'width': '1180px'
+			})
+			$('.wxhclist').append(
+				`<tr class="lzwxhc">
                 <td class="layui-form"><input class="layui-input" data-name="pid"></td>
                 <td><input class="layui-input " data-name="materielName"></td>
                 <td><input class="layui-input " data-name="materielBrand"></td>
                 <td><input class="layui-input " data-name="materielSpecifications"></td>
                 <td><input class="layui-input " data-name="materielModel"></td>
-                <td><input class="layui-input " data-name="materielNumber"></td>
+                <td><input class="layui-input " data-name="materielNumber" value="1"></td>
                 <td><div class="layui-btn layui-btn-xs layui-btn-danger">删除</div></td>
             </tr>`
-        )
-        let str = '<option></option>'
-        $.each(ckList, function (i, n) {
-            str += `<option>${n.warName}</option>`
-        })
-        $('.wxsel').html(str)
-        layui.use('form', function () {
-            var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-            form.render();
-        })
+			)
+			let str = '<option></option>'
+			$.each(ckList, function(i, n) {
+				str += `<option>${n.warName}</option>`
+			})
+			$('.wxsel').html(str)
+			layui.use('form', function() {
+				var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+				form.render();
+			})
 
-    }
-    let dphTags = ''
-    // 设置动平衡
-    function setDph(_this) {
-        dphTags = _this
-        layer.open({
-            type: 1,
-            content: $('.dphWindow'),
-            area: ['640px']
-        })
-        $('.dphtype').css({
-            'background': '#fff'
-        })
-    }
-    let dph = []
-    $('.dph').on('click', function () {
-        dph.push($(this).text())
-        let str = dph.toString()
-        str = str.replace(/,/g, '+')
-        $('.dphnum').html(str)
-    })
-    $('.dphtype').on('click', function () {
-        $('.dphtype').css({
-            'background': '#fff'
-        })
-        $(this).css({
-            'background': '#ccc'
-        })
-    })
-    // 动平衡退格
-    function delDph() {
-        dph = dph.slice(0, dph.length - 1)
-        let str = dph.toString()
-        str = str.replace(/,/g, '+')
-        $('.dphnum').html(str)
-    }
-    // 保存动平衡数值
-    function saveDph() {
-        layer.close(layer.index)
-        let nums = 0
-        $.each(dph, function (i, n) {
-            nums += Number(n)
-        })
-        $(dphTags).val(nums)
-        $('.dphnum').html('')
-        dph = []
-    }
-    // 保存车辆维修
-    function saveClwx() {
-        let data = {}
-        $('#clwx input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        data.carPai = trimStr(carNum)
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.msg('保存成功!')
-                    selCar()
-                }
+		}
+		let dphTags = ''
+		// 设置动平衡
+		function setDph(_this) {
+			dphTags = _this
+			layer.open({
+				type: 1,
+				content: $('.dphWindow'),
+				area: ['640px'],
+				maxmin:true,
+			})
+			$('.dphtype').css({
+				'background': '#fff'
+			})
+		}
+		let dph = []
+		$('.dph').on('click', function() {
+			dph.push($(this).text())
+			let str = dph.toString()
+			str = str.replace(/,/g, '+')
+			$('.dphnum').html(str)
+		})
+		$('.dphtype').on('click', function() {
+			$('.dphtype').css({
+				'background': '#fff'
+			})
+			$(this).css({
+				'background': '#ccc'
+			})
+		})
+		// 动平衡退格
+		function delDph() {
+			dph = dph.slice(0, dph.length - 1)
+			let str = dph.toString()
+			str = str.replace(/,/g, '+')
+			$('.dphnum').html(str)
+		}
+		// 保存动平衡数值
+		function saveDph() {
+			layer.close(layer.index)
+			let nums = 0
+			$.each(dph, function(i, n) {
+				nums += Number(n)
+			})
+			$(dphTags).val(nums)
+			$('.dphnum').html('')
+			dph = []
+		}
+		// 保存车辆维修
+		function saveClwx() {
+			let data = {}
+			$('#clwx input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			data.carPai = trimStr(carNum)
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/addCheLiangWeiXiuTop`,
+				type: 'post',
+				data: data,
+				success: function(res) {
+					if(res.code == 0) {
+						layer.msg('保存成功!')
+						selCar()
+					}
 
-            }
-        })
-    }
-    // 耗材明细保存
-    function saveHcmx() {
-        let data = {}
-        $('.lzhcmx input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        data.pid = $('.lzhcmx select').val()
-        data.carPlate = trimStr(sessionStorage.pcar)
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/addHc`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.msg('保存成功!')
-                }
-            }
-        })
-    }
+				}
+			})
+		}
+		// 耗材明细保存
+		function saveHcmx() {
+			let data = {}
+			$('.lzhcmx input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			data.pid = $('.lzhcmx select').val()
+			data.carPlate = trimStr(sessionStorage.pcar)
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/addHc`,
+				type: 'post',
+				data: data,
+				success: function(res) {
+					if(res.code == 0) {
+						layer.msg('保存成功!')
+						// 查询未保存的物料销售
+						selSaleList()
+						// 查询未保存的物料维修
+						wlList()
+						// 查询未保存的车辆维修
+						selCar()
+					}
+				}
+			})
+		}
 
-    function saveOne(bol) {
-        let data = {}
-        $('.saveOne input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        $('.qianming input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        $('.fyjf input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        data.saleRepairPaymentMethod = $('.fkfs').val()
-        data.custId = loadUserInfo.customer.id
-        data.userId = loadUserInfo.user.id
-        data.customerId = loadUserInfo.customer.id
-        data.carPlate = trimStr(sessionStorage.pcar)
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/addRepairOrder`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.msg('保存成功!')
-                    if (bol) {
-                        sessionStorage.jcpcar = trimStr(sessionStorage.pcar)
-                        window.location.href = 'jianceweihuxiangqing.html'
-                    } else {
-                        alert('请手动关闭!')
-                    }
-                }
-            }
-        })
-    }
+		function saveOne(bol) {
+			let data = {}
+			$('.saveOne input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			$('.qianming input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			$('.fyjf input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			data.saleRepairPaymentMethod = $('.fkfs').val()
+			data.custId = loadUserInfo.customer.id
+			data.userId = loadUserInfo.user.id
+			data.customerId = loadUserInfo.customer.id
+			data.carPlate = trimStr(sessionStorage.pcar)
+			$.ajax({
+				url: `${API}/erpXiaoShouWeiXiu/addRepairOrder`,
+				type: 'post',
+				data: data,
+				success: function(res) {
+					if(res.code == 0) {
+						layer.msg('保存成功!')
+						if(bol) {
+							sessionStorage.jcpcar = trimStr(sessionStorage.pcar)
+							window.location.href = 'jianceweihuxiangqing.html'
+						} else {
+							alert('请手动关闭!')
+						}
+					}
+				}
+			})
+		}
 
-    function saveRe(num) {
-        let data = {}
-        $('.spxsList input').each(function () {
-            data[$(this).data('name')] = $(this).val()
-        })
-        data.orderId = '1'
-        data.warehouseId = '1'
+		function saveRe(num) {
+			let data = {}
+			$('.spxsList input').each(function() {
+				data[$(this).data('name')] = $(this).val()
+			})
+			data.orderId = '1'
+			data.warehouseId = '1'
 
-        data.carPai = trimStr(carNum)
-        $.ajax({
-            url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (res.code == 0) {
-                    layer.msg('保存成功!')
-                    selSaleList()
-                    if (num == 1) {
-                        $('.spxsList .materielProductionId').val('')
-                    }
-                    if (num == 2) {
-                        $('.spxsList input').val('')
-                    }
-                    if (num == 3) {
-                        alert('请手动关闭!')
-                    }
-                }
+			data.carPai = trimStr(carNum)
+			if(num == 4) {
+				$('.spxsList input').val('')
+				layer.closeAll();
+			} else {
+				$.ajax({
+					url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
+					type: 'post',
+					data: data,
+					success: function(res) {
+						if(res.code == 0) {
+							layer.msg('保存成功!')
+							selSaleList()
+							if(num == 1) {
+								$('.spxsList .materielProductionId').val('')
+								$('.spxsList .materielOutTo').val('')
+							}
+							if(num == 2) {
+								$('.spxsList input').val('')
+							}
+							if(num == 3) {
+								$('.spxsList input').val('')
+								layer.closeAll();
+							}
+						}
+	
+					}
+				})
+			}
+			
+		}
 
-            }
-        })
-    }
-    
-    
-    // 显示一晃
-    function showLy(_this) {
-        $('.ly-body').show()
-        let left = $(_this).offset().left
-        let top = $(_this).offset().top + 40
-        console.log(left, top)
-        $('.ly-body').css({
-            'left': left + 'px',
-            'top': top + 'px'
-        })
-    }
-    // 隐藏一晃
-    function hidLy() {
-        $('.ly-body').hide()
-    }
-    // 设置一晃值 根据车牌号
-    function setLyByCar(str) {
+		// 显示来源
+		function showLy(_this) {
+			$('.ly-show').show()
+			let left = $(_this).offset().left - 20
+			let top = $(_this).offset().top + 20
+			$('.ly-show').css({
+				'left': left + 'px',
+				'top': top + 'px'
+			})
+			event.stopPropagation();
+		}
+		// 隐藏来源
+		function hidLy() {
+			$('.ly-show').hide()
+		}
+		// 设置来源物料值 根据车牌号
+		function setLyByCar(str) {
 
-        $.ajax({
-            url: `${API}/erpWarehouse/selectByCarPlate?carIdAndPlate=${str}`,
-            success: function (res) {
-                if (res.code == 0 && res.data) {
-                    
-                    $('.wlset_0').val(res.data.materielName)
-                    $('.wlset_1').val(res.data.materielBrand)
-                    $('.wlset_2').val(res.data.materielSpecifications)
-                    $('.wlset_3').val(res.data.materielModel)
-                    $('.wlset_4').val(res.data.materielPlace)
-                    $('.wlset_5').val(res.data.materielState)
-                    $('.wlset_6').val(res.data.materielUnit)
-                    // $('.wlset_7').val(res.data.materielNumber)
-                    $('.wlset_8').val(res.data.materielProductionId)
-                    $('.wlset_9').val(res.data.materielSensorId)
-                    
-                }
-                $('.materielSource').val(str)
-                $('.ly-body').hide()
-            }
-        })
-    }
-    // 查询轮胎 及 仓库
-    function setLy() {
+			$.ajax({
+				url: `${API}/erpWarehouse/selectByCarPlate?carIdAndPlate=${str}`,
+				success: function(res) {
+					if(res.code == 0 && res.data) {
 
-        $.ajax({
-            url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.pcar}`,
-            type: 'get',
-            success: function (res) {
-                let qxstr = '<ul>'
-                let str = '<ul>'
-                $.each(res.data.taiwei, function (i, k) {
-                    str +=
-                        `<li onclick="setLyByCar('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
-                    qxstr +=
-                        `<li onclick="setQxs('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
-                })
-                str += '</ul>'
-                $('.ly-3').html(str)
-                $('.qx-3').html(qxstr)
-            }
-        })
-        if(sessionStorage.gcar) {
-            $.ajax({
-            url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.gcar}`,
-            type: 'get',
-            success: function (res) {
-                let qxstr = '<ul>'
-                let str = '<ul>'
-                $.each(res.data.taiwei, function (i, k) {
-                    str +=
-                        `<li onclick="setLyByCar('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
-                    qxstr +=
-                        `<li onclick="setQxs('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
-                })
-                str += '</ul>'
-                $('.ly-3-g').html(str)
-                $('.qx-3-g').html(qxstr)
-            }
-        })
-        }
-        $.ajax({
-            url: `${API}/erpCustomerWarehouse/getcustWarehouseByCustId?custId=${loadUserInfo.customer.id}`,
-            type: 'get',
-            success: function (res) {
-                let str = '<ul>'
-                let qxstr = '<ul>'
-                $.each(res.data, function (i, k) {
-                    str += `<li onclick="setKcList('${k.id}','${k.warName}')"> ${k.warName}</li>`
-                    qxstr += `<li onclick="setQxs('${k.warName}')">${k.warName} </li>`
-                })
-                str += '</ul>'
-                $('.ly-khkc').html(str)
-                $('.qx-khkc').html(qxstr)
-            }
-        })
-    }
+						$('.wlset_0').val(res.data.materielName || '')
+						$('.wlset_1').val(res.data.materielBrand || '')
+						$('.wlset_2').val(res.data.materielSpecifications || '')
+						$('.wlset_3').val(res.data.materielModel || '')
+						$('.wlset_4').val(res.data.materielPlace || '')
+						$('.wlset_5').val(res.data.materielState || '')
+						$('.wlset_6').val(res.data.materielUnit || '')
+						$('.wlset_7').val(1)
+						$('.wlset_8').val(res.data.materielProductionId || '')
+						$('.wlset_9').val(res.data.materielSensorId || '')
 
-    function setQxs(name) {
-        $('.materielOutTo').val(name)
-        $('.qx-body').hide()
-    }
-    // 显示去向位置
-    function setQx(_this) {
-        $('.materielOutTo').val('')
-        $('.qx-body').show()
-        let left = $(_this).offset().left
-        let top = $(_this).offset().top + 40
-        $('.qx-body').css({
-            'left': left + 'px',
-            'top': top + 'px'
-        })
-    }
-    setLy()
-    let tags = ''
+					}
+					$('.materielSource').val(str)
+					$('.ly-show').hide()
+				}
+			})
+		}
+		// 查询轮胎 及 仓库
+		function setLy() {
 
-    //  显示物料列表
-    function setLyInfo(_this, bol) {
-            isHcck = bol
-        layer.open({
-            type: 1,
-            area: ['800px', '400px'],
-            content: $('.xjdsb')
-        })
-    }
-    // 查询物料列表
-    function setKcList(id, key, num) {
+			$.ajax({
+				url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.pcar}`,
+				type: 'get',
+				success: function(res) {
+					let qxstr = '<ul>'
+					let str = '<ul>'
+					$.each(res.data.taiwei, function(i, k) {
+						str +=
+							`<li onclick="setLyByCar('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
+						qxstr +=
+							`<li onclick="setQxs('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
+					})
+					str += '</ul>'
+					$('.ly-3').html(str)
+					$('.qx-3').html(qxstr)
+				}
+			})
+			if(sessionStorage.gcar) {
+				$.ajax({
+					url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.gcar}`,
+					type: 'get',
+					success: function(res) {
+						let qxstr = '<ul>'
+						let str = '<ul>'
+						$.each(res.data.taiwei, function(i, k) {
+							str +=
+								`<li onclick="setLyByCar('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
+							qxstr +=
+								`<li onclick="setQxs('${trimStr(sessionStorage.gcar)}-${k}')"> ${k}</li>`
+						})
+						str += '</ul>'
+						$('.ly-3-g').html(str)
+						$('.qx-3-g').html(qxstr)
+					}
+				})
+			}
+			$.ajax({
+				url: `${API}/erpCustomerWarehouse/getcustWarehouseByCustId?custId=${loadUserInfo.customer.id}`,
+				type: 'get',
+				success: function(res) {
+					let str = '<ul>'
+					let qxstr = '<ul>'
+					$.each(res.data, function(i, k) {
+						str += `<li onclick="setKcList('${k.id}','${k.warName}')"> ${k.warName}</li>`
+						qxstr += `<li onclick="setQxs('${k.warName}')">${k.warName} </li>`
+					})
+					str += '</ul>'
+					$('.ly-khkc').html(str)
+					$('.qx-khkc').html(qxstr)
+				}
+			})
+		}
 
-        $('.ly-body').hide()
-        $('.materielSource').val(key)
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectByWareHouseId?custId=${loadUserInfo.customer.id}&custWareId=${id}`,
-            success: function (res) {
-                let arr = res.data
-                let str = ''
-                $.each(arr, function (i, k) {
-                    str +=
-                        `<tr class="cnmsd_${i}" style="cursor:pointer;" onclick="setVals(${i})">
+		function setQxs(name) {
+			$('.materielOutTo').val(name)
+			$('.qx-show').hide()
+		}
+		// 显示去向位置
+		function setQx(_this) {
+			$('.materielOutTo').val('')
+			$('.qx-show').show()
+			let left = $(_this).offset().left - 20
+			let top = $(_this).offset().top + 20
+			$('.qx-show').css({
+				'left': left + 'px',
+				'top': top + 'px'
+			})
+			event.stopPropagation();
+		}
+		setLy()
+		let tags = ''
+
+		//  显示物料列表
+		function setLyInfo(_this, bol) {
+			isHcck = bol
+			layer.open({
+				type: 1,
+				area: ['800px', '400px'],
+				content: $('.xjdsb'),
+				maxmin:true,
+			})
+		}
+		// 查询物料列表
+		function setKcList(id, key, num) {
+
+			$('.ly-show').hide()
+			$('.materielSource').val(key)
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectByWareHouseId?custId=${loadUserInfo.customer.id}&custWareId=${id}&so=1`,
+				success: function(res) {
+					let arr = res.data
+					let str = ''
+					$.each(arr, function(i, k) {
+						str +=
+							`<tr class="cnmsd_${i}" style="cursor:pointer;" onclick="setVals(${i})">
                             <td>${k.materielName || ''}</td>
                             <td>${k.materielBrand || ''}</td>
                             <td>${k.materielSpecifications || ''}</td>
@@ -1788,269 +1905,265 @@
                             <td>${k.materielUnit || ''}</td>
                             <td>${k.num || ''}</td>
                         </tr>`
-                })
-                $('.yhlist').html(str)
-            }
-        })
-    }
+					})
+					$('.yhlist').html(str)
+				}
+			})
+		}
 
+		let osCls
+		//  查找大类
+		function showLv1(show, cla) {
+			osCls = cla
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTop`,
+				type: 'get',
+				success: function(res) {
+					let str = ''
+					let arrs = res.data
+					$.each(arrs, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+					})
+					$('.hover-show').html(str)
+					$('.hover-show').show()
+					event.stopPropagation();
 
-    let osCls
-    //  查找大类
-    function showLv1(show, cla) {
-        osCls = cla
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTop`,
-            type: 'get',
-            success: function (res) {
-                let str = ''
-                let arrs = res.data
-                $.each(arrs, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
-                })
-                $('.hover-show').html(str)
-                if (show) {
-                    $('.hover-show').show()
-                }
-            }
-        })
-    }
-    // 查找品名
-    function showLv2(zid, _this) {
-        $(`.hover-show .list-2`).html('')
-        aiZid = zid
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找规格
-    function showLv3(zid, _this) {
-        $(`.hover-show .list-3`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找品牌
-    function showLv4(zid, _this) {
-        $(`.hover-show .list-4`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找型号
-    function showLv5(zid, _this) {
-        $(`.hover-show .list-5`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
+				}
+			})
+		}
+		// 查找品名
+		function showLv2(zid, _this) {
+			$(`.hover-show .list-2`).html('')
+			aiZid = zid
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找规格
+		function showLv3(zid, _this) {
+			$(`.hover-show .list-3`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找品牌
+		function showLv4(zid, _this) {
+			$(`.hover-show .list-4`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找型号
+		function showLv5(zid, _this) {
+			$(`.hover-show .list-5`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function showLv6(zid, _this) {
-        $(`.hover-show .list-6`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                console.log(res)
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找
-    function showLv7(zid, _this) {
-        $(`.hover-show .list-7`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
+		function showLv6(zid, _this) {
+			$(`.hover-show .list-6`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					console.log(res)
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找
+		function showLv7(zid, _this) {
+			$(`.hover-show .list-7`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function showLv8(zid, _this) {
-        $(`.hover-show .list-8`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    
+		function showLv8(zid, _this) {
+			$(`.hover-show .list-8`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function setWlVal(_this) {
-        $(`.${osCls} .materielUnit`).val($(_this).text())
-        $(`.${osCls} .materielPlace`).val($(_this).parents('.list-8').prev().text())
-        $(`.${osCls} .materielState`).val($(_this).parents('.list-7').prev().text())
-        $(`.${osCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
-        $(`.${osCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
-        $(`.${osCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
-        $(`.${osCls} .materielName`).val($(_this).parents('.list-3').prev().text())
-    }
-    let fkfs = []
-    $.ajax({
-        url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data.parametersChildList
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k.name}" >${k.name}</option>`
-                fkfs.push({
-                    name: k.name
-                })
-            })
-            $('.fkfs').html(str)
-            layform.render()
-        }
-    })
-    let qxCls = ''
-    // 汽修项目一晃式
-    function setQxxm(cls, _this) {
-        qxCls = cls
-        $.ajax({
-            url: `${API}/erpSaleParameter/getParameterCustomerByParameterIdListOne`,
-            success: function (res) {
-                let str = ''
-                let arrs = res.data
-                $.each(arrs, function (k, v) {
-                    str +=
-                        `<li onmouseenter="qxxmLv2('${v.id}',this)"  ><span class="names">${v.name}</span><div class="qxlist-${v.id} qxlists-2"></div></li>`
-                })
-                $('.qxxm-show').html(str)
-                $('.qxxm-show').show()
-                let left = $(_this).offset().left
-                let top = $(_this).offset().top + 40
-                console.log(left, top)
-                $('.qxxm-body').css({
-                    'left': left + 'px',
-                    'top': top + 'px'
-                })
-            }
-        })
-    }
+		function setWlVal(_this) {
+			$(`.${osCls} .materielUnit`).val($(_this).text())
+			$(`.${osCls} .materielPlace`).val($(_this).parents('.list-8').prev().text())
+			$(`.${osCls} .materielState`).val($(_this).parents('.list-7').prev().text())
+			$(`.${osCls} .materielModel`).val($(_this).parents('.list-6').prev().text())
+			$(`.${osCls} .materielBrand`).val($(_this).parents('.list-5').prev().text())
+			$(`.${osCls} .materielSpecifications`).val($(_this).parents('.list-4').prev().text())
+			$(`.${osCls} .materielName`).val($(_this).parents('.list-3').prev().text())
+		}
+		let fkfs = []
+		$.ajax({
+			url: `${API}/erpSystemParameters/getparametersByName?name=付款方式`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data.parametersChildList
+				let str = '<option></option>'
+				$.each(arr, function(i, k) {
+					str += `<option value="${k.name}" >${k.name}</option>`
+					fkfs.push({
+						name: k.name
+					})
+				})
+				$('.fkfs').html(str)
+				layform.render()
+			}
+		})
+		let qxCls = ''
+		// 汽修项目一晃式
+		function setQxxm(cls, _this) {
+			qxCls = cls
+			$.ajax({
+				url: `${API}/erpSaleParameter/getParameterCustomerByParameterIdListOne`,
+				success: function(res) {
+					let str = ''
+					let arrs = res.data
+					$.each(arrs, function(k, v) {
+						str +=
+							`<li onmouseenter="qxxmLv2('${v.id}',this)"  ><span class="names">${v.name}</span><div class="qxlist-${v.id} qxlists-2"></div></li>`
+					})
+					$('.qxxm-show').html(str)
+					$('.qxxm-show').show()
+					let left = $(_this).offset().left
+					let top = $(_this).offset().top + 40
+					$('.qxxm-body').css({
+						'left': left + 'px',
+						'top': top + 'px'
+					})
+					event.stopPropagation();
+				}
+			})
+		}
 
-    function qxxmLv2(id, _this) {
-        $('.qxlists-2').html('')
-        $.ajax({
-            url: `${API}//erpSaleParameter/getParameteByParameterId?id=${id}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                console.log(res, '666')
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="qxxmLv3('${v.id}',this)"  ><span class="names">${v.name}</span><div class="qxlist-${v.id} qxlists-3"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
+		function qxxmLv2(id, _this) {
+			$('.qxlists-2').html('')
+			$.ajax({
+				url: `${API}//erpSaleParameter/getParameteByParameterId?id=${id}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					console.log(res, '666')
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="qxxmLv3('${v.id}',this)"  ><span class="names">${v.name}</span><div class="qxlist-${v.id} qxlists-3"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function qxxmLv3(id, _this) {
-        $('.qxlists-3').html('')
-        $.ajax({
-            url: `${API}/erpSystemParameters/getparametersByName?name=维修方式`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data.parametersChildList
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onclick="setQxVal(this)" ><span class="names">${v.name}</span></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 设置去向
-    function setQxVal(_this) {
-        $(`.garageProject`).val($(_this).parents('.qxlists-2').prev().text())
-        $(`.repairProject`).val($(_this).parents('.qxlists-3').prev().text())
-        $(`.repairMode`).val($(_this).text())
-        $('.qxxm-show').hide()
-    }
-</script>
+		function qxxmLv3(id, _this) {
+			$('.qxlists-3').html('')
+			$.ajax({
+				url: `${API}/erpSystemParameters/getparametersByName?name=维修方式`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data.parametersChildList
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onclick="setQxVal(this)" ><span class="names">${v.name}</span></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 设置去向
+		function setQxVal(_this) {
+			$(`.garageProject`).val($(_this).parents('.qxlists-2').prev().text())
+			$(`.repairProject`).val($(_this).parents('.qxlists-3').prev().text())
+			$(`.repairMode`).val($(_this).text())
+			$('.qxxm-show').hide()
+		}
+	</script>
 
 </html>

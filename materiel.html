@@ -120,8 +120,8 @@
     <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
     <div class="wrap">
         <div class="down-xlsx" style="float: right;line-height: 30px;">
-            <a href="./lib/muban.xlsx" download="download">导入模板</a>
-            <p id="tableExporter" class="layui-btn layui-btn-sm" onclick="getOut()" style="background: #fff; color: #333;">导出excel</p>
+            <a class="layui-btn" href="./lib/muban.xlsx" download="download" style="margin-bottom: 10px;">导入模板</a>
+            <!--<p id="tableExporter" class="layui-btn layui-btn-sm" onclick="getOut()" style="background: #fff; color: #333;">导出excel</p>-->
         </div>
         <table class="layui-table">
             <thead>
@@ -187,7 +187,7 @@
                         <span class="scbh"></span>
                         <input type="text" data-name="shengIds" class="scbh layui-input materielSheng isClear" style="width: 50%;display: inline-block;"
                             value="">
-                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">上传</button>
+                        <button class="layui-btn layui-btn-xs" style="padding:0 10px;" id="seeInfo">导入</button>
                     </td>
                     <td class="">
                         <input type="text" data-name="qrcodes" class="layui-input ercode materielEqcode isClear" value="">
@@ -770,7 +770,7 @@
                     </td>
                     <td>
                         <input class=" layui-input scbhai isClear" data-name="chuanIds" value=""  style="width:50%;display: inline-block;" />
-                        <button class="layui-btn layui-btn-xs"  style="padding:0 10px;" id="seeAiInfo">上传</button>
+                        <button class="layui-btn layui-btn-xs"  style="padding:0 10px;" id="seeAiInfo">导入</button>
                     </td>
                     <td >
                         <input data-name="qrChuanCodes" class="ercodeai layui-input isClear" value="" />

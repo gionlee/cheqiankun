@@ -254,7 +254,7 @@
                     str+=`<tr>
                             <td>${i+1}</td>
                             <td>${n.dt == null ? '' : n.dt}</td>
-                            <td style="cursor:pointer;" onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                            <td style="cursor:pointer;" onclick="seeInfo('${n.workId}','${n.carNumber}')">${n.workId == null ? '' : n.workId}</td>
                             <!--工作单位--><td style="cursor:pointer;" onclick="fn_filter('workPlace','${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
                             <!--客户名称--><td style="cursor:pointer;" onclick="fn_filter('clientName','${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
                             <!--车牌号--><td style="cursor:pointer;" onclick="fn_filter('carNumber','${n.carNumber == null ? '' : n.carNumber}')">${n.carNumber == null ? '' : n.carNumber}</td>
@@ -326,7 +326,7 @@
                     str+=`<tr>
                             <td>${i+1}</td>
                             <td>${n.dt == null ? '' : n.dt}</td>
-                            <td style="cursor:pointer;" onclick="seeInfo('${n.workId}')">${n.workId == null ? '' : n.workId}</td>
+                            <td style="cursor:pointer;" onclick="seeInfo('${n.workId}','${n.carNumber}')">${n.workId == null ? '' : n.workId}</td>
                             <!--工作单位--><td style="cursor:pointer;" onclick="fn_filter('workPlace','${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
                             <!--客户名称--><td style="cursor:pointer;" onclick="fn_filter('clientName','${n.clientName == null ? '' : n.clientName}')">${n.clientName == null ? '' : n.clientName}</td>
                             <!--车牌号--><td style="cursor:pointer;" onclick="fn_filter('carNumber','${n.carNumber == null ? '' : n.carNumber}')">${n.carNumber == null ? '' : n.carNumber}</td>
@@ -373,7 +373,8 @@
         })
     }
     
-    function seeInfo(id) {
+    function seeInfo(id,carnum) {
+        // alert('222')
     	var pan=id.substr(0,4);
     	if(pan=="XSWX"){
     		$.ajax({
@@ -561,9 +562,13 @@
 	    })
 	            }
 	        })
-    	}else if(pan=="JCWH"){
+    	} else if(pan=="JCWH"){
     		sessionStorage.setItem('sheelId', id);
+    		sessionStorage.setItem('jcpcar', carnum);
     		window.location.href = `./gongzuohuizongjianceweihu.html`
+    	} else {
+    		sessionStorage.setItem('sheelId', id);
+    		window.location.href = `./gongzuohuizongzhilianglipeidetail.html`
     	}
         
     }

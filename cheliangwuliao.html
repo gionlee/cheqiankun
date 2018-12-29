@@ -110,10 +110,10 @@
 					var html = '';
 					console.log(objkacha)
 					for(var key in objkacha) {
-						html += '<a href="cheliangwuliaoxiangqing.html?userid='+loadUserInfo.user.id+'&id=' + objkacha[key].id + '" class="carlist">' + objkacha[key].carPlate + '</a>';
+						html += '<a href="cheliangwuliaoxiangqing.html?userid='+loadUserInfo.user.id+'&id=' + objkacha[key].id + '&carPlate=' + encodeURI(encodeURI(objkacha[key].carPlate)) + '" class="carlist">' + objkacha[key].carPlate + '</a>';
 					}
 					for(var key in objdagua) {
-						html += '<a href="cheliangwuliaoxiangqing.html?userid='+loadUserInfo.user.id+'&id=' + objdagua[key].id + '" class="carlist">' + objdagua[key].carPlate + '</a>';
+						html += '<a href="cheliangwuliaoxiangqing.html?userid='+loadUserInfo.user.id+'&id=' + objdagua[key].id + '&carPlate=' + encodeURI(encodeURI(objdagua[key].carPlate)) + '" class="carlist">' + objdagua[key].carPlate + '</a>';
 					}
 					$(".lists").html(html);
 				},

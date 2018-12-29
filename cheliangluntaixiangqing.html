@@ -1,219 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="./css/font.css">
-    <link rel="stylesheet" href="./css/xadmin.css">
-    <script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
-    <script src="./lib/layui/layui.js" charset="utf-8"></script>
-    <script type="text/javascript" src="./js/Global.js"></script>
-    <script src="./js/xlsx.full.min.js"></script>
-    <style>
-        .wrap {
-            padding: 20px;
-        }
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Document</title>
+		<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" href="./css/font.css">
+		<link rel="stylesheet" href="./css/xadmin.css">
+		<script type="text/javascript" src="./js/jquery-2.1.0.js"></script>
+		<script src="./lib/layui/layui.js" charset="utf-8"></script>
+		<script type="text/javascript" src="./js/Global.js"></script>
+		<script src="./js/xlsx.full.min.js"></script>
+		<style>
+			.wrap {
+				padding: 20px;
+			}
+			
+			.select {
+				height: 40px;
+				padding: 20px 0;
+				border-bottom: 1px solid #ccc;
+				text-align: center;
+			}
+			
+			.search {
+				width: 200px;
+				height: 38px;
+				margin: 0 auto;
+				display: inline-block;
+				padding-top: 1px;
+			}
+			
+			select {
+				height: 30px;
+			}
+			
+			.layui-input {
+				border: 0;
+				outline: none;
+				height: 30px;
+				line-height: 30px;
+			}
+			
+			.btn {
+				display: inline-block;
+			}
+			
+			.next {
+				text-align: center;
+			}
+			
+			.layui-table td,
+			.layui-table th {
+				padding: 0;
+				text-align: center;
+				height: 30px;
+			}
+			
+			.hanf {
+				width: 49%;
+			}
+			
+			.layui-input-block {
+				margin-left: 0px;
+				/* padding: 0 5px; */
+				min-height: 30px;
+			}
+			
+			.control {
+				min-width: 110px;
+			}
+			
+			.num {
+				min-width: 50px;
+			}
+			
+			.hover-body {
+				position: relative;
+			}
+			
+			.hover-show {
+				position: absolute;
+				top: 10px;
+				left: 50px;
+				z-index: 10;
+				display: none;
+			}
+			
+			.hover-show li {
+				width: 150px;
+				height: 30px;
+				background: #fff;
+				border-bottom: 1px solid #ccc;
+				line-height: 30px;
+				text-align: center;
+				cursor: pointer;
+				position: relative;
+			}
+			
+			.hover-show li:hover {
+				background: #ccc;
+				/* color: #fff; */
+			}
+			
+			.hover-show li ul {}
+			
+			.hover-show div {
+				top: 0;
+				position: absolute;
+				width: 150px;
+			}
+			
+			.hover-show div ul {
+				position: absolute;
+				top: 0;
+				left: 150px;
+			}
+		</style>
+	</head>
 
-        .select {
-            height: 40px;
-            padding: 20px 0;
-            border-bottom: 1px solid #ccc;
-            text-align: center;
-        }
+	<body>
+		<input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
+		<div class="wrap">
 
-        .search {
-            width: 200px;
-            height: 38px;
-            margin: 0 auto;
-            display: inline-block;
-            padding-top: 1px;
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>胎位</th>
+						<th>品名</th>
+						<th>品牌</th>
+						<th>规格</th>
+						<th>型号</th>
+						<th>物料新旧</th>
+						<th>产地</th>
+						<th>单位</th>
+						<th>数量</th>
+						<th style="width:15%;">生产编号</th>
+						<th style="width:10%;">二维码</th>
+						<th style="width:10%;">RFID</th>
+						<th>价格</th>
+						<th>安装日期</th>
+						<th>里程表数</th>
+					</tr>
+				</thead>
+				<tbody class="saves">
+					<tr>
+						<td class="tai layui-form ai" rowspan="2">
+							<select class="tireLocation" name="" id="">
 
-        }
+							</select>
+						</td>
+						<td>轮辋</td>
+						<td><input onclick="showLv1(true,true,this)" data-name="rimsBrand" type="text" class="layui-input rimsBrand"></td>
+						<td><input data-name="rimsSpecifications" type="text" class="layui-input rimsSpecifications"></td>
+						<td><input data-name="rimsModel" type="text" class="layui-input rimsModel"></td>
+						<td><input data-name="rimsPlace" type="text" class="layui-input rimsPlace"></td>
+						<td><input data-name="rimsState" type="text" class="layui-input rimsState"></td>
+						<td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
+						<td><input data-name="rimsNum" type="text" class="layui-input rimsNum" value="1"></td>
+						<td>
+							<input type="text" class="layui-input rimsProductionId isClear" data-name="rimsProductionId">
+						</td>
+						<td><input type="text" class="layui-input rimsQrCode isClear" data-name="rimsQrCode"></td>
+						<td class=""><input type="text" class="layui-input rimsRfId isClear" data-name="rimsRfId"></td>
+						<td class=""><input type="text" class="layui-input rimsStoragePrice" data-name="rimsStoragePrice"></td>
+						<td rowspan="2" class="ai">
+							<input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
+						</td>
+						<td rowspan="2" class="ai" style="width:100px;">
+							<input type="text" data-name="tireMileage" class="layui-input tireMileage" value="">
+						</td>
+					</tr>
+					<tr>
 
-        select {
-            height: 30px;
-        }
+						<td class="zhineng">
+							<input type="text" onclick="showLv1(true,true,this)" data-name="tireName" class="layui-input save-data  ai-data tireName" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireBrand" class="layui-input save-data tireBrand" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireSpecifications" class="layui-input save-data tireSpecifications" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireModel" class="layui-input save-data tireModel" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tirePlace" class="layui-input save-data tirePlace" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireState" class="layui-input save-data tireState" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireUnit" class="layui-input save-data tireUnit" value="">
+						</td>
+						<td>
+							<input type="text" data-name="tireNum" class="layui-input save-data" value="1">
+						</td>
+						<td>
+							<input type="text" class="layui-input tireProductionId isClear" data-name="tireProductionId">
+						</td>
+						<td class="ercode">
+							<input type="text" class="layui-input qrCode isClear" data-name="qrCode">
+						</td>
+						<td class="rfid">
+							<input type="text" class="layui-input rfId isClear" data-name="rfId">
+						</td>
+						<td>
+							<input type="text" class="layui-input tireStoragePrice" data-name="tireStoragePrice">
+						</td>
 
-        .layui-input {
-            border: 0;
-            outline: none;
-            height: 30px;
-            line-height: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-
-        }
-
-        .next {
-            text-align: center;
-        }
-
-        .layui-table td,
-        .layui-table th {
-            padding: 0;
-            text-align: center;
-            height:30px;
-        }
-
-        .hanf {
-            width: 49%;
-        }
-
-        .layui-input-block {
-            margin-left: 0px;
-            /* padding: 0 5px; */
-            min-height: 30px;
-        }
-
-        .control {
-            min-width: 110px;
-        }
-
-        .num {
-            min-width: 50px;
-        }
-        .hover-body {
-            position: relative;
-        }
-        .hover-show {
-            position:absolute;
-            top: 10px;
-            left: 50px;
-            z-index: 10;
-            display: none;
-        }
-        .hover-show li {
-            width: 150px;
-            height: 30px;
-            background: #fff;
-            border-bottom:1px solid #ccc;
-            line-height: 30px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            
-        }
-        .hover-show li:hover {
-            background: #ccc;
-            /* color: #fff; */
-        }
-        .hover-show li ul {
-
-        }
-        .hover-show div {
-            top: 0;
-            position: absolute;
-            width: 150px;
-        }
-        .hover-show div ul {
-            position: absolute;
-            top: 0;
-            left: 150px;
-        }
-    </style>
-</head>
-
-<body>
-    <input type="file" class="layui-input" id="excel-file" style="opacity:0;position: absolute;z-index: -999;" value="点击浏览">
-    <div class="wrap">
-
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>胎位</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>物料新旧</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>数量</th>
-                    <th style="width:15%;">生产编号</th>
-                    <th style="width:10%;">二维码</th>
-                    <th style="width:10%;">RFID</th>
-                    <th>价格</th>
-                    <th>安装日期</th>
-                    <th>里程表数</th>
-                </tr>
-            </thead>
-            <tbody class="saves">
-                <tr>
-                    <td class="tai layui-form ai" rowspan="2">
-                        <select class="tireLocation" name="" id="">
-
-                        </select>
-                    </td>
-                    <td>轮辋</td>
-                    <td><input onclick="showLv1(true,true,this)" data-name="rimsBrand" type="text" class="layui-input rimsBrand"></td>
-                    <td><input data-name="rimsSpecifications" type="text" class="layui-input rimsSpecifications"></td>
-                    <td><input data-name="rimsModel" type="text" class="layui-input rimsModel"></td>
-                    <td><input data-name="rimsPlace" type="text" class="layui-input rimsPlace"></td>
-                    <td><input data-name="rimsState" type="text" class="layui-input rimsState"></td>
-                    <td><input data-name="rimsUnit" type="text" class="layui-input rimsUnit"></td>
-                    <td><input data-name="rimsNum" type="text" class="layui-input rimsNum" value="1"></td>
-                    <td>
-                        <input type="text" class="layui-input rimsProductionId isClear" data-name="rimsProductionId">
-                    </td>
-                    <td><input type="text" class="layui-input rimsQrCode isClear" data-name="rimsQrCode"></td>
-                    <td class=""><input type="text" class="layui-input rimsRfId isClear" data-name="rimsRfId"></td>
-                    <td class=""><input type="text" class="layui-input rimsStoragePrice" data-name="rimsStoragePrice"></td>
-                    <td rowspan="2" class="ai">
-                        <input type="text" data-name="tireStorageDate" class="layui-input tireStorageDate" value="">
-                    </td>
-                    <td rowspan="2" class="ai" style="width:100px;">
-                        <input type="text" data-name="tireMileage" class="layui-input tireMileage" value="">
-                    </td>
-                </tr>
-                <tr>
-
-                    <td class="zhineng">
-                        <input type="text" onclick="showLv1(true,true,this)" data-name="tireName" class="layui-input save-data  ai-data tireName"
-                            value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireBrand" class="layui-input save-data tireBrand" value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireSpecifications" class="layui-input save-data tireSpecifications"
-                            value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireModel" class="layui-input save-data tireModel" value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tirePlace" class="layui-input save-data tirePlace" value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireState" class="layui-input save-data tireState" value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireUnit" class="layui-input save-data tireUnit" value="">
-                    </td>
-                    <td>
-                        <input type="text" data-name="tireNum" class="layui-input save-data" value="1">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input tireProductionId isClear" data-name="tireProductionId">
-                    </td>
-                    <td class="ercode">
-                        <input type="text" class="layui-input qrCode isClear" data-name="qrCode">
-                    </td>
-                    <td class="rfid">
-                        <input type="text" class="layui-input rfId isClear" data-name="rfId">
-                    </td>
-                    <td>
-                        <input type="text" class="layui-input tireStoragePrice" data-name="tireStoragePrice">
-                    </td>
-
-                </tr>
-                <!-- <tr>
+					</tr>
+					<!-- <tr>
                     <td>轮辋</td>
                     <td><input data-name="sensorBrand" type="text" class="layui-input sensorBrand"></td>
                     <td><input data-name="sensorSpecifications" type="text" class="layui-input sensorSpecifications"></td>
@@ -227,255 +227,252 @@
                     <td><input data-name="sensorRfid" type="text" class="layui-input sensorRfid"></td>
                 </tr> -->
 
-            </tbody>
-        </table>
-        <div class="hover-body">
-            <ul class="hover-show">
+				</tbody>
+			</table>
+			<div class="hover-body">
+				<ul class="hover-show">
 
-            </ul>
-        </div>
-        <div style="margin:20px auto;text-align: center;">
-            <div class="layui-btn layui-btn-xs" onclick="save(1)">确认/重复</div>
-            <div class="layui-btn layui-btn-xs" onclick="save(2)">确认/新添</div>
-            <div class="layui-btn layui-btn-xs" onclick="save(3)">确认/结束</div>
-        </div>
-        <table class="layui-table">
-            <thead>
-                <tr>
-                    <th>胎位</th>
-                    <th>品名</th>
-                    <th>品牌</th>
-                    <th>规格</th>
-                    <th>型号</th>
-                    <th>物料新旧</th>
-                    <th>产地</th>
-                    <th>单位</th>
-                    <th>数量</th>
-                    <th>生产编号</th>
-                    <th>二维码</th>
-                    <th>RFID</th>
-                    <th>价格</th>
-                    <th>安装日期</th>
-                    <th>里程表数 </th>
-                </tr>
-            </thead>
-            <tbody class="matlist"></tbody>
-        </table>
+				</ul>
+			</div>
+			<div style="margin:20px auto;text-align: center;">
+				<div class="layui-btn layui-btn-xs" onclick="save(1)">确认/重复</div>
+				<div class="layui-btn layui-btn-xs" onclick="save(2)">确认/新添</div>
+				<div class="layui-btn layui-btn-xs" onclick="save(3)">确认/结束</div>
+			</div>
+			<table class="layui-table">
+				<thead>
+					<tr>
+						<th>胎位</th>
+						<th>品名</th>
+						<th>品牌</th>
+						<th>规格</th>
+						<th>型号</th>
+						<th>物料新旧</th>
+						<th>产地</th>
+						<th>单位</th>
+						<th>数量</th>
+						<th>生产编号</th>
+						<th>二维码</th>
+						<th>RFID</th>
+						<th>价格</th>
+						<th>安装日期</th>
+						<th>里程表数 </th>
+					</tr>
+				</thead>
+				<tbody class="matlist"></tbody>
+			</table>
 
-    </div>
-</body>
-<script>
-    let layform = ''
-    let layer = ''
-    layui.use('form', function () {
-        layform = layui.form
-    })
-    layui.use('layer', function () {
-        layer = layui.layer
-    })
-    layui.use('laydate', function () {
-        layui.laydate.render({
-            elem: '.tireStorageDate'
-        })
-    })
-    let bhlist = []
-    let tireProductionId = [] // 生产编号
-    let rfId = [] // RFID
-    let qrCode = [] // 二维码
-    let sensorProductionId = [] // ai生产编号
-    let sensorRfId = [] // aiRFID
-    let sensorQrCode = [] // ai二维码
-    let rimsProductionId = [] // 轮辋生产编号
-    let rimsQrCode = [] // 轮辋二维码
-    let rimsRfId = [] // 轮辋RFID
-    let isAiClick = false
-    let whoclick = 'lt'
-    let zhiNeng = false
-    $('#seeInfo').on('click', function () {
-        $('#excel-file').click()
-        whoclick = 'lt'
-    })
-    $('#lwInfo').on('click', function () {
-        $('#excel-file').click()
-        whoclick = 'lw'
-    })
+		</div>
+	</body>
+	<script>
+		let layform = ''
+		let layer = ''
+		layui.use('form', function() {
+			layform = layui.form
+		})
+		layui.use('layer', function() {
+			layer = layui.layer
+		})
+		layui.use('laydate', function() {
+			layui.laydate.render({
+				elem: '.tireStorageDate'
+			})
+		})
+		let bhlist = []
+		let tireProductionId = [] // 生产编号
+		let rfId = [] // RFID
+		let qrCode = [] // 二维码
+		let sensorProductionId = [] // ai生产编号
+		let sensorRfId = [] // aiRFID
+		let sensorQrCode = [] // ai二维码
+		let rimsProductionId = [] // 轮辋生产编号
+		let rimsQrCode = [] // 轮辋二维码
+		let rimsRfId = [] // 轮辋RFID
+		let isAiClick = false
+		let whoclick = 'lt'
+		let zhiNeng = false
+		$('#seeInfo').on('click', function() {
+			$('#excel-file').click()
+			whoclick = 'lt'
+		})
+		$('#lwInfo').on('click', function() {
+			$('#excel-file').click()
+			whoclick = 'lw'
+		})
 
+		$('#excel-file').change(function(e) {
+			var files = e.target.files;
 
-    $('#excel-file').change(function (e) {
-        var files = e.target.files;
+			var fileReader = new FileReader();
+			fileReader.onload = function(ev) {
+				try {
+					var data = ev.target.result,
+						workbook = XLSX.read(data, {
+							type: 'binary'
+						}), // 以二进制流方式读取得到整份excel表格对象
+						persons = []; // 存储获取到的数据
+				} catch(e) {
+					alert('文件读取失败！');
+					return;
+				}
 
-        var fileReader = new FileReader();
-        fileReader.onload = function (ev) {
-            try {
-                var data = ev.target.result,
-                    workbook = XLSX.read(data, {
-                        type: 'binary'
-                    }), // 以二进制流方式读取得到整份excel表格对象
-                    persons = []; // 存储获取到的数据
-            } catch (e) {
-                alert('文件读取失败！');
-                return;
-            }
+				// 表格的表格范围，可用于判断表头是否数量是否正确
+				var fromTo = '';
+				// 遍历每张表读取
 
-            // 表格的表格范围，可用于判断表头是否数量是否正确
-            var fromTo = '';
-            // 遍历每张表读取
+				for(var sheet in workbook.Sheets) {
+					if(workbook.Sheets.hasOwnProperty(sheet)) {
+						fromTo = workbook.Sheets[sheet]['!ref'];
+						persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
+						// break; // 如果只取第一张表，就取消注释这行
+					}
+				}
 
-            for (var sheet in workbook.Sheets) {
-                if (workbook.Sheets.hasOwnProperty(sheet)) {
-                    fromTo = workbook.Sheets[sheet]['!ref'];
-                    persons = persons.concat(XLSX.utils.sheet_to_json(workbook.Sheets[sheet]));
-                    // break; // 如果只取第一张表，就取消注释这行
-                }
-            }
+				bhlist = persons
+				let ercode = ''
+				let scbh = ''
+				let rfid = ''
 
-            bhlist = persons
-            let ercode = ''
-            let scbh = ''
-            let rfid = ''
+				if(whoclick == 'zn') {
+					$.each(bhlist, function(i, n) {
+						ercode += bhlist[i]['二维码'] + ','
+						scbh += bhlist[i]['生产编号'] + ','
+						rfid += bhlist[i]['RFID'] + ','
+						sensorProductionId.push(bhlist[i]['生产编号'])
+						sensorRfId.push(bhlist[i]['RFID'])
+						sensorQrCode.push(bhlist[i]['二维码'])
+					})
+					$('#znInfo').html('更改')
+					if(scbh.length > 26) {
+						$('.scbhai').html(scbh.slice(0, 20) + '...')
+						$('.scbhai').attr('title', scbh.slice(0, scbh.length - 1))
+					} else {
+						$('.scbhai').html(scbh.slice(0, scbh.length - 1))
+					}
+					if(ercode.length > 26) {
+						$('.ercodeai').html(ercode.slice(0, 20) + '...')
+						$('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
+					} else {
+						$('.ercodeai').html(ercode.slice(0, ercode.length - 1))
+					}
+					if(rfid.length > 26) {
+						$('.rfidai').html(rfid.slice(0, 20) + '...')
+						$('.rfidai').attr('title', rfid.slice(0, rfid.length - 1))
+					} else {
+						$('.rfidai').html(rfid.slice(0, rfid.length - 1))
+					}
+				} else if(whoclick == 'lt') {
+					$.each(bhlist, function(i, n) {
+						ercode += bhlist[i]['二维码'] + ','
+						scbh += bhlist[i]['生产编号'] + ','
+						rfid += bhlist[i]['RFID'] + ','
+						tireProductionId.push(bhlist[i]['生产编号'])
+						qrCode.push(bhlist[i]['RFID'])
+						rfId.push(bhlist[i]['二维码'])
+					})
+					$('#seeInfo').html('更改')
+					if(scbh.length > 26) {
+						$('.scbh').html(scbh.slice(0, 20) + '...')
+						$('.scbh').attr('title', scbh.slice(0, scbh.length - 1))
+					} else {
+						$('.scbh').html(scbh.slice(0, scbh.length - 1))
+					}
+					if(ercode.length > 26) {
+						$('.ercode').html(ercode.slice(0, 20) + '...')
+						$('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
+					} else {
+						$('.ercode').html(ercode.slice(0, ercode.length - 1))
+					}
+					if(rfid.length > 26) {
+						$('.rfid').html(rfid.slice(0, 20) + '...')
+						$('.rfid').attr('title', rfid.slice(0, rfid.length - 1))
+					} else {
+						$('.rfid').html(rfid.slice(0, rfid.length - 1))
+					}
+				} else {
+					$.each(bhlist, function(i, n) {
+						ercode += bhlist[i]['二维码'] + ','
+						scbh += bhlist[i]['生产编号'] + ','
+						rfid += bhlist[i]['RFID'] + ','
+						rimsProductionId.push(bhlist[i]['生产编号'])
+						rimsRfId.push(bhlist[i]['RFID'])
+						rimsQrCode.push(bhlist[i]['二维码'])
+					})
+					$('#lwInfo').html('更改')
+					if(scbh.length > 26) {
+						$('.scbhlw').html(scbh.slice(0, 20) + '...')
+						$('.scbhlw').attr('title', scbh.slice(0, scbh.length - 1))
+					} else {
+						$('.scbhlw').html(scbh.slice(0, scbh.length - 1))
+					}
+					if(ercode.length > 26) {
+						$('.rimsQrCode').html(ercode.slice(0, 20) + '...')
+						$('.rimsQrCode').attr('title', ercode.slice(0, ercode.length - 1))
+					} else {
+						$('.rimsQrCode').html(ercode.slice(0, ercode.length - 1))
+					}
+					if(rfid.length > 26) {
+						$('.rimsRfId').html(rfid.slice(0, 20) + '...')
+						$('.rimsRfId').attr('title', rfid.slice(0, rfid.length - 1))
+					} else {
+						$('.rimsRfId').html(rfid.slice(0, rfid.length - 1))
+					}
+				}
 
+			};
 
-            if (whoclick == 'zn') {
-                $.each(bhlist, function (i, n) {
-                    ercode += bhlist[i]['二维码'] + ','
-                    scbh += bhlist[i]['生产编号'] + ','
-                    rfid += bhlist[i]['RFID'] + ','
-                    sensorProductionId.push(bhlist[i]['生产编号'])
-                    sensorRfId.push(bhlist[i]['RFID'])
-                    sensorQrCode.push(bhlist[i]['二维码'])
-                })
-                $('#znInfo').html('更改')
-                if (scbh.length > 26) {
-                    $('.scbhai').html(scbh.slice(0, 20) + '...')
-                    $('.scbhai').attr('title', scbh.slice(0, scbh.length - 1))
-                } else {
-                    $('.scbhai').html(scbh.slice(0, scbh.length - 1))
-                }
-                if (ercode.length > 26) {
-                    $('.ercodeai').html(ercode.slice(0, 20) + '...')
-                    $('.ercodeai').attr('title', ercode.slice(0, ercode.length - 1))
-                } else {
-                    $('.ercodeai').html(ercode.slice(0, ercode.length - 1))
-                }
-                if (rfid.length > 26) {
-                    $('.rfidai').html(rfid.slice(0, 20) + '...')
-                    $('.rfidai').attr('title', rfid.slice(0, rfid.length - 1))
-                } else {
-                    $('.rfidai').html(rfid.slice(0, rfid.length - 1))
-                }
-            } else if (whoclick == 'lt') {
-                $.each(bhlist, function (i, n) {
-                    ercode += bhlist[i]['二维码'] + ','
-                    scbh += bhlist[i]['生产编号'] + ','
-                    rfid += bhlist[i]['RFID'] + ','
-                    tireProductionId.push(bhlist[i]['生产编号'])
-                    qrCode.push(bhlist[i]['RFID'])
-                    rfId.push(bhlist[i]['二维码'])
-                })
-                $('#seeInfo').html('更改')
-                if (scbh.length > 26) {
-                    $('.scbh').html(scbh.slice(0, 20) + '...')
-                    $('.scbh').attr('title', scbh.slice(0, scbh.length - 1))
-                } else {
-                    $('.scbh').html(scbh.slice(0, scbh.length - 1))
-                }
-                if (ercode.length > 26) {
-                    $('.ercode').html(ercode.slice(0, 20) + '...')
-                    $('.ercode').attr('title', ercode.slice(0, ercode.length - 1))
-                } else {
-                    $('.ercode').html(ercode.slice(0, ercode.length - 1))
-                }
-                if (rfid.length > 26) {
-                    $('.rfid').html(rfid.slice(0, 20) + '...')
-                    $('.rfid').attr('title', rfid.slice(0, rfid.length - 1))
-                } else {
-                    $('.rfid').html(rfid.slice(0, rfid.length - 1))
-                }
-            } else {
-                $.each(bhlist, function (i, n) {
-                    ercode += bhlist[i]['二维码'] + ','
-                    scbh += bhlist[i]['生产编号'] + ','
-                    rfid += bhlist[i]['RFID'] + ','
-                    rimsProductionId.push(bhlist[i]['生产编号'])
-                    rimsRfId.push(bhlist[i]['RFID'])
-                    rimsQrCode.push(bhlist[i]['二维码'])
-                })
-                $('#lwInfo').html('更改')
-                if (scbh.length > 26) {
-                    $('.scbhlw').html(scbh.slice(0, 20) + '...')
-                    $('.scbhlw').attr('title', scbh.slice(0, scbh.length - 1))
-                } else {
-                    $('.scbhlw').html(scbh.slice(0, scbh.length - 1))
-                }
-                if (ercode.length > 26) {
-                    $('.rimsQrCode').html(ercode.slice(0, 20) + '...')
-                    $('.rimsQrCode').attr('title', ercode.slice(0, ercode.length - 1))
-                } else {
-                    $('.rimsQrCode').html(ercode.slice(0, ercode.length - 1))
-                }
-                if (rfid.length > 26) {
-                    $('.rimsRfId').html(rfid.slice(0, 20) + '...')
-                    $('.rimsRfId').attr('title', rfid.slice(0, rfid.length - 1))
-                } else {
-                    $('.rimsRfId').html(rfid.slice(0, rfid.length - 1))
-                }
-            }
+			// 以二进制方式打开文件
+			fileReader.readAsBinaryString(files[0]);
+		});
+		let fplx = []
 
-        };
-
-        // 以二进制方式打开文件
-        fileReader.readAsBinaryString(files[0]);
-    });
-    let fplx = []
-
-    $.ajax({
-        url: `${API}//erpCustomerCar/selectPotionByCarId?carId=${getUrlParam('id')}`,
-        type: 'get',
-        success: function (res) {
-            let arr = res.data
-            let str = '<option></option>'
-            $.each(arr, function (i, k) {
-                str += `<option value="${k}" >${k}</option>`
-            })
-            $('.tireLocation').html(str)
-            layform.render()
-            selWl()
-        }
-    })
-    let carList = []
-    // 查询车辆
-    function selWl() {
-        $.ajax({
-            url: `${API}/erpTireSensor/findCarDetailed?carPlate=${decodeURI(decodeURI(getUrlParam('carnum')))}`,
-            type: 'get',
-            success: function (res) {
-                let arr = res.data
-                let str = ''
-                carList = res.data
-                $.each(arr, function (i, n) {
-                    if (n.zhiNeng) {
-                        str +=
-                            `<tr>
-		                    <td rowspan="3">${n.tireLocation == null ? '' : n.tireLocation}</td>
-		                    <td>${n.rimsName == null ? '' : n.rimsName}</td>
-		                    <td>${n.rimsBrand == null ? '' : n.rimsBrand}</td>
-		                    <td>${n.rimsSpecifications == null ? '' : n.rimsSpecifications}</td>
-		                    <td>${n.rimsModel == null ? '' : n.rimsModel}</td>
-		                    <td>${n.rimsPlace == null ? '' : n.rimsPlace}</td>
-		                    <td>${n.rimsState == null ? '' : n.rimsState}</td>
-		                    <td>${n.rimsUnit == null ? '' : n.rimsUnit}</td>
-		                    <td>${n.rimsNum == null ? '' : n.rimsNum}</td>
-		                    <td>${n.rimsProductionId == null ? '' : n.rimsProductionId}</td>
-		                    <td>${n.rimsQrCode == null ? '' : n.rimsQrCode}</td>
-		                    <td>${n.rimsRfId == null ? '' : n.rimsRfId}</td>
-		                    <td>${n.rimsStoragePrice == null ? '' : n.rimsStoragePrice}</td>
-		                    
-		                    <td  rowspan="3">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
-		                    <td  rowspan="3">${n.tireMileage == null ? '' : n.tireMileage}</td>
-		                </tr> `
-                    } else {
-                        str +=
-                            `<tr>
+		$.ajax({
+			url: `${API}//erpCustomerCar/selectPotionByCarId?carId=${getUrlParam('id')}`,
+			type: 'get',
+			success: function(res) {
+				let arr = res.data
+				let str = '<option></option>'
+				$.each(arr, function(i, k) {
+					str += `<option value="${k}" >${k}</option>`
+				})
+				$('.tireLocation').html(str)
+				layform.render()
+				selWl()
+			}
+		})
+		let carList = []
+		// 查询车辆
+		function selWl() {
+			$.ajax({
+				url: `${API}/erpCarTireArchives/getTireByCarId?carPlate=${decodeURI(decodeURI(getUrlParam('carnum')))}`,
+				type: 'get',
+				success: function(res) {
+					let arr = res.data
+					let str = ''
+					carList = res.data
+					$.each(arr, function(i, n) {
+						if(n.zhiNeng) {
+							str +=
+								`<tr>
+			                    <td rowspan="3">${n.tireLocation == null ? '' : n.tireLocation}</td>
+			                    <td>${n.rimsName == null ? '' : n.rimsName}</td>
+			                    <td>${n.rimsBrand == null ? '' : n.rimsBrand}</td>
+			                    <td>${n.rimsSpecifications == null ? '' : n.rimsSpecifications}</td>
+			                    <td>${n.rimsModel == null ? '' : n.rimsModel}</td>
+			                    <td>${n.rimsPlace == null ? '' : n.rimsPlace}</td>
+			                    <td>${n.rimsState == null ? '' : n.rimsState}</td>
+			                    <td>${n.rimsUnit == null ? '' : n.rimsUnit}</td>
+			                    <td>${n.rimsNum == null ? '' : n.rimsNum}</td>
+			                    <td>${n.rimsProductionId == null ? '' : n.rimsProductionId}</td>
+			                    <td>${n.rimsQrCode == null ? '' : n.rimsQrCode}</td>
+			                    <td>${n.rimsRfId == null ? '' : n.rimsRfId}</td>
+			                    <td>${n.rimsStoragePrice == null ? '' : n.rimsStoragePrice}</td>
+			                    <td  rowspan="3">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
+			                    <td  rowspan="3">${n.tireMileage == null ? '' : n.tireMileage}</td>
+			                </tr> `
+						} else {
+							str +=
+								`<tr>
 		                    <td rowspan="2">${n.tireLocation == null ? '' : n.tireLocation}</td>
 		                    <td>${n.rimsName == null ? '' : n.rimsName}</td>
 		                    <td>${n.rimsBrand == null ? '' : n.rimsBrand}</td>
@@ -492,11 +489,11 @@
 		                    <td  rowspan="2">${n.tireStorageDate == null ? '' : n.tireStorageDate}</td>
 		                    <td  rowspan="2">${n.tireMileage == null ? '' : n.tireMileage}</td>
 		                    </tr>`
-                    }
+						}
 
-                    if (n.zhiNeng) {
-                        str +=
-                            `<tr><td rowspan="2">${n.tireName == null ? '' : n.tireName}</td>
+						if(n.zhiNeng) {
+							str +=
+								`<tr><td rowspan="2">${n.tireName == null ? '' : n.tireName}</td>
 				                    <td>${n.tireBrand == null ? '' : n.tireBrand}</td>
 				                    <td>${n.tireSpecifications == null ? '' : n.tireSpecifications}</td>
 				                    <td>${n.tireModel == null ? '' : n.tireModel}</td>
@@ -508,9 +505,9 @@
 				                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
 				                    <td>${n.rfId == null ? '' : n.rfId}</td>
 				                    <td>${n.tireStoragePrice == null ? '' : n.tireStoragePrice}</td></tr>`
-                    } else {
-                        str +=
-                            `<tr><td>${n.tireName == null ? '' : n.tireName}</td>
+						} else {
+							str +=
+								`<tr><td>${n.tireName == null ? '' : n.tireName}</td>
 				                    <td>${n.tireBrand == null ? '' : n.tireBrand}</td>
 				                    <td>${n.tireSpecifications == null ? '' : n.tireSpecifications}</td>
 				                    <td>${n.tireModel == null ? '' : n.tireModel}</td>
@@ -522,11 +519,11 @@
 				                    <td>${n.qrCode == null ? '' : n.qrCode}</td>
 				                    <td>${n.rfId == null ? '' : n.rfId}</td>
 				                    <td>${n.tireStoragePrice == null ? '' : n.tireStoragePrice}</td></tr>`
-                    }
+						}
 
-                    if (n.zhiNeng) {
-                        str +=
-                            `<tr><!--<td>${n.sensorName == null ? '' : n.sensorName}</td>-->
+						if(n.zhiNeng) {
+							str +=
+								`<tr><!--<td>${n.sensorName == null ? '' : n.sensorName}</td>-->
 		                    <td>${n.sensorBrand == null ? '' : n.sensorBrand}</td>
 		                    <td>${n.sensorSpecifications == null ? '' : n.sensorSpecifications}</td>
 		                    <td>${n.sensorModel == null ? '' : n.sensorModel}</td>
@@ -538,330 +535,330 @@
 		                    <td>${n.sensorQrCode == null ? '' : n.sensorQrCode}</td>
 		                    <td>${n.sensorRfId == null ? '' : n.sensorRfId}</td>
 		                    <td>${n.sensorStoragePrice == null ? '' : n.sensorStoragePrice}</td></tr>`
-                    }
-                    /* else {
-                                        	str +=`<tr><td>${n.sensorName == null ? '' : n.sensorName}</td>
-                    		                    <td>${n.sensorBrand == null ? '' : n.sensorBrand}</td>
-                    		                    <td>${n.sensorSpecifications == null ? '' : n.sensorSpecifications}</td>
-                    		                    <td>${n.sensorModel == null ? '' : n.sensorModel}</td>
-                    		                    <td>${n.sensorPlace == null ? '' : n.sensorPlace}</td>
-                    		                    <td>${n.sensorState == null ? '' : n.sensorState}</td>
-                    		                    <td>${n.sensorUnit == null ? '' : n.sensorUnit}</td>
-                    		                    <td>${n.sensorNum == null ? '' : n.sensorNum}</td>
-                    		                    <td>${n.sensorProductionId == null ? '' : n.sensorProductionId}</td>
-                    		                    <td>${n.sensorQrCode == null ? '' : n.sensorQrCode}</td>
-                    		                    <td>${n.sensorRfId == null ? '' : n.sensorRfId}</td>
-                    		                    <td>${n.sensorStoragePrice == null ? '' : n.sensorStoragePrice}</td></tr>`
-                                        }*/
-                })
+						}
+						/* else {
+						                    	str +=`<tr><td>${n.sensorName == null ? '' : n.sensorName}</td>
+								                    <td>${n.sensorBrand == null ? '' : n.sensorBrand}</td>
+								                    <td>${n.sensorSpecifications == null ? '' : n.sensorSpecifications}</td>
+								                    <td>${n.sensorModel == null ? '' : n.sensorModel}</td>
+								                    <td>${n.sensorPlace == null ? '' : n.sensorPlace}</td>
+								                    <td>${n.sensorState == null ? '' : n.sensorState}</td>
+								                    <td>${n.sensorUnit == null ? '' : n.sensorUnit}</td>
+								                    <td>${n.sensorNum == null ? '' : n.sensorNum}</td>
+								                    <td>${n.sensorProductionId == null ? '' : n.sensorProductionId}</td>
+								                    <td>${n.sensorQrCode == null ? '' : n.sensorQrCode}</td>
+								                    <td>${n.sensorRfId == null ? '' : n.sensorRfId}</td>
+								                    <td>${n.sensorStoragePrice == null ? '' : n.sensorStoragePrice}</td></tr>`
+						                    }*/
+					})
 
-                $('.matlist').html(str)
-            }
-        })
-    }
-    // 保存
-    function save(params) {
-        let bol = true
-       if($('.tireLocation').val() == '') {
-           alert('请选择胎位')
-           return false
-       }
-       $.each(carList,function (i,k) {
-           if(k.tireLocation == $('.tireLocation').val()) {
-               alert('胎位重复!')
-               bol = false
-               return false
-           }
-       })
-        if(bol) {
-            let data = {};
-        $('.saves input').each(function () {
-            console.log($(this).data('name') == 'tireName', $(this).val());
-            if ($(this).data('name') == 'tireName' && $(this).val() == '轮胎(智能)') {
-                zhiNeng = true;
-            }
-            data[$(this).data('name')] = $(this).val()
-        })
-        data.tireLocation = $('.tireLocation').val()
-        data.custId = loadUserInfo.customer.id
-        data.userId = loadUserInfo.user.id
-        data.carPlate = decodeURI(decodeURI(getUrlParam('carnum')))
-        data.rimsName = "轮辋"
-        data.zhiNeng = zhiNeng
-        if (isFcAi) {}
-        $.ajax({
-            url: `${API}/erpTireSensor/addCarDetailed`,
-            type: 'post',
-            data: data,
-            success: function (res) {
-                if (params == 1) {
-            $('.isClear').val('')
-        }
-        if(params == 2) {
-            $('.saves input').val('')  
-        }
-        if (params == 3) {
-            alert('自动关闭失败,请手动关闭!')
-        }
-                selWl()
-                layer.msg("保存成功")
-            }
-        })
-        }
-    }
+					$('.matlist').html(str)
+				}
+			})
+		}
+		// 保存
+		function save(params) {
+			let bol = true
+			if($('.tireLocation').val() == '') {
+				alert('请选择胎位')
+				return false
+			}
+			$.each(carList, function(i, k) {
+				if(k.tireLocation == $('.tireLocation').val()) {
+					alert('胎位重复!')
+					bol = false
+					return false
+				}
+			})
+			if(bol) {
+				let data = {};
+				$('.saves input').each(function() {
+					console.log($(this).data('name') == 'tireName', $(this).val());
+					if($(this).data('name') == 'tireName' && $(this).val() == '轮胎(智能)') {
+						zhiNeng = true;
+					}
+					data[$(this).data('name')] = $(this).val()
+				})
+				data.tireLocation = $('.tireLocation').val()
+				data.custId = loadUserInfo.customer.id
+				data.userId = loadUserInfo.user.id
+				data.carPlate = decodeURI(decodeURI(getUrlParam('carnum')))
+				data.rimsName = "轮辋"
+				data.zhiNeng = zhiNeng
+				if(isFcAi) {}
+				$.ajax({
+					url: `${API}/erpTireSensor/addCarDetailed`,
+					type: 'post',
+					data: data,
+					success: function(res) {
+						if(params == 1) {
+							$('.isClear').val('')
+						}
+						if(params == 2) {
+							$('.saves input').val('')
+						}
+						if(params == 3) {
+							alert('自动关闭失败,请手动关闭!')
+						}
+						selWl()
+						layer.msg("保存成功")
+					}
+				})
+			}
+		}
 
-    function hoverShow() {
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTop`,
-            type: 'get',
-            success: function (res) {
-                let str = ''
-                let arrs = res.data
-                $.each(arrs, function (i, o) {
-                    str += `<li class="list_${o.zid}">${o.name}<div class="two"><ul>`
-                    $.ajax({
-                        url: `${API}/erpMaterielFlow/selectTwo?pid=${o.zid}`,
-                        type: 'get',
-                        async: false,
-                        success: function (res) {
-                            let arr = res.data
-                            $.each(arr, function (j, p) {
-                                str +=
-                                    `<li class="list_${p.zid}">${p.name}<div class="two"><ul>`
-                                $.ajax({
-                                    url: `${API}/erpMaterielFlow/selectThree?pid=${p.zid}`,
-                                    type: 'get',
-                                    async: false,
-                                    success: function (res) {
-                                        let earr = res.data
-                                        $.each(earr, function (k, q) {
-                                            str +=
-                                                `<li class="elist_${q.zid}">${q.name}</li>`
-                                        })
+		function hoverShow() {
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTop`,
+				type: 'get',
+				success: function(res) {
+					let str = ''
+					let arrs = res.data
+					$.each(arrs, function(i, o) {
+						str += `<li class="list_${o.zid}">${o.name}<div class="two"><ul>`
+						$.ajax({
+							url: `${API}/erpMaterielFlow/selectTwo?pid=${o.zid}`,
+							type: 'get',
+							async: false,
+							success: function(res) {
+								let arr = res.data
+								$.each(arr, function(j, p) {
+									str +=
+										`<li class="list_${p.zid}">${p.name}<div class="two"><ul>`
+									$.ajax({
+										url: `${API}/erpMaterielFlow/selectThree?pid=${p.zid}`,
+										type: 'get',
+										async: false,
+										success: function(res) {
+											let earr = res.data
+											$.each(earr, function(k, q) {
+												str +=
+													`<li class="elist_${q.zid}">${q.name}</li>`
+											})
 
-                                    }
-                                })
-                                str += `</ul></div></li>`
+										}
+									})
+									str += `</ul></div></li>`
 
-                            })
+								})
 
-                        }
-                    })
-                    str += `</ul></div></li>`
-                })
+							}
+						})
+						str += `</ul></div></li>`
+					})
 
-                console.log(str)
-                $('.hover-show').html(str)
+					console.log(str)
+					$('.hover-show').html(str)
 
-            }
-        })
-    }
-    // hoverShow()
-    //  第一层！！！
-    let setVal = 'lt'
+				}
+			})
+		}
+		// hoverShow()
+		//  第一层！！！
+		let setVal = 'lt'
 
-    function showLv1(show, bol, _this) {
-        setVal = $(_this).data('name')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTop`,
-            type: 'get',
-            success: function (res) {
-                let str = ''
-                let arrs = res.data
-                $.each(arrs, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
-                })
-                $('.hover-show').html(str)
-                if (show) {
-                    $('.hover-show').show()
-                }
+		function showLv1(show, bol, _this) {
+			setVal = $(_this).data('name')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTop`,
+				type: 'get',
+				success: function(res) {
+					let str = ''
+					let arrs = res.data
+					$.each(arrs, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv2('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-2"></div></li>`
+					})
+					$('.hover-show').html(str)
+					if(show) {
+						$('.hover-show').show()
+					}
 
-                isAI = bol
-            }
-        })
-    }
-    // 查找品名
-    function showLv2(zid, _this) {
-        $(`.hover-show .list-2`).html('')
-        aiZid = zid
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找规格
-    function showLv3(zid, _this) {
-        $(`.hover-show .list-3`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找品牌
-    function showLv4(zid, _this) {
-        $(`.hover-show .list-4`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找型号
-    function showLv5(zid, _this) {
-        $(`.hover-show .list-5`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
+					isAI = bol
+				}
+			})
+		}
+		// 查找品名
+		function showLv2(zid, _this) {
+			$(`.hover-show .list-2`).html('')
+			aiZid = zid
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv3('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-3"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找规格
+		function showLv3(zid, _this) {
+			$(`.hover-show .list-3`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectTwo?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv4('${zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-4"></div></li>`
+					})
+					str += '</ul>'
+					console.log(str)
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找品牌
+		function showLv4(zid, _this) {
+			$(`.hover-show .list-4`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv5('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-5"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找型号
+		function showLv5(zid, _this) {
+			$(`.hover-show .list-5`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectThree?pid=${zid}`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv6('${v.zid}',this)"  ><span class="names">${v.name}</span><div class="list-${v.zid} list-6"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function showLv6(zid, _this) {
-        $(`.hover-show .list-6`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                console.log(res)
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
-                })
-                str += '</ul>'
-                console.log(str)
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    // 查找
-    function showLv7(zid, _this) {
-        $(`.hover-show .list-7`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str +=
-                        `<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
+		function showLv6(zid, _this) {
+			$(`.hover-show .list-6`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=51`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					console.log(res)
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv7('',this)" ><span class="names">${v}</span><div class="list-7"></div></li>`
+					})
+					str += '</ul>'
+					console.log(str)
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		// 查找
+		function showLv7(zid, _this) {
+			$(`.hover-show .list-7`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=69`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str +=
+							`<li onmouseenter="showLv8('',this)" ><span class="names">${v}</span><div class="list-8"></div></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
 
-    function showLv8(zid, _this) {
-        $(`.hover-show .list-8`).html('')
-        $.ajax({
-            url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
-            type: 'get',
-            async: false,
-            success: function (res) {
-                let arr = res.data
-                let str = '<ul>'
-                $.each(arr, function (k, v) {
-                    str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
-                })
-                str += '</ul>'
-                $(_this).children('div').html(str)
-            }
-        })
-    }
-    let isAI = false
-    let isFcAi = true // 是否第一次选中智能轮胎
-    let clsname = ''
-    let aiName = ''
+		function showLv8(zid, _this) {
+			$(`.hover-show .list-8`).html('')
+			$.ajax({
+				url: `${API}/erpMaterielFlow/selectSytem?shu=27`,
+				type: 'get',
+				async: false,
+				success: function(res) {
+					let arr = res.data
+					let str = '<ul>'
+					$.each(arr, function(k, v) {
+						str += `<li onclick="setWlVal(this)" ><span class="names">${v}</span></li>`
+					})
+					str += '</ul>'
+					$(_this).children('div').html(str)
+				}
+			})
+		}
+		let isAI = false
+		let isFcAi = true // 是否第一次选中智能轮胎
+		let clsname = ''
+		let aiName = ''
 
-    function setWlVal(_this) {
-        console.log(setVal)
-        if (setVal == 'tireName') {
-            $('.tireUnit').val($(_this).text())
-            $('.tireState').val($(_this).parents('.list-8').prev().text())
-            $('.tirePlace').val($(_this).parents('.list-7').prev().text())
-            $('.tireModel').val($(_this).parents('.list-6').prev().text())
-            $('.tireSpecifications').val($(_this).parents('.list-4').prev().text())
-            $('.tireBrand').val($(_this).parents('.list-5').prev().text())
-            $('.tireName').val($(_this).parents('.list-3').prev().text())
-            aiName = $(_this).parents('.list-2').prev().text()
-        }
-        if (setVal == 'rimsBrand') {
-            $('.rimsUnit').val($(_this).text())
-            $('.rimsState').val($(_this).parents('.list-8').prev().text())
-            $('.rimsPlace').val($(_this).parents('.list-7').prev().text())
-            $('.rimsModel').val($(_this).parents('.list-6').prev().text())
-            $('.rimsSpecifications').val($(_this).parents('.list-4').prev().text())
-            $('.rimsBrand').val($(_this).parents('.list-5').prev().text())
-            $('.rimsName').val($(_this).parents('.list-3').prev().text())
-            aiName = $(_this).parents('.list-2').prev().text()
-        }
-        if (setVal == 'sensorBrand') {
-            $('.sensorUnit').val($(_this).text())
-            $('.sensorState').val($(_this).parents('.list-8').prev().text())
-            $('.sensorPlace').val($(_this).parents('.list-7').prev().text())
-            $('.sensorModel').val($(_this).parents('.list-6').prev().text())
-            $('.sensorSpecifications').val($(_this).parents('.list-4').prev().text())
-            $('.sensorBrand').val($(_this).parents('.list-5').prev().text())
-            $('.sensorName').val($(_this).parents('.list-3').prev().text())
-            aiName = $(_this).parents('.list-2').prev().text()
-            zhiNeng = true
-        }
-        if (aiName == '轮胎(智能)' && isFcAi) {
-            zhiNeng == true
-            isFcAi = false
-            $('.ai').prop('rowspan', '3')
-            $('.zhineng').prop('rowspan', '2')
-            $('.saves').append(
-                `<tr class="AIlist">
+		function setWlVal(_this) {
+			console.log(setVal)
+			if(setVal == 'tireName') {
+				$('.tireUnit').val($(_this).text())
+				$('.tireState').val($(_this).parents('.list-8').prev().text())
+				$('.tirePlace').val($(_this).parents('.list-7').prev().text())
+				$('.tireModel').val($(_this).parents('.list-6').prev().text())
+				$('.tireSpecifications').val($(_this).parents('.list-4').prev().text())
+				$('.tireBrand').val($(_this).parents('.list-5').prev().text())
+				$('.tireName').val($(_this).parents('.list-3').prev().text())
+				aiName = $(_this).parents('.list-2').prev().text()
+			}
+			if(setVal == 'rimsBrand') {
+				$('.rimsUnit').val($(_this).text())
+				$('.rimsState').val($(_this).parents('.list-8').prev().text())
+				$('.rimsPlace').val($(_this).parents('.list-7').prev().text())
+				$('.rimsModel').val($(_this).parents('.list-6').prev().text())
+				$('.rimsSpecifications').val($(_this).parents('.list-4').prev().text())
+				$('.rimsBrand').val($(_this).parents('.list-5').prev().text())
+				$('.rimsName').val($(_this).parents('.list-3').prev().text())
+				aiName = $(_this).parents('.list-2').prev().text()
+			}
+			if(setVal == 'sensorBrand') {
+				$('.sensorUnit').val($(_this).text())
+				$('.sensorState').val($(_this).parents('.list-8').prev().text())
+				$('.sensorPlace').val($(_this).parents('.list-7').prev().text())
+				$('.sensorModel').val($(_this).parents('.list-6').prev().text())
+				$('.sensorSpecifications').val($(_this).parents('.list-4').prev().text())
+				$('.sensorBrand').val($(_this).parents('.list-5').prev().text())
+				$('.sensorName').val($(_this).parents('.list-3').prev().text())
+				aiName = $(_this).parents('.list-2').prev().text()
+				zhiNeng = true
+			}
+			if(aiName == '轮胎(智能)' && isFcAi) {
+				zhiNeng == true
+				isFcAi = false
+				$('.ai').prop('rowspan', '3')
+				$('.zhineng').prop('rowspan', '2')
+				$('.saves').append(
+					`<tr class="AIlist">
                     <td >
                         <input type="hidden"  data-name="sensorName" class="layui-input  sensorName"
                             value="" >
@@ -900,18 +897,18 @@
                         <input  class="layui-input sensorStoragePrice " data-name="sensorStoragePrice">
                     </td>
                     </tr>`
-            )
-            $('#znInfo').on('click', function () {
-                whoclick = 'zn'
-                $('#excel-file').click()
+				)
+				$('#znInfo').on('click', function() {
+					whoclick = 'zn'
+					$('#excel-file').click()
 
-            })
-        }
-    }
-    $(document).on('click', function () {
-        $('.hover-show').hide()
-    })
-    showLv1()
-</script>
+				})
+			}
+		}
+		$(document).on('click', function() {
+			$('.hover-show').hide()
+		})
+		showLv1()
+	</script>
 
 </html>

@@ -181,13 +181,14 @@
 		$(function() {
 			var id = GetRequest().id;
 			$.ajax({
-				url: API + '/erpCarTireArchives/getTireByCarId?carId=' + id + '&custId=' + loadUserInfo.customer.id,
+				url: `${API}/erpCarTireArchives/getTireByCarId?carPlate=${decodeURI(decodeURI(getUrlParam('carPlate')))}`,
+				// url: API + '/erpCarTireArchives/getTireByCarId?carId=' + id + '&custId=' + loadUserInfo.customer.id,
 				type: 'get',
 				dataType: 'json',
 				success: function(ret) {
 					var objkacha = ret.data.reverse();
 					var html = '';
-					let arr = ret.data
+					/*let arr = ret.data
 					let narr = []
 					$.each(arr, function(i, n) {
 						let data = {}
@@ -201,135 +202,114 @@
 						if(narr.indexOf(data) == -1) {
 							narr.push(data)
 						}
-					})
+					})*/
 					for(var key = 0; key < objkacha.length; key++) {
-						if (objkacha[key].iszhi_neng) {
+						if (objkacha[key].zhiNeng) {
 							html += '<tr>' +
-										'<td rowspan="4">' + (objkacha.length - key) + '</td>' +
-										'<td rowspan="4">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>' +
-										'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-										'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-										'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-										'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-										'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-										'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-										'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-										'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-										'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-										'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-										'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+										'<td rowspan="3">' + (objkacha.length - key) + '</td>' +
+										'<td rowspan="3">' + (objkacha[key].tireLocation == null ? '' : objkacha[key].tireLocation) + '</td>' +
+										'<td>' + (objkacha[key].tireName == null ? '' : objkacha[key].tireName) + '</td>' +
+										'<td>' + (objkacha[key].tireBrand == null ? '' : objkacha[key].tireBrand) + '</td>' +
+										'<td>' + (objkacha[key].tireSpecifications == null ? '' : objkacha[key].tireSpecifications) + '</td>' +
+										'<td>' + (objkacha[key].tireModel == null ? '' : objkacha[key].tireModel) + '</td>' +
+										'<td onclick="seeInfo("' + objkacha[key].tireProductionId + '")">' + (objkacha[key].tireProductionId == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+										'<td>' + (objkacha[key].tireStorageDate == null ? '' : objkacha[key].tireStorageDate) + '</td>' +
+										'<td>' + (objkacha[key].tireStoragePrice == null ? '' : objkacha[key].tireStoragePrice) + '</td>' +
+										'<td>' + (objkacha[key].tireHu == undefined ? '' : objkacha[key].tireHu) + '</td>' +
+										'<td>' + (objkacha[key].mileage1 == undefined ? '' : objkacha[key].mileage1) + '</td>' +
+										'<td>' + (objkacha[key].yujilicheng1 == undefined ? '' : objkacha[key].yujilicheng1) + '</td>' +
+										'<td>' + (objkacha[key].tireAverage == null ? '' : objkacha[key].tireAverage) + '</td>' +
+										'<td>' + (objkacha[key].tireState == null ? '' : objkacha[key].tireState) + '</td>' +
+										'<td>' + (objkacha[key].tireTread1 == null ? '' : objkacha[key].tireTread1) + '</td>' +
+										'<td>' + (objkacha[key].tireTread2 == null ? '' : objkacha[key].tireTread2) + '</td>' +
+										'<td>' + (objkacha[key].tireTread3 == null ? '' : objkacha[key].tireTread3) + '</td>' +
+										'<td>' + (objkacha[key].tireTread4 == null ? '' : objkacha[key].tireTread4) + '</td>' +
+										'<td>' + (objkacha[key].tiretime == null ? '' : objkacha[key].tiretime) + '</td>' +
 									'</tr>'+
 									'<tr>' +
 										'<!--<td rowspan="4">' + (objkacha.length - key) + '</td>-->' +
-										'<!--<td rowspan="4">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>-->' +
-										'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-										'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-										'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-										'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-										'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-										'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-										'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-										'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-										'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-										'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-										'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+										'<!--<td rowspan="4">' + (objkacha[key].tireLocation == null ? '' : objkacha[key].tireLocation) + '</td>-->' +
+										'<td>' + (objkacha[key].sensorName == null ? '' : objkacha[key].sensorName) + '</td>' +
+										'<td>' + (objkacha[key].sensorBrand == null ? '' : objkacha[key].sensorBrand) + '</td>' +
+										'<td>' + (objkacha[key].sensorSpecifications == null ? '' : objkacha[key].sensorSpecifications) + '</td>' +
+										'<td>' + (objkacha[key].sensorModel == null ? '' : objkacha[key].sensorModel) + '</td>' +
+										'<td onclick="seeInfo("' + objkacha[key].sensorProductionId + '")">' + (objkacha[key].sensorProductionId == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+										'<td>' + (objkacha[key].tireStorageDate == null ? '' : objkacha[key].tireStorageDate) + '</td>' +
+										'<td>' + (objkacha[key].sensorStoragePrice == null ? '' : objkacha[key].sensorStoragePrice) + '</td>' +
+										'<td>' + (objkacha[key].sensorHu == undefined ? '' : objkacha[key].sensorHu) + '</td>' +
+										'<td>' + (objkacha[key].mileage2 == undefined ? '' : objkacha[key].mileage2) + '</td>' +
+										'<td>' + (objkacha[key].yujilicheng2 == undefined ? '' : objkacha[key].yujilicheng2) + '</td>' +
+										'<td>' + (objkacha[key].sensorAverage == null ? '' : objkacha[key].sensorAverage) + '</td>' +
+										'<td>' + (objkacha[key].sensorState == null ? '' : objkacha[key].sensorState) + '</td>' +
+										'<td>' + (objkacha[key].sensorTread1 == null ? '' : objkacha[key].sensorTread1) + '</td>' +
+										'<td>' + (objkacha[key].sensorTread2 == null ? '' : objkacha[key].sensorTread2) + '</td>' +
+										'<td>' + (objkacha[key].sensorTread3 == null ? '' : objkacha[key].sensorTread3) + '</td>' +
+										'<td>' + (objkacha[key].sensorTread4 == null ? '' : objkacha[key].sensorTread4) + '</td>' +
+										'<td>' + (objkacha[key].sensortime == null ? '' : objkacha[key].sensortime) + '</td>' +
 								'</tr>'+
 								'<tr>' +
 									'<!--<td rowspan="4">' + (objkacha.length - key) + '</td>-->' +
-									'<!--<td rowspan="4">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>-->' +
-									'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-									'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-									'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-									'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-									'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-									'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-									'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-									'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-									'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-									'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-									'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-									'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-									'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
-								'</tr>'+
-								'<tr>' +
-									'<!--<td rowspan="4">' + (objkacha.length - key) + '</td>-->' +
-									'<!--<td rowspan="4">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>-->' +
-									'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-									'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-									'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-									'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-									'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-									'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-									'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-									'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-									'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-									'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-									'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-									'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-									'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-									'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+									'<!--<td rowspan="4">' + (objkacha[key].tireLocation == null ? '' : objkacha[key].tireLocation) + '</td>-->' +
+									'<td>' + (objkacha[key].rimsName == null ? '' : objkacha[key].rimsName) + '</td>' +
+									'<td>' + (objkacha[key].rimsBrand == null ? '' : objkacha[key].rimsBrand) + '</td>' +
+									'<td>' + (objkacha[key].rimsSpecifications == null ? '' : objkacha[key].rimsSpecifications) + '</td>' +
+									'<td>' + (objkacha[key].rimsModel == null ? '' : objkacha[key].rimsModel) + '</td>' +
+									'<td onclick="seeInfo("' + objkacha[key].rimsProductionId + '")">' + (objkacha[key].rimsProductionId == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+									'<td>' + (objkacha[key].tireStorageDate == null ? '' : objkacha[key].tireStorageDate) + '</td>' +
+									'<td>' + (objkacha[key].rimsStoragePrice == null ? '' : objkacha[key].rimsStoragePrice) + '</td>' +
+									'<td>' + (objkacha[key].rimsHu == undefined ? '' : objkacha[key].rimsHu) + '</td>' +
+									'<td>' + (objkacha[key].mileage3 == undefined ? '' : objkacha[key].mileage3) + '</td>' +
+									'<td>' + (objkacha[key].yujilicheng3 == undefined ? '' : objkacha[key].yujilicheng3) + '</td>' +
+									'<td>' + (objkacha[key].rimsAverage == null ? '' : objkacha[key].rimsAverage) + '</td>' +
+									'<td>' + (objkacha[key].rimsState == null ? '' : objkacha[key].rimsState) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread1 == null ? '' : objkacha[key].rimsTread1) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread2 == null ? '' : objkacha[key].rimsTread2) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread3 == null ? '' : objkacha[key].rimsTread3) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread4 == null ? '' : objkacha[key].rimsTread4) + '</td>' +
+									'<td>' + (objkacha[key].rimstime == null ? '' : objkacha[key].rimstime) + '</td>' +
 								'</tr>';
 						} else{
 							html += '<tr>' +
 										'<td rowspan="2">' + (objkacha.length - key) + '</td>' +
-										'<td rowspan="2">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>' +
-										'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-										'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-										'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-										'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-										'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-										'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-										'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-										'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-										'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-										'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-										'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+										'<td rowspan="2">' + (objkacha[key].tireLocation == null ? '' : objkacha[key].tireLocation) + '</td>' +
+										'<td>' + (objkacha[key].tireName == null ? '' : objkacha[key].tireName) + '</td>' +
+										'<td>' + (objkacha[key].tireBrand == null ? '' : objkacha[key].tireBrand) + '</td>' +
+										'<td>' + (objkacha[key].tireSpecifications == null ? '' : objkacha[key].tireSpecifications) + '</td>' +
+										'<td>' + (objkacha[key].tireModel == null ? '' : objkacha[key].tireModel) + '</td>' +
+										'<td onclick="seeInfo("' + objkacha[key].tireProductionId + '")">' + (objkacha[key].tireProductionId == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+										'<td>' + (objkacha[key].tireStorageDate == null ? '' : objkacha[key].tireStorageDate) + '</td>' +
+										'<td>' + (objkacha[key].tireStoragePrice == null ? '' : objkacha[key].tireStoragePrice) + '</td>' +
+										'<td>' + (objkacha[key].tireHu == undefined ? '' : objkacha[key].tireHu) + '</td>' +
+										'<td>' + (objkacha[key].mileage1 == undefined ? '' : objkacha[key].mileage1) + '</td>' +
+										'<td>' + (objkacha[key].yujilicheng1 == undefined ? '' : objkacha[key].yujilicheng1) + '</td>' +
+										'<td>' + (objkacha[key].tireAverage == null ? '' : objkacha[key].tireAverage) + '</td>' +
+										'<td>' + (objkacha[key].tireState == null ? '' : objkacha[key].tireState) + '</td>' +
+										'<td>' + (objkacha[key].tireTread1 == null ? '' : objkacha[key].tireTread1) + '</td>' +
+										'<td>' + (objkacha[key].tireTread2 == null ? '' : objkacha[key].tireTread2) + '</td>' +
+										'<td>' + (objkacha[key].tireTread3 == null ? '' : objkacha[key].tireTread3) + '</td>' +
+										'<td>' + (objkacha[key].tireTread4 == null ? '' : objkacha[key].tireTread4) + '</td>' +
+										'<td>' + (objkacha[key].tiretime == null ? '' : objkacha[key].tiretime) + '</td>' +
 									'</tr>'+
 									'<tr>' +
-										'<!--<td rowspan="4">' + (objkacha.length - key) + '</td>-->' +
-										'<!--<td rowspan="4">' + (objkacha[key].tire_location == null ? '' : objkacha[key].tire_location) + '</td>-->' +
-										'<td>' + (objkacha[key].materiel_name == null ? '' : objkacha[key].materiel_name) + '</td>' +
-										'<td>' + (objkacha[key].car_brand == null ? '' : objkacha[key].car_brand) + '</td>' +
-										'<td>' + (objkacha[key].materiel_Specifications == null ? '' : objkacha[key].materiel_Specifications) + '</td>' +
-										'<td>' + (objkacha[key].materiel_model == null ? '' : objkacha[key].materiel_model) + '</td>' +
-										'<td onclick="seeInfo("' + objkacha[key].materiel_production_id + '")">' + (objkacha[key].materiel_production_id == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
-										'<td>' + (objkacha[key].car_gz_date == null ? '' : objkacha[key].car_gz_date) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_price == null ? '' : objkacha[key].tire_purchase_price) + '</td>' +
-										'<td>' + (objkacha[key].tire_maintenance == undefined ? '' : objkacha[key].tire_maintenance) + '</td>' +
-										'<td>' + (objkacha[key].tire_purchase_mileage == undefined ? '' : objkacha[key].tire_purchase_mileage) + '</td>' +
-										'<td>' + (objkacha[key].carMileage == undefined ? '' : objkacha[key].carMileage) + '</td>' +
-										'<td>' + (objkacha[key].tire_average == null ? '' : objkacha[key].tire_average) + '</td>' +
-										'<td>' + (objkacha[key].materiel_state == null ? '' : objkacha[key].materiel_state) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread1 == null ? '' : objkacha[key].tire_tread1) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread2 == null ? '' : objkacha[key].tire_tread2) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread3 == null ? '' : objkacha[key].tire_tread3) + '</td>' +
-										'<td>' + (objkacha[key].tire_tread4 == null ? '' : objkacha[key].tire_tread4) + '</td>' +
-										'<td>' + (objkacha[key].car_operate_date == null ? '' : objkacha[key].car_operate_date) + '</td>' +
+									'<!--<td rowspan="4">' + (objkacha.length - key) + '</td>-->' +
+									'<!--<td rowspan="4">' + (objkacha[key].tireLocation == null ? '' : objkacha[key].tireLocation) + '</td>-->' +
+									'<td>' + (objkacha[key].rimsName == null ? '' : objkacha[key].rimsName) + '</td>' +
+									'<td>' + (objkacha[key].rimsBrand == null ? '' : objkacha[key].rimsBrand) + '</td>' +
+									'<td>' + (objkacha[key].rimsSpecifications == null ? '' : objkacha[key].rimsSpecifications) + '</td>' +
+									'<td>' + (objkacha[key].rimsModel == null ? '' : objkacha[key].rimsModel) + '</td>' +
+									'<td onclick="seeInfo("' + objkacha[key].rimsProductionId + '")">' + (objkacha[key].rimsProductionId == null ? '' : objkacha[key].materiel_production_id) + '</td>' +
+									'<td>' + (objkacha[key].tireStorageDate == null ? '' : objkacha[key].tireStorageDate) + '</td>' +
+									'<td>' + (objkacha[key].rimsStoragePrice == null ? '' : objkacha[key].rimsStoragePrice) + '</td>' +
+									'<td>' + (objkacha[key].rimsHu == undefined ? '' : objkacha[key].rimsHu) + '</td>' +
+									'<td>' + (objkacha[key].mileage3 == undefined ? '' : objkacha[key].mileage3) + '</td>' +
+									'<td>' + (objkacha[key].yujilicheng3 == undefined ? '' : objkacha[key].yujilicheng3) + '</td>' +
+									'<td>' + (objkacha[key].rimsAverage == null ? '' : objkacha[key].rimsAverage) + '</td>' +
+									'<td>' + (objkacha[key].rimsState == null ? '' : objkacha[key].rimsState) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread1 == null ? '' : objkacha[key].rimsTread1) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread2 == null ? '' : objkacha[key].rimsTread2) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread3 == null ? '' : objkacha[key].rimsTread3) + '</td>' +
+									'<td>' + (objkacha[key].rimsTread4 == null ? '' : objkacha[key].rimsTread4) + '</td>' +
+									'<td>' + (objkacha[key].rimstime == null ? '' : objkacha[key].rimstime) + '</td>' +
 								'</tr>';
 						}
 							
