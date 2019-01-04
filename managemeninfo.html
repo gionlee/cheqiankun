@@ -252,7 +252,7 @@
                 let str = ''
                 $.each(list,function (i,n) {
                     str+=`<tr>
-                            <td>${i+1}</td>
+                            <td>${list.length - i}</td>
                             <td>${n.dt == null ? '' : n.dt}</td>
                             <td style="cursor:pointer;" onclick="seeInfo('${n.workId}','${n.carNumber}')">${n.workId == null ? '' : n.workId}</td>
                             <!--工作单位--><td style="cursor:pointer;" onclick="fn_filter('workPlace','${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>
@@ -324,7 +324,7 @@
                 
                 $.each(new_list,function (i,n) {
                     str+=`<tr>
-                            <td>${i+1}</td>
+                            <td>${new_list.length - i}</td>
                             <td>${n.dt == null ? '' : n.dt}</td>
                             <td style="cursor:pointer;" onclick="seeInfo('${n.workId}','${n.carNumber}')">${n.workId == null ? '' : n.workId}</td>
                             <!--工作单位--><td style="cursor:pointer;" onclick="fn_filter('workPlace','${n.workPlace == null ? '' : n.workPlace}')">${n.workPlace == null ? '' : n.workPlace}</td>

@@ -352,6 +352,19 @@
 			.ly-gcar {
 				display: none;
 			}
+			.scbh {
+				padding:20px;
+				display: none;
+			}
+			.scbh li {
+				float: left;
+				width: 100px;
+				height: 30px;
+				border: 1px solid #ccc;
+				text-align: center;
+				line-height: 30px;
+				cursor: pointer;
+			}
 		</style>
 	</head>
 
@@ -595,10 +608,10 @@
 							<td><input type="text" class="layui-input materielPlace set_4" data-name="materielPlace"></td>
 							<td><input type="text" class="layui-input materielState set_5" data-name="materielState"></td>
 							<td><input type="text" class="layui-input materielUnit set_6" data-name="materielUnit"></td>
-							<td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
-							<td><input type="text" class="layui-input materielProductionId set_7" data-name="materielProductionId"></td>
+							<td><input type="text" class="layui-input materielOutTo" required="required" data-name="materielOutTo" onclick="setQx(this)"></td>
+							<td><input type="text" class="layui-input materielProductionId set_8" data-name="materielProductionId" ondblclick="setScbh()"></td>
 							<td><input type="text" id="shu" class="layui-input materielNumber set_7" data-name="materielNumber" oninput="setXong()"></td>
-							<td><input type="text" id="dan" class="layui-input materielPrice" data-name="materielPrice" oninput="setXong()"></td>
+							<td><input type="text" id="dan" class="layui-input materielPrice" required="required" data-name="materielPrice" oninput="setXong()"></td>
 							<td><input type="text" id="zong" class="layui-input materielTotal" data-name="materielTotal"></td>
 							<td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
 							<td><input type="text" onclick="setDph(this)" data-name="dynamicBalancingLeft" class="layui-input"></td>
@@ -742,7 +755,7 @@
 							<td><input type="text" class="layui-input materielUnit wlset_6" data-name="materielUnit"></td>
 							<td><input type="text" class="layui-input materielOutTo" data-name="materielOutTo" onclick="setQx(this)"></td>
 							<td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
-							<td><input type="text" class="layui-input materielProductionId wlset_8" data-name="materielProductionId"></td>
+							<td><input type="text" class="layui-input materielProductionId wlset_8" data-name=""></td>
 							<td><input type="text" class="layui-input materiel_sensor_id  wlset_8" data-name="materiel_sensor_id"></td>
 							<td><input type="text" class="layui-input materiel_sensor_id  wlset_8" data-name="materiel_sensor_id"></td>
 							<td><input type="text" class="layui-input materielPressure" data-name="materielPressure"></td>
@@ -823,10 +836,10 @@
 							<th style="width: 140px" >型号</th>
 							<th style="width: 110px" >物料新旧</th>
 							<th style="width: 35px" >数量</th>
-							<th style="width: 110px" >去向</th>
+							<th style="width: 120px" >去向</th>
 							<th style="width: 110px" >生产编号</th>
 							<th style="width: 110px" >胎压ID</th>
-							<th style="width:60px" >操作</th>
+							<th style="width: 60px" >操作</th>
 						</tr>
 					</thead>
 					<tbody class="dcllist">
@@ -848,7 +861,7 @@
 									<th style="width: 140px" >型号</th>
 									<th style="width: 110px" >物料新旧</th>
 									<th style="width: 35px" >数量</th>
-									<th style="width: 110px" >去向</th>
+									<th style="width: 120px" >去向</th>
 									<th style="width: 110px" >生产编号</th>
 									<th style="width: 110px" >胎压ID</th>
 									<th style="width:60px" >操作</th>
@@ -963,6 +976,8 @@
 				</table>
 			</div>
 		</div>
+		<!-- 生产编号列表 -->
+		<ul class="scbh"></ul>
 	</body>
 	<script src="./js/Global.js"></script>
 	<script>
@@ -1015,6 +1030,28 @@
 					$('.qx-show').hide()
 					$('.qxxm-show').hide()
 		})
+		// 查询所有生产编号
+		function selScbh() {
+			$.ajax({
+			url:`${API}/erpWarehouse/getMaterielszi?ckid=${cangkuId}&materiel_name=${$('.set_0').val()}&materiel_brand=${$('.set_1').val()}&materiel_Specifications=${$('.set_2').val()}&materiel_model=${$('.set_3').val()}&materiel_place=${$('.set_4').val()}&materiel_unit=${$('.set_6').val()}`,
+			success:function (res) {
+				let arr = res.data
+				let str = ''
+				$.each(arr,function (i,k) {
+					if(k) {
+						str +=`<li onclick="setScbhVal('${k.materiel_production_id}')">${k.materiel_production_id}</li>`
+					}
+					
+				})
+				$('.scbh').html(str)
+			}
+		})
+		}
+		// 设置生产编号的值
+		function setScbhVal (val) {
+			$('.set_8').val(val)
+			layer.close(layer.index)
+		}
 		// 设置实收金额
 		function setSsje () {
 			$('#ssje').val($('#fyhj').val() - $('#xfjf').val())
@@ -1040,18 +1077,18 @@
 						str +=
 							`<tr >
                             <td >${n.warehouseName || ''}</td>
-                            <td>${n.materielName}</td>
-                            <td >${n.materielBrand}</td>
-                            <td>${n.materielSpecifications}</td>
-                            <td>${n.materielModel}</td>
-                            <td>${n.materielPlace}</td>
-                            <td>${n.materielUnit}</td>
-                            <td>${n.materielProductionId}</td>
-                            <td>${n.materielState}</td>
-                            <td>${n.materielOutTo}</td>
-                            <td>${n.materielNumber}</td>
-                            <td>${n.materielPrice}</td>
-                            <td class="jisuanjine">${n.materielTotal}</td>
+                            <td>${n.materielName == null ? '' : n.materielName}</td>
+                            <td >${n.materielBrand == null ? '' : n.materielBrand}</td>
+                            <td>${n.materielSpecifications == null ? '' : n.materielSpecifications}</td>
+                            <td>${n.materielModel == null ? '' : n.materielModel}</td>
+                            <td>${n.materielPlace == null ? '' : n.materielPlace}</td>
+                            <td>${n.materielUnit == null ? '' : n.materielUnit}</td>
+                            <td>${n.materielProductionId == null ? '' : n.materielProductionId}</td>
+                            <td>${n.materielState == null ? '' : n.materielState}</td>
+                            <td>${n.materielOutTo == null ? '' : n.materielOutTo}</td>
+                            <td>${n.materielNumber == null ? '' : n.materielNumber}</td>
+                            <td>${n.materielPrice == null ? '' : n.materielPrice}</td>
+                            <td class="jisuanjine">${n.materielTotal == null ? '' : n.materielTotal}</td>
                         </tr>`
 						strs +=
 							`<tr >     
@@ -1099,9 +1136,6 @@
 					$(`.hcset_${i}`).val($(k).text())
 				}
 			})
-			$(`.set_7`).val(1)
-			$(`.wlset_7`).val(1)
-			$(`.hcset_7`).val(1)
 			layer.close(layer.index)
 
 		}
@@ -1129,12 +1163,12 @@
 					form.render();
 				})
 				form.on('select', function(data) {
-					console.log($(data.elem))
-					console.log($(data.elem).hasClass('hcck'))
 					selWxHc()
 					if($(data.elem).hasClass('hcck')) {
 						isHcck = true
 					}
+					cangkuId = data.value
+
 					setKcList(data.value, '')
 				});
 			}
@@ -1247,6 +1281,7 @@
 				$('input').val('')
 				layer.closeAll()
 			} else{
+				console.log(data,'666')
 				$.ajax({
 					url: `${API}/erpXiaoShouWeiXiu/addWuLiaoWeiXiuNew`,
 					type: 'post',
@@ -1267,7 +1302,7 @@
 							} else if(params == 2) {
 								$('.wlwxList input').val('')
 								$('.wxhclist input').val('')
-								
+								$('.wxbj input').val('')
 							} else if(params == 3){
 								$('input').val('')
 								layer.closeAll()
@@ -1298,6 +1333,16 @@
 			setKcList(changeId, $('.sel').val())
 			wlwxbol = true
 
+		}
+		// 设置生产编号
+		function setScbh () {
+			selScbh()	
+			layer.open({
+				type: 1,
+				content: $('.scbh'),
+				area: ['600px', '400px'],
+				maxmin:true,
+			})
 		}
 		let wwcList = []
 		let ywcList = []
@@ -1330,17 +1375,17 @@
 							`<tr>
                         <td>${wwcList.length - i}</td>
                         <td>${n.repairRepair || ""}</td>
-                        <td>${n.materielSource}</td>
-                        <td>${n.materielName}</td>
-                        <td>${n.materielBrand}</td>
-                        <td>${n.materielSpecifications}</td>
-                        <td>${n.materielModel}</td>
-                        <td>${n.materielState}</td>
+                        <td>${n.materielSource || ""}</td>
+                        <td>${n.materielName || ""}</td>
+                        <td>${n.materielBrand || ""}</td>
+                        <td>${n.materielSpecifications || ""}</td>
+                        <td>${n.materielModel || ""}</td>
+                        <td>${n.materielState || ""}</td>
                         
-						<td>${n.materielNumber}</td>
-						<td>${n.materielOutTo}</td>
-                        <td>${n.materielProductionId}</td>
-                        <td>${n.materielPressure}</td>
+						<td>${n.materielNumber || ""}</td>
+						<td>${n.materielOutTo || ""}</td>
+                        <td>${n.materielProductionId || ""}</td>
+                        <td>${n.materielPressure || ""}</td>
                         <td><div class="layui-btn layui-btn-xs layui-btn-normal" onclick="setDatatoWx(${i})">选择</div></td><tr>`
 					})
 					$.each(ywcList, function(i, n) {
@@ -1348,17 +1393,17 @@
 						`<tr>
                         <td>${ywcList.length - i}</td>
                         <td>${n.repairRepair || ""}</td>
-                        <td>${n.materielSource}</td>
-                        <td>${n.materielName}</td>
-                        <td>${n.materielBrand}</td>
-                        <td>${n.materielSpecifications}</td>
-                        <td>${n.materielModel}</td>
-                        <td>${n.materielState}</td>
+                        <td>${n.materielSource || ""}</td>
+                        <td>${n.materielName || ""}</td>
+                        <td>${n.materielBrand || ""}</td>
+                        <td>${n.materielSpecifications || ""}</td>
+                        <td>${n.materielModel || ""}</td>
+                        <td>${n.materielState || ""}</td>
                         
-						<td>${n.materielNumber}</td>
-						<td>${n.materielOutTo}</td>
-                        <td>${n.materielProductionId}</td>
-                        <td>${n.materielPressure}</td>
+						<td>${n.materielNumber || ""}</td>
+						<td>${n.materielOutTo || ""}</td>
+                        <td>${n.materielProductionId || ""}</td>
+                        <td>${n.materielPressure || ""}</td>
                         <td><div class="layui-btn layui-btn-xs layui-btn-danger" onclick="delWl(${n.id})">删除</div></td><tr>`
 					})
 
@@ -1719,41 +1764,47 @@
 		}
 
 		function saveRe(num) {
-			let data = {}
-			$('.spxsList input').each(function() {
-				data[$(this).data('name')] = $(this).val()
-			})
-			data.orderId = '1'
-			data.warehouseId = '1'
-
-			data.carPai = trimStr(carNum)
-			if(num == 4) {
-				$('.spxsList input').val('')
-				layer.closeAll();
+			
+			if ($('.spxsList .materielOutTo').val() == '' || $('.spxsList .materielPrice').val() == '') {
+				alert('价格和去向不能为空');
 			} else {
-				$.ajax({
-					url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
-					type: 'post',
-					data: data,
-					success: function(res) {
-						if(res.code == 0) {
-							layer.msg('保存成功!')
-							selSaleList()
-							if(num == 1) {
-								$('.spxsList .materielProductionId').val('')
-								$('.spxsList .materielOutTo').val('')
-							}
-							if(num == 2) {
-								$('.spxsList input').val('')
-							}
-							if(num == 3) {
-								$('.spxsList input').val('')
-								layer.closeAll();
-							}
-						}
-	
-					}
+				let data = {}
+				$('.spxsList input').each(function() {
+					data[$(this).data('name')] = $(this).val()
 				})
+				data.orderId = '1'
+				data.warehouseId = '1'
+	
+				data.carPai = trimStr(carNum)
+				if(num == 4) {
+					$('.spxsList input').val('')
+					layer.closeAll();
+				} else {
+					$.ajax({
+						url: `${API}/erpXiaoShouWeiXiu/xiaoshouweixiuAddShangPinLieBiao`,
+						type: 'post',
+						data: data,
+						success: function(res) {
+							if(res.code == 0) {
+								layer.msg('保存成功!')
+								selSaleList()
+								wlList()
+								if(num == 1) {
+									$('.spxsList .materielProductionId').val('')
+									$('.spxsList .materielOutTo').val('')
+								}
+								if(num == 2) {
+									$('.spxsList input').val('')
+								}
+								if(num == 3) {
+									$('.spxsList input').val('')
+									layer.closeAll();
+								}
+							}
+		
+						}
+					})
+				}
 			}
 			
 		}
@@ -1802,16 +1853,16 @@
 		function setLy() {
 
 			$.ajax({
-				url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${sessionStorage.pcar}`,
+				url: `${API}/erpCustomerCar/selectPotionByCarPlate?carPlate=${carNum}`,
 				type: 'get',
 				success: function(res) {
 					let qxstr = '<ul>'
 					let str = '<ul>'
 					$.each(res.data.taiwei, function(i, k) {
 						str +=
-							`<li onclick="setLyByCar('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
+							`<li onclick="setLyByCar('${trimStr(carNum)}-${k}')"> ${k}</li>`
 						qxstr +=
-							`<li onclick="setQxs('${trimStr(sessionStorage.pcar)}-${k}')"> ${k}</li>`
+							`<li onclick="setQxs('${trimStr(carNum)}-${k}')"> ${k}</li>`
 					})
 					str += '</ul>'
 					$('.ly-3').html(str)
@@ -1841,16 +1892,30 @@
 				url: `${API}/erpCustomerWarehouse/getcustWarehouseByCustId?custId=${loadUserInfo.customer.id}`,
 				type: 'get',
 				success: function(res) {
-					let str = '<ul>'
-					let qxstr = '<ul>'
+					
+					$('.ly-khkc').each(function () {
+						let fr = $(this).prev().text()
+						let str = '<ul>'
 					$.each(res.data, function(i, k) {
-						str += `<li onclick="setKcList('${k.id}','${k.warName}')"> ${k.warName}</li>`
-						qxstr += `<li onclick="setQxs('${k.warName}')">${k.warName} </li>`
+						str += `<li onclick="setKcList('${k.id}','${fr}-${k.warName}')">${fr}-${k.warName}</li>`
+						
 					})
 					str += '</ul>'
-					$('.ly-khkc').html(str)
-					$('.qx-khkc').html(qxstr)
+						$(this).html(str)
+					
+					})
+					$('.qx-khkc').each(function () {
+						let fr = $(this).prev().text()
+					let qxstr = '<ul>'
+					$.each(res.data, function(i, k) {
+						qxstr += `<li onclick="setQxs('${fr}-${k.warName}')">${fr}-${k.warName}</li>`
+					})
+					qxstr += '</ul>'
+						$(this).html(qxstr)
+					
+					})
 				}
+				
 			})
 		}
 
@@ -1889,21 +1954,23 @@
 			$('.ly-show').hide()
 			$('.materielSource').val(key)
 			$.ajax({
-				url: `${API}/erpMaterielFlow/selectByWareHouseId?custId=${loadUserInfo.customer.id}&custWareId=${id}&so=1`,
+				// url: `${API}/erpMaterielFlow/selectByWareHouseId?custId=${loadUserInfo.customer.id}&custWareId=${id}&so=1`,
+				url:`${API}/erpWarehouse/getMaterielsCk?ckid=${id}`,
 				success: function(res) {
 					let arr = res.data
 					let str = ''
 					$.each(arr, function(i, k) {
 						str +=
 							`<tr class="cnmsd_${i}" style="cursor:pointer;" onclick="setVals(${i})">
-                            <td>${k.materielName || ''}</td>
-                            <td>${k.materielBrand || ''}</td>
-                            <td>${k.materielSpecifications || ''}</td>
-                            <td>${k.materielModel || ''}</td>
-                            <td>${k.materielPlace || ''}</td>
-                            <td>${k.materielState || ''}</td>
-                            <td>${k.materielUnit || ''}</td>
-                            <td>${k.num || ''}</td>
+                            <td>${k.materiel_name || ''}</td>
+                            <td>${k.materiel_brand || ''}</td>
+                            <td>${k.materiel_Specifications || ''}</td>
+                            <td>${k.materiel_model || ''}</td>
+                            <td>${k.materiel_place || ''}</td>
+                            <td>${k.materiel_state || ''}</td>
+                            <td>${k.materiel_unit || ''}</td>
+							<td>${k.num}</td>
+							<td style="display:none;">${k.materiel_production_id}</td>
                         </tr>`
 					})
 					$('.yhlist').html(str)
